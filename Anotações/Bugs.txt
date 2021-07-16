@@ -1,0 +1,12 @@
+Formatação do decimal/double/float de casas deciamis => decimal.Parse("0.001") => 1
+Classes afetadas:
+ |-> condições de pagamento
+ |	    |-> consulta.inserir(leve)
+ |    	|-> consulta.alterar(moderado)
+ |		|-> consulta.excluir(critico)
+ |-> parcelas da condição de pagamento
+		|-> cadastro.lv_Parcelas.inserir(moderado)
+     	|-> cadastro.lv_Parcelas.alterar(moderado)
+		|-> cadastro.lv_Parcelas.excluir(critico)
+		
+travar radio button fisico/juridico fornecedor/cliente

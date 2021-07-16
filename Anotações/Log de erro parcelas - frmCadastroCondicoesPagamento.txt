@@ -1,0 +1,53 @@
+ERROR 1: Parcela (15)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53
+
+ERROR 2: Parcela (18)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53
+
+ERROR 3: Parcela (30)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53
+
+ERROR 4: Parcela (45)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53
+
+ERROR 5: Parcela (65)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53
+
+ERROR 6: Parcela (70)
+
+O índice e o comprimento devem se referir a um local dentro da cadeia de caracteres.
+Nome do parâmetro: length ---> mscorlib
+Localizado   em System.String.Substring(Int32 startIndex, Int32 length)
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelas(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 252
+   em Peojeto_ICI.frmCadastros.frmCadastroPai.CalcularPorcParcelasTxT(Int32 totalParc) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroPai.cs:linha 213
+   em Peojeto_ICI.frmCadastros.frmCadastroCondicoesPagamento.btn_Entrada_Click(Object sender, EventArgs e) na C:\Users\gabhr\Desktop\.NET\PraticaGabhrielSW\frmCadastros\frmCadastroCondicoesPagamento.cs:linha 53

@@ -1,0 +1,4 @@
+(X) formatar(renomear) os campos da ctrl como cep -> CEP, dataCad -> cadastro
+
+( ) ajustar a nova entrada de codigo da datagrid de codigoPais -> pais no alterar/excluir
+
