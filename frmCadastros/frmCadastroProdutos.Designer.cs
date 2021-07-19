@@ -198,11 +198,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_PesquisarModelo.Location = new System.Drawing.Point(371, 143);
             this.btn_PesquisarModelo.Name = "btn_PesquisarModelo";
-            this.btn_PesquisarModelo.Size = new System.Drawing.Size(61, 23);
+            this.btn_PesquisarModelo.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarModelo.TabIndex = 8;
-            this.btn_PesquisarModelo.Text = "Pesquisar";
             this.btn_PesquisarModelo.UseVisualStyleBackColor = true;
             this.btn_PesquisarModelo.Click += new System.EventHandler(this.btn_PesquisarModelo_Click);
+            this.btn_PesquisarModelo.MouseEnter += new System.EventHandler(this.btn_PesquisarModelo_MouseEnter);
+            this.btn_PesquisarModelo.MouseLeave += new System.EventHandler(this.btn_PesquisarModelo_MouseLeave);
             // 
             // txtb_Marca
             // 
@@ -217,11 +218,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_PesquisarSubGrupo.Location = new System.Drawing.Point(371, 199);
             this.btn_PesquisarSubGrupo.Name = "btn_PesquisarSubGrupo";
-            this.btn_PesquisarSubGrupo.Size = new System.Drawing.Size(61, 23);
+            this.btn_PesquisarSubGrupo.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarSubGrupo.TabIndex = 10;
-            this.btn_PesquisarSubGrupo.Text = "Pesquisar";
             this.btn_PesquisarSubGrupo.UseVisualStyleBackColor = true;
             this.btn_PesquisarSubGrupo.Click += new System.EventHandler(this.btn_PesquisarSubGrupo_Click);
+            this.btn_PesquisarSubGrupo.MouseEnter += new System.EventHandler(this.btn_PesquisarSubGrupo_MouseEnter);
+            this.btn_PesquisarSubGrupo.MouseLeave += new System.EventHandler(this.btn_PesquisarSubGrupo_MouseLeave);
             // 
             // txtb_SubGrupo
             // 
@@ -372,18 +374,19 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Fornecedor.Enabled = false;
             this.txtb_Fornecedor.Location = new System.Drawing.Point(99, 258);
             this.txtb_Fornecedor.Name = "txtb_Fornecedor";
-            this.txtb_Fornecedor.Size = new System.Drawing.Size(199, 20);
+            this.txtb_Fornecedor.Size = new System.Drawing.Size(234, 20);
             this.txtb_Fornecedor.TabIndex = 46;
             // 
             // btn_PesquisarFornecedor
             // 
-            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(304, 255);
+            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(339, 255);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
-            this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(61, 23);
+            this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarFornecedor.TabIndex = 12;
-            this.btn_PesquisarFornecedor.Text = "Pesquisar";
             this.btn_PesquisarFornecedor.UseVisualStyleBackColor = true;
             this.btn_PesquisarFornecedor.Click += new System.EventHandler(this.btn_PesquisarFornecedor_Click);
+            this.btn_PesquisarFornecedor.MouseEnter += new System.EventHandler(this.btn_PesquisarFornecedor_MouseEnter);
+            this.btn_PesquisarFornecedor.MouseLeave += new System.EventHandler(this.btn_PesquisarFornecedor_MouseLeave);
             // 
             // btn_Remover
             // 

@@ -121,6 +121,17 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btn_Pesquisar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        dgAAAHYBTnsmCAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAESSURBVDhPndG9
+        SgNBFIbhtQyk0UqwskuhXoHYprYRSZNWg2kkiKJVDOZHQ1CjNtbxGlLGQshd5X2XHUiWXcPmgwczi2fO
+        zJloKXvo4Bk99PGCQ6zNCYbYjldRdAqL73CPOnJjZ4uzso9vXOPYD1l5ROhsV48f/MBNvM4bMuOdQyw6
+        wxFaydp08YDQaCX+k3c2/q6hivNkbZqJg3iVygDhFHknaOMGu/EqlTBt7+qdLQp+UcIIr8iM3Xwqp+0m
+        y7H4A25264e8+M4+ldN+whU8tp0t/sM7/o3v7FM5bTfwzh7bzmNMsYO18amcdnpgFs/whUs/FM0WPlHB
+        HBMUTgMWl5O/FygcO1vsi3mijWJnZhF1FhrRNQAarMTTAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAANcNAADXDQAAAAAAAAAA

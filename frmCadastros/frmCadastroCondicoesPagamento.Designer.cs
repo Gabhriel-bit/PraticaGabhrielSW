@@ -77,12 +77,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Sair
             // 
-            this.btn_Sair.Location = new System.Drawing.Point(422, 516);
+            this.btn_Sair.Location = new System.Drawing.Point(431, 516);
             this.btn_Sair.TabIndex = 12;
             // 
             // btn_Cadastro
             // 
-            this.btn_Cadastro.Location = new System.Drawing.Point(350, 515);
+            this.btn_Cadastro.Location = new System.Drawing.Point(359, 515);
             this.btn_Cadastro.TabIndex = 11;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
@@ -322,7 +322,7 @@ namespace Projeto_ICI.frmCadastros
             this.gb_Parcelas.Controls.Add(this.lbl_FormaPag);
             this.gb_Parcelas.Location = new System.Drawing.Point(24, 126);
             this.gb_Parcelas.Name = "gb_Parcelas";
-            this.gb_Parcelas.Size = new System.Drawing.Size(464, 67);
+            this.gb_Parcelas.Size = new System.Drawing.Size(436, 67);
             this.gb_Parcelas.TabIndex = 37;
             this.gb_Parcelas.TabStop = false;
             this.gb_Parcelas.Text = "Parcelas";
@@ -351,11 +351,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_PesquisarFormPagParc.Location = new System.Drawing.Point(399, 33);
             this.btn_PesquisarFormPagParc.Name = "btn_PesquisarFormPagParc";
-            this.btn_PesquisarFormPagParc.Size = new System.Drawing.Size(59, 23);
+            this.btn_PesquisarFormPagParc.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarFormPagParc.TabIndex = 9;
-            this.btn_PesquisarFormPagParc.Text = "Pesquisar";
             this.btn_PesquisarFormPagParc.UseVisualStyleBackColor = true;
             this.btn_PesquisarFormPagParc.Click += new System.EventHandler(this.btn_PesquisarFormPagParc_Click);
+            this.btn_PesquisarFormPagParc.MouseEnter += new System.EventHandler(this.btn_PesquisarFormPagParc_MouseEnter);
+            this.btn_PesquisarFormPagParc.MouseLeave += new System.EventHandler(this.btn_PesquisarFormPagParc_MouseLeave);
             // 
             // btn_Remover
             // 
@@ -428,7 +429,7 @@ namespace Projeto_ICI.frmCadastros
             // frmCadastroCondicoesPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(500, 553);
+            this.ClientSize = new System.Drawing.Size(509, 553);
             this.Controls.Add(this.btn_AutoParc);
             this.Controls.Add(this.lbl_TotalPorc);
             this.Controls.Add(this.lbl_TotalDias);

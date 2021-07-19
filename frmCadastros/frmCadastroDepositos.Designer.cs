@@ -128,11 +128,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_Pesquisar.Location = new System.Drawing.Point(488, 138);
             this.btn_Pesquisar.Name = "btn_Pesquisar";
-            this.btn_Pesquisar.Size = new System.Drawing.Size(63, 27);
+            this.btn_Pesquisar.Size = new System.Drawing.Size(26, 25);
             this.btn_Pesquisar.TabIndex = 8;
-            this.btn_Pesquisar.Text = "Pesquisar";
             this.btn_Pesquisar.UseVisualStyleBackColor = true;
             this.btn_Pesquisar.Click += new System.EventHandler(this.btn_Pesquisar_Click);
+            this.btn_Pesquisar.MouseEnter += new System.EventHandler(this.btn_Pesquisar_MouseEnter);
+            this.btn_Pesquisar.MouseLeave += new System.EventHandler(this.btn_Pesquisar_MouseLeave);
             // 
             // lbl_Cidade
             // 
@@ -342,13 +343,14 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_PesquisarProduto
             // 
-            this.btn_PesquisarProduto.Location = new System.Drawing.Point(350, 198);
+            this.btn_PesquisarProduto.Location = new System.Drawing.Point(387, 198);
             this.btn_PesquisarProduto.Name = "btn_PesquisarProduto";
-            this.btn_PesquisarProduto.Size = new System.Drawing.Size(63, 27);
+            this.btn_PesquisarProduto.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarProduto.TabIndex = 10;
-            this.btn_PesquisarProduto.Text = "Pesquisar";
             this.btn_PesquisarProduto.UseVisualStyleBackColor = true;
             this.btn_PesquisarProduto.Click += new System.EventHandler(this.btn_PesquisarProduto_Click);
+            this.btn_PesquisarProduto.MouseEnter += new System.EventHandler(this.btn_PesquisarProduto_MouseEnter);
+            this.btn_PesquisarProduto.MouseLeave += new System.EventHandler(this.btn_PesquisarProduto_MouseLeave);
             // 
             // lbl_Produto
             // 
@@ -365,7 +367,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Produto.Enabled = false;
             this.txtb_Produto.Location = new System.Drawing.Point(99, 205);
             this.txtb_Produto.Name = "txtb_Produto";
-            this.txtb_Produto.Size = new System.Drawing.Size(245, 20);
+            this.txtb_Produto.Size = new System.Drawing.Size(282, 20);
             this.txtb_Produto.TabIndex = 70;
             // 
             // lbl_CodigoProduto

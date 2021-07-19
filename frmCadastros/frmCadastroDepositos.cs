@@ -38,13 +38,19 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlDeposito = new Controllers.ctrlDepositos(pUmaConexao);
 
-            frmConsCidade = new frmConsultas.frmConsultaCidades(pUmaConexao);
             listaCidades = new List<Classes.cidades>();
             umaCidade = new Classes.cidades();
 
-            frmConsProduto = new frmConsultas.frmConsultaProdutos(pUmaConexao);
             listaProdutos = new List<Classes.produtos>();
             umProduto = new Classes.produtos();
+
+            btn_PesquisarProduto.Image = umImgPesquisaSair;
+            btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form[] pFrmCad)
+        {
+            frmConsCidade = (frmConsultas.frmConsultaCidades)pFrmCad[0];
+            frmConsProduto = (frmConsultas.frmConsultaProdutos)pFrmCad[1];
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -359,6 +365,26 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoProduto_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoCodigo(txtb_CodigoProduto, e);
+        }
+
+        private void btn_PesquisarProduto_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarProduto.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarProduto_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarProduto.Image = umImgPesquisaSair;
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
     }
 }

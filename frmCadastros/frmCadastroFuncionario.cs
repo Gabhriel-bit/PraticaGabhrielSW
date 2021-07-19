@@ -35,13 +35,18 @@ namespace Projeto_ICI.frmCadastros
             umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
             obrigatorioGrupoCNH(false);
 
-            frmConsCidade = new frmConsultas.frmConsultaCidades(pUmaConexao);
             umaCidade = new Classes.cidades();
             listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection();
 
-            frmConsCargo = new frmConsultas.frmConsultaCargos(pUmaConexao);
             umCargo = new Classes.cargos();
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
+
+            btn_PesquisarCargo.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form[] pFrmCad)
+        {
+            frmConsCidade = (frmConsultas.frmConsultaCidades)pFrmCad[0];
+            frmConsCargo = (frmConsultas.frmConsultaCargos)pFrmCad[1];
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -318,6 +323,16 @@ namespace Projeto_ICI.frmCadastros
                                                     "mas deve ser inserido um valor válido entre 0 e 1!");
                 e.Cancel = true;
             }
+        }
+
+        private void btn_PesquisarCargo_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarCargo.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarCargo_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarCargo.Image = umImgPesquisaSair;
         }
     }
 }

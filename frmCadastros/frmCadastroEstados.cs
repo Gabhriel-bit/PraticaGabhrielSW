@@ -25,12 +25,16 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroEstados(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
-            frmConsPais = new frmConsultas.frmConsultaPaises(pUmaConexao);
             umCtrlEstado = new Controllers.ctrlEstados(pUmaConexao);
             umPais = new Classes.paises();
             listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection();
-        }
 
+            btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form pFrmCad)
+        {
+            frmConsPais = (frmConsultas.frmConsultaPaises)pFrmCad;
+        }
         public override void CarregarTxtBox(object pUmObjeto)
         {
             base.CarregarTxtBox(pUmObjeto);
@@ -153,6 +157,16 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoPais_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoCodigo(txtb_CodigoPais, e);
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
     }
 }

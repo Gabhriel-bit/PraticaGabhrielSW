@@ -25,10 +25,14 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroModelos(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
-            frmConsMarca = new frmConsultas.frmConsultaMarcas(pUmaConexao);
             umCtrlModelos = new Controllers.ctrlModelos(pUmaConexao);
             umaMarca = new Classes.marcas();
             listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection();
+            btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form pFrmCad)
+        {
+            frmConsMarca = (frmConsultas.frmConsultaMarcas)pFrmCad;
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -139,6 +143,16 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Modelo, null);
                 e.Cancel = false;
             }
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
     }
 }

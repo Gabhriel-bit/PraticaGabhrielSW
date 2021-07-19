@@ -163,11 +163,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_PesquisarCargo.Location = new System.Drawing.Point(225, 378);
             this.btn_PesquisarCargo.Name = "btn_PesquisarCargo";
-            this.btn_PesquisarCargo.Size = new System.Drawing.Size(63, 27);
+            this.btn_PesquisarCargo.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarCargo.TabIndex = 18;
-            this.btn_PesquisarCargo.Text = "Pesquisar";
             this.btn_PesquisarCargo.UseVisualStyleBackColor = true;
             this.btn_PesquisarCargo.Click += new System.EventHandler(this.btn_PesquisarCargo_Click);
+            this.btn_PesquisarCargo.MouseEnter += new System.EventHandler(this.btn_PesquisarCargo_MouseEnter);
+            this.btn_PesquisarCargo.MouseLeave += new System.EventHandler(this.btn_PesquisarCargo_MouseLeave);
             // 
             // lbl_Cargo
             // 
@@ -210,7 +211,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_CNH.AutoSize = true;
             this.lbl_CNH.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CNH.Location = new System.Drawing.Point(291, 367);
+            this.lbl_CNH.Location = new System.Drawing.Point(254, 367);
             this.lbl_CNH.Name = "lbl_CNH";
             this.lbl_CNH.Size = new System.Drawing.Size(36, 15);
             this.lbl_CNH.TabIndex = 71;
@@ -218,7 +219,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // txtb_CNH
             // 
-            this.txtb_CNH.Location = new System.Drawing.Point(294, 385);
+            this.txtb_CNH.Location = new System.Drawing.Point(257, 385);
             this.txtb_CNH.Name = "txtb_CNH";
             this.txtb_CNH.Size = new System.Drawing.Size(137, 20);
             this.txtb_CNH.TabIndex = 19;
@@ -226,7 +227,7 @@ namespace Projeto_ICI.frmCadastros
             // date_DataVenc
             // 
             this.date_DataVenc.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.date_DataVenc.Location = new System.Drawing.Point(437, 385);
+            this.date_DataVenc.Location = new System.Drawing.Point(400, 385);
             this.date_DataVenc.Name = "date_DataVenc";
             this.date_DataVenc.Size = new System.Drawing.Size(105, 20);
             this.date_DataVenc.TabIndex = 20;
@@ -235,7 +236,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_DataVenc.AutoSize = true;
             this.lbl_DataVenc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_DataVenc.Location = new System.Drawing.Point(434, 367);
+            this.lbl_DataVenc.Location = new System.Drawing.Point(397, 367);
             this.lbl_DataVenc.Name = "lbl_DataVenc";
             this.lbl_DataVenc.Size = new System.Drawing.Size(99, 15);
             this.lbl_DataVenc.TabIndex = 72;

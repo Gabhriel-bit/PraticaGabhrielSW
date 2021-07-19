@@ -19,9 +19,13 @@ namespace Projeto_ICI
     {
         public NumberStyles vgEstilo = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
         public CultureInfo vgProv = new CultureInfo("fr-FR");
+        protected Image umImgPesquisaEntrar;
+        protected Image umImgPesquisaSair;
         public formularioBase()
         {
             InitializeComponent();
+            umImgPesquisaEntrar = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_entrar.png");
+            umImgPesquisaSair = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_sair.png");
         }
         public virtual void ConhecaOBJ(object pOBJ)
         {
@@ -31,7 +35,18 @@ namespace Projeto_ICI
         {
 
         }
+        public virtual void SetFrmCad(Form[] pFrmCad)
+        {
 
+        }
+        public virtual void SetFrmCons(Form pFrmCad)
+        {
+
+        }
+        public virtual void SetFrmCons(Form[] pFrmCad)
+        {
+
+        }
         public static string FormatCPF(string pCPF)
         {
             pCPF = pCPF.Replace(".", "");

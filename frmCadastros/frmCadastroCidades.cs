@@ -26,12 +26,15 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroCidades(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
-            frmConsEstado = new frmConsultas.frmConsultaEstados(pUmaConexao);
             umCtrlCidade = new Controllers.ctrlCidades(pUmaConexao);
             umEstado = new Classes.estados();
             listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection();
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
-
+        public override void SetFrmCons(Form pFrmCad)
+        {
+            frmConsEstado = (frmConsultas.frmConsultaEstados)pFrmCad;
+        }
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
             var nomeBtn = frmConsEstado.Btn_Sair;
@@ -157,6 +160,16 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoEstado_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoCodigo(txtb_CodigoEstado, e);
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
     }
 }

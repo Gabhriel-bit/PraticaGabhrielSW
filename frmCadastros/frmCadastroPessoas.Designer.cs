@@ -206,11 +206,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_PesquisarCidade.Location = new System.Drawing.Point(507, 144);
             this.btn_PesquisarCidade.Name = "btn_PesquisarCidade";
-            this.btn_PesquisarCidade.Size = new System.Drawing.Size(63, 27);
+            this.btn_PesquisarCidade.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarCidade.TabIndex = 50;
-            this.btn_PesquisarCidade.Text = "Pesquisar";
             this.btn_PesquisarCidade.UseVisualStyleBackColor = true;
             this.btn_PesquisarCidade.Click += new System.EventHandler(this.btn_PesquisarCidade_Click);
+            this.btn_PesquisarCidade.MouseEnter += new System.EventHandler(this.btn_PesquisarCidade_MouseEnter);
+            this.btn_PesquisarCidade.MouseLeave += new System.EventHandler(this.btn_PesquisarCidade_MouseLeave);
             // 
             // lbl_Cidade
             // 

@@ -37,16 +37,21 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlCliente = new Controllers.ctrlClientes(pUmaConexao);
 
-            frmConsCondPag = new frmConsultas.frmConsultaCondicoesPagamento(pUmaConexao);
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection();
             umCondPag = new Classes.condicoesPagamento();
 
-            frmConsCidade = new frmConsultas.frmConsultaCidades(pUmaConexao);
             listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection();
             umaCidade = new Classes.cidades();
 
             rb_Fisica.Checked = true;
             closing = false;
+
+            btn_PesquisarCondPag.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form[] pFrmCad)
+        {
+            frmConsCondPag = (frmConsultas.frmConsultaCondicoesPagamento)pFrmCad[0];
+            frmConsCidade = (frmConsultas.frmConsultaCidades)pFrmCad[1];
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -352,6 +357,16 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoCondPag_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoCodigo(txtb_CodigoCondPag, e);
+        }
+
+        private void btn_PesquisarCondPag_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarCondPag.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarCondPag_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarCondPag.Image = umImgPesquisaSair;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroPessoas()
         {
             InitializeComponent();
+            btn_PesquisarCidade.Image = umImgPesquisaSair;
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -286,6 +287,16 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Email, "Email inválido!");
                 e.Cancel = true;
             }
+        }
+
+        private void btn_PesquisarCidade_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarCidade.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarCidade_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarCidade.Image = umImgPesquisaSair;
         }
     }
 }

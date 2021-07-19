@@ -45,17 +45,24 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umaCtrlProduto = new Controllers.ctrlProdutos(pUmaConexao);
 
-            frmConsSubGrupo = new frmConsultas.frmConsultaSubgrupos(pUmaConexao);
             listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection();
             umSubgrupo = new Classes.subgrupos();
 
-            frmConsForn = new frmConsultas.frmConsultaFornecedores(pUmaConexao);
             listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection();
             umForn = new Classes.fornecedores();
 
-            frmConsModelo = new frmConsultas.frmConsultaModelos(pUmaConexao);
             listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection();
             umModelo = new Classes.modelos();
+
+            btn_PesquisarFornecedor.Image = umImgPesquisaSair;
+            btn_PesquisarModelo.Image = umImgPesquisaSair;
+            btn_PesquisarSubGrupo.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form[] pFrmCad)
+        {
+            frmConsSubGrupo = (frmConsultas.frmConsultaSubgrupos)pFrmCad[0];
+            frmConsForn = (frmConsultas.frmConsultaFornecedores)pFrmCad[1];
+            frmConsModelo = (frmConsultas.frmConsultaModelos)pFrmCad[2];
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -398,6 +405,36 @@ namespace Projeto_ICI.frmCadastros
                 vlProduto.ListaFornecedores = lvToList();
                 ObjToDataBase(vlProduto, umaCtrlProduto);
             }
+        }
+
+        private void btn_PesquisarModelo_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarModelo.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarModelo_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarModelo.Image = umImgPesquisaSair;
+        }
+
+        private void btn_PesquisarSubGrupo_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarSubGrupo.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarSubGrupo_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarSubGrupo.Image = umImgPesquisaSair;
+        }
+
+        private void btn_PesquisarFornecedor_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarFornecedor.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarFornecedor_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarFornecedor.Image = umImgPesquisaSair;
         }
     }
 }

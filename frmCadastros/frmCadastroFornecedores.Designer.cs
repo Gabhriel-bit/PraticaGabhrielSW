@@ -61,12 +61,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Sair
             // 
-            this.btn_Sair.Location = new System.Drawing.Point(514, 367);
+            this.btn_Sair.Location = new System.Drawing.Point(556, 367);
             this.btn_Sair.TabIndex = 18;
             // 
             // btn_Cadastro
             // 
-            this.btn_Cadastro.Location = new System.Drawing.Point(442, 366);
+            this.btn_Cadastro.Location = new System.Drawing.Point(484, 366);
             this.btn_Cadastro.TabIndex = 17;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
@@ -162,13 +162,14 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_PesquisarCondPag
             // 
-            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(509, 230);
+            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(578, 201);
             this.btn_PesquisarCondPag.Name = "btn_PesquisarCondPag";
-            this.btn_PesquisarCondPag.Size = new System.Drawing.Size(63, 27);
+            this.btn_PesquisarCondPag.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarCondPag.TabIndex = 68;
-            this.btn_PesquisarCondPag.Text = "Pesquisar";
             this.btn_PesquisarCondPag.UseVisualStyleBackColor = true;
             this.btn_PesquisarCondPag.Click += new System.EventHandler(this.btn_PesquisarCondPag_Click);
+            this.btn_PesquisarCondPag.MouseEnter += new System.EventHandler(this.btn_PesquisarCondPag_MouseEnter);
+            this.btn_PesquisarCondPag.MouseLeave += new System.EventHandler(this.btn_PesquisarCondPag_MouseLeave);
             // 
             // txtb_CodigoCondPag
             // 
@@ -193,7 +194,7 @@ namespace Projeto_ICI.frmCadastros
             // frmCadastroFornecedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(592, 405);
+            this.ClientSize = new System.Drawing.Size(634, 405);
             this.Controls.Add(this.txtb_CodigoCondPag);
             this.Controls.Add(this.lbl_CodigoCondPag);
             this.Controls.Add(this.btn_PesquisarCondPag);

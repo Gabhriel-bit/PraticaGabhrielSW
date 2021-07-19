@@ -13,6 +13,7 @@ namespace Projeto_ICI.frmConsultas
         public frmConsultaPai()
         {
             InitializeComponent();
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
         /*
         /// <summary>
@@ -30,10 +31,6 @@ namespace Projeto_ICI.frmConsultas
             Sair();
             Close();
         }
-        public virtual void SetFrmCad(Form pFrmCad)
-        {
-
-        }
         protected virtual void Sair()
         {
 
@@ -45,5 +42,25 @@ namespace Projeto_ICI.frmConsultas
 
         public string Btn_Sair
         { get => btn_Sair.Text; set => btn_Sair.Text = value; }
+
+        private void frmConsultaPai_Resize(object sender, EventArgs e)
+        {
+            decimal larguraDGV = this.Width - 35;
+            var pos = Math.Truncate((larguraDGV - 40) / 4);
+            var X = int.Parse((pos + Math.Truncate(pos / 3)).ToString());
+            btn_Alterar.Location = new Point(X, btn_Alterar.Location.Y);
+            X = int.Parse((pos + Math.Truncate(pos * 2 - pos / 4)).ToString());
+            btn_Excluir.Location = new Point(X, btn_Excluir.Location.Y);
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
+        }
     }
 }

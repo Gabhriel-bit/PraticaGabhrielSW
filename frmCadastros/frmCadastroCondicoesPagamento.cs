@@ -33,14 +33,18 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroCondicoesPagamento(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
-            frmConsFormPag = new frmConsultas.frmConsultasFormasPagamento(pUmaConexao);
             umCtrlCondPag = new Controllers.ctrlCondicoesPagamento(pUmaConexao);
             listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection();
             listaParcelas = new List<Classes.parcelasCondPag>();
             umaFormaPag = new Classes.formasPagamento();
             umaParcelaCondPag = new Classes.parcelasCondPag();
-        }
 
+            btn_PesquisarFormPagParc.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form pFrmCad)
+        {
+            frmConsFormPag = (frmConsultas.frmConsultasFormasPagamento)pFrmCad;
+        }
         public override void CarregarTxtBox(object pUmObjeto)
         {
             base.CarregarTxtBox(pUmObjeto);
@@ -693,6 +697,16 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Multa, "Multa inválida!");
                 e.Cancel = true;
             }
+        }
+
+        private void btn_PesquisarFormPagParc_MouseEnter(object sender, EventArgs e)
+        {
+            btn_PesquisarFormPagParc.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_PesquisarFormPagParc_MouseLeave(object sender, EventArgs e)
+        {
+            btn_PesquisarFormPagParc.Image = umImgPesquisaSair;
         }
     }
 }

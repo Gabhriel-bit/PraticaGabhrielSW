@@ -25,10 +25,14 @@ namespace Projeto_ICI.frmCadastros
         public frmCadastroSubGrupos(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
-            frmConsGrupo = new frmConsultas.frmConsultaGrupos(pUmaConexao);
             umCtrlSubgrupo = new Controllers.ctrlSubgrupos(pUmaConexao);
             umGrupo = new Classes.grupos();
             listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection();
+            btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+        public override void SetFrmCons(Form pFrmCad)
+        {
+            frmConsGrupo = (frmConsultas.frmConsultaGrupos)pFrmCad;
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -134,6 +138,16 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Subgrupo, null);
                 e.Cancel = false;
             }
+        }
+
+        private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaEntrar;
+        }
+
+        private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Pesquisar.Image = umImgPesquisaSair;
         }
     }
 }

@@ -76,19 +76,6 @@ namespace Projeto_ICI.frmCadastros
                 MessageBox.Show(msg, "ERRO");
             }
         }
-
-        public virtual void ConhecaObj(object pObj)
-        {
-
-        }
-        public virtual void SetFrmCons(Form pFrmCad)
-        {
-
-        }
-        public virtual void SetFrmCons(Form[] pFrmCad)
-        {
-
-        }
         private void btn_Sair_Click(object sender, EventArgs e)
         {
             Close();
