@@ -15,7 +15,6 @@ namespace Projeto_ICI.frmCadastros
         private Classes.condicoesPagamento umCondPag;
 
         private Controllers.ctrlFornecedores umCtrlForn;
-        private bool closing;
         public frmCadastroFornecedores()
         {
             InitializeComponent();
@@ -30,7 +29,6 @@ namespace Projeto_ICI.frmCadastros
             umaCidade = new Classes.cidades();
 
             rb_Fisica.Checked = true;
-            closing = false;
         }
 
         public frmCadastroFornecedores(BancoDados.conexoes pUmaConexao)
@@ -45,7 +43,6 @@ namespace Projeto_ICI.frmCadastros
             umaCidade = new Classes.cidades();
 
             rb_Fisica.Checked = true;
-            closing = false;
 
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
         }
@@ -189,10 +186,7 @@ namespace Projeto_ICI.frmCadastros
                 else
                 {
                     errorMSG.SetError(lbl_CPF_CNPJ, "CPF inválido!");
-                    if (closing)
-                    {
-                        e.Cancel = true;
-                    }
+                    e.Cancel = closing;
                 }
             }
             else
@@ -205,10 +199,7 @@ namespace Projeto_ICI.frmCadastros
                 else
                 {
                     errorMSG.SetError(lbl_CPF_CNPJ, "CNPJ inválido!");
-                    if (closing)
-                    {
-                        e.Cancel = true;
-                    }
+                    e.Cancel = closing;
                 }
             }
         }
@@ -218,7 +209,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
             {
                 errorMSG.SetError(lbl_Cliente, "Nome inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -242,13 +233,14 @@ namespace Projeto_ICI.frmCadastros
                 else
                 {
                     errorMSG.SetError(lbl_telCelular, null);
-                    return true;
+                    return closing;
                 }
             }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
             {
                 errorMSG.SetError(lbl_Cliente, "Campo 'Fornecedor' é obrigatório!");

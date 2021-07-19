@@ -32,6 +32,7 @@ namespace Projeto_ICI
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formularioBase));
             this.errorMSG = new System.Windows.Forms.ErrorProvider(this.components);
+            this.abrirAqruivo = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,6 +40,10 @@ namespace Projeto_ICI
             // 
             this.errorMSG.ContainerControl = this;
             this.errorMSG.Icon = ((System.Drawing.Icon)(resources.GetObject("errorMSG.Icon")));
+            // 
+            // abrirAqruivo
+            // 
+            this.abrirAqruivo.FileName = "openFileDialog";
             // 
             // formularioBase
             // 
@@ -57,5 +62,6 @@ namespace Projeto_ICI
         #endregion
 
         protected System.Windows.Forms.ErrorProvider errorMSG;
+        protected System.Windows.Forms.OpenFileDialog abrirAqruivo;
     }
 }

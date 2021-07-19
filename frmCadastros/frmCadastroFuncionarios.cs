@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace Projeto_ICI.frmCadastros
 {
-    public partial class frmCadastroFuncionario : Projeto_ICI.frmCadastros.frmCadastroPessoas
+    public partial class frmCadastroFuncionarios : Projeto_ICI.frmCadastros.frmCadastroPessoas
     {
         frmConsultas.frmConsultaCargos frmConsCargo;
         List<Classes.cargos> listaCargos;
         Classes.cargos umCargo;
 
         Controllers.ctrlFuncionarios umCtrlFunc;
-        public frmCadastroFuncionario()
+        public frmCadastroFuncionarios()
         {
             InitializeComponent();
             umCtrlFunc = new Controllers.ctrlFuncionarios();
@@ -29,7 +29,7 @@ namespace Projeto_ICI.frmCadastros
             umCargo = new Classes.cargos();
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
         }
-        public frmCadastroFuncionario(BancoDados.conexoes pUmaConexao)
+        public frmCadastroFuncionarios(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
             umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
@@ -99,20 +99,21 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_SalarioBase_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoDoubleMoeda(txtb_SalarioBase.Text))
-            {
-                errorMSG.SetError(lbl_SalarioBase, "Salário base inválido!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoDoubleMoeda(txtb_SalarioBase.Text))
             {
                 errorMSG.SetError(lbl_SalarioBase, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_SalarioBase, "Salário base inválido!");
+                e.Cancel = closing;
             }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Funcionario.Text))
             {
                 errorMSG.SetError(lbl_Funcionario, "Campo 'Funcionario' é obrigatório!");
@@ -172,6 +173,18 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_SalarioBase, "Campo 'Salário base' é obrigatório!");
                 txtb_SalarioBase.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_ComissaoProd.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_ComissaoProd, "Campo 'Comissão Produto' é obrigatório!");
+                txtb_ComissaoProd.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_ComissaoVenda.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_ComissaoVenda, "Campo 'Comissão Venda' é obrigatório!");
+                txtb_ComissaoVenda.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Cargo.Text))
             {
@@ -248,7 +261,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_CNH.Text))
             {
                 errorMSG.SetError(lbl_CNH, "O campo 'CNH' é obrigatório!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -286,7 +299,7 @@ namespace Projeto_ICI.frmCadastros
             if (!ValidacaoNome(txtb_Funcionario.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Funcionario, "Funcionário inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -304,9 +317,9 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.SetError(lbl_ComissaoProd, "Valor inválido!\nO campo não é obrigatório, " +
-                                                    "mas deve ser inserido um valor válido entre 0 e 1!");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_ComissaoProd, "Valor inválido!\nO campo é obrigatório, " +
+                                                    "deve ser inserido um valor válido entre 0 e 100!");
+                e.Cancel = closing;
             }
         }
 
@@ -319,9 +332,9 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.SetError(lbl_ComissaoVenda, "Valor inválido!\nO campo não é obrigatório, " +
-                                                    "mas deve ser inserido um valor válido entre 0 e 1!");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_ComissaoVenda, "Valor inválido!\nO campo é obrigatório, " +
+                                                    "deve ser inserido um valor válido entre 0 e 100!");
+                e.Cancel = closing;
             }
         }
 
@@ -333,6 +346,20 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarCargo_MouseLeave(object sender, EventArgs e)
         {
             btn_PesquisarCargo.Image = umImgPesquisaSair;
+        }
+
+        private void date_DataNasc_Fund_Validating(object sender, CancelEventArgs e)
+        {
+            if (DateTime.Now.Year - date_DataNasc_Fund.Value.Year < 16)
+            {
+                errorMSG.SetError(lbl_DataNasc_Fund, "O funcionário não pode ter menos de 16 anos!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
         }
     }
 }

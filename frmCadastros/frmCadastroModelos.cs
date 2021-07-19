@@ -104,6 +104,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {
                 errorMSG.SetError(lbl_Modelo, "Campo 'Modelo' inválido!");
@@ -136,7 +137,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {
                 errorMSG.SetError(lbl_Modelo, "Modelo inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {

@@ -57,6 +57,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Pais.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Pais, "Campo 'País' inválido!");
@@ -77,13 +78,13 @@ namespace Projeto_ICI.frmCadastros
         {
             if (!ValidacaoNome(txtb_Pais.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Pais, "País inválido!");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_Pais, null);
+                e.Cancel = false;
             }
             else
             {
-                errorMSG.SetError(lbl_Pais, null);
-                e.Cancel = false;
+                errorMSG.SetError(lbl_Pais, "País inválido!");
+                e.Cancel = closing;
             }
         }
     }

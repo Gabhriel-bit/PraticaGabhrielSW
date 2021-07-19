@@ -129,7 +129,7 @@ namespace Projeto_ICI.frmCadastros
             if (idade < 16 || idade > 130)
             {
                 errorMSG.SetError(lbl_DataNasc_Fund, "Data de nascimento inválida");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Projeto_ICI.frmCadastros
             if (validacaoCelularTelefone())
             { e.Cancel = false; }
             else
-            { e.Cancel = true; }
+            { e.Cancel = closing; }
         }
 
         protected virtual bool validacaoCelularTelefone()
@@ -162,7 +162,7 @@ namespace Projeto_ICI.frmCadastros
             if (idade < 0)
             {
                 errorMSG.SetError(lbl_DataNasc_Fund, $"{lbl_DataNasc_Fund.Text} inválida");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -214,7 +214,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.SetError(lbl_CPF_CNPJ, "CPF inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
         }
         private void txtb_Logradouro_Validating(object sender, CancelEventArgs e)
@@ -222,7 +222,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Logradouro.Text))
             {
                 errorMSG.SetError(lbl_Logradouro, "Logradouro inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -236,7 +236,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Numero.Text))
             {
                 errorMSG.SetError(lbl_Numero, "Número inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -249,7 +249,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Bairro.Text))
             {
                 errorMSG.SetError(lbl_Bairro, "Bairro inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -285,7 +285,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.SetError(lbl_Email, "Email inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
         }
 
@@ -297,6 +297,48 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarCidade_MouseLeave(object sender, EventArgs e)
         {
             btn_PesquisarCidade.Image = umImgPesquisaSair;
+        }
+
+        private void txtb_Logradouro_Validating_1(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Logradouro.Text))
+            {
+                errorMSG.SetError(lbl_Logradouro, "Logradouro inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Logradouro, null);
+                e.Cancel = false;
+            }
+        }
+
+        private void txtb_Numero_Validating_1(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Numero.Text))
+            {
+                errorMSG.SetError(lbl_Numero, "Número inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Numero, null);
+                e.Cancel = false;
+            }
+        }
+
+        private void txtb_Bairro_Validating_1(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Bairro.Text))
+            {
+                errorMSG.SetError(lbl_Bairro, "Bairro inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Bairro, null);
+                e.Cancel = false;
+            }
         }
     }
 }

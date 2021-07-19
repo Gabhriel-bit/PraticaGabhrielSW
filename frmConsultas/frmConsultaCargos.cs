@@ -99,7 +99,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadCargo.Btn_Acao = "Excluir";
                 frmCadCargo.ShowDialog();
                 frmCadCargo.Btn_Acao = btnName;
-                frmCadCargo.DesBloqTxTBox();
                 carregarDados(umCtrlCargos);
             }
         }

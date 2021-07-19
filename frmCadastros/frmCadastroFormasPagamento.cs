@@ -46,20 +46,21 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_FormaPag_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_FormaPag.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_FormaPag, "Forma de pagamento inválida!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoNome(txtb_FormaPag.Text, 2, true))
             {
                 errorMSG.SetError(lbl_FormaPag, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_FormaPag, "Forma de pagamento inválida!");
+                e.Cancel = closing;
             }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_FormaPag.Text, 2, true))
             {
                 errorMSG.SetError(lbl_FormaPag, "Campo 'Forma de pagamento' inválido!");

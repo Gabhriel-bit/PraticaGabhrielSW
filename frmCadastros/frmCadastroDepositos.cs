@@ -205,6 +205,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Deposito.Text))
             {
                 errorMSG.SetError(lbl_Deposito, "O campo 'Deposito' é obrigatório!");
@@ -235,6 +236,12 @@ namespace Projeto_ICI.frmCadastros
                                               "usando o campo 'Código' ou o botão" +
                                               "'Pesquisar'");
                 txtb_CodigoCidade.Focus();
+            }
+            else if (lv_Produtos.Items.Count == 0)
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Produto, "Deve haver ao menos um produto cadastrado!");
+                txtb_CodigoProduto.Focus();
             }
             else
             {
@@ -385,6 +392,62 @@ namespace Projeto_ICI.frmCadastros
         private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
         {
             btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+
+        private void txtb_Deposito_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Deposito.Text))
+            {
+                errorMSG.SetError(lbl_Deposito, "Deposito inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+        }
+
+        private void txtb_Logradouro_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Logradouro.Text))
+            {
+                errorMSG.SetError(lbl_Logradouro, "Logradouro inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+        }
+
+        private void txtb_Numero_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Numero.Text))
+            {
+                errorMSG.SetError(lbl_Numero, "Número inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+        }
+
+        private void txtb_Bairro_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Bairro.Text))
+            {
+                errorMSG.SetError(lbl_Bairro, "Bairro inválido!");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
         }
     }
 }

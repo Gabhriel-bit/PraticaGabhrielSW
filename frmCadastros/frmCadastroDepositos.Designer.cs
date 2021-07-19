@@ -190,6 +190,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Bairro.Name = "txtb_Bairro";
             this.txtb_Bairro.Size = new System.Drawing.Size(180, 20);
             this.txtb_Bairro.TabIndex = 5;
+            this.txtb_Bairro.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Bairro_Validating);
             // 
             // lbl_Complemento
             // 
@@ -225,6 +226,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Numero.Name = "txtb_Numero";
             this.txtb_Numero.Size = new System.Drawing.Size(58, 20);
             this.txtb_Numero.TabIndex = 3;
+            this.txtb_Numero.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Numero_Validating);
             // 
             // lbl_Logradouro
             // 
@@ -243,6 +245,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Logradouro.Name = "txtb_Logradouro";
             this.txtb_Logradouro.Size = new System.Drawing.Size(143, 20);
             this.txtb_Logradouro.TabIndex = 2;
+            this.txtb_Logradouro.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Logradouro_Validating);
             // 
             // lbl_Deposito
             // 
@@ -261,6 +264,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Deposito.Name = "txtb_Deposito";
             this.txtb_Deposito.Size = new System.Drawing.Size(266, 20);
             this.txtb_Deposito.TabIndex = 1;
+            this.txtb_Deposito.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Deposito_Validating);
             // 
             // lv_Produtos
             // 
@@ -358,9 +362,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Produto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Produto.Location = new System.Drawing.Point(96, 187);
             this.lbl_Produto.Name = "lbl_Produto";
-            this.lbl_Produto.Size = new System.Drawing.Size(50, 15);
+            this.lbl_Produto.Size = new System.Drawing.Size(55, 15);
             this.lbl_Produto.TabIndex = 71;
-            this.lbl_Produto.Text = "Produto";
+            this.lbl_Produto.Text = "Produto*";
             // 
             // txtb_Produto
             // 

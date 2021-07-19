@@ -99,7 +99,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadMarca.Btn_Acao = "Excluir";
                 frmCadMarca.ShowDialog();
                 frmCadMarca.Btn_Acao = btnName;
-                frmCadMarca.DesBloqTxTBox();
                 carregarDados(umCtrlMarca);
             }
         }

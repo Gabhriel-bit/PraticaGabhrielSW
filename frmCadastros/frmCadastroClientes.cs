@@ -15,7 +15,6 @@ namespace Projeto_ICI.frmCadastros
         Classes.condicoesPagamento umCondPag;
 
         Controllers.ctrlClientes umCtrlCliente;
-        private bool closing;
         public frmCadastroClientes()
         {
             InitializeComponent();
@@ -173,10 +172,7 @@ namespace Projeto_ICI.frmCadastros
                 else
                 {
                     errorMSG.SetError(lbl_CPF_CNPJ, "CPF inválido!");
-                    if (closing)
-                    {
-                        e.Cancel = true;
-                    }
+                    e.Cancel = closing;
                 }
             }
             else
@@ -189,25 +185,23 @@ namespace Projeto_ICI.frmCadastros
                 else
                 {
                     errorMSG.SetError(lbl_CPF_CNPJ, "CNPJ inválido!");
-                    if (closing)
-                    {
-                        e.Cancel = true;
-                    }
+                    e.Cancel = closing;
                 }
             }
         }
 
         private void txtb_Cliente_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Cliente.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_Cliente, "Nome inválido!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoNome(txtb_Cliente.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Cliente, null);
                 e.Cancel = false;
+
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Cliente, "Nome inválido!");
+                e.Cancel = closing;
             }
         }
 
@@ -233,6 +227,7 @@ namespace Projeto_ICI.frmCadastros
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Cliente.Text))
             {
                 errorMSG.SetError(lbl_Cliente, "Campo 'Funcionario' é obrigatório!");

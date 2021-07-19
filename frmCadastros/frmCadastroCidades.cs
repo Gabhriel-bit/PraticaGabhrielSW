@@ -90,20 +90,21 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Cidade_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Cidade.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_Cidade, "Cidade inválido!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoNome(txtb_Cidade.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Cidade, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Cidade, "Cidade inválido!");
+                e.Cancel = closing;
             }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Cidade.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Cidade, "Campo 'Cidade' inválido!");

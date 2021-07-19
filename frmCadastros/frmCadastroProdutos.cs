@@ -343,15 +343,15 @@ namespace Projeto_ICI.frmCadastros
         }
         private void txtb_Unidade_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoIntPositivo(txtb_Unidade.Text, false))
+            if (string.IsNullOrEmpty(txtb_Unidade.Text))
             {
                 errorMSG.Clear();
                 e.Cancel = false;
             }
             else
             {
-                errorMSG.SetError(lbl_Unidade, "Insira um número positivo maior que zero!");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_Unidade, "O campo UND (unidade) é obrigatório!");
+                e.Cancel = closing;
             }
         }
         private void txtb_Produto_Validating(object sender, CancelEventArgs e)
@@ -359,7 +359,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_Produto.Text))
             {
                 errorMSG.SetError(lbl_Produto, "O campo 'Produto' é obrigatório!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -369,6 +369,7 @@ namespace Projeto_ICI.frmCadastros
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_Produto.Text))
             {
                 errorMSG.SetError(lbl_Produto, "O campo 'Produto' é obrigatório!");
@@ -379,6 +380,18 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_Unidade, "O campo 'Unidade' é obrigatório!");
                 txtb_Unidade.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Custo.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Custo, "O campo 'Custo' é obrigatório!");
+                txtb_Custo.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Saldo.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Saldo, "O campo 'Saldo' é obrigatório!");
+                txtb_Saldo.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {
@@ -435,6 +448,49 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarFornecedor_MouseLeave(object sender, EventArgs e)
         {
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
+        }
+
+        private void btn_CarregarImg_Click(object sender, EventArgs e)
+        {
+            abrirAqruivo.ShowDialog();
+            var vlDiretorio = abrirAqruivo.FileName;
+            if (!string.IsNullOrEmpty(vlDiretorio) && vlDiretorio != "openFileDialog")
+            {
+                picb_Foto.Image = Image.FromFile(vlDiretorio);
+            }
+        }
+
+        private void btn_RemoverImg_Click(object sender, EventArgs e)
+        {
+            picb_Foto.Image = null;
+        }
+
+        private void lbl_Custo_Validating(object sender, CancelEventArgs e)
+        {
+            if (ValidacaoDoubleMoeda(txtb_Custo.Text))
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Unidade, "O campo Custo inválido!");
+                e.Cancel = closing;
+            }
+        }
+
+        private void txtb_Saldo_Validating(object sender, CancelEventArgs e)
+        {
+            if (ValidacaoIntPositivo(txtb_Custo.Text, false))
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Unidade, "O campo Custo inválido!");
+                e.Cancel = closing;
+            }
         }
     }
 }

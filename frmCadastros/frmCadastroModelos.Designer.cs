@@ -133,9 +133,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Marca.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Marca.Location = new System.Drawing.Point(96, 161);
             this.lbl_Marca.Name = "lbl_Marca";
-            this.lbl_Marca.Size = new System.Drawing.Size(42, 15);
+            this.lbl_Marca.Size = new System.Drawing.Size(47, 15);
             this.lbl_Marca.TabIndex = 20;
-            this.lbl_Marca.Text = "Marca";
+            this.lbl_Marca.Text = "Marca*";
             // 
             // txtb_Marca
             // 

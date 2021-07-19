@@ -30,7 +30,7 @@ BEGIN
 		ddi        VARCHAR(4),
 		sigla      VARCHAR(3),
 		codigo     INT PRIMARY KEY IDENTITY,
-		codigoUsu  INT,
+		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL--,
 		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
@@ -44,7 +44,7 @@ BEGIN
 		uf         VARCHAR(3),
 		codigoPais INT NOT NULL,
 		codigo     INT PRIMARY KEY IDENTITY,
-		codigoUsu  INT,
+		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 		CONSTRAINT FK_codPaisEstado FOREIGN KEY (codigoPais) REFERENCES paises (codigo)--,
@@ -59,7 +59,7 @@ BEGIN
 		ddd          VARCHAR(3),
 		codigoEstado INT NOT NULL,
 		codigo       INT PRIMARY KEY IDENTITY,
-		codigoUsu    INT,
+		codigoUsu    INT  NOT NULL,
 		dataCad      VARCHAR(10) NOT NULL,
 		dataUltAlt   VARCHAR(10) NOT NULL,
 		CONSTRAINT FK_codEstadoCidade FOREIGN KEY (codigoEstado) REFERENCES estados (codigo)--,
@@ -74,7 +74,7 @@ BEGIN
 		cargo      VARCHAR(50) NOT NULL UNIQUE,
 		descricao  VARCHAR(200),
 		codigo     INT PRIMARY KEY IDENTITY,
-		codigoUsu  INT,
+		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL--,
 		--CONSTRAINT FK_codCargoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
@@ -86,7 +86,7 @@ BEGIN
 	CREATE TABLE grupos (
 		grupo      VARCHAR(50) NOT NULL UNIQUE,
 		codigo     INT PRIMARY KEY IDENTITY,
-		codigoUsu  INT,
+		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL--,
 		--CONSTRAINT FK_codGrupoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
@@ -99,7 +99,7 @@ BEGIN
 		subgrupo    VARCHAR(50) NOT NULL UNIQUE,
 		codigoGrupo INT NOT NULL,
 		codigo      INT PRIMARY KEY IDENTITY,
-		codigoUsu   INT,
+		codigoUsu   INT  NOT NULL,
 		dataCad     VARCHAR(10) NOT NULL,
 		dataUltAlt  VARCHAR(10) NOT NULL,
 		CONSTRAINT FK_codGrupoSubgrupo FOREIGN KEY (codigoGrupo) REFERENCES grupos (codigo)--,
@@ -112,7 +112,7 @@ BEGIN
 	CREATE TABLE marcas (
 		marca      VARCHAR(50) NOT NULL UNIQUE,
 		codigo     INT PRIMARY KEY IDENTITY,
-		codigoUsu  INT,
+		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL--,
 		--CONSTRAINT FK_codMarcaUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
@@ -126,7 +126,7 @@ BEGIN
 		descricao   VARCHAR(250),
 		codigoMarca INT NOT NULL,
 		codigo      INT PRIMARY KEY IDENTITY,
-		codigoUsu   INT,
+		codigoUsu   INT  NOT NULL,
 		dataCad     VARCHAR(10) NOT NULL,
 		dataUltAlt  VARCHAR(10) NOT NULL,
 		CONSTRAINT FK_codMarcaModelo FOREIGN KEY (codigoMarca) REFERENCES marcas (codigo)--,
@@ -139,7 +139,7 @@ BEGIN
 	CREATE TABLE formasPagamento (
 		formaPagamento VARCHAR(50) NOT NULL UNIQUE,
 		codigo         INT PRIMARY KEY IDENTITY,
-		codigoUsu      INT,
+		codigoUsu      INT  NOT NULL,
 		dataCad        VARCHAR(10) NOT NULL,
 		dataUltAlt     VARCHAR(10) NOT NULL--,
 		--CONSTRAINT FK_codFormPagUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
@@ -186,14 +186,14 @@ BEGIN
         bairro      VARCHAR(50) NOT NULL,
         cep         VARCHAR(10),
         tel_Celular VARCHAR(20) NOT NULL,
-        email       VARCHAR(30),
+        email       VARCHAR(30) NOT NULL,
         cnpj_cpf    VARCHAR(20) NOT NULL UNIQUE,
         inscEst_rg  VARCHAR(20),
         cnh         VARCHAR(20),
 		dataFund_Nasc   VARCHAR(10),
 		salarioBase     NUMERIC(8,4) NOT NULL,
-		comissaoVenda   NUMERIC(8,4),
-		comissaoProduto NUMERIC(8,4),
+		comissaoVenda   NUMERIC(8,4) NOT NULL,
+		comissaoProduto NUMERIC(8,4) NOT NULL,
         dataVencCNH VARCHAR(10), 		
 		codigoCidade INT NOT NULL,
 		codigoCargo  INT NOT NULL,
@@ -217,7 +217,7 @@ BEGIN
         bairro      VARCHAR(50) NOT NULL,
         cep         VARCHAR(10),
         tel_Celular VARCHAR(20) NOT NULL,
-        email       VARCHAR(30),
+        email       VARCHAR(30) NOT NULL,
         cnpj_cpf    VARCHAR(20) NOT NULL UNIQUE,
         inscEst_rg  VARCHAR(20),
 		dataFund_Nasc VARCHAR(10),		
@@ -243,7 +243,7 @@ BEGIN
         bairro      VARCHAR(50) NOT NULL,
         cep         VARCHAR(10),
         tel_Celular VARCHAR(20) NOT NULL,
-        email       VARCHAR(30),
+        email       VARCHAR(30) NOT NULL,
         cnpj_cpf    VARCHAR(20) NOT NULL UNIQUE,
         inscEst_rg  VARCHAR(20),
 		dataFund_Nasc VARCHAR(10),		
@@ -263,13 +263,14 @@ IF OBJECT_ID('produtos') IS NULL
 BEGIN
 	CREATE TABLE produtos (
 		produto     VARCHAR(50) NOT NULL UNIQUE,
-        referencia  VARCHAR(50) NOT NULL,
-        codigoBarras VARCHAR(20) NOT NULL,
+        referencia  VARCHAR(50) ,
+        codigoBarras VARCHAR(20) ,
         custo       NUMERIC(8,4) NOT NULL,
         unidade     INT NOT NULL,
-        saldo       INT NOT NULL,		
+        saldo       INT NOT NULL,
+		foto        VARBINARY(MAX),
 		codigoModelo   INT NOT NULL,
-		codigoSubgrupo INT NOT NULL,
+		codigoSubgrupo INT ,
 		codigo         INT PRIMARY KEY IDENTITY,
 		codigoUsu      INT  NOT NULL,
 		dataCad        VARCHAR(10) NOT NULL,
@@ -285,13 +286,9 @@ BEGIN
 	CREATE TABLE produto_fornecedor (
 		codigoProduto     INT  NOT NULL,
 		codigoFornecedor  INT  NOT NULL,
-		--codigoUsu      INT  NOT NULL,
-		--dataCad        VARCHAR(10) NOT NULL,
-		--dataUltAlt     VARCHAR(10) NOT NULL,
 		PRIMARY KEY(codigoProduto, codigoFornecedor),
 		CONSTRAINT FK_codProdProd_forn FOREIGN KEY (codigoProduto) REFERENCES produtos (codigo),
-		CONSTRAINT FK_codFornProd_forn FOREIGN KEY (codigoFornecedor) REFERENCES fornecedores (codigo)--,
-		--CONSTRAINT FK_codProdUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codFornProd_forn FOREIGN KEY (codigoFornecedor) REFERENCES fornecedores (codigo)
 	);
 END
 
@@ -320,13 +317,9 @@ BEGIN
 	CREATE TABLE deposito_produto (
 		codigoProduto  INT  NOT NULL,
 		codigoDeposito INT  NOT NULL,
-		--codigoUsu      INT  NOT NULL,
-		--dataCad        VARCHAR(10) NOT NULL,
-		--dataUltAlt     VARCHAR(10) NOT NULL,
 		PRIMARY KEY(codigoProduto, codigoDeposito),
 		CONSTRAINT FK_codProdDep_prod FOREIGN KEY (codigoProduto) REFERENCES produtos (codigo),
-		CONSTRAINT FK_codDepoDep_prod FOREIGN KEY (codigoDeposito) REFERENCES depositos (codigo)--,
-		--CONSTRAINT FK_codProdUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codDepoDep_prod FOREIGN KEY (codigoDeposito) REFERENCES depositos (codigo)
 	);
 END
 GO

@@ -15,7 +15,7 @@ namespace Projeto_ICI
         private frmCadastroDepositos frmCadDeposito;
         private frmCadastroEstados frmCadEstado;
         private frmCadastroFornecedores frmCadFornecedor;
-        private frmCadastroFuncionario frmCadFuncionario;
+        private frmCadastroFuncionarios frmCadFuncionario;
         private frmCadastroGrupos frmCadGrupo;
         private frmCadastroMarcas frmCadMarca;
         private frmCadastroModelos frmCadModelo;
@@ -61,7 +61,7 @@ namespace Projeto_ICI
                 frmCadDeposito = new frmCadastroDepositos(umaConexao);
                 frmCadEstado = new frmCadastroEstados(umaConexao);
                 frmCadFornecedor = new frmCadastroFornecedores(umaConexao);
-                frmCadFuncionario = new frmCadastroFuncionario(umaConexao);
+                frmCadFuncionario = new frmCadastroFuncionarios(umaConexao);
                 frmCadGrupo = new frmCadastroGrupos(umaConexao);
                 frmCadMarca = new frmCadastroMarcas(umaConexao);
                 frmCadModelo = new frmCadastroModelos(umaConexao);

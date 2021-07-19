@@ -11,7 +11,7 @@ namespace Projeto_ICI.frmConsultas
 {
     public partial class frmConsultaFuncionarios : Projeto_ICI.frmConsultas.frmConsultaPai
     {
-        frmCadastros.frmCadastroFuncionario frmCadFunc;
+        frmCadastros.frmCadastroFuncionarios frmCadFunc;
         Controllers.ctrlFuncionarios umCtrlFunc;
         List<Classes.cargos> listaCargos;
         List<Classes.cidades> listaCidades;
@@ -19,7 +19,7 @@ namespace Projeto_ICI.frmConsultas
         public frmConsultaFuncionarios()
         {
             InitializeComponent();
-            frmCadFunc = new frmCadastros.frmCadastroFuncionario();
+            frmCadFunc = new frmCadastros.frmCadastroFuncionarios();
             umCtrlFunc = new Controllers.ctrlFuncionarios();
             umFunc = new Classes.funcionarios();
             carregarDados(umCtrlFunc);
@@ -33,7 +33,7 @@ namespace Projeto_ICI.frmConsultas
         }
         public override void SetFrmCad(Form pFrmCad)
         {
-            frmCadFunc = (frmCadastros.frmCadastroFuncionario)pFrmCad;
+            frmCadFunc = (frmCadastros.frmCadastroFuncionarios)pFrmCad;
         }
         protected override void carregarDados(controllers pCTRL)
         {
@@ -129,7 +129,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadFunc.CarregarTxtBox(vlFunc);
                 frmCadFunc.Btn_Acao = "Excluir";
                 frmCadFunc.ShowDialog();
-                frmCadFunc.DesBloqTxTBox();
                 frmCadFunc.Btn_Acao = btnName;
                 carregarDados(umCtrlFunc);
             }

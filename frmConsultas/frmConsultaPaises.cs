@@ -102,7 +102,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadPais.Btn_Acao = "Excluir";
                 frmCadPais.ShowDialog();
                 frmCadPais.Btn_Acao = btnName;
-                frmCadPais.DesBloqTxTBox();
                 carregarDados(umCtrlPais);
             }
         }

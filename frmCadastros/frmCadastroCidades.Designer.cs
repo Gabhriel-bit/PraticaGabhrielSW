@@ -94,9 +94,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Estado.Location = new System.Drawing.Point(96, 82);
             this.lbl_Estado.Name = "lbl_Estado";
-            this.lbl_Estado.Size = new System.Drawing.Size(45, 15);
+            this.lbl_Estado.Size = new System.Drawing.Size(50, 15);
             this.lbl_Estado.TabIndex = 24;
-            this.lbl_Estado.Text = "Estado";
+            this.lbl_Estado.Text = "Estado*";
             // 
             // txtb_Estado
             // 

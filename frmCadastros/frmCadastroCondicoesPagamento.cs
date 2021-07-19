@@ -203,18 +203,18 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_TotalParcelas_Validating(object sender, CancelEventArgs e)
         {
-            if (!(ValidacaoIntPositivo(txtb_TotalParcelas.Text, false)))
-            {
-                errorMSG.SetError(lbl_TotalParcelas,
-                    "Valor (" + txtb_TotalParcelas.Text + ") inválido!\n" +
-                    "O número de parcelas deve ser inteiro e positivo maior que 0 (zero)!");
-                txtb_TotalParcelas.Text = "1";
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoIntPositivo(txtb_TotalParcelas.Text, false))
             {
                 errorMSG.SetError(lbl_TotalParcelas, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_TotalParcelas,
+                        "Valor (" + txtb_TotalParcelas.Text + ") inválido!\n" +
+                        "O número de parcelas deve ser inteiro e positivo maior que 0 (zero)!");
+                txtb_TotalParcelas.Text = "1";
+                e.Cancel = closing;
             }
         }
 
@@ -475,7 +475,7 @@ namespace Projeto_ICI.frmCadastros
             if (string.IsNullOrEmpty(txtb_CondicaoPag.Text))
             {
                 errorMSG.SetError(lbl_CondicaoPag, "Condição de pagamento inválida!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -498,13 +498,13 @@ namespace Projeto_ICI.frmCadastros
         {
             if (decimal.TryParse(txtb_TaxaJuros.Text, out decimal _))
             {
-                errorMSG.SetError(lbl_TaxaJuros, null);
-                e.Cancel = false;
+                errorMSG.SetError(lbl_TaxaJuros, "Taxa de juros inválida");
+                e.Cancel = closing;
             }
             else
             {
-                errorMSG.SetError(lbl_TaxaJuros, "Taxa de juros inválida");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_TaxaJuros, null);
+                e.Cancel = false;
             }
         }
         private void btn_PesquisarFormPagParc_Click(object sender, EventArgs e)
@@ -593,6 +593,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (string.IsNullOrEmpty(txtb_CondicaoPag.Text))
             {
                 errorMSG.SetError(lbl_CondicaoPag, "o campo 'Condição de pagamento' é obrigatório!");
@@ -644,7 +645,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.SetError(lbl_Multa, "Multa inválida!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
         }
 
@@ -664,7 +665,7 @@ namespace Projeto_ICI.frmCadastros
                     {
                         errorMSG.SetError(lbl_Dias, "O numero de dias não pode ser igual ou inferior\na ultima parcela!");
                         txtb_Dias.Text = (vlUltParc.Dias + 7).ToString();
-                        e.Cancel = true;
+                        e.Cancel = closing;
                     }
                     else
                     {
@@ -676,7 +677,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.SetError(lbl_Dias, "O número de dias deve ser positivo!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
         }
 
@@ -695,7 +696,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.SetError(lbl_Multa, "Multa inválida!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
         }
 

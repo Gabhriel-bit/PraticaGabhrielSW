@@ -47,7 +47,7 @@ namespace Projeto_ICI.frmCadastros
             if (!ValidacaoNome(txtb_Marca.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Marca, "Marca inválida!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -58,6 +58,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Marca.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Marca, "Campo 'Marca' inválido!");

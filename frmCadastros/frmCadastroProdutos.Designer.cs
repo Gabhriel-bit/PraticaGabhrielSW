@@ -68,7 +68,12 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_btn_Adicionar = new System.Windows.Forms.Label();
             this.lbl_btn_Pesquisar = new System.Windows.Forms.Label();
             this.lbl_btn_Remover = new System.Windows.Forms.Label();
+            this.picb_Foto = new System.Windows.Forms.PictureBox();
+            this.lbl_Foto = new System.Windows.Forms.Label();
+            this.btn_CarregarImg = new System.Windows.Forms.Button();
+            this.btn_RemoverImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).BeginInit();
             this.SuspendLayout();
             // 
             // txtb_CodigoUsu
@@ -81,12 +86,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Sair
             // 
-            this.btn_Sair.Location = new System.Drawing.Point(448, 538);
+            this.btn_Sair.Location = new System.Drawing.Point(510, 538);
             this.btn_Sair.TabIndex = 16;
             // 
             // btn_Cadastro
             // 
-            this.btn_Cadastro.Location = new System.Drawing.Point(376, 537);
+            this.btn_Cadastro.Location = new System.Drawing.Point(438, 537);
             this.btn_Cadastro.TabIndex = 15;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
@@ -306,9 +311,10 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Custo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Custo.Location = new System.Drawing.Point(281, 72);
             this.lbl_Custo.Name = "lbl_Custo";
-            this.lbl_Custo.Size = new System.Drawing.Size(38, 15);
+            this.lbl_Custo.Size = new System.Drawing.Size(43, 15);
             this.lbl_Custo.TabIndex = 53;
-            this.lbl_Custo.Text = "Custo";
+            this.lbl_Custo.Text = "Custo*";
+            this.lbl_Custo.Validating += new System.ComponentModel.CancelEventHandler(this.lbl_Custo_Validating);
             // 
             // txtb_Custo
             // 
@@ -325,9 +331,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Saldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Saldo.Location = new System.Drawing.Point(356, 72);
             this.lbl_Saldo.Name = "lbl_Saldo";
-            this.lbl_Saldo.Size = new System.Drawing.Size(39, 15);
+            this.lbl_Saldo.Size = new System.Drawing.Size(44, 15);
             this.lbl_Saldo.TabIndex = 55;
-            this.lbl_Saldo.Text = "Saldo";
+            this.lbl_Saldo.Text = "Saldo*";
             // 
             // txtb_Saldo
             // 
@@ -337,6 +343,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Saldo.Size = new System.Drawing.Size(73, 20);
             this.txtb_Saldo.TabIndex = 6;
             this.txtb_Saldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtb_Saldo.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Saldo_Validating);
             // 
             // lbl_Fornecedor
             // 
@@ -374,12 +381,12 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Fornecedor.Enabled = false;
             this.txtb_Fornecedor.Location = new System.Drawing.Point(99, 258);
             this.txtb_Fornecedor.Name = "txtb_Fornecedor";
-            this.txtb_Fornecedor.Size = new System.Drawing.Size(234, 20);
+            this.txtb_Fornecedor.Size = new System.Drawing.Size(311, 20);
             this.txtb_Fornecedor.TabIndex = 46;
             // 
             // btn_PesquisarFornecedor
             // 
-            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(339, 255);
+            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(416, 255);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
             this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarFornecedor.TabIndex = 12;
@@ -390,9 +397,9 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Remover
             // 
-            this.btn_Remover.Location = new System.Drawing.Point(438, 255);
+            this.btn_Remover.Location = new System.Drawing.Point(515, 255);
             this.btn_Remover.Name = "btn_Remover";
-            this.btn_Remover.Size = new System.Drawing.Size(61, 23);
+            this.btn_Remover.Size = new System.Drawing.Size(61, 25);
             this.btn_Remover.TabIndex = 14;
             this.btn_Remover.Text = "Remover";
             this.btn_Remover.UseVisualStyleBackColor = true;
@@ -410,7 +417,7 @@ namespace Projeto_ICI.frmCadastros
             this.lv_Fornecedores.Location = new System.Drawing.Point(24, 284);
             this.lv_Fornecedores.MultiSelect = false;
             this.lv_Fornecedores.Name = "lv_Fornecedores";
-            this.lv_Fornecedores.Size = new System.Drawing.Size(475, 177);
+            this.lv_Fornecedores.Size = new System.Drawing.Size(552, 177);
             this.lv_Fornecedores.TabIndex = 66;
             this.lv_Fornecedores.UseCompatibleStateImageBehavior = false;
             this.lv_Fornecedores.View = System.Windows.Forms.View.Details;
@@ -431,9 +438,9 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Adicionar
             // 
-            this.btn_Adicionar.Location = new System.Drawing.Point(371, 255);
+            this.btn_Adicionar.Location = new System.Drawing.Point(448, 255);
             this.btn_Adicionar.Name = "btn_Adicionar";
-            this.btn_Adicionar.Size = new System.Drawing.Size(61, 23);
+            this.btn_Adicionar.Size = new System.Drawing.Size(61, 25);
             this.btn_Adicionar.TabIndex = 13;
             this.btn_Adicionar.Text = "Adicionar";
             this.btn_Adicionar.UseVisualStyleBackColor = true;
@@ -458,15 +465,63 @@ namespace Projeto_ICI.frmCadastros
             // lbl_btn_Remover
             // 
             this.lbl_btn_Remover.AutoSize = true;
-            this.lbl_btn_Remover.Location = new System.Drawing.Point(445, 241);
+            this.lbl_btn_Remover.Location = new System.Drawing.Point(522, 243);
             this.lbl_btn_Remover.Name = "lbl_btn_Remover";
             this.lbl_btn_Remover.Size = new System.Drawing.Size(0, 13);
             this.lbl_btn_Remover.TabIndex = 69;
             // 
+            // picb_Foto
+            // 
+            this.picb_Foto.BackColor = System.Drawing.Color.LightGray;
+            this.picb_Foto.InitialImage = null;
+            this.picb_Foto.Location = new System.Drawing.Point(448, 36);
+            this.picb_Foto.Name = "picb_Foto";
+            this.picb_Foto.Size = new System.Drawing.Size(128, 130);
+            this.picb_Foto.TabIndex = 70;
+            this.picb_Foto.TabStop = false;
+            this.picb_Foto.Visible = false;
+            // 
+            // lbl_Foto
+            // 
+            this.lbl_Foto.AutoSize = true;
+            this.lbl_Foto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Foto.Location = new System.Drawing.Point(445, 18);
+            this.lbl_Foto.Name = "lbl_Foto";
+            this.lbl_Foto.Size = new System.Drawing.Size(31, 15);
+            this.lbl_Foto.TabIndex = 71;
+            this.lbl_Foto.Text = "Foto";
+            this.lbl_Foto.Visible = false;
+            // 
+            // btn_CarregarImg
+            // 
+            this.btn_CarregarImg.Location = new System.Drawing.Point(448, 172);
+            this.btn_CarregarImg.Name = "btn_CarregarImg";
+            this.btn_CarregarImg.Size = new System.Drawing.Size(61, 25);
+            this.btn_CarregarImg.TabIndex = 72;
+            this.btn_CarregarImg.Text = "Carregar";
+            this.btn_CarregarImg.UseVisualStyleBackColor = true;
+            this.btn_CarregarImg.Visible = false;
+            this.btn_CarregarImg.Click += new System.EventHandler(this.btn_CarregarImg_Click);
+            // 
+            // btn_RemoverImg
+            // 
+            this.btn_RemoverImg.Location = new System.Drawing.Point(515, 172);
+            this.btn_RemoverImg.Name = "btn_RemoverImg";
+            this.btn_RemoverImg.Size = new System.Drawing.Size(61, 25);
+            this.btn_RemoverImg.TabIndex = 73;
+            this.btn_RemoverImg.Text = "Remover";
+            this.btn_RemoverImg.UseVisualStyleBackColor = true;
+            this.btn_RemoverImg.Visible = false;
+            this.btn_RemoverImg.Click += new System.EventHandler(this.btn_RemoverImg_Click);
+            // 
             // frmCadastroProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(526, 576);
+            this.ClientSize = new System.Drawing.Size(588, 576);
+            this.Controls.Add(this.btn_RemoverImg);
+            this.Controls.Add(this.btn_CarregarImg);
+            this.Controls.Add(this.lbl_Foto);
+            this.Controls.Add(this.picb_Foto);
             this.Controls.Add(this.lbl_btn_Remover);
             this.Controls.Add(this.lbl_btn_Pesquisar);
             this.Controls.Add(this.lbl_btn_Adicionar);
@@ -550,7 +605,12 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.lbl_btn_Adicionar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Pesquisar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Remover, 0);
+            this.Controls.SetChildIndex(this.picb_Foto, 0);
+            this.Controls.SetChildIndex(this.lbl_Foto, 0);
+            this.Controls.SetChildIndex(this.btn_CarregarImg, 0);
+            this.Controls.SetChildIndex(this.btn_RemoverImg, 0);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -596,5 +656,9 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Label lbl_btn_Adicionar;
         private System.Windows.Forms.Label lbl_btn_Pesquisar;
         private System.Windows.Forms.Label lbl_btn_Remover;
+        private System.Windows.Forms.PictureBox picb_Foto;
+        private System.Windows.Forms.Label lbl_Foto;
+        private System.Windows.Forms.Button btn_CarregarImg;
+        private System.Windows.Forms.Button btn_RemoverImg;
     }
 }

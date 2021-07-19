@@ -54,6 +54,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -189,11 +190,11 @@
     <Compile Include="frmCadastros\frmCadastroCargos.Designer.cs">
       <DependentUpon>frmCadastroCargos.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCadastros\frmCadastroFuncionario.cs">
+    <Compile Include="frmCadastros\frmCadastroFuncionarios.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCadastros\frmCadastroFuncionario.Designer.cs">
-      <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
+    <Compile Include="frmCadastros\frmCadastroFuncionarios.Designer.cs">
+      <DependentUpon>frmCadastroFuncionarios.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCadastros\frmCadastroClientes.cs">
       <SubType>Form</SubType>
@@ -335,7 +336,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="umButton\Last.cs" />
     <EmbeddedResource Include="frmAcesso\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -375,8 +375,8 @@
     <EmbeddedResource Include="frmCadastros\frmCadastroEstados.resx">
       <DependentUpon>frmCadastroEstados.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCadastros\frmCadastroFuncionario.resx">
-      <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
+    <EmbeddedResource Include="frmCadastros\frmCadastroFuncionarios.resx">
+      <DependentUpon>frmCadastroFuncionarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCadastros\frmCadastroGrupos.resx">
       <DependentUpon>frmCadastroGrupos.cs</DependentUpon>

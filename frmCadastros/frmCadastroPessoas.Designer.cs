@@ -268,6 +268,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Bairro.Name = "txtb_Bairro";
             this.txtb_Bairro.Size = new System.Drawing.Size(197, 20);
             this.txtb_Bairro.TabIndex = 47;
+            this.txtb_Bairro.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Bairro_Validating_1);
             // 
             // lbl_Complemento
             // 
@@ -304,6 +305,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Numero.Name = "txtb_Numero";
             this.txtb_Numero.Size = new System.Drawing.Size(58, 20);
             this.txtb_Numero.TabIndex = 45;
+            this.txtb_Numero.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Numero_Validating_1);
             // 
             // lbl_Logradouro
             // 
@@ -322,6 +324,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Logradouro.Name = "txtb_Logradouro";
             this.txtb_Logradouro.Size = new System.Drawing.Size(143, 20);
             this.txtb_Logradouro.TabIndex = 44;
+            this.txtb_Logradouro.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Logradouro_Validating_1);
             // 
             // frmCadastroPessoas
             // 

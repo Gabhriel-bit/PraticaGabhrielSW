@@ -46,7 +46,7 @@ namespace Projeto_ICI.frmCadastros
             if (!ValidacaoNome(txtb_Grupo.Text, 2, true))
             {
                 errorMSG.SetError(txtb_Grupo, "Grupo inválido!");
-                e.Cancel = true;
+                e.Cancel = closing;
             }
             else
             {
@@ -57,6 +57,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click_1(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Grupo.Text, 2, true))
             {
                 errorMSG.SetError(txtb_Grupo, "Campo 'Grupo' inválido!");

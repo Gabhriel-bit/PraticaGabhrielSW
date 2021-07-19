@@ -10,11 +10,13 @@ namespace Projeto_ICI.frmCadastros
 {
     public partial class frmCadastroPai : Projeto_ICI.formularioBase
     {
+        protected bool closing;
         public frmCadastroPai()
         {
             InitializeComponent();
             this.txtb_DataCadastro.Text = DateTime.Today.ToString().Remove(11);
             this.txtb_DataUltAlt.Text = DateTime.Today.ToString().Remove(11);
+            closing = false;
         }
         public virtual void CarregarTxtBox(object pUmObjeto)
         {
@@ -92,6 +94,13 @@ namespace Projeto_ICI.frmCadastros
             {
                 this.txtb_DataUltAlt.Text = DateTime.Today.ToString().Remove(11);
             }
+        }
+        private void frmCadastroPai_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ClearTxTBox();
+            DesBloqTxTBox();
+            closing = false;
+            errorMSG.Clear();
         }
     }
 }

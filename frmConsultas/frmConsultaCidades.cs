@@ -114,7 +114,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadCidade.CarregarTxtBox(vlCidade);
                 frmCadCidade.Btn_Acao = "Excluir";
                 frmCadCidade.ShowDialog();
-                frmCadCidade.DesBloqTxTBox();
                 frmCadCidade.Btn_Acao = btnName;
                 carregarDados(umCtrlCidade);
             }

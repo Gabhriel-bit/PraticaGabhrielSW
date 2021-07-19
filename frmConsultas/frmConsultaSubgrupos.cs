@@ -113,7 +113,6 @@ namespace Projeto_ICI.frmConsultas
                 frmCadSubGrupo.CarregarTxtBox(vlSubgrupo);
                 frmCadSubGrupo.Btn_Acao = "Excluir";
                 frmCadSubGrupo.ShowDialog();
-                frmCadSubGrupo.DesBloqTxTBox();
                 frmCadSubGrupo.Btn_Acao = btnName;
                 carregarDados(umCtrlSubgrupo);
             }

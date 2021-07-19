@@ -114,6 +114,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Estado.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Estado, "Campo 'Estado' inválido!");
@@ -142,15 +143,15 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Estado_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Estado.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_Estado, "Estado inválido!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoNome(txtb_Estado.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Estado, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_Estado, "Estado inválido!");
+                e.Cancel = closing;
             }
         }
 

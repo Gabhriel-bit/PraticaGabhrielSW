@@ -140,9 +140,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Pais.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Pais.Location = new System.Drawing.Point(96, 82);
             this.lbl_Pais.Name = "lbl_Pais";
-            this.lbl_Pais.Size = new System.Drawing.Size(31, 15);
+            this.lbl_Pais.Size = new System.Drawing.Size(36, 15);
             this.lbl_Pais.TabIndex = 15;
-            this.lbl_Pais.Text = "País";
+            this.lbl_Pais.Text = "País*";
             // 
             // txtb_Pais
             // 

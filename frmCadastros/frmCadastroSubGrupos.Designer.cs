@@ -92,9 +92,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Grupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Grupo.Location = new System.Drawing.Point(96, 86);
             this.lbl_Grupo.Name = "lbl_Grupo";
-            this.lbl_Grupo.Size = new System.Drawing.Size(41, 15);
+            this.lbl_Grupo.Size = new System.Drawing.Size(46, 15);
             this.lbl_Grupo.TabIndex = 20;
-            this.lbl_Grupo.Text = "Grupo";
+            this.lbl_Grupo.Text = "Grupo*";
             // 
             // txtb_Grupo
             // 

@@ -70,19 +70,20 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Cargo_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Cargo.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_Cargo, "Cargo inválido!");
-                e.Cancel = true;
-            }
-            else
+            if (ValidacaoNome(txtb_Cargo.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Cargo, null);
                 e.Cancel = false;
             }
+            else
+            {
+                errorMSG.SetError(lbl_Cargo, "Cargo inválido!");
+                e.Cancel = closing;
+            }
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Cargo.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Cargo, "Campo 'Cargo' é obrigatório!");

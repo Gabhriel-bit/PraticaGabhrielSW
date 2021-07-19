@@ -164,6 +164,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.lbl_Codigo);
             this.Name = "frmCadastroPai";
             this.Text = "Cadastro";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastroPai_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastroPai_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);

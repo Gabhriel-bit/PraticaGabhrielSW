@@ -24,8 +24,7 @@ namespace Projeto_ICI
         public formularioBase()
         {
             InitializeComponent();
-            umImgPesquisaEntrar = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_entrar.png");
-            umImgPesquisaSair = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_sair.png");
+            CarregarImgs();
         }
         public virtual void ConhecaOBJ(object pOBJ)
         {
@@ -47,14 +46,29 @@ namespace Projeto_ICI
         {
 
         }
+        private void CarregarImgs()
+        {
+            try
+            {
+                umImgPesquisaEntrar = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_entrar.png");
+                umImgPesquisaSair = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_sair.png");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Erro ao carregar imagens dos formulários\n" + e.Message, "ERRO");
+            }
+        }
         public static string FormatCPF(string pCPF)
         {
             pCPF = pCPF.Replace(".", "");
             pCPF = pCPF.Replace("-", "");
-            return pCPF.Substring(0,3) + "." +
-                   pCPF.Substring(3, 3) + "." +
-                   pCPF.Substring(6, 3) + "-" +
-                   pCPF.Substring(9, 2);
+            if (pCPF != "")
+                return pCPF.Substring(0, 3) + "." +
+                       pCPF.Substring(3, 3) + "." +
+                       pCPF.Substring(6, 3) + "-" +
+                       pCPF.Substring(9, 2);
+            else
+                return "";
         }
         public static string FormatCNPJ(string pCNPJ)
         {
@@ -62,11 +76,14 @@ namespace Projeto_ICI
             pCNPJ = pCNPJ.Replace("/", "");
             pCNPJ = pCNPJ.Replace("-", "");
 
-            return pCNPJ.Substring(0, 2) + "." +
-                   pCNPJ.Substring(2, 3) + "." +
-                   pCNPJ.Substring(5, 3) + "/" +
-                   pCNPJ.Substring(8, 4) + "-" +
-                   pCNPJ.Substring(12, 2);
+            if (pCNPJ != "")
+                return pCNPJ.Substring(0, 2) + "." +
+                       pCNPJ.Substring(2, 3) + "." +
+                       pCNPJ.Substring(5, 3) + "/" +
+                       pCNPJ.Substring(8, 4) + "-" +
+                       pCNPJ.Substring(12, 2);
+            else
+                return "";
         }
         public static bool ValidacaoCPF(string pCPF)
         {

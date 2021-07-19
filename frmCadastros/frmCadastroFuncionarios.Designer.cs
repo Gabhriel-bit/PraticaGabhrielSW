@@ -1,7 +1,7 @@
 ﻿
 namespace Projeto_ICI.frmCadastros
 {
-    partial class frmCadastroFuncionario
+    partial class frmCadastroFuncionarios
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -29,7 +29,7 @@ namespace Projeto_ICI.frmCadastros
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroFuncionario));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroFuncionarios));
             this.lbl_Funcionario = new System.Windows.Forms.Label();
             this.txtb_Funcionario = new System.Windows.Forms.TextBox();
             this.btn_PesquisarCargo = new System.Windows.Forms.Button();
@@ -55,6 +55,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.date_DataNasc_Fund.Size = new System.Drawing.Size(121, 20);
             this.date_DataNasc_Fund.TabIndex = 13;
+            this.date_DataNasc_Fund.Validating += new System.ComponentModel.CancelEventHandler(this.date_DataNasc_Fund_Validating);
             // 
             // lbl_DataNasc_Fund
             // 
@@ -248,9 +249,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_ComissaoVenda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ComissaoVenda.Location = new System.Drawing.Point(220, 307);
             this.lbl_ComissaoVenda.Name = "lbl_ComissaoVenda";
-            this.lbl_ComissaoVenda.Size = new System.Drawing.Size(42, 15);
+            this.lbl_ComissaoVenda.Size = new System.Drawing.Size(47, 15);
             this.lbl_ComissaoVenda.TabIndex = 78;
-            this.lbl_ComissaoVenda.Text = "Venda";
+            this.lbl_ComissaoVenda.Text = "Venda*";
             // 
             // txtb_ComissaoVenda
             // 
@@ -269,9 +270,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_ComissaoProd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ComissaoProd.Location = new System.Drawing.Point(135, 307);
             this.lbl_ComissaoProd.Name = "lbl_ComissaoProd";
-            this.lbl_ComissaoProd.Size = new System.Drawing.Size(50, 15);
+            this.lbl_ComissaoProd.Size = new System.Drawing.Size(55, 15);
             this.lbl_ComissaoProd.TabIndex = 77;
-            this.lbl_ComissaoProd.Text = "Produto";
+            this.lbl_ComissaoProd.Text = "Produto*";
             // 
             // txtb_ComissaoProd
             // 

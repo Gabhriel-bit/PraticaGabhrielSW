@@ -78,6 +78,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
+            closing = true;
             if (!ValidacaoNome(txtb_Subgrupo.Text, 2, true))
             {
                 errorMSG.SetError(lbl_Subgrupo, "Campo 'Subgrupo' inválido!");
@@ -130,13 +131,13 @@ namespace Projeto_ICI.frmCadastros
         {
             if (!ValidacaoNome(txtb_Subgrupo.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Subgrupo, "Subgrupo inválido!");
-                e.Cancel = true;
+                errorMSG.SetError(lbl_Subgrupo, null);
+                e.Cancel = false;
             }
             else
             {
-                errorMSG.SetError(lbl_Subgrupo, null);
-                e.Cancel = false;
+                errorMSG.SetError(lbl_Subgrupo, "Subgrupo inválido!");
+                e.Cancel = closing;
             }
         }
 
