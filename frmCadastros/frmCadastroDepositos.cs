@@ -38,12 +38,15 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlDeposito = new Controllers.ctrlDepositos(pUmaConexao);
 
-            listaCidades = new List<Classes.cidades>();
+            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
             umaCidade = new Classes.cidades();
 
-            listaProdutos = new List<Classes.produtos>();
+            listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsgDeposito);
             umProduto = new Classes.produtos();
-
+            if (vlMsgCidade != "" || vlMsgDeposito != "")
+            { MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
+                              vlMsgDeposito != "" ? vlMsgDeposito : "", "ERRO");
+            }
             btn_PesquisarProduto.Image = umImgPesquisaSair;
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
@@ -185,7 +188,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Cidade.Text = umaCidade.Cidade;
                 txtb_CodigoCidade.Text = umaCidade.Codigo.ToString();
             }
-            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -200,7 +205,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoProduto.Text = umProduto.Codigo.ToString();
                 txtb_Produto.Text = umProduto.Produto;
             }
-            listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection();
+            listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

@@ -70,11 +70,12 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.grupos> PesquisarCollection()
+        public List<Classes.grupos> PesquisarCollection(out string pMsg)
         {
             DataTable vlTabelaGrupo =
                           ExecuteComandSearchQuery(
-                                 umDaoGrupo.PesquisarToString("grupos", camposSelect, "", ""));
+                                 umDaoGrupo.PesquisarToString("grupos", camposSelect, "", ""), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaGrupo == null)
             {
                 return null;
@@ -93,10 +94,13 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
-            return ExecuteComandSearchQuery(
-                          umDaoGrupo.PesquisarToString("grupos", camposSelect, pCampo, pValor));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoGrupo.PesquisarToString("grupos", camposSelect,
+                             pCampo, pValor), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

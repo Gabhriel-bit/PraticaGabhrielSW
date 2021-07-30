@@ -71,11 +71,13 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.formasPagamento> PesquisarCollection()
+        public List<Classes.formasPagamento> PesquisarCollection(out string pMsg)
         {
             DataTable vlTabelaFormaPag =
                           ExecuteComandSearchQuery(
-                                 umDaoFormPag.PesquisarToString("formasPagamento", camposSelect, "", ""));
+                                 umDaoFormPag.PesquisarToString("formasPagamento",
+                                 camposSelect, "", ""), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaFormaPag == null)
             {
                 return null;
@@ -94,10 +96,13 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
-            return ExecuteComandSearchQuery(
-                          umDaoFormPag.PesquisarToString("formasPagamento", camposSelect, pCampo, pValor));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoFormPag.PesquisarToString("formasPagamento",
+                          camposSelect, pCampo, pValor), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

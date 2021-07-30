@@ -122,6 +122,7 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
+            string vlMsg = "";
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
@@ -130,19 +131,22 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlMarca.Pesquisar("codigo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlMarca.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlMarca.Pesquisar("marca", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlMarca.Pesquisar("marca", txtb_Pesquisa.Text, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
+            txtb_Pesquisa.Clear();
         }
 
         private void frmConsultaMarcas_Load(object sender, EventArgs e)

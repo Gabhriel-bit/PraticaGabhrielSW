@@ -20,15 +20,17 @@ namespace Projeto_ICI.frmCadastros
             frmConsGrupo = new frmConsultas.frmConsultaGrupos();
             umCtrlSubgrupo = new Controllers.ctrlSubgrupos();
             umGrupo = new Classes.grupos();
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection();
+            listaGrupos = new List<Classes.grupos>();
         }
         public frmCadastroSubGrupos(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
             umCtrlSubgrupo = new Controllers.ctrlSubgrupos(pUmaConexao);
             umGrupo = new Classes.grupos();
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection();
             btn_Pesquisar.Image = umImgPesquisaSair;
+            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
         public override void SetFrmCons(Form pFrmCad)
         {
@@ -73,7 +75,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoGrupo.Text = umGrupo.Codigo.ToString();
                 txtb_Grupo.Text = umGrupo.Grupo;
             }
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection();
+            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

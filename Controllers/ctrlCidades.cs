@@ -76,14 +76,15 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.cidades> PesquisarCollection()
+        public List<Classes.cidades> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("cidades.", "");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
                        umDaoCidade.PesquisarToString("cidades",
-                       camposSelList.Replace("estado", "codigoEstado"), "", ""));
-            var vlListaEstados = umaCtrlEstado.PesquisarCollection();
+                       camposSelList.Replace("estado", "codigoEstado"), "", ""), out string vlMsg);
+            var vlListaEstados = umaCtrlEstado.PesquisarCollection(out string vlMsgEstado);
+            pMsg = vlMsg + '\n' + vlMsgEstado;
             if (vlTabelaCidades == null)
             {
                 return null;
@@ -106,16 +107,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlCidade);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlCidade = new Classes.cidades();
-            return ExecuteComandSearchQuery(
+            var vlTable = ExecuteComandSearchQuery(
                        umDaoCidade.PesquisarToString("cidades, estados", camposSelect,
-                       pCampo, pValor, vlCidade.toStringSearchPesquisa()));
+                       pCampo, pValor, vlCidade.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

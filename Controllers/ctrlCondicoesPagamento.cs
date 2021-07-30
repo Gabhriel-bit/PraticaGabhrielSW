@@ -82,11 +82,13 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.condicoesPagamento> PesquisarCollection()
+        public List<Classes.condicoesPagamento> PesquisarCollection(out string pMsg)
         {
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
-                       umDaoCondPag.PesquisarToString("condicoesPagamento", camposSelect, "", ""));
+                       umDaoCondPag.PesquisarToString("condicoesPagamento",
+                            camposSelect, "", ""), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaCondicoesPagamento == null)
             {
                 return null;
@@ -103,20 +105,23 @@ namespace Projeto_ICI.Controllers
                                                    decimal.Parse(row[3].ToString(), vgEstilo, vgProv),
                                                    decimal.Parse(row[4].ToString(), vgEstilo, vgProv),
                                                    decimal.Parse(row[5].ToString(), vgEstilo, vgProv));
-                    vlCondPag.ListaParcelas = PesquisarCollection(vlCondPag.Codigo);
+                    vlCondPag.ListaParcelas = PesquisarCollection(vlCondPag.Codigo, out string vlMsgParc);
+                    pMsg += "Erro ao carrgar parcelas " +
+                        $"da condição de pagamento '{vlCondPag.CondicaoPag}'\n-->" + vlMsgParc;
                     lista.Add(vlCondPag);
                 }
                 return lista;
             }
         }
 
-        public List<Classes.parcelasCondPag> PesquisarCollection(int pCodigoCondPang)
+        public List<Classes.parcelasCondPag> PesquisarCollection(int pCodigoCondPang, out string pMsg)
         {
             DataTable vlTabelaParcalasCondPag =
                 ExecuteComandSearchQuery(
                     umDaoCondPag.PesquisarToString("parcelasCondicaoPagamento",
                                                    camposSelectParcelas,
-                                                   "codigoCondPag", pCodigoCondPang.ToString()));
+                                                   "codigoCondPag", pCodigoCondPang.ToString()), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaParcalasCondPag == null)
             {
                 return null;
@@ -130,7 +135,9 @@ namespace Projeto_ICI.Controllers
                                                                 (int)row[2],
                                                                 decimal.Parse(row[3].ToString(), vgEstilo, vgProv));
                     vlParcela.UmaFormaPag.Codigo = (int)row[4];
-                    var vlListaFormaPag = umaCtrlFromaPag.PesquisarCollection();
+                    var vlListaFormaPag = umaCtrlFromaPag.PesquisarCollection(out string vlMsgFormPag);
+                    if (vlMsgFormPag != "")
+                    { pMsg += "\nErro ao carregar formas de pagamento: " + vlMsgFormPag; }
                     foreach (Classes.formasPagamento vlFormPag in vlListaFormaPag)
                     {
                         if (vlFormPag.Codigo == vlParcela.UmaFormaPag.Codigo)
@@ -142,10 +149,13 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
-            return ExecuteComandSearchQuery(
-                       umDaoCondPag.PesquisarToString("condicoesPagamento", camposSelect, pCampo, pValor));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoCondPag.PesquisarToString("condicoesPagamento",
+                            camposSelect, pCampo, pValor), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

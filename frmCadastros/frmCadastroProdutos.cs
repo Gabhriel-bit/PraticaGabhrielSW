@@ -45,15 +45,20 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umaCtrlProduto = new Controllers.ctrlProdutos(pUmaConexao);
 
-            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection();
+            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgS);
             umSubgrupo = new Classes.subgrupos();
 
-            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection();
+            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection(out string vlMsgF);
             umForn = new Classes.fornecedores();
 
-            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection();
+            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgM);
             umModelo = new Classes.modelos();
-
+            if (vlMsgS != "" || vlMsgF != "" || vlMsgM != "")
+            {
+                MessageBox.Show(vlMsgS != "" ? vlMsgS : "" +
+                                vlMsgF != "" ? vlMsgF : "" +
+                                vlMsgM != "" ? vlMsgM : "", "ERRO");
+            }
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
             btn_PesquisarModelo.Image = umImgPesquisaSair;
             btn_PesquisarSubGrupo.Image = umImgPesquisaSair;
@@ -198,7 +203,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoFornecedor.Text = umForn.Codigo.ToString();
                 txtb_Fornecedor.Text = umForn.Fornecedor;
             }
-            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection();
+            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
         private void btn_PesquisarSubGrupo_Click(object sender, EventArgs e)
         {
@@ -212,7 +219,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoSubGrupo.Text = umSubgrupo.Codigo.ToString();
                 txtb_SubGrupo.Text = umSubgrupo.Subgrupo;
             }
-            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection();
+            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
         private void btn_PesquisarModelo_Click(object sender, EventArgs e)
         {
@@ -227,7 +236,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Modelo.Text = umModelo.Modelo;
                 txtb_Marca.Text = umModelo.UmaMarca.Marca;
             }
-            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection();
+            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
         private void btn_Remover_Click(object sender, EventArgs e)
         {

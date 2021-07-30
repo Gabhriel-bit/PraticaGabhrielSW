@@ -73,11 +73,12 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.cargos> PesquisarCollection()
+        public List<Classes.cargos> PesquisarCollection(out string pMsg)
         {
             DataTable vlTabelaCargos =
                           ExecuteComandSearchQuery(
-                                 umDaoCargos.PesquisarToString("cargos", camposSelect, "", ""));
+                                 umDaoCargos.PesquisarToString("cargos",camposSelect, "", ""), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaCargos == null)
             {
                 return null;
@@ -99,10 +100,12 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
-            return ExecuteComandSearchQuery(
-                          umDaoCargos.PesquisarToString("cargos", camposSelect, pCampo, pValor));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoCargos.PesquisarToString("cargos", camposSelect, pCampo, pValor), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

@@ -75,14 +75,15 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.modelos> PesquisarCollection()
+        public List<Classes.modelos> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("modelos.", "");
             DataTable vlTabelaModelo =
                  ExecuteComandSearchQuery(
                        umDaoModelo.PesquisarToString("modelos",
-                       camposSelList.Replace("marca", "codigoMarca"), "", ""));
-            var vlListamarcas = umaCtrlMarca.PesquisarCollection();
+                       camposSelList.Replace("marca", "codigoMarca"), "", ""), out string vlMsg);
+            var vlListamarcas = umaCtrlMarca.PesquisarCollection(out string vlMsgMarca);
+            pMsg = vlMsg + '\n' + vlMsgMarca;
             if (vlTabelaModelo == null)
             {
                 return null;
@@ -105,16 +106,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlModelo);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlModelo = new Classes.modelos();
-            return ExecuteComandSearchQuery(
-                       umDaoModelo.PesquisarToString("modelos, marcas", camposSelect,
-                       pCampo, pValor, vlModelo.toStringSearchPesquisa()));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoModelo.PesquisarToString("modelos, marcas", camposSelect,
+                          pCampo, pValor, vlModelo.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

@@ -83,16 +83,17 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.funcionarios> PesquisarCollection()
+        public List<Classes.funcionarios> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("funcionarios.", "");
             camposSelList = camposSelList.Replace("cargo", "codigoCargo");
             DataTable vlTabelaFunc =
                  ExecuteComandSearchQuery(
                        umDaoFunc.PesquisarToString("funcionarios",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""));
-            var vlListaCidades = umaCtrlCidade.PesquisarCollection();
-            var vlListaCargos = umaCtrlCargo.PesquisarCollection();
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
+            var vlListaCidades = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
+            var vlListaCargos = umaCtrlCargo.PesquisarCollection(out string vlMsgCargo);
+            pMsg = vlMsg + '\n' + vlMsgCidade + '\n' + vlMsgCargo;
             if (vlTabelaFunc == null)
             {
                 return null;
@@ -128,16 +129,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlFunc);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo = "", string pValor = "")
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlFunc = new Classes.funcionarios();
-            return ExecuteComandSearchQuery(
+            var vlTable = ExecuteComandSearchQuery(
                        umDaoFunc.PesquisarToString("funcionarios, cidades, cargos", camposSelect,
-                       pCampo, pValor, vlFunc.toStringSearchPesquisa()));
+                       pCampo, pValor, vlFunc.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

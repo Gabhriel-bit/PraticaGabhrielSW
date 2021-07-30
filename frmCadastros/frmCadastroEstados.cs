@@ -20,14 +20,16 @@ namespace Projeto_ICI.frmCadastros
             frmConsPais = new frmConsultas.frmConsultaPaises();
             umCtrlEstado = new Controllers.ctrlEstados();
             umPais = new Classes.paises();
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection();
+            listaPaises = new List<Classes.paises>();
         }
         public frmCadastroEstados(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
             umCtrlEstado = new Controllers.ctrlEstados(pUmaConexao);
             umPais = new Classes.paises();
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection();
+            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
 
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
@@ -83,7 +85,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Pais.Text = umPais.Pais;
                 
             }
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection();
+            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void txtb_CodigoPais_TextChanged(object sender, EventArgs e)

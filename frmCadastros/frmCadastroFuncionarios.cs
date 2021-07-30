@@ -21,13 +21,14 @@ namespace Projeto_ICI.frmCadastros
             umCtrlFunc = new Controllers.ctrlFuncionarios();
             obrigatorioGrupoCNH(false);
 
+            string vlMsg = "";
             frmConsCidade = new frmConsultas.frmConsultaCidades();
             umaCidade = new Classes.cidades();
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection();
+            listaCidades = new List<Classes.cidades>();
 
             frmConsCargo = new frmConsultas.frmConsultaCargos();
             umCargo = new Classes.cargos();
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
+            listaCargos = new List<Classes.cargos>();
         }
         public frmCadastroFuncionarios(BancoDados.conexoes pUmaConexao)
         {
@@ -35,11 +36,17 @@ namespace Projeto_ICI.frmCadastros
             umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
             obrigatorioGrupoCNH(false);
 
+            string vlMsg = "";
             umaCidade = new Classes.cidades();
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
 
             umCargo = new Classes.cargos();
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
+            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
+            if (vlMsgCidade != "" || vlMsgCargo != "")
+            {
+                MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
+                                vlMsgCargo != "" ? vlMsgCargo : "", "ERRO");
+            }
 
             btn_PesquisarCargo.Image = umImgPesquisaSair;
         }
@@ -234,12 +241,16 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCargo.Text = umCargo.Codigo.ToString();
                 obrigatorioGrupoCNH(umCargo.CNH);
             }
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
+            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void btn_PesquisarCidade_Click(object sender, EventArgs e)
         {
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void obrigatorioGrupoCNH(bool pObg)

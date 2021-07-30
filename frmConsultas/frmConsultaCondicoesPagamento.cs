@@ -53,7 +53,9 @@ namespace Projeto_ICI.frmConsultas
                                                decimal.Parse(row[3].Value.ToString(), vgEstilo, vgProv),
                                                decimal.Parse(row[4].Value.ToString(), vgEstilo, vgProv),
                                                decimal.Parse(row[5].Value.ToString(), vgEstilo, vgProv));
-                vlCondPag.ListaParcelas = umCtrlCondPag.PesquisarCollection(vlCondPag.Codigo);
+                vlCondPag.ListaParcelas = umCtrlCondPag.PesquisarCollection(vlCondPag.Codigo, out string vlMsg);
+                if (vlMsg != "")
+                { MessageBox.Show(vlMsg, "ERRO"); }
                 return vlCondPag;
             }
         }
@@ -125,6 +127,7 @@ namespace Projeto_ICI.frmConsultas
         }
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
+            string vlMsg = "";
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
@@ -133,17 +136,19 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCondPag.Pesquisar("codigo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlCondPag.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_Pesquisa.Text, out vlMsg);
             }
             else
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             txtb_Pesquisa.Clear();
         }
 

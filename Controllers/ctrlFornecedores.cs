@@ -83,16 +83,17 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.fornecedores> PesquisarCollection()
+        public List<Classes.fornecedores> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("fornecedores.", "");
             camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento", "codigoCondPag");
             DataTable vlTabelaFunc =
                  ExecuteComandSearchQuery(
                        umDaoForn.PesquisarToString("fornecedores",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""));
-            var vlListaCidades = umaCtrlCidade.PesquisarCollection();
-            var vlListaCondPag = umaCtrlCondPag.PesquisarCollection();
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
+            var vlListaCidades = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
+            var vlListaCondPag = umaCtrlCondPag.PesquisarCollection(out string vlMsgCondPag);
+            pMsg = vlMsg + '\n' + vlMsgCidade + '\n' + vlMsgCondPag;
             if (vlTabelaFunc == null)
             {
                 return null;
@@ -124,16 +125,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlForn);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo = "", string pValor = "")
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlForn = new Classes.fornecedores();
-            var t = umDaoForn.PesquisarToString("condicoesPagamento, fornecedores, cidades",
-                       camposSelect, pCampo, pValor, vlForn.toStringSearchPesquisa());
-            return ExecuteComandSearchQuery(t);
+            var vlTable = ExecuteComandSearchQuery(umDaoForn.PesquisarToString("condicoesPagamento," +
+                          " fornecedores, cidades", camposSelect, pCampo, pValor,
+                          vlForn.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

@@ -36,12 +36,16 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlForn = new Controllers.ctrlFornecedores(pUmaConexao);
 
-            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection();
+            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
             umCondPag = new Classes.condicoesPagamento();
 
-            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
             umaCidade = new Classes.cidades();
-
+            if (vlMsgCidade != "" || vlMsgCondPag != "")
+            {
+                MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
+                                vlMsgCondPag != "" ? vlMsgCondPag : "", "ERRO");
+            }
             rb_Fisica.Checked = true;
 
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
@@ -166,12 +170,16 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCondPag.Text = umCondPag.Codigo.ToString();
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
-            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection();
+            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void btn_PesquisarCidade_Click(object sender, EventArgs e)
         {
-            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void txtb_CPF_CNPJ_Validating(object sender, CancelEventArgs e)

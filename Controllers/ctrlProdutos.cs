@@ -97,14 +97,17 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.produtos> PesquisarCollection()
+        public List<Classes.produtos> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("produtos.", "");
             camposSelList = camposSelList.Replace("subgrupo", "codigoSubgrupo");
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
                        umDaoProdutos.PesquisarToString("produtos",
-                       camposSelect.Replace("modelo", "codigoModelo"), "", ""));
+                       camposSelList.Replace("modelo", "codigoModelo"), "", ""), out string vlMsg);
+            var vlListaModelo = umaCtrlModelo.PesquisarCollection(out string vlMsgMod);
+            var vlListaSubgrupo = umaCtrlSubgrupo.PesquisarCollection(out string vlMsgSubgrup);
+            pMsg = vlMsg + '\n' + vlMsgMod + '\n' + vlMsgSubgrup;
             if (vlTabelaCondicoesPagamento == null)
             {
                 return null;
@@ -112,6 +115,7 @@ namespace Projeto_ICI.Controllers
             else
             {
                 List<Classes.produtos> lista = new List<Classes.produtos>();
+                string vlMsgForn = "";
                 foreach (DataRow row in vlTabelaCondicoesPagamento.Rows)
                 {
                     var vlProduto = new
@@ -122,33 +126,35 @@ namespace Projeto_ICI.Controllers
                                          decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
                                          (int)row[3], (int)row[4]);
                     vlProduto.UmModelo.Codigo = (int)row[7];
-                    var vlListaModelo = umaCtrlModelo.PesquisarCollection();
                     foreach (Classes.modelos vlModelo in vlListaModelo)
                     {
                         if (vlModelo.Codigo == vlProduto.UmModelo.Codigo)
                         { vlProduto.UmModelo.ThisModelo = vlModelo; }
                     }
                     vlProduto.UmSubgrupo.Codigo = (int)row[8];
-                    var vlListaSubgrupo = umaCtrlSubgrupo.PesquisarCollection();
                     foreach (Classes.subgrupos vlSubgrupo in vlListaSubgrupo)
                     {
                         if (vlSubgrupo.Codigo == vlProduto.UmSubgrupo.Codigo)
                         { vlProduto.UmSubgrupo.ThisSubgrupo = vlSubgrupo; }
                     }
-                    vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo);
+                    vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out vlMsgForn);
+                    pMsg += $"\nErro ao carrgar fornecedores do produto '{vlProduto.Produto}'\n-->" + vlMsgForn;
                     lista.Add(vlProduto);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public List<Classes.fornecedores> PesquisarCollection(int pCodigoProduto)
+        public List<Classes.fornecedores> PesquisarCollection(int pCodigoProduto, out string pMsg)
         {
             DataTable vlTabelaParcalasCondPag =
                 ExecuteComandSearchQuery(
                     umDaoProdutos.PesquisarToString("produto_fornecedor",
                                                    camposSelectProduto_Forn,
-                                                   "codigoProduto", pCodigoProduto.ToString()));
+                                                   "codigoProduto", pCodigoProduto.ToString()), out string vlMsg);
+            var vlListaForn = umCtrlFornecedor.PesquisarCollection(out string vlMsgForn);
+            pMsg = vlMsg + '\n' + vlMsgForn;
             if (vlTabelaParcalasCondPag == null)
             {
                 return null;
@@ -159,7 +165,6 @@ namespace Projeto_ICI.Controllers
                 foreach (DataRow row in vlTabelaParcalasCondPag.Rows)
                 {
                     var vlCodigoForn = (int)row[0];
-                    var vlListaForn = umCtrlFornecedor.PesquisarCollection();
                     foreach (Classes.fornecedores vlForn in vlListaForn)
                     {
                         if (vlForn.Codigo == vlCodigoForn)
@@ -170,12 +175,13 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlProduto = new Classes.produtos();
-            return ExecuteComandSearchQuery(
-                       umDaoProdutos.PesquisarToString("produtos, subgrupos, modelos",
-                       camposSelect, pCampo, pValor, vlProduto.toStringSearchPesquisa()));
+            DataTable vlTable = ExecuteComandSearchQuery(umDaoProdutos.PesquisarToString("produtos, subgrupos, modelos",
+                                camposSelect, pCampo, pValor, vlProduto.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

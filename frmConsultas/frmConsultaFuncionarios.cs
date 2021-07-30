@@ -38,8 +38,14 @@ namespace Projeto_ICI.frmConsultas
         protected override void carregarDados(controllers pCTRL)
         {
             base.carregarDados(pCTRL);
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection();
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection();
+            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
+            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
+            if (vlMsgCargo != "" || vlMsgCidade != "")
+            {
+                MessageBox.Show(vlMsgCargo != "" ? "Cargos: " + vlMsgCargo : "" +
+                                vlMsgCidade != "" ? "Cidades: " + vlMsgCidade : "",
+                                "ERRO --> " + this.Text.ToString());
+            }
 
         }
         public override void ConhecaOBJ(object pOBJ)
@@ -153,39 +159,43 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
+            string vlMsg = "";
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar();
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("", "", out vlMsg);
             }
             else if (ValidacaoCPF(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text));
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoCNPJ(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text));
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("codigo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("funcionario", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("funcionario", txtb_Pesquisa.Text, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
+            txtb_Pesquisa.Clear();
         }
 
         private void frmConsultaFuncionarios_Load(object sender, EventArgs e)

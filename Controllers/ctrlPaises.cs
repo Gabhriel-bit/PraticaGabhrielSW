@@ -73,11 +73,12 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.paises> PesquisarCollection()
+        public List<Classes.paises> PesquisarCollection(out string pMsg)
         {
             DataTable vlTabelaPaises =
                           ExecuteComandSearchQuery(
-                                 umDaoPais.PesquisarToString("paises", camposSelect, "", ""));
+                                 umDaoPais.PesquisarToString("paises", camposSelect, "", ""), out string vlMsg);
+            pMsg = vlMsg;
             if (vlTabelaPaises == null)
             {
                 return null;
@@ -97,10 +98,12 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
-            return ExecuteComandSearchQuery(
-                          umDaoPais.PesquisarToString("paises", camposSelect, pCampo, pValor));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoPais.PesquisarToString("paises", camposSelect, pCampo, pValor), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

@@ -20,14 +20,16 @@ namespace Projeto_ICI.frmCadastros
             frmConsMarca = new frmConsultas.frmConsultaMarcas();
             umCtrlModelos = new Controllers.ctrlModelos();
             umaMarca = new Classes.marcas();
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection();
+            listaMarcas = new List<Classes.marcas>();
         }
         public frmCadastroModelos(BancoDados.conexoes pUmaConexao)
         {
             InitializeComponent();
             umCtrlModelos = new Controllers.ctrlModelos(pUmaConexao);
             umaMarca = new Classes.marcas();
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection();
+            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -77,7 +79,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoMarca.Text = umaMarca.Codigo.ToString();
                 txtb_Marca.Text = umaMarca.Marca;
             }
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection();
+            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void txtb_CodigoMarca_TextChanged(object sender, EventArgs e)

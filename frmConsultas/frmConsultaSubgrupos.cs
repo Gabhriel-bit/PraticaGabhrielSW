@@ -37,7 +37,9 @@ namespace Projeto_ICI.frmConsultas
         protected override void carregarDados(controllers pCTRL)
         {
             base.carregarDados(pCTRL);
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection();
+            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
         }
 
         public override void ConhecaOBJ(object pOBJ)
@@ -138,6 +140,7 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
+            string vlMsg = "";
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
@@ -146,17 +149,19 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("codigo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Pesquisa.Text, out vlMsg);
             }
             else
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             txtb_Pesquisa.Clear();
         }
 

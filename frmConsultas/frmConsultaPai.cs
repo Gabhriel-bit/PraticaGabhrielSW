@@ -37,7 +37,9 @@ namespace Projeto_ICI.frmConsultas
         }
         protected virtual void carregarDados(Controllers.controllers pCTRL)
         {
-            this.dataGridView.DataSource = pCTRL.Pesquisar();
+            this.dataGridView.DataSource = pCTRL.Pesquisar("", "", out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
         }
 
         public string Btn_Sair

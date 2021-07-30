@@ -38,7 +38,9 @@ namespace Projeto_ICI.frmConsultas
         protected override void carregarDados(controllers pCTRL)
         {
             base.carregarDados(pCTRL);
-            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection();
+            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
         }
 
         private Classes.depositos dataGridToDeposito()
@@ -63,7 +65,9 @@ namespace Projeto_ICI.frmConsultas
                     if (vlCidade.Codigo == vlProduto.UmaCidade.Codigo)
                     { vlProduto.UmaCidade.ThisCidade = vlCidade; }
                 }
-                vlProduto.ListaProd = umCtrlDeposito.PesquisarCollection(vlProduto.Codigo);
+                vlProduto.ListaProd = umCtrlDeposito.PesquisarCollection(vlProduto.Codigo, out string vlMsg);
+                if (vlMsg != "")
+                { MessageBox.Show(vlMsg, "ERRO"); }
                 return vlProduto;
             }
         }
@@ -119,6 +123,7 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
+            string vlMsg = "";
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
@@ -127,17 +132,19 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlDeposito.Pesquisar("codigo", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlDeposito.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlDeposito.Pesquisar("deposito", txtb_Pesquisa.Text);
+                dataGridView.DataSource = umCtrlDeposito.Pesquisar("deposito", txtb_Pesquisa.Text, out vlMsg);
             }
             else
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             txtb_Pesquisa.Clear();
         }
         protected override void Sair()

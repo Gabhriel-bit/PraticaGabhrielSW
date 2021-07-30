@@ -20,7 +20,7 @@ namespace Projeto_ICI.frmCadastros
             frmConsEstado = new frmConsultas.frmConsultaEstados();
             umCtrlCidade = new Controllers.ctrlCidades();
             umEstado = new Classes.estados();
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection();
+            listaEstados = new List<Classes.estados>();
         }
 
         public frmCadastroCidades(BancoDados.conexoes pUmaConexao)
@@ -28,7 +28,9 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlCidade = new Controllers.ctrlCidades(pUmaConexao);
             umEstado = new Classes.estados();
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection();
+            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -47,7 +49,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoEstado.Text = umEstado.Codigo.ToString();
                 txtb_Estado.Text = umEstado.Estado;
             }
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection();
+            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         public override void CarregarTxtBox(object pUmObjeto)

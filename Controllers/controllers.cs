@@ -27,8 +27,9 @@ namespace Projeto_ICI.Controllers
         {
             return "";
         }
-        public virtual DataTable Pesquisar(string pCampo = "", string pValor = "")
+        public virtual DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
+            pMsg = "";
             return null;
         }
 
@@ -37,8 +38,8 @@ namespace Projeto_ICI.Controllers
             var conn = new SqlCommand();
             try
             {
-                //if (conn.Transaction == null)
-                //{ return "Erro ao conectar ao banco de dados"; }
+                if (conn == null && conn.Transaction == null)
+                { return "Erro ao conectar ao banco de dados"; }
 
                 //Abre uma conexão com o banco e inicia uma transação
                 conn.Connection = conexao.OpenConnection;
@@ -62,36 +63,38 @@ namespace Projeto_ICI.Controllers
         }
 
         //integrar um erro para pesquisa no banco de dados
-        protected DataTable ExecuteComandSearchQuery(string pComandText/*, out string pMsgErro*/)
+        protected DataTable ExecuteComandSearchQuery(string pComandText, out string pMsgErro)
         {
             var conn = new SqlCommand();
+            string vlTitle = this.ToString().Replace("Projeto_ICI.Controllers.ctrl", "Controller ") + ":\n";
+            string vlMsg = "";
             try
             {
-                //caso não seja encontrado o banco de dados, a Transaction retornará nulo
-                //if (conn.Transaction == null)
-                //{ return null; }
-
                 //Abre uma conexão com o banco e inicia uma transação
+                vlMsg = vlTitle + "Erro ao conectar ao banco de dados (linhas: 74-77)";
                 conn.Connection = conexao.OpenConnection;
                 conn.Transaction = conexao.OpenConnection.BeginTransaction();
 
                 conn.CommandText = pComandText;
 
+                vlMsg = vlTitle + "Erro ao carregar tabelas (linhas: 80-82)";
                 SqlDataAdapter adp = new SqlDataAdapter(conn);
                 DataTable resultado = new DataTable();
                 adp.Fill(resultado);
 
+                vlMsg = vlTitle + "Erro ao finalizar execução no Bando de dados (linhas: 85-86)";
                 conn.Transaction.Commit();
                 conexao.CloseConnection();
-                //pMsgErro = "sucesso";
+
+                pMsgErro = "";
                 return resultado;
             }
             catch (SqlException e)
             {
                 if (conn.Transaction != null)
                 { conn.Transaction.Rollback(); }
-                //pMsgErro = e.Message;
-                return null;
+                pMsgErro = vlMsg + '\n' + e.Message;
+                return new DataTable();
             }
         }
         public BancoDados.conexoes UmaConexao

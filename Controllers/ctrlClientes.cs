@@ -83,7 +83,7 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.clientes> PesquisarCollection()
+        public List<Classes.clientes> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("clientes.", "");
             camposSelList = camposSelList.Replace("condicaoPagamento " + 
@@ -91,9 +91,10 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaFunc =
                  ExecuteComandSearchQuery(
                        umDaoCliente.PesquisarToString("clientes",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""));
-            var vlListaCidades = umaCtrlCidade.PesquisarCollection();
-            var vlListaCondPag = umaCtrlCondPag.PesquisarCollection();
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
+            var vlListaCidades = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
+            var vlListaCondPag = umaCtrlCondPag.PesquisarCollection(out string vlMsgCondPag);
+            pMsg = vlMsg + "\n" + vlMsgCidade + "\n" + vlMsgCondPag;
             if (vlTabelaFunc == null)
             {
                 return null;
@@ -125,16 +126,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlCliente);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo = "", string pValor = "")
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlClientes = new Classes.clientes();
-            return ExecuteComandSearchQuery(
-                       umDaoCliente.PesquisarToString("clientes, cidades, condicoesPagamento",
-                       camposSelect, pCampo, pValor, vlClientes.toStringSearchPesquisa()));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoCliente.PesquisarToString("clientes, cidades, condicoesPagamento",
+                          camposSelect, pCampo, pValor, vlClientes.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

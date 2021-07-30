@@ -74,14 +74,15 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.estados> PesquisarCollection()
+        public List<Classes.estados> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("estados.", "");
             DataTable vlTabelaEstados =
                  ExecuteComandSearchQuery(
                        umDaoEstado.PesquisarToString("estados",
-                       camposSelList.Replace("pais", "codigoPais"), "", ""));
-            var vlListaPaises = umaCtrlPais.PesquisarCollection();
+                       camposSelList.Replace("pais", "codigoPais"), "", ""), out string vlMsg);
+            var vlListaPaises = umaCtrlPais.PesquisarCollection(out string vlMsgPaises);
+            pMsg = vlMsg + "\n" + vlMsgPaises;
             if (vlTabelaEstados == null)
             {
                 return null;
@@ -104,16 +105,19 @@ namespace Projeto_ICI.Controllers
                     }
                     lista.Add(vlEstado);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlEstado = new Classes.estados();
-            return ExecuteComandSearchQuery(
-                       umDaoEstado.PesquisarToString("estados, paises", camposSelect,
-                       pCampo, pValor, vlEstado.toStringSearchPesquisa()));
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoEstado.PesquisarToString("estados, paises", camposSelect,
+                          pCampo, pValor, vlEstado.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

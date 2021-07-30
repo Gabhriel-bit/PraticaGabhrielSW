@@ -90,13 +90,15 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
-        public List<Classes.depositos> PesquisarCollection()
+        public List<Classes.depositos> PesquisarCollection(out string pMsg)
         {
             var camposSelList = camposSelect.Replace("depositos.", "");
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
                        umDaoDeposito.PesquisarToString("depositos",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""));
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
+            var vlListaCidade = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
+            pMsg = vlMsg + '\n' + vlMsgCidade;
             if (vlTabelaCondicoesPagamento == null)
             {
                 return null;
@@ -113,26 +115,29 @@ namespace Projeto_ICI.Controllers
                                          (string)row[3], (string)row[4],
                                          (string)row[5], (string)row[6]);
                     vlDeposito.UmaCidade.Codigo = (int)row[7];
-                    var vlListaCidade = umaCtrlCidade.PesquisarCollection();
                     foreach (Classes.cidades vlCidade in vlListaCidade)
                     {
                         if (vlCidade.Codigo == vlDeposito.UmaCidade.Codigo)
                         { vlDeposito.UmaCidade.ThisCidade = vlCidade; }
                     }
-                    vlDeposito.ListaProd = PesquisarCollection(vlDeposito.Codigo);
+                    vlDeposito.ListaProd = PesquisarCollection(vlDeposito.Codigo, out string vlMsgProd);
+                    pMsg += $"\nErro ao carrgar produtos do Deposito '{vlDeposito.Deposito}'\n-->" + vlMsgProd;
                     lista.Add(vlDeposito);
                 }
+                pMsg = "";
                 return lista;
             }
         }
 
-        public List<Classes.produtos> PesquisarCollection(int pCodigoProduto)
+        public List<Classes.produtos> PesquisarCollection(int pCodigoProduto, out string pMsg)
         {
             DataTable vlTabelaProdutoDeposito =
                 ExecuteComandSearchQuery(
                     umDaoDeposito.PesquisarToString("deposito_produto",
                                                    camposSelectProduto_Forn,
-                                                   "codigoDeposito", pCodigoProduto.ToString()));
+                                                   "codigoDeposito", pCodigoProduto.ToString()), out string vlMsg);
+            var vlListaProd = umaCtrlProduto.PesquisarCollection(out string vlMsgProd);
+            pMsg = vlMsg + "\n-->" + vlMsgProd;
             if (vlTabelaProdutoDeposito == null)
             {
                 return null;
@@ -143,7 +148,6 @@ namespace Projeto_ICI.Controllers
                 foreach (DataRow row in vlTabelaProdutoDeposito.Rows)
                 {
                     var vlCodigoProd = (int)row[0];
-                    var vlListaProd = umaCtrlProduto.PesquisarCollection();
                     foreach (Classes.produtos vlDeposito in vlListaProd)
                     {
                         if (vlDeposito.Codigo == vlCodigoProd)
@@ -154,12 +158,14 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor)
+        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
         {
             var vlDeposito = new Classes.depositos();
-            return ExecuteComandSearchQuery(
-                       umDaoDeposito.PesquisarToString("depositos, cidades", camposSelect,
-                       pCampo, pValor, vlDeposito.toStringSearchPesquisa())); ;
+            var vlTable = ExecuteComandSearchQuery(
+                         umDaoDeposito.PesquisarToString("depositos, cidades", camposSelect,
+                         pCampo, pValor, vlDeposito.toStringSearchPesquisa()), out string vlMsg);
+            pMsg = vlMsg;
+            return vlTable;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             frmConsFormPag = new frmConsultas.frmConsultasFormasPagamento();
             umCtrlCondPag = new Controllers.ctrlCondicoesPagamento();
-            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection();
+            listaFormasPag = new List<Classes.formasPagamento>();
             listaParcelas = new List<Classes.parcelasCondPag>();
             umaFormaPag = new Classes.formasPagamento();
             umaParcelaCondPag = new Classes.parcelasCondPag();
@@ -34,7 +34,9 @@ namespace Projeto_ICI.frmCadastros
         {
             InitializeComponent();
             umCtrlCondPag = new Controllers.ctrlCondicoesPagamento(pUmaConexao);
-            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection();
+            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
             listaParcelas = new List<Classes.parcelasCondPag>();
             umaFormaPag = new Classes.formasPagamento();
             umaParcelaCondPag = new Classes.parcelasCondPag();
@@ -519,7 +521,9 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoFormPag.Text = umaFormaPag.Codigo.ToString();
                 txtb_FormaPag.Text = umaFormaPag.FormaPag;
             }
-            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection();
+            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
+            if (vlMsg != "")
+            { MessageBox.Show(vlMsg, "ERRO"); }
         }
 
         private void txtb_CodigoFormPag_TextChanged(object sender, EventArgs e)
