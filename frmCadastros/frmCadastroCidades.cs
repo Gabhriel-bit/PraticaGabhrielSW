@@ -29,8 +29,7 @@ namespace Projeto_ICI.frmCadastros
             umCtrlCidade = new Controllers.ctrlCidades(pUmaConexao);
             umEstado = new Classes.estados();
             listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -50,8 +49,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Estado.Text = umEstado.Estado;
             }
             listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         public override void CarregarTxtBox(object pUmObjeto)

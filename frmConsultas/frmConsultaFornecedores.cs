@@ -44,12 +44,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsgConPag);
             listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsgForn);
-            if (vlMsgConPag != "" || vlMsgForn != "")
-            {
-                MessageBox.Show(vlMsgConPag != "" ? "Condições de pagamento: " + vlMsgConPag : "" +
-                               vlMsgForn != "" ? "Fornecedores: " + vlMsgForn : "",
-                               "ERRO --> " + this.Text.ToString());
-            }
+            showErrorMsg(new string[] { vlMsgForn, vlMsgConPag});
         }
         private Classes.fornecedores dataGridToForn()
         {
@@ -187,8 +182,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

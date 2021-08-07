@@ -29,8 +29,7 @@ namespace Projeto_ICI.frmCadastros
             umGrupo = new Classes.grupos();
             btn_Pesquisar.Image = umImgPesquisaSair;
             listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
         public override void SetFrmCons(Form pFrmCad)
         {
@@ -76,8 +75,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Grupo.Text = umGrupo.Grupo;
             }
             listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

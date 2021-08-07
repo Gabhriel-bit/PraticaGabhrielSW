@@ -41,11 +41,8 @@ namespace Projeto_ICI.frmCadastros
 
             listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
             umaCidade = new Classes.cidades();
-            if (vlMsgCidade != "" || vlMsgCondPag != "")
-            {
-                MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
-                                vlMsgCondPag != "" ? vlMsgCondPag : "", "ERRO");
-            }
+            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag});
+
             rb_Fisica.Checked = true;
 
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
@@ -171,15 +168,13 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
             listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void btn_PesquisarCidade_Click(object sender, EventArgs e)
         {
             listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void txtb_CPF_CNPJ_Validating(object sender, CancelEventArgs e)

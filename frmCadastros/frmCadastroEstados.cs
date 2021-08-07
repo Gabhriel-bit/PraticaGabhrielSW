@@ -28,8 +28,7 @@ namespace Projeto_ICI.frmCadastros
             umCtrlEstado = new Controllers.ctrlEstados(pUmaConexao);
             umPais = new Classes.paises();
             listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
 
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
@@ -86,8 +85,7 @@ namespace Projeto_ICI.frmCadastros
                 
             }
             listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoPais_TextChanged(object sender, EventArgs e)

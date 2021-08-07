@@ -38,11 +38,8 @@ namespace Projeto_ICI.frmCadastros
 
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
             listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            if (vlMsgCondPag != "" || vlMsgCidade != "")
-            {
-                MessageBox.Show(vlMsgCondPag != "" ? vlMsgCondPag : "" +
-                                vlMsgCidade != "" ? vlMsgCidade : "", "ERRO");
-            }
+            showErrorMsg(new string[] { vlMsgCondPag, vlMsgCidade});
+
             umaCidade = new Classes.cidades();
             rb_Fisica.Checked = true;
             closing = false;
@@ -160,8 +157,7 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarCidade_Click(object sender, EventArgs e)
         {
             listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
         protected override void validacaoCPF_CNPJ(object sender, CancelEventArgs e)
         {
@@ -325,8 +321,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoCondPag_TextChanged(object sender, EventArgs e)

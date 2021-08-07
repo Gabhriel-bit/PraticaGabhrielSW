@@ -39,8 +39,7 @@ namespace Projeto_ICI.frmConsultas
         {
             base.carregarDados(pCTRL);
             listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
+            showErrorMsg(vlMsg);
         }
 
         private Classes.depositos dataGridToDeposito()
@@ -66,8 +65,7 @@ namespace Projeto_ICI.frmConsultas
                     { vlProduto.UmaCidade.ThisCidade = vlCidade; }
                 }
                 vlProduto.ListaProd = umCtrlDeposito.PesquisarCollection(vlProduto.Codigo, out string vlMsg);
-                if (vlMsg != "")
-                { MessageBox.Show(vlMsg, "ERRO"); }
+                showErrorMsg(vlMsg);
                 return vlProduto;
             }
         }
@@ -143,8 +141,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
         protected override void Sair()

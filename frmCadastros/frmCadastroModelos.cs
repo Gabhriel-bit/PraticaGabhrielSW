@@ -28,8 +28,7 @@ namespace Projeto_ICI.frmCadastros
             umCtrlModelos = new Controllers.ctrlModelos(pUmaConexao);
             umaMarca = new Classes.marcas();
             listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -80,8 +79,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Marca.Text = umaMarca.Marca;
             }
             listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoMarca_TextChanged(object sender, EventArgs e)

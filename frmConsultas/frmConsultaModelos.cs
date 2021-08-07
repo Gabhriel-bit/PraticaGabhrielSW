@@ -38,8 +38,7 @@ namespace Projeto_ICI.frmConsultas
         {
             base.carregarDados(pCTRL);
             listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
+            showErrorMsg(vlMsg);
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -157,8 +156,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

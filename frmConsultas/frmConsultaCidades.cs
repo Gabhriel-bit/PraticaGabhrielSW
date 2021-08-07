@@ -44,8 +44,7 @@ namespace Projeto_ICI.frmConsultas
         {
             base.carregarDados(pCTRL);
             listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO --> " + this.Text.ToString()); }
+            showErrorMsg(vlMsg);
         }
 
         private Classes.cidades dataGridToCidade()
@@ -163,8 +162,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

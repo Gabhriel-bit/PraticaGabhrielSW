@@ -36,17 +36,12 @@ namespace Projeto_ICI.frmCadastros
             umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
             obrigatorioGrupoCNH(false);
 
-            string vlMsg = "";
             umaCidade = new Classes.cidades();
             listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
 
             umCargo = new Classes.cargos();
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
-            if (vlMsgCidade != "" || vlMsgCargo != "")
-            {
-                MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
-                                vlMsgCargo != "" ? vlMsgCargo : "", "ERRO");
-            }
+            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade});
 
             btn_PesquisarCargo.Image = umImgPesquisaSair;
         }
@@ -242,15 +237,13 @@ namespace Projeto_ICI.frmCadastros
                 obrigatorioGrupoCNH(umCargo.CNH);
             }
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void btn_PesquisarCidade_Click(object sender, EventArgs e)
         {
             listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void obrigatorioGrupoCNH(bool pObg)

@@ -40,12 +40,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
             listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            if (vlMsgCondPag != "" || vlMsgCidade != "")
-            {
-                MessageBox.Show(vlMsgCondPag != "" ? "Condições de pagamento: " + vlMsgCondPag : "" +
-                                vlMsgCidade != "" ? "Cidades: " + vlMsgCidade : "",
-                                "ERRO --> " + this.Text.ToString());
-            }
+            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag});
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -186,8 +181,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

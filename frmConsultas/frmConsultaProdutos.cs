@@ -42,12 +42,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaSubgrupos = umCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgSubg);
             listaModelos = umCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgMod);
-            if (vlMsgMod != "" || vlMsgSubg != "")
-            { 
-                MessageBox.Show(vlMsgSubg != "" ? "Subgrupos: " + vlMsgSubg : "" +
-                                vlMsgMod != "" ? "Modelos: " + vlMsgMod : "",
-                                "ERRO --> " + this.Text.ToString());
-            }
+            showErrorMsg(new string[] { vlMsgMod, vlMsgSubg});
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -78,8 +73,7 @@ namespace Projeto_ICI.frmConsultas
                                      (int)row[3].Value, (int)row[4].Value);
 
                 vlProduto.ListaFornecedores = umCtrlProduto.PesquisarCollection(vlProduto.Codigo, out string vlMsg);
-                if (vlMsg != "")
-                { MessageBox.Show(vlMsg, "ERRO"); }
+                showErrorMsg(vlMsg);
                 vlProduto.UmModelo.Codigo = (int)row[7].Value;
                 foreach (Classes.modelos vlModelo in listaModelos)
                 {
@@ -177,8 +171,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

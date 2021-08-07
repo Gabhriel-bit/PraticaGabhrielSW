@@ -53,12 +53,8 @@ namespace Projeto_ICI.frmCadastros
 
             listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgM);
             umModelo = new Classes.modelos();
-            if (vlMsgS != "" || vlMsgF != "" || vlMsgM != "")
-            {
-                MessageBox.Show(vlMsgS != "" ? vlMsgS : "" +
-                                vlMsgF != "" ? vlMsgF : "" +
-                                vlMsgM != "" ? vlMsgM : "", "ERRO");
-            }
+            showErrorMsg(new string[] { vlMsgF, vlMsgM, vlMsgS});
+
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
             btn_PesquisarModelo.Image = umImgPesquisaSair;
             btn_PesquisarSubGrupo.Image = umImgPesquisaSair;
@@ -167,7 +163,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao criar lista de fornecedores!");
+                showErrorMsg("Erro ao criar lista de fornecedores!");
                 return null;
             }
         }
@@ -188,7 +184,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao carregar lista de fornecedores!");
+                showErrorMsg("Erro ao carregar lista de fornecedores!");
             }
         }
         private void btn_PesquisarFornecedor_Click(object sender, EventArgs e)
@@ -204,8 +200,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Fornecedor.Text = umForn.Fornecedor;
             }
             listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
         private void btn_PesquisarSubGrupo_Click(object sender, EventArgs e)
         {
@@ -220,8 +215,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_SubGrupo.Text = umSubgrupo.Subgrupo;
             }
             listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
         private void btn_PesquisarModelo_Click(object sender, EventArgs e)
         {
@@ -237,8 +231,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Marca.Text = umModelo.UmaMarca.Marca;
             }
             listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
         private void btn_Remover_Click(object sender, EventArgs e)
         {

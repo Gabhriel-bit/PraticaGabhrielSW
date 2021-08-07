@@ -35,8 +35,8 @@ namespace Projeto_ICI.frmCadastros
             InitializeComponent();
             umCtrlCondPag = new Controllers.ctrlCondicoesPagamento(pUmaConexao);
             listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
+
             listaParcelas = new List<Classes.parcelasCondPag>();
             umaFormaPag = new Classes.formasPagamento();
             umaParcelaCondPag = new Classes.parcelasCondPag();
@@ -164,7 +164,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao criar lista de parcelas!");
+                showErrorMsg("Erro ao criar lista de parcelas!");
                 return null;
             }
         }
@@ -184,7 +184,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao carregar lista de parcelas!");
+                showErrorMsg("Erro ao carregar lista de parcelas!");
             }
         }
 
@@ -522,8 +522,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_FormaPag.Text = umaFormaPag.FormaPag;
             }
             listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoFormPag_TextChanged(object sender, EventArgs e)

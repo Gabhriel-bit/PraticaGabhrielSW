@@ -40,13 +40,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
             listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            if (vlMsgCargo != "" || vlMsgCidade != "")
-            {
-                MessageBox.Show(vlMsgCargo != "" ? "Cargos: " + vlMsgCargo : "" +
-                                vlMsgCidade != "" ? "Cidades: " + vlMsgCidade : "",
-                                "ERRO --> " + this.Text.ToString());
-            }
-
+            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade});
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -193,8 +187,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 

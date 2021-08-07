@@ -44,7 +44,26 @@ namespace Projeto_ICI
         }
         public virtual void SetFrmCons(Form[] pFrmCad)
         {
-
+            
+        }
+        protected void showErrorMsg(string pMsg)
+        {
+            if (pMsg != "")
+            { MessageBox.Show(pMsg, "ERRO --> " + this.Text.ToString()); }
+        }
+        protected void showErrorMsg(string[] pMsgList)
+        {
+            if (pMsgList != null && pMsgList.Length > 0)
+            {
+                string vlMsg = "";
+                foreach (string vlMsgFor in pMsgList)
+                {
+                    if (vlMsgFor != "")
+                    { vlMsg += vlMsgFor + '\n'; }
+                }
+                if (vlMsg != "")
+                { MessageBox.Show(vlMsg.Remove(vlMsg.Length - 1), "ERRO --> " + this.Text.ToString()); }      
+            }
         }
         private void CarregarImgs()
         {

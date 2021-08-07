@@ -43,10 +43,8 @@ namespace Projeto_ICI.frmCadastros
 
             listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsgDeposito);
             umProduto = new Classes.produtos();
-            if (vlMsgCidade != "" || vlMsgDeposito != "")
-            { MessageBox.Show(vlMsgCidade != "" ? vlMsgCidade : "" +
-                              vlMsgDeposito != "" ? vlMsgDeposito : "", "ERRO");
-            }
+            showErrorMsg(new string[] { vlMsgCidade, vlMsgDeposito});
+
             btn_PesquisarProduto.Image = umImgPesquisaSair;
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
@@ -144,7 +142,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao criar lista de produtos!");
+                showErrorMsg("Erro ao criar lista de produtos!");
                 return null;
             }
         }
@@ -173,7 +171,7 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                MessageBox.Show("Erro ao carregar lista de fornecedores!");
+                showErrorMsg("Erro ao carregar lista de fornecedores!");
             }
         }
         private void btn_Pesquisar_Click(object sender, EventArgs e)
@@ -189,8 +187,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCidade.Text = umaCidade.Codigo.ToString();
             }
             listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -206,8 +203,7 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Produto.Text = umProduto.Produto;
             }
             listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsg);
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

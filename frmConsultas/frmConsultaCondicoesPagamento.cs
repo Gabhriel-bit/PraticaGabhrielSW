@@ -54,8 +54,7 @@ namespace Projeto_ICI.frmConsultas
                                                decimal.Parse(row[4].Value.ToString(), vgEstilo, vgProv),
                                                decimal.Parse(row[5].Value.ToString(), vgEstilo, vgProv));
                 vlCondPag.ListaParcelas = umCtrlCondPag.PesquisarCollection(vlCondPag.Codigo, out string vlMsg);
-                if (vlMsg != "")
-                { MessageBox.Show(vlMsg, "ERRO"); }
+                showErrorMsg(vlMsg);
                 return vlCondPag;
             }
         }
@@ -147,8 +146,7 @@ namespace Projeto_ICI.frmConsultas
             {
                 errorMSG.SetError(lbl_Pesquisa, "Valor de pesquisa inválido!");
             }
-            if (vlMsg != "")
-            { MessageBox.Show(vlMsg, "ERRO"); }
+            showErrorMsg(vlMsg);
             txtb_Pesquisa.Clear();
         }
 
