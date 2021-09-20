@@ -54,6 +54,7 @@ namespace Projeto_ICI
             this.Name = "formularioBase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formularioBase_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);
 

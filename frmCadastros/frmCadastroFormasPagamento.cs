@@ -11,15 +11,11 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroFormasPagamento : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         private Controllers.ctrlFormasPagamento umCtrlFormPag;
-        public frmCadastroFormasPagamento()
+
+        public frmCadastroFormasPagamento(Controllers.ctrlFormasPagamento pCtrlFormPag)
         {
             InitializeComponent();
-            umCtrlFormPag = new Controllers.ctrlFormasPagamento();
-        }
-        public frmCadastroFormasPagamento(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlFormPag = new Controllers.ctrlFormasPagamento(pUmaConexao);
+            umCtrlFormPag = pCtrlFormPag;
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -48,8 +44,24 @@ namespace Projeto_ICI.frmCadastros
         {
             if (ValidacaoNome(txtb_FormaPag.Text, 2, true))
             {
-                errorMSG.SetError(lbl_FormaPag, null);
-                e.Cancel = false;
+                if (umCtrlFormPag.Pesquisar("formaPagamento", txtb_FormaPag.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_FormaPag, "Forma de pagamento já cadastrada!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_FormaPag, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_FormaPag, null);
+                    e.Cancel = false;
+                }
             }
             else
             {

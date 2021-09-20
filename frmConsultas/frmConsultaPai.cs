@@ -13,6 +13,8 @@ namespace Projeto_ICI.frmConsultas
         public frmConsultaPai()
         {
             InitializeComponent();
+            Width = 627;
+            Height = 416;
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         /*
@@ -33,11 +35,11 @@ namespace Projeto_ICI.frmConsultas
         }
         protected virtual void Sair()
         {
-
+            
         }
         protected virtual void carregarDados(Controllers.controllers pCTRL)
         {
-            this.dataGridView.DataSource = pCTRL.Pesquisar("", "", out string vlMsg);
+            this.dataGridView.DataSource = pCTRL.Pesquisar("", "", default, out string vlMsg);
             showErrorMsg(vlMsg);
         }
 
@@ -62,6 +64,21 @@ namespace Projeto_ICI.frmConsultas
         private void btn_Pesquisar_MouseLeave(object sender, EventArgs e)
         {
             btn_Pesquisar.Image = umImgPesquisaSair;
+        }
+
+        protected virtual object dataGridToObj(Controllers.controllers pCtrl, out string pMsg)
+        {
+            if (dataGridView.SelectedRows.Count == 0 ||
+                dataGridView.SelectedRows[0].Cells[0].Value == null)
+            {
+                pMsg = "";
+                return null;
+            }
+            else
+            {
+                var row = dataGridView.SelectedRows[0].Cells;
+                return pCtrl.Pesquisar("codigo", ((int)row[0].Value).ToString(), out pMsg, false);
+            }
         }
     }
 }

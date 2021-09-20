@@ -69,11 +69,12 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_btn_Pesquisar = new System.Windows.Forms.Label();
             this.lbl_btn_Remover = new System.Windows.Forms.Label();
             this.picb_Foto = new System.Windows.Forms.PictureBox();
-            this.lbl_Foto = new System.Windows.Forms.Label();
             this.btn_CarregarImg = new System.Windows.Forms.Button();
             this.btn_RemoverImg = new System.Windows.Forms.Button();
+            this.grupo_Foto = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).BeginInit();
+            this.grupo_Foto.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtb_CodigoUsu
@@ -86,12 +87,12 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Sair
             // 
-            this.btn_Sair.Location = new System.Drawing.Point(510, 538);
+            this.btn_Sair.Location = new System.Drawing.Point(519, 538);
             this.btn_Sair.TabIndex = 16;
             // 
             // btn_Cadastro
             // 
-            this.btn_Cadastro.Location = new System.Drawing.Point(438, 537);
+            this.btn_Cadastro.Location = new System.Drawing.Point(447, 537);
             this.btn_Cadastro.TabIndex = 15;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
@@ -474,54 +475,50 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.picb_Foto.BackColor = System.Drawing.Color.LightGray;
             this.picb_Foto.InitialImage = null;
-            this.picb_Foto.Location = new System.Drawing.Point(448, 36);
+            this.picb_Foto.Location = new System.Drawing.Point(10, 18);
             this.picb_Foto.Name = "picb_Foto";
             this.picb_Foto.Size = new System.Drawing.Size(128, 130);
             this.picb_Foto.TabIndex = 70;
             this.picb_Foto.TabStop = false;
-            this.picb_Foto.Visible = false;
-            // 
-            // lbl_Foto
-            // 
-            this.lbl_Foto.AutoSize = true;
-            this.lbl_Foto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Foto.Location = new System.Drawing.Point(445, 18);
-            this.lbl_Foto.Name = "lbl_Foto";
-            this.lbl_Foto.Size = new System.Drawing.Size(31, 15);
-            this.lbl_Foto.TabIndex = 71;
-            this.lbl_Foto.Text = "Foto";
-            this.lbl_Foto.Visible = false;
             // 
             // btn_CarregarImg
             // 
-            this.btn_CarregarImg.Location = new System.Drawing.Point(448, 172);
+            this.btn_CarregarImg.Location = new System.Drawing.Point(10, 154);
             this.btn_CarregarImg.Name = "btn_CarregarImg";
             this.btn_CarregarImg.Size = new System.Drawing.Size(61, 25);
             this.btn_CarregarImg.TabIndex = 72;
             this.btn_CarregarImg.Text = "Carregar";
             this.btn_CarregarImg.UseVisualStyleBackColor = true;
-            this.btn_CarregarImg.Visible = false;
             this.btn_CarregarImg.Click += new System.EventHandler(this.btn_CarregarImg_Click);
             // 
             // btn_RemoverImg
             // 
-            this.btn_RemoverImg.Location = new System.Drawing.Point(515, 172);
+            this.btn_RemoverImg.Location = new System.Drawing.Point(77, 154);
             this.btn_RemoverImg.Name = "btn_RemoverImg";
             this.btn_RemoverImg.Size = new System.Drawing.Size(61, 25);
             this.btn_RemoverImg.TabIndex = 73;
             this.btn_RemoverImg.Text = "Remover";
             this.btn_RemoverImg.UseVisualStyleBackColor = true;
-            this.btn_RemoverImg.Visible = false;
             this.btn_RemoverImg.Click += new System.EventHandler(this.btn_RemoverImg_Click);
+            // 
+            // grupo_Foto
+            // 
+            this.grupo_Foto.Controls.Add(this.btn_CarregarImg);
+            this.grupo_Foto.Controls.Add(this.btn_RemoverImg);
+            this.grupo_Foto.Controls.Add(this.picb_Foto);
+            this.grupo_Foto.Location = new System.Drawing.Point(438, 18);
+            this.grupo_Foto.Name = "grupo_Foto";
+            this.grupo_Foto.Size = new System.Drawing.Size(147, 192);
+            this.grupo_Foto.TabIndex = 74;
+            this.grupo_Foto.TabStop = false;
+            this.grupo_Foto.Text = "Foto";
+            this.grupo_Foto.Visible = false;
             // 
             // frmCadastroProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(588, 576);
-            this.Controls.Add(this.btn_RemoverImg);
-            this.Controls.Add(this.btn_CarregarImg);
-            this.Controls.Add(this.lbl_Foto);
-            this.Controls.Add(this.picb_Foto);
+            this.ClientSize = new System.Drawing.Size(597, 576);
+            this.Controls.Add(this.grupo_Foto);
             this.Controls.Add(this.lbl_btn_Remover);
             this.Controls.Add(this.lbl_btn_Pesquisar);
             this.Controls.Add(this.lbl_btn_Adicionar);
@@ -605,12 +602,10 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.lbl_btn_Adicionar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Pesquisar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Remover, 0);
-            this.Controls.SetChildIndex(this.picb_Foto, 0);
-            this.Controls.SetChildIndex(this.lbl_Foto, 0);
-            this.Controls.SetChildIndex(this.btn_CarregarImg, 0);
-            this.Controls.SetChildIndex(this.btn_RemoverImg, 0);
+            this.Controls.SetChildIndex(this.grupo_Foto, 0);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).EndInit();
+            this.grupo_Foto.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -657,8 +652,8 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Label lbl_btn_Pesquisar;
         private System.Windows.Forms.Label lbl_btn_Remover;
         private System.Windows.Forms.PictureBox picb_Foto;
-        private System.Windows.Forms.Label lbl_Foto;
         private System.Windows.Forms.Button btn_CarregarImg;
         private System.Windows.Forms.Button btn_RemoverImg;
+        private System.Windows.Forms.GroupBox grupo_Foto;
     }
 }

@@ -75,8 +75,8 @@ namespace Projeto_ICI.DAOs
 
         public string ExcluirToString(string pTabela, string pCampo, string pValor)
         {
-            var excluir = $"delete from {pTabela} where {pCampo} = " +
-                $"{pValor.Replace(',', '.')};";
+            var excluir = $"UPDATE {pTabela} SET disponivel = 0 where {pCampo} = " +
+                          $"{pValor.Replace(',', '.')};";
             return excluir;
         }
 
@@ -91,21 +91,29 @@ namespace Projeto_ICI.DAOs
         }
 
         public string PesquisarToString(string pNameTable, string pCamposSelecionados,
-            string pCampo, string pValor, string[] pRefCampos = default)
+            string pCampo, string pValor, string[] pRefCampos = default, bool pValorIgual = false)
         {
-            string search = $"select {pCamposSelecionados} from {pNameTable}";
+            string vlNomeDao = ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
+            string search = $"select {pCamposSelecionados} from {pNameTable} " +
+                            (pValorIgual ? " where " : $"where {vlNomeDao}.disponivel != 0 ");
+
             if (pCampo != "")
             {
                 if (int.TryParse(pValor, out int _) ||
                     decimal.TryParse(pValor, out decimal _))
-                    search += $" where {pCampo}={pValor.Replace(',', '.')}";
+                    search += (pValorIgual ? "" : " AND ") + $"{pCampo}={pValor.Replace(',', '.')}";
                 else
-                    search += $" where {pCampo} like '%{pValor}%'";
+                {
+                    if (pValorIgual)
+                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} = '{pValor}'";
+                    else
+                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} like '%{pValor}%'";
+                }
             }
             if (pRefCampos != null)
             {
-                if (!search.Contains("where"))
-                { search += " where "; }
+                search += " AND ";
+
                 foreach (string campo in pRefCampos)
                 {
                     search += campo + " AND ";

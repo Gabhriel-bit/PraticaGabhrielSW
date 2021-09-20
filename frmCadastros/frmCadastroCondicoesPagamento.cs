@@ -20,20 +20,10 @@ namespace Projeto_ICI.frmCadastros
         private Classes.formasPagamento umaFormaPag;
         private Classes.parcelasCondPag umaParcelaCondPag;
 
-        public frmCadastroCondicoesPagamento()
+        public frmCadastroCondicoesPagamento(Controllers.ctrlCondicoesPagamento pCtrlCondPag)
         {
             InitializeComponent();
-            frmConsFormPag = new frmConsultas.frmConsultasFormasPagamento();
-            umCtrlCondPag = new Controllers.ctrlCondicoesPagamento();
-            listaFormasPag = new List<Classes.formasPagamento>();
-            listaParcelas = new List<Classes.parcelasCondPag>();
-            umaFormaPag = new Classes.formasPagamento();
-            umaParcelaCondPag = new Classes.parcelasCondPag();
-        }
-        public frmCadastroCondicoesPagamento(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCondPag = new Controllers.ctrlCondicoesPagamento(pUmaConexao);
+            umCtrlCondPag = pCtrlCondPag;
             listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
             showErrorMsg(vlMsg);
 
@@ -273,20 +263,6 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.Clear();
-                /*if (umaParcelaCondPag.Numero != 0 && lv_Parcelas.Items.Count > 0)
-                {
-                    umaParcelaCondPag.Dias = int.Parse(txtb_Dias.Text);
-                    umaParcelaCondPag.Porcentagem = decimal.Parse(txtb_Porcentagem.Text.Replace(".", ","), vgEstilo, vgProv);
-                    umaParcelaCondPag.UmaFormaPag.Codigo = int.Parse(txtb_CodigoFormPag.Text);
-                    umaParcelaCondPag.UmaFormaPag.FormaPag = txtb_FormaPag.Text;
-                    txtb_Dias.Clear();
-                    txtb_Porcentagem.Clear();
-                    txtb_CodigoFormPag.Clear();
-                    txtb_FormaPag.Clear();
-                    recalcularParcelas(umaParcelaCondPag.ThisParcelasCondPag);
-                }
-                else
-                {*/
                 var vlParcela = new
                     Classes.parcelasCondPag(0,
                                             (lv_Parcelas.Items.Count + 1),
@@ -481,8 +457,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.Clear();
-                e.Cancel = false;
+                if (umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_CondicaoPag.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_CondicaoPag, "Condição de pagamento já cadastrada!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_CondicaoPag, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_CondicaoPag, null);
+                    e.Cancel = false;
+                }
             }
         }
         private void txtb_Dias_Validating(object sender, CancelEventArgs e)

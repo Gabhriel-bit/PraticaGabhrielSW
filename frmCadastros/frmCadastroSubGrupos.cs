@@ -13,23 +13,13 @@ namespace Projeto_ICI.frmCadastros
         frmConsultas.frmConsultaGrupos frmConsGrupo;
         Controllers.ctrlSubgrupos umCtrlSubgrupo;
         Classes.grupos umGrupo;
-        List<Classes.grupos> listaGrupos;
-        public frmCadastroSubGrupos()
+
+        public frmCadastroSubGrupos(Controllers.ctrlSubgrupos pCtrlSubgrupo)
         {
             InitializeComponent();
-            frmConsGrupo = new frmConsultas.frmConsultaGrupos();
-            umCtrlSubgrupo = new Controllers.ctrlSubgrupos();
-            umGrupo = new Classes.grupos();
-            listaGrupos = new List<Classes.grupos>();
-        }
-        public frmCadastroSubGrupos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlSubgrupo = new Controllers.ctrlSubgrupos(pUmaConexao);
+            umCtrlSubgrupo = pCtrlSubgrupo;
             umGrupo = new Classes.grupos();
             btn_Pesquisar.Image = umImgPesquisaSair;
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
         public override void SetFrmCons(Form pFrmCad)
         {
@@ -74,8 +64,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoGrupo.Text = umGrupo.Codigo.ToString();
                 txtb_Grupo.Text = umGrupo.Grupo;
             }
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
@@ -115,15 +103,29 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoGrupo.Text, out int i))
+                if (int.TryParse(txtb_CodigoGrupo.Text, out int vlCodigo))
                 {
-                    foreach (Classes.grupos vlGrupo in listaGrupos)
+                    var vlGrupo =
+                         (Classes.grupos)umCtrlSubgrupo.CTRLGrupo.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlGrupo != null)
                     {
-                        if (vlGrupo.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Grupo.Text = vlGrupo.Grupo;
-                            umGrupo = vlGrupo.ThisGrupo;
+                            umGrupo.ThisGrupo = vlGrupo;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Grupo.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Grupo.Clear();
                     }
                 }
             }
@@ -131,10 +133,26 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Subgrupo_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Subgrupo.Text, 2, true))
+            if (ValidacaoNome(txtb_Subgrupo.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Subgrupo, null);
-                e.Cancel = false;
+                if (umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Subgrupo.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Subgrupo, "Subgrupo já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Subgrupo, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Subgrupo, null);
+                    e.Cancel = false;
+                }
             }
             else
             {

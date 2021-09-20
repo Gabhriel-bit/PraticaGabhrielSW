@@ -51,9 +51,8 @@ namespace Projeto_ICI.frmConsultas
             // frmConsultaFuncionarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(614, 431);
+            this.ClientSize = new System.Drawing.Size(611, 377);
             this.Name = "frmConsultaFuncionarios";
-            this.Text = "Consulta de Funcinário";
             this.Load += new System.EventHandler(this.frmConsultaFuncionarios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);

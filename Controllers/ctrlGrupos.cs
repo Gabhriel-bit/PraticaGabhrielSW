@@ -14,13 +14,10 @@ namespace Projeto_ICI.Controllers
                                            "dataCad as cadastro, " +
                                            "dataUltAlt as ultima_Alteração";
         private DAOs.daoGrupos umDaoGrupo;
-        public ctrlGrupos()
+
+        public ctrlGrupos(BancoDados.conexoes pUmaConexa, DAOs.daoGrupos pDaoGrupo)
         {
-            umDaoGrupo = new DAOs.daoGrupos();
-        }
-        public ctrlGrupos(BancoDados.conexoes pUmaConexa)
-        {
-            umDaoGrupo = new DAOs.daoGrupos();
+            umDaoGrupo = pDaoGrupo;
             UmaConexao = pUmaConexa;
         }
 
@@ -74,9 +71,8 @@ namespace Projeto_ICI.Controllers
         {
             DataTable vlTabelaGrupo =
                           ExecuteComandSearchQuery(
-                                 umDaoGrupo.PesquisarToString("grupos", camposSelect, "", ""), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaGrupo == null)
+                                 umDaoGrupo.PesquisarToString("grupos", camposSelect, "", ""), out pMsg);
+            if (vlTabelaGrupo.Rows.Count == 0)
             {
                 return null;
             }
@@ -94,12 +90,30 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
+        {
+            DataTable vlTabelaGrupo =
+              ExecuteComandSearchQuery(
+                     umDaoGrupo.PesquisarToString("grupos", camposSelect, pCampo, pValor, default, pDisponivel),
+                                                  out pMsg);
+            if (vlTabelaGrupo.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaGrupo.Rows[0];
+               return new Classes.grupos((int)row[0], (int)row[2],
+                                         (string)row[3], (string)row[4],
+                                         (string)row[1]);
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlTable = ExecuteComandSearchQuery(
                           umDaoGrupo.PesquisarToString("grupos", camposSelect,
-                             pCampo, pValor), out string vlMsg);
-            pMsg = vlMsg;
+                             pCampo, pValor, default, pValorIgual), out pMsg);
             return vlTable;
         }
     }

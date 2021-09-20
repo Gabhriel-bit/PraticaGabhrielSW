@@ -17,16 +17,11 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoSubgrupos umDaoSubgrupo;
 
-        public ctrlSubgrupos()
+        public ctrlSubgrupos(BancoDados.conexoes pUmaConexao, DAOs.daoSubgrupos pDaoSubgrupo,
+            Controllers.ctrlGrupos pCtrlGrupo)
         {
-            umDaoSubgrupo = new DAOs.daoSubgrupos();
-            umaCtrlGrupo = new ctrlGrupos(); ;
-        }
-
-        public ctrlSubgrupos(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoSubgrupo = new DAOs.daoSubgrupos();
-            umaCtrlGrupo = new ctrlGrupos(pUmaConexao);
+            umDaoSubgrupo = pDaoSubgrupo;
+            umaCtrlGrupo = pCtrlGrupo;
             UmaConexao = pUmaConexao;
         }
 
@@ -82,10 +77,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaSubgrupos =
                  ExecuteComandSearchQuery(
                        umDaoSubgrupo.PesquisarToString("subgrupos",
-                       camposSelList.Replace(", grupo, ", ", codigoGrupo, "), "", ""), out string vlMsg);
-            var vlListaGrupos = umaCtrlGrupo.PesquisarCollection(out string vlMsgGrupo);
-            pMsg = vlMsg + '\n' + vlMsgGrupo;
-            if (vlTabelaSubgrupos == null)
+                       camposSelList.Replace(", grupo, ", ", codigoGrupo, "), "", ""), out pMsg);
+
+            if (vlTabelaSubgrupos.Rows.Count == 0)
             {
                 return null;
             }
@@ -99,12 +93,13 @@ namespace Projeto_ICI.Controllers
                     var vlSubgrupo = new Classes.subgrupos((int)row[0], (int)row[3],
                                                         (string)row[4], (string)row[5],
                                                         (string)row[1]);
-                    vlSubgrupo.UmGrupo.Codigo = (int)row[2];
-                    foreach (Classes.grupos vlGrupo in vlListaGrupos)
-                    {
-                        if (vlGrupo.Codigo == vlSubgrupo.UmGrupo.Codigo)
-                        { vlSubgrupo.UmGrupo.ThisGrupo = vlGrupo; }
-                    }
+
+                    vlSubgrupo.UmGrupo = (Classes.grupos)umaCtrlGrupo.Pesquisar("codigo",
+                                                                                ((int)row[2]).ToString(),
+                                                                                out string vlMsgGrupo,
+                                                                                true);
+                    pMsg += vlMsgGrupo;
+
                     lista.Add(vlSubgrupo);
                 }
                 pMsg = "";
@@ -112,13 +107,41 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("subgrupos.", "");
+            DataTable vlTabelaSubgrupos =
+                 ExecuteComandSearchQuery(
+                       umDaoSubgrupo.PesquisarToString("subgrupos",
+                       camposSelList.Replace(", grupo, ", ", codigoGrupo, "),
+                       pCampo, pValor, default, pValorIgual),
+                       out pMsg);
+
+            if (vlTabelaSubgrupos.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaSubgrupos.Rows[0];
+                var vlSubgrupo = new Classes.subgrupos((int)row[0], (int)row[3],
+                                                    (string)row[4], (string)row[5],
+                                                    (string)row[1]);
+                vlSubgrupo.UmGrupo = (Classes.grupos)umaCtrlGrupo.Pesquisar("codigo",
+                                                                            ((int)row[2]).ToString(),
+                                                                            out string vlMsgGrupo,
+                                                                            true);
+                pMsg = vlMsgGrupo;
+                return vlSubgrupo;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlSubgrupo = new Classes.subgrupos();
             var vlTable = ExecuteComandSearchQuery(
                           umDaoSubgrupo.PesquisarToString("subgrupos, grupos", camposSelect,
-                          pCampo, pValor, vlSubgrupo.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+                          pCampo, pValor, vlSubgrupo.toStringSearchPesquisa()), out pMsg);
             return vlTable;
         }
     }

@@ -11,15 +11,11 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroPaises : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         private Controllers.ctrlPaises umCtrlPais;
-        public frmCadastroPaises()
+
+        public frmCadastroPaises(Controllers.ctrlPaises pCtrlPais)
         {
             InitializeComponent();
-            umCtrlPais = new Controllers.ctrlPaises();
-        }
-        public frmCadastroPaises(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlPais = new Controllers.ctrlPaises(pUmaConexao);
+            umCtrlPais = pCtrlPais;
         }
 
         public override void CarregarTxtBox(object pUmObjeto)
@@ -76,10 +72,26 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Pais_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Pais.Text, 2, true))
+            if (ValidacaoNome(txtb_Pais.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Pais, null);
-                e.Cancel = false;
+                if (umCtrlPais.Pesquisar("pais", txtb_Pais.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Pais, "País já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Pais, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Pais, null);
+                    e.Cancel = false;
+                }
             }
             else
             {

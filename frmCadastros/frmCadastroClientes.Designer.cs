@@ -54,8 +54,6 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_PesquisarCidade
             // 
-            this.btn_PesquisarCidade.Click += new System.EventHandler(this.btn_PesquisarCidade_Click);
-            // 
             // txtb_CodigoUsu
             // 
             this.txtb_CodigoUsu.Location = new System.Drawing.Point(24, 377);

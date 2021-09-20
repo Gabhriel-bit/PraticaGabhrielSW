@@ -13,19 +13,11 @@ namespace Projeto_ICI.frmConsultas
         frmCadastros.frmCadastroGrupos frmCadGrupo;
         Controllers.ctrlGrupos umCtrlGrupos;
         Classes.grupos umGrupo;
-        public frmConsultaGrupos()
-        {
-            InitializeComponent();
-            frmCadGrupo = new frmCadastros.frmCadastroGrupos();
-            umCtrlGrupos = new Controllers.ctrlGrupos();
-            umGrupo = new Classes.grupos();
-            carregarDados(umCtrlGrupos);
-        }
 
-        public frmConsultaGrupos(BancoDados.conexoes pUmaConexao)
+        public frmConsultaGrupos(Controllers.ctrlGrupos pCtrlGrupo)
         {
             InitializeComponent();
-            umCtrlGrupos = new Controllers.ctrlGrupos(pUmaConexao);
+            umCtrlGrupos = pCtrlGrupo;
             umGrupo = new Classes.grupos();
             carregarDados(umCtrlGrupos);
         }
@@ -38,24 +30,6 @@ namespace Projeto_ICI.frmConsultas
             umGrupo = (Classes.grupos)pOBJ;
         }
 
-        private Classes.grupos dataGridToGrupo()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlGrupo = new Classes.grupos((int)row[0].Value, (int)row[2].Value,
-                                                (string)row[3].Value, (string)row[4].Value,
-                                                (string)row[1].Value);
-                return vlGrupo;
-            }
-
-        }
-
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadGrupo.ClearTxTBox();
@@ -65,10 +39,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlGrupo = dataGridToGrupo();
+            var vlGrupo = (Classes.grupos)dataGridToObj(umCtrlGrupos, out string vlMsg);
             if (vlGrupo == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um grupo");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -86,10 +65,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlGrupo = dataGridToGrupo();
+            var vlGrupo = (Classes.grupos)dataGridToObj(umCtrlGrupos, out string vlMsg);
             if (vlGrupo == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um grupo!");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -110,10 +94,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlGrupo = dataGridToGrupo();
+                var vlGrupo = (Classes.grupos)dataGridToObj(umCtrlGrupos, out string vlMsg);
                 if (vlGrupo == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um grupo!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -135,13 +124,13 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlGrupos.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlGrupos.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlGrupos.Pesquisar("grupo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlGrupos.Pesquisar("grupo", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

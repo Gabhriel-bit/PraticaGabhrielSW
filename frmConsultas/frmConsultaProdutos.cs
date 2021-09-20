@@ -17,18 +17,11 @@ namespace Projeto_ICI.frmConsultas
 
         List<Classes.modelos> listaModelos;
         List<Classes.subgrupos> listaSubgrupos;
-        public frmConsultaProdutos()
-        {
-            InitializeComponent();
-            frmCadProduto = new frmCadastros.frmCadastroProdutos();
-            umCtrlProduto = new Controllers.ctrlProdutos();
-            umProduto = new Classes.produtos();
 
-        }
-        public frmConsultaProdutos(BancoDados.conexoes pUmaConexao)
+        public frmConsultaProdutos(Controllers.ctrlProdutos pCtrlProduto)
         {
             InitializeComponent();
-            umCtrlProduto = new Controllers.ctrlProdutos(pUmaConexao);
+            umCtrlProduto = pCtrlProduto;
             umProduto = new Classes.produtos();
 
             carregarDados(umCtrlProduto);
@@ -42,7 +35,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaSubgrupos = umCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgSubg);
             listaModelos = umCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgMod);
-            showErrorMsg(new string[] { vlMsgMod, vlMsgSubg});
+            showErrorMsg(new string[] { vlMsgMod, vlMsgSubg });
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -54,47 +47,17 @@ namespace Projeto_ICI.frmConsultas
             frmCadProduto.ShowDialog();
             carregarDados(umCtrlProduto);
         }
-        private Classes.produtos dataGridToProduto()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlProduto = new
-                    Classes.produtos((int)row[0].Value, (int)row[9].Value,
-                                     (string)row[10].Value, (string)row[11].Value,
-                                     (string)row[1].Value, (string)row[5].Value,
-                                     (string)row[6].Value,
-                                     decimal.Parse(row[2].Value.ToString(), vgEstilo, vgProv),
-                                     (int)row[3].Value, (int)row[4].Value);
-
-                vlProduto.ListaFornecedores = umCtrlProduto.PesquisarCollection(vlProduto.Codigo, out string vlMsg);
-                showErrorMsg(vlMsg);
-                vlProduto.UmModelo.Codigo = (int)row[7].Value;
-                foreach (Classes.modelos vlModelo in listaModelos)
-                {
-                    if (vlModelo.Codigo == vlProduto.UmModelo.Codigo)
-                    { vlProduto.UmModelo.ThisModelo = vlModelo; }
-                }
-                vlProduto.UmSubgrupo.Codigo = (int)row[8].Value;
-                foreach (Classes.subgrupos vlSubgrupo in listaSubgrupos)
-                {
-                    if (vlSubgrupo.Codigo == vlProduto.UmSubgrupo.Codigo)
-                    { vlProduto.UmSubgrupo.ThisSubgrupo = vlSubgrupo; }
-                }
-                return vlProduto;
-            }
-        }
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlProduto = dataGridToProduto();
+            var vlProduto = (Classes.produtos)dataGridToObj(umCtrlProduto, out string vlMsg);
             if (vlProduto == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um produto");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -112,10 +75,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlProduto = dataGridToProduto();
+            var vlProduto = (Classes.produtos)dataGridToObj(umCtrlProduto, out string vlMsg);
             if (vlProduto == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um produto");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Excluir, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -135,10 +103,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlProduto = dataGridToProduto();
+                var vlProduto = (Classes.produtos)dataGridToObj(umCtrlProduto, out string vlMsg);
                 if (vlProduto == null)
                 {
-                    errorMSG.SetError(btn_Sair, "Selecione um e apenas um produto!");
+                    errorMSG.SetError(btn_Alterar, "Selecione um e apenas um produto!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -160,12 +133,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlProduto.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlProduto.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlProduto.Pesquisar("produto", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlProduto.Pesquisar("produto", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {

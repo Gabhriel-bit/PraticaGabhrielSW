@@ -51,9 +51,8 @@ namespace Projeto_ICI.frmConsultas
             // frmConsultaCondicoesPagamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(614, 431);
+            this.ClientSize = new System.Drawing.Size(611, 377);
             this.Name = "frmConsultaCondicoesPagamento";
-            this.Text = "Consulta de Condições de Pagamento";
             this.Load += new System.EventHandler(this.frmConsultaCondicoesPagamento_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);

@@ -11,15 +11,11 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroGrupos : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         Controllers.ctrlGrupos umCtrlGrupo;
-        public frmCadastroGrupos()
+
+        public frmCadastroGrupos(Controllers.ctrlGrupos pCtrlGrupo)
         {
             InitializeComponent();
-            umCtrlGrupo = new Controllers.ctrlGrupos();
-        }
-        public frmCadastroGrupos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlGrupo = new Controllers.ctrlGrupos(pUmaConexao);
+            umCtrlGrupo = pCtrlGrupo;
         }
         public override void CarregarTxtBox(object pUmObjeto)
         {
@@ -50,8 +46,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.SetError(txtb_Grupo, null);
-                e.Cancel = false;
+                if (umCtrlGrupo.Pesquisar("grupo", txtb_Grupo.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Grupo, "Grupo já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Grupo, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Grupo, null);
+                    e.Cancel = false;
+                }
             }
         }
 

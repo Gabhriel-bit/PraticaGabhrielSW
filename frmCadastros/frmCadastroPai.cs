@@ -85,6 +85,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void frmCadastroPai_Load(object sender, EventArgs e)
         {
+            closing = false;
             if (Btn_Acao == "Salvar")
             {
                 this.txtb_DataCadastro.Text = DateTime.Today.ToString().Remove(11);

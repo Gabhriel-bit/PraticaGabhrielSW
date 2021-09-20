@@ -1,9 +1,25 @@
 IF DB_ID('praticaDBGabhriel') IS NOT NULL
 BEGIN
+
+	IF OBJECT_ID('contas_pagar') IS NOT NULL
+	BEGIN
+		DROP TABLE contas_pagar;
+	END
+	
+	IF OBJECT_ID('produtos_nf') IS NOT NULL
+	BEGIN
+		DROP TABLE produtos_nf;
+	END
+
+	IF OBJECT_ID('nf_compra') IS NOT NULL
+	BEGIN
+		DROP TABLE nf_compra;
+	END
+	
 	IF OBJECT_ID('deposito_produto') IS NOT NULL
 	BEGIN
 		DROP TABLE deposito_produto;
-	END
+	END 
 	
 	IF OBJECT_ID('produto_fornecedor') IS NOT NULL
 	BEGIN
@@ -74,7 +90,17 @@ BEGIN
 	BEGIN
 		DROP TABLE cargos;
 	END
+
+	IF OBJECT_ID('transportadoras') IS NOT NULL
+	BEGIN
+		DROP TABLE transportadoras;
+	END
 	
+	IF OBJECT_ID('veiculos') IS NOT NULL
+	BEGIN
+		DROP TABLE veiculos;
+	END
+		
 	IF OBJECT_ID('cidades') IS NOT NULL
 	BEGIN
 		DROP TABLE cidades;

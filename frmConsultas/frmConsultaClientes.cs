@@ -16,18 +16,11 @@ namespace Projeto_ICI.frmConsultas
         List<Classes.condicoesPagamento> listaCondPag;
         List<Classes.cidades> listaCidades;
         Classes.clientes umCliente;
-        public frmConsultaClientes()
+
+        public frmConsultaClientes(Controllers.ctrlClientes pCtrlCliente)
         {
             InitializeComponent();
-            frmCadCliente = new frmCadastros.frmCadastroClientes();
-            umCtrlCliente = new ctrlClientes();
-            umCliente = new Classes.clientes();
-            carregarDados(umCtrlCliente);
-        }
-        public frmConsultaClientes(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCliente = new ctrlClientes(pUmaConexao);
+            umCtrlCliente = pCtrlCliente;
             umCliente = new Classes.clientes();
             carregarDados(umCtrlCliente);
         }
@@ -40,45 +33,13 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
             listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag});
+            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag });
         }
         public override void ConhecaOBJ(object pOBJ)
         {
             umCliente = (Classes.clientes)pOBJ;
         }
-        private Classes.clientes dataGridToCliente()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlCliente = new Classes.clientes((int)row[0].Value, (int)row[14].Value,
-                                                      (string)row[15].Value, (string)row[16].Value,
-                                                      (string)row[1].Value, (string)row[7].Value,
-                                                      (string)row[8].Value, (string)row[9].Value,
-                                                      (string)row[6].Value, (string)row[10].Value,
-                                                      (string)row[3].Value, (string)row[4].Value,
-                                                      (string)row[11].Value, (string)row[12].Value,
-                                                      (string)row[13].Value);
-                vlCliente.UmaCondPag.Codigo = (int)row[2].Value;
-                vlCliente.UmaCidade.Codigo = (int)row[5].Value;
-                foreach (Classes.condicoesPagamento vlCondPag in listaCondPag)
-                {
-                    if (vlCondPag.Codigo == vlCliente.UmaCondPag.Codigo)
-                    { vlCliente.UmaCondPag.ThisCondPag = vlCondPag; }
-                }
-                foreach (Classes.cidades vlCidade in listaCidades)
-                {
-                    if (vlCidade.Codigo == vlCliente.UmaCidade.Codigo)
-                    { vlCliente.UmaCidade.ThisCidade = vlCidade; }
-                }
-                return vlCliente;
-            }
-        }
+
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadCliente.ClearTxTBox();
@@ -88,10 +49,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlCliente = dataGridToCliente();
+            var vlCliente = (Classes.clientes)dataGridToObj(umCtrlCliente, out string vlMsg);
             if (vlCliente == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um cliente");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -109,10 +75,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlCliente = dataGridToCliente();
+            var vlCliente = (Classes.clientes)dataGridToObj(umCtrlCliente, out string vlMsg);
             if (vlCliente == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um cliente");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -132,10 +103,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlCliente = dataGridToCliente();
+                var vlCliente = (Classes.clientes)dataGridToObj(umCtrlCliente, out string vlMsg);
                 if (vlCliente == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um cliente!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -151,30 +127,30 @@ namespace Projeto_ICI.frmConsultas
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCliente.Pesquisar("", "", out vlMsg);
+                dataGridView.DataSource = umCtrlCliente.Pesquisar("", "", default, out vlMsg);
             }
             else if (ValidacaoCPF(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCliente.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), out vlMsg);
+                dataGridView.DataSource = umCtrlCliente.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoCNPJ(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCliente.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), out vlMsg);
+                dataGridView.DataSource = umCtrlCliente.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCliente.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCliente.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCliente.Pesquisar("cliente", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCliente.Pesquisar("cliente", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

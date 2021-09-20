@@ -15,18 +15,11 @@ namespace Projeto_ICI.frmConsultas
         Controllers.ctrlSubgrupos umCtrlSubgrupo;
         List<Classes.grupos> listaGrupos;
         Classes.subgrupos umSubgrupo;
-        public frmConsultaSubgrupos()
+
+        public frmConsultaSubgrupos(Controllers.ctrlSubgrupos pCtrlSubgrupo)
         {
             InitializeComponent();
-            frmCadSubGrupo = new frmCadastros.frmCadastroSubGrupos();
-            umCtrlSubgrupo = new Controllers.ctrlSubgrupos();
-            umSubgrupo = new Classes.subgrupos();
-            carregarDados(umCtrlSubgrupo);
-        }
-        public frmConsultaSubgrupos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlSubgrupo = new Controllers.ctrlSubgrupos(pUmaConexao);
+            umCtrlSubgrupo = pCtrlSubgrupo;
             umSubgrupo = new Classes.subgrupos();
             carregarDados(umCtrlSubgrupo);
         }
@@ -46,29 +39,6 @@ namespace Projeto_ICI.frmConsultas
             umSubgrupo = (Classes.subgrupos)pOBJ;
         }
 
-        private Classes.subgrupos dataGridToSubgrupo()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlSubgrupo = new Classes.subgrupos((int)row[0].Value, (int)row[3].Value,
-                                                     (string)row[4].Value, (string)row[5].Value,
-                                                     (string)row[1].Value);
-                vlSubgrupo.UmGrupo.Codigo = (int)row[2].Value;
-                foreach (Classes.grupos vlGrupo in listaGrupos)
-                {
-                    if (vlGrupo.Codigo == vlSubgrupo.UmGrupo.Codigo)
-                    { vlSubgrupo.UmGrupo.ThisGrupo = vlGrupo; }
-                }
-                return vlSubgrupo;
-            }
-        }
-
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadSubGrupo.ClearTxTBox();
@@ -78,10 +48,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlSubgrupo = dataGridToSubgrupo();
+            var vlSubgrupo = (Classes.subgrupos)dataGridToObj(umCtrlSubgrupo, out string vlMsg);
             if (vlSubgrupo == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um subgrupo");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -99,10 +74,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlSubgrupo = dataGridToSubgrupo();
+            var vlSubgrupo = (Classes.subgrupos)dataGridToObj(umCtrlSubgrupo, out string vlMsg);
             if (vlSubgrupo == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um subgrupo");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -123,10 +103,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlSubgrupo = dataGridToSubgrupo();
+                var vlSubgrupo = (Classes.subgrupos)dataGridToObj(umCtrlSubgrupo, out string vlMsg);
                 if (vlSubgrupo == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um subgrupo!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -148,12 +133,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {

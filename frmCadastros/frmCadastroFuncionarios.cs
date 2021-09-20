@@ -11,38 +11,19 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroFuncionarios : Projeto_ICI.frmCadastros.frmCadastroPessoas
     {
         frmConsultas.frmConsultaCargos frmConsCargo;
-        List<Classes.cargos> listaCargos;
         Classes.cargos umCargo;
 
         Controllers.ctrlFuncionarios umCtrlFunc;
-        public frmCadastroFuncionarios()
+
+        public frmCadastroFuncionarios(Controllers.ctrlFuncionarios pCtrlFunc)
         {
             InitializeComponent();
-            umCtrlFunc = new Controllers.ctrlFuncionarios();
-            obrigatorioGrupoCNH(false);
-
-            string vlMsg = "";
-            frmConsCidade = new frmConsultas.frmConsultaCidades();
-            umaCidade = new Classes.cidades();
-            listaCidades = new List<Classes.cidades>();
-
-            frmConsCargo = new frmConsultas.frmConsultaCargos();
-            umCargo = new Classes.cargos();
-            listaCargos = new List<Classes.cargos>();
-        }
-        public frmCadastroFuncionarios(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
+            umCtrlFunc = pCtrlFunc;
+            umCtrlCidade = pCtrlFunc.CTRLCidade;
             obrigatorioGrupoCNH(false);
 
             umaCidade = new Classes.cidades();
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-
             umCargo = new Classes.cargos();
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
-            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade});
-
             btn_PesquisarCargo.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form[] pFrmCad)
@@ -236,14 +217,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCargo.Text = umCargo.Codigo.ToString();
                 obrigatorioGrupoCNH(umCargo.CNH);
             }
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
-        }
-
-        private void btn_PesquisarCidade_Click(object sender, EventArgs e)
-        {
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void obrigatorioGrupoCNH(bool pObg)
@@ -283,16 +256,29 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoCargo.Text, out int i))
+                if (int.TryParse(txtb_CodigoCargo.Text, out int vlCodigo))
                 {
-                    foreach (Classes.cargos vlCargo in listaCargos)
+                    var vlCargo =
+                         (Classes.cargos)umCtrlFunc.CTRLCargo.Pesquisar("codigo",
+                                                                         vlCodigo.ToString(),
+                                                                         out string vlMsg,
+                                                                         false);
+                    if (vlCargo != null)
                     {
-                        if (vlCargo.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Cargo.Text = vlCargo.Cargo;
-                            umCargo = vlCargo.ThisCargo;
-                            obrigatorioGrupoCNH(umCargo.CNH);
+                            umCargo.ThisCargo = vlCargo;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Cargo.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Cargo.Clear();
                     }
                 }
             }
@@ -300,15 +286,31 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Funcionario_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Funcionario.Text, 2, true))
+            if (ValidacaoNome(txtb_Funcionario.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Funcionario, "Funcionário inválido!");
-                e.Cancel = closing;
+                if (umCtrlFunc.Pesquisar("funcionario", txtb_Funcionario.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Funcionario, "Funcionário já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Funcionario, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Funcionario, null);
+                    e.Cancel = false;
+                }
             }
             else
             {
-                errorMSG.SetError(lbl_Funcionario, null);
-                e.Cancel = false;
+                errorMSG.SetError(lbl_Funcionario, "Funcionário inválido!");
+                e.Cancel = closing;
             }
         }
 

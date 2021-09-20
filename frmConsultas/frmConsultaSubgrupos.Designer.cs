@@ -51,10 +51,9 @@ namespace Projeto_ICI.frmConsultas
             // frmConsultaSubgrupos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(614, 431);
+            this.ClientSize = new System.Drawing.Size(611, 377);
             this.Name = "frmConsultaSubgrupos";
-            this.Text = "Consulta de Subgrupos";
-            this.Load += new System.EventHandler(this.frmConsultaSubgrupos_Load);
+            this.Click += new System.EventHandler(this.frmConsultaSubgrupos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

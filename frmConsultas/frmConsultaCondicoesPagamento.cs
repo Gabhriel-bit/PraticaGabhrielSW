@@ -13,18 +13,11 @@ namespace Projeto_ICI.frmConsultas
         frmCadastros.frmCadastroCondicoesPagamento frmCadCondPag;
         Controllers.ctrlCondicoesPagamento umCtrlCondPag;
         Classes.condicoesPagamento umaCondPag;
-        public frmConsultaCondicoesPagamento()
+
+        public frmConsultaCondicoesPagamento(Controllers.ctrlCondicoesPagamento pCtrlCondPag)
         {
             InitializeComponent();
-            frmCadCondPag = new frmCadastros.frmCadastroCondicoesPagamento();
-            umCtrlCondPag = new Controllers.ctrlCondicoesPagamento();
-            umaCondPag = new Classes.condicoesPagamento();
-            carregarDados(umCtrlCondPag);
-        }
-        public frmConsultaCondicoesPagamento(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCondPag = new Controllers.ctrlCondicoesPagamento(pUmaConexao);
+            umCtrlCondPag = pCtrlCondPag;
             umaCondPag = new Classes.condicoesPagamento();
             carregarDados(umCtrlCondPag);
         }
@@ -36,28 +29,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umaCondPag = (Classes.condicoesPagamento)pOBJ;
         }
-        private Classes.condicoesPagamento dataGridToCondPag()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlCondPag = new
-                    Classes.condicoesPagamento((int)row[0].Value, (int)row[6].Value,
-                                               (string)row[7].Value, (string)row[8].Value,
-                                               (string)row[1].Value, (int)row[2].Value,
-                                               decimal.Parse(row[3].Value.ToString(), vgEstilo, vgProv),
-                                               decimal.Parse(row[4].Value.ToString(), vgEstilo, vgProv),
-                                               decimal.Parse(row[5].Value.ToString(), vgEstilo, vgProv));
-                vlCondPag.ListaParcelas = umCtrlCondPag.PesquisarCollection(vlCondPag.Codigo, out string vlMsg);
-                showErrorMsg(vlMsg);
-                return vlCondPag;
-            }
-        }
+
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadCondPag.ClearTxTBox();
@@ -67,10 +39,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlCondPag = dataGridToCondPag();
+            var vlCondPag = (Classes.condicoesPagamento)dataGridToObj(umCtrlCondPag, out string vlMsg);
             if (vlCondPag == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione uma e apenas uma condição de pagamento");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -88,10 +65,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlCondPag = dataGridToCondPag();
+            var vlCondPag = (Classes.condicoesPagamento)dataGridToObj(umCtrlCondPag, out string vlMsg);
             if (vlCondPag == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione uma e apenas uma condição de pagamento");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -111,10 +93,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlCondPag = dataGridToCondPag();
+                var vlCondPag = (Classes.condicoesPagamento)dataGridToObj(umCtrlCondPag, out string vlMsg);
                 if (vlCondPag == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione uma e apenas uma condição de pagamento!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -135,12 +122,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCondPag.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCondPag.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {

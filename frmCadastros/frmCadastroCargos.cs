@@ -11,16 +11,11 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroCargos : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         Controllers.ctrlCargos umCtrlCargo;
-        public frmCadastroCargos()
+
+        public frmCadastroCargos(Controllers.ctrlCargos pCtrlCargo)
         {
             InitializeComponent();
-            umCtrlCargo = new Controllers.ctrlCargos();
-            alterarRbtnCNH = false;
-        }
-        public frmCadastroCargos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCargo = new Controllers.ctrlCargos(pUmaConexao);
+            umCtrlCargo = pCtrlCargo;
             alterarRbtnCNH = false;
         }
         public override void CarregarTxtBox(object pUmObjeto)
@@ -72,8 +67,24 @@ namespace Projeto_ICI.frmCadastros
         {
             if (ValidacaoNome(txtb_Cargo.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Cargo, null);
-                e.Cancel = false;
+                if (umCtrlCargo.Pesquisar("cargo", txtb_Cargo.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Cargo, "Cargo já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Cargo, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Cargo, null);
+                    e.Cancel = false;
+                }
             }
             else
             {

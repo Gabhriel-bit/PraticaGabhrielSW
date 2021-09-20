@@ -15,13 +15,10 @@ namespace Projeto_ICI.Controllers
                                            "dataUltAlt as ultima_Alteração";
         private DAOs.daoFormasPagamento umDaoFormPag;
 
-        public ctrlFormasPagamento()
+        public ctrlFormasPagamento(BancoDados.conexoes pUmaConexa,
+            DAOs.daoFormasPagamento pDaoFormPag)
         {
-            umDaoFormPag = new DAOs.daoFormasPagamento();
-        }
-        public ctrlFormasPagamento(BancoDados.conexoes pUmaConexa)
-        {
-            umDaoFormPag = new DAOs.daoFormasPagamento();
+            umDaoFormPag = pDaoFormPag;
             UmaConexao = pUmaConexa;
         }
 
@@ -76,9 +73,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaFormaPag =
                           ExecuteComandSearchQuery(
                                  umDaoFormPag.PesquisarToString("formasPagamento",
-                                 camposSelect, "", ""), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaFormaPag == null)
+                                 camposSelect, "", ""), out pMsg);
+
+            if (vlTabelaFormaPag.Rows.Count == 0)
             {
                 return null;
             }
@@ -96,11 +93,31 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
+        {
+            DataTable vlTabelaFormaPag =
+              ExecuteComandSearchQuery(
+                     umDaoFormPag.PesquisarToString("formasPagamento",
+                     camposSelect, pCampo, pValor, default, pDisponivel), out string vlMsg);
+            pMsg = vlMsg;
+            if (vlTabelaFormaPag.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaFormaPag.Rows[0];
+                return new Classes.formasPagamento((int)row[0], (int)row[2],
+                                                   (string)row[3], (string)row[4],
+                                                   (string)row[1]);
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlTable = ExecuteComandSearchQuery(
                           umDaoFormPag.PesquisarToString("formasPagamento",
-                          camposSelect, pCampo, pValor), out string vlMsg);
+                          camposSelect, pCampo, pValor, default, pValorIgual), out string vlMsg);
             pMsg = vlMsg;
             return vlTable;
         }

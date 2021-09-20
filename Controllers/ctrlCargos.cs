@@ -16,13 +16,9 @@ namespace Projeto_ICI.Controllers
                                            "dataUltAlt as ultima_Ateração";
         private DAOs.daoCargos umDaoCargos;
 
-        public ctrlCargos()
+        public ctrlCargos(BancoDados.conexoes pUmaConexa, DAOs.daoCargos pDaoCargo)
         {
-            umDaoCargos = new DAOs.daoCargos();
-        }
-        public ctrlCargos(BancoDados.conexoes pUmaConexa)
-        {
-            umDaoCargos = new DAOs.daoCargos();
+            umDaoCargos = pDaoCargo;
             UmaConexao = pUmaConexa;
         }
 
@@ -77,9 +73,8 @@ namespace Projeto_ICI.Controllers
         {
             DataTable vlTabelaCargos =
                           ExecuteComandSearchQuery(
-                                 umDaoCargos.PesquisarToString("cargos",camposSelect, "", ""), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaCargos == null)
+                                 umDaoCargos.PesquisarToString("cargos",camposSelect, "", ""), out pMsg);
+            if (vlTabelaCargos.Rows.Count == 0)
             {
                 return null;
             }
@@ -99,12 +94,30 @@ namespace Projeto_ICI.Controllers
                 return lista;
             }
         }
-
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            DataTable vlTabelaCargos =
+                          ExecuteComandSearchQuery(
+                                 umDaoCargos.PesquisarToString("cargos", camposSelect, pCampo, pValor, default, pValorIgual),
+                                 out pMsg);
+            if (vlTabelaCargos.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaCargos.Rows[0];
+                return new Classes.cargos((int)row[0], (int)row[4],
+                                         (string)row[5], (string)row[6],
+                                         bool.Parse((string)row[3]),
+                                         (string)row[1], (string)row[2]);
+            }
+        }
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlTable = ExecuteComandSearchQuery(
-                          umDaoCargos.PesquisarToString("cargos", camposSelect, pCampo, pValor), out string vlMsg);
-            pMsg = vlMsg;
+                          umDaoCargos.PesquisarToString("cargos", camposSelect, pCampo, pValor, default, pValorIgual),
+                          out pMsg);
             return vlTable;
         }
     }

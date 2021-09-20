@@ -11,7 +11,7 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroPessoas : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         protected frmConsultas.frmConsultaCidades frmConsCidade;
-        protected List<Classes.cidades> listaCidades;
+        protected Controllers.ctrlCidades umCtrlCidade;
         protected Classes.cidades umaCidade;
         public frmCadastroPessoas()
         {
@@ -105,20 +105,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoCidade.Text, out int i))
+                if (int.TryParse(txtb_CodigoCidade.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.cidades vlCidade in listaCidades)
+                    var vlCidade =
+                         (Classes.cidades)umCtrlCidade.Pesquisar("codigo",
+                                                                 vlCodigo.ToString(),
+                                                                 out string vlMsg,
+                                                                 false);
+                    if (vlCidade != null)
                     {
-                        if (vlCidade.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Cidade.Text = vlCidade.Cidade;
-                            umaCidade = vlCidade.ThisCidade;
-                            vlFind = true;
+                            umaCidade.ThisCidade = vlCidade;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Cidade.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_Cidade.Clear(); }
+                    else
+                    {
+                        txtb_Cidade.Clear();
+                    }
                 }
             }
         }

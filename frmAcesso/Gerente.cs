@@ -1,13 +1,51 @@
 ﻿using System;
 using Projeto_ICI.frmConsultas;
 using Projeto_ICI.frmCadastros;
+using Projeto_ICI.DAOs;
+using Projeto_ICI.Controllers;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Projeto_ICI
 {
     public partial class Gerente : Form
     {
+        private List<string> itensConsulta;
+        private List<string> itensCadastro;
+
+        private daoCargos umaDaoCargo;
+        private daoCidades umaDaoCidade;
+        private daoClientes umaDaoCliente;
+        private daoCondicoesPagamento umaDaoCondPag;
+        private daoDepositos umaDaoDeposito;
+        private daoEstados umaDaoEstado;
+        private daoFormasPagamento umaDaoFormPag;
+        private daoFornecedores umaDaoForn;
+        private daoFuncionarios umaDaoFunc;
+        private daoGrupos umaDaoGrupo;
+        private daoMarcas umaDaoMarca;
+        private daoModelos umaDaoModelo;
+        private daoPaises umaDaoPais;
+        private daoProdutos umaDaoProduto;
+        private daoSubgrupos umaDaoSubgrupo;
+
+        private ctrlCargos umCtrlCargo;
+        private ctrlCidades umCtrlCidade;
+        private ctrlClientes umCtrlCliente;
+        private ctrlCondicoesPagamento umCtrlCondPag;
+        private ctrlDepositos umCtrlDeposito;
+        private ctrlEstados umCtrlEstado;
+        private ctrlFormasPagamento umCtrlFormPag;
+        private ctrlFornecedores umCtrlForn;
+        private ctrlFuncionarios umCtrlFunc;
+        private ctrlGrupos umCtrlGrupo;
+        private ctrlMarcas umCtrlMarca;
+        private ctrlModelos umCtrlModelo;
+        private ctrlPaises umCtrlPais;
+        private ctrlProdutos umCtrlProduto;
+        private ctrlSubgrupos umCtrlSubgrupo;
+
         private frmCadastroCargos frmCadCargo;
         private frmCadastroCidades frmCadCidade;
         private frmCadastroClientes frmCadCliente;
@@ -41,10 +79,13 @@ namespace Projeto_ICI
         private frmConsultaSubgrupos frmConsSubgrupo;
 
         private BancoDados.conexoes umaConexao;
+
         public Gerente()
         {
             InitializeComponent();
             InicializarAtributos();
+           //frmComprasVendas.frmCadastroCompras f = new frmComprasVendas.frmCadastroCompras();
+           // f.ShowDialog();
         }
         private void InicializarAtributos()
         {
@@ -53,39 +94,72 @@ namespace Projeto_ICI
                 //conexão com banco de dados
                 umaConexao = new BancoDados.conexoes();
 
+                umaDaoCargo = new daoCargos();
+                umaDaoCidade = new daoCidades();
+                umaDaoCliente = new daoClientes();
+                umaDaoCondPag = new daoCondicoesPagamento();
+                umaDaoDeposito= new daoDepositos();
+                umaDaoEstado = new daoEstados();
+                umaDaoFormPag = new daoFormasPagamento();
+                umaDaoForn = new daoFornecedores();
+                umaDaoFunc = new daoFuncionarios();
+                umaDaoGrupo = new daoGrupos();
+                umaDaoMarca= new daoMarcas();
+                umaDaoModelo = new daoModelos();
+                umaDaoPais = new daoPaises();
+                umaDaoProduto = new daoProdutos();
+                umaDaoSubgrupo = new daoSubgrupos();
+
+                umCtrlCargo = new ctrlCargos(umaConexao, umaDaoCargo);
+                umCtrlPais = new ctrlPaises(umaConexao, umaDaoPais);
+                umCtrlGrupo = new ctrlGrupos(umaConexao, umaDaoGrupo);
+                umCtrlMarca = new ctrlMarcas(umaConexao, umaDaoMarca);
+                umCtrlEstado = new ctrlEstados(umaConexao, umaDaoEstado, umCtrlPais);
+                umCtrlSubgrupo = new ctrlSubgrupos(umaConexao, umaDaoSubgrupo, umCtrlGrupo);
+                umCtrlModelo = new ctrlModelos(umaConexao, umaDaoModelo, umCtrlMarca);
+                umCtrlFormPag = new ctrlFormasPagamento(umaConexao, umaDaoFormPag);
+                umCtrlCidade = new ctrlCidades(umaConexao, umaDaoCidade, umCtrlEstado);
+                umCtrlCondPag = new ctrlCondicoesPagamento(umaConexao, umCtrlFormPag, umaDaoCondPag);
+                umCtrlForn = new ctrlFornecedores(umaConexao, umaDaoForn, umCtrlCidade, umCtrlCondPag);
+                umCtrlProduto = new ctrlProdutos(umaConexao, umaDaoProduto, umCtrlModelo, umCtrlSubgrupo, umCtrlForn);
+                umCtrlCliente = new ctrlClientes(umaConexao, umCtrlCidade, umCtrlCondPag, umaDaoCliente);
+                umCtrlDeposito = new ctrlDepositos(umaConexao, umaDaoDeposito, umCtrlCidade, umCtrlProduto);
+                umCtrlFunc = new ctrlFuncionarios(umaConexao, umaDaoFunc, umCtrlCargo, umCtrlCidade);
+                
+
                 //formulários de cadastro
-                frmCadCargo = new frmCadastroCargos(umaConexao);
-                frmCadCidade = new frmCadastroCidades(umaConexao);
-                frmCadCliente = new frmCadastroClientes(umaConexao);
-                frmCadCondPag = new frmCadastroCondicoesPagamento(umaConexao);
-                frmCadDeposito = new frmCadastroDepositos(umaConexao);
-                frmCadEstado = new frmCadastroEstados(umaConexao);
-                frmCadFornecedor = new frmCadastroFornecedores(umaConexao);
-                frmCadFuncionario = new frmCadastroFuncionarios(umaConexao);
-                frmCadGrupo = new frmCadastroGrupos(umaConexao);
-                frmCadMarca = new frmCadastroMarcas(umaConexao);
-                frmCadModelo = new frmCadastroModelos(umaConexao);
-                frmCadPais = new frmCadastroPaises(umaConexao);
-                frmCadProduto = new frmCadastroProdutos(umaConexao);
-                frmCadFormPag = new frmCadastroFormasPagamento(umaConexao);
-                frmCadSubgrupo = new frmCadastroSubGrupos(umaConexao);
+                frmCadCargo = new frmCadastroCargos(umCtrlCargo);
+                frmCadCidade = new frmCadastroCidades(umCtrlCidade);
+                frmCadCliente = new frmCadastroClientes(umCtrlCliente);
+                frmCadCondPag = new frmCadastroCondicoesPagamento(umCtrlCondPag);
+                frmCadDeposito = new frmCadastroDepositos(umCtrlDeposito);
+                frmCadEstado = new frmCadastroEstados(umCtrlEstado);
+                frmCadFornecedor = new frmCadastroFornecedores(umCtrlForn);
+                frmCadFuncionario = new frmCadastroFuncionarios(umCtrlFunc);
+                frmCadGrupo = new frmCadastroGrupos(umCtrlGrupo);
+                frmCadMarca = new frmCadastroMarcas(umCtrlMarca);
+                frmCadModelo = new frmCadastroModelos(umCtrlModelo);
+                frmCadPais = new frmCadastroPaises(umCtrlPais);
+                frmCadProduto = new frmCadastroProdutos(umCtrlProduto);
+                frmCadFormPag = new frmCadastroFormasPagamento(umCtrlFormPag);
+                frmCadSubgrupo = new frmCadastroSubGrupos(umCtrlSubgrupo);
 
                 //formulários de consulta
-                frmConsCargo = new frmConsultaCargos(umaConexao);
-                frmConsCidade = new frmConsultaCidades(umaConexao);
-                frmConsCliente = new frmConsultaClientes(umaConexao);
-                frmConsCondPag = new frmConsultaCondicoesPagamento(umaConexao);
-                frmConsDeposito = new frmConsultaDepositos(umaConexao);
-                frmConsEstado = new frmConsultaEstados(umaConexao);
-                frmConsFornecedor = new frmConsultaFornecedores(umaConexao);
-                frmConsFuncionario = new frmConsultaFuncionarios(umaConexao);
-                frmConsGrupo = new frmConsultaGrupos(umaConexao);
-                frmConsMarca = new frmConsultaMarcas(umaConexao);
-                frmConsModelo = new frmConsultaModelos(umaConexao);
-                frmConsPais = new frmConsultaPaises(umaConexao);
-                frmConsProduto = new frmConsultaProdutos(umaConexao);
-                frmConsFormPag = new frmConsultasFormasPagamento(umaConexao);
-                frmConsSubgrupo = new frmConsultaSubgrupos(umaConexao);
+                frmConsCargo = new frmConsultaCargos(umCtrlCargo);
+                frmConsCidade = new frmConsultaCidades(umCtrlCidade);
+                frmConsCliente = new frmConsultaClientes(umCtrlCliente);
+                frmConsCondPag = new frmConsultaCondicoesPagamento(umCtrlCondPag);
+                frmConsDeposito = new frmConsultaDepositos(umCtrlDeposito);
+                frmConsEstado = new frmConsultaEstados(umCtrlEstado);
+                frmConsFornecedor = new frmConsultaFornecedores(umCtrlForn);
+                frmConsFuncionario = new frmConsultaFuncionarios(umCtrlFunc);
+                frmConsGrupo = new frmConsultaGrupos(umCtrlGrupo);
+                frmConsMarca = new frmConsultaMarcas(umCtrlMarca);
+                frmConsModelo = new frmConsultaModelos(umCtrlModelo);
+                frmConsPais = new frmConsultaPaises(umCtrlPais);
+                frmConsProduto = new frmConsultaProdutos(umCtrlProduto);
+                frmConsFormPag = new frmConsultasFormasPagamento(umCtrlFormPag);
+                frmConsSubgrupo = new frmConsultaSubgrupos(umCtrlSubgrupo);
 
                 //vincula os formulários de consulta com seus respectivos cadastros
                 frmConsCargo.SetFrmCad(frmCadCargo);
@@ -123,6 +197,14 @@ namespace Projeto_ICI
                 Close();
             }
         }
+
+        private void carregarListaConsulta()
+        {
+            itensConsulta = new List<string>();
+            MessageBox.Show(mnItem_Cargos.Name);
+
+        }
+
         private void mnItem_Cargos_Click(object sender, EventArgs e)
         {
             frmConsCargo.ShowDialog();

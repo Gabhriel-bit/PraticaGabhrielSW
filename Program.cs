@@ -23,12 +23,12 @@ namespace Projeto_ICI
             //login.ShowDialog();
             //if (login.ConfirmacaoChave(autorizacao.DataCad))
             //{
-            //try
-            //{
+            try
+            {
                 Application.Run(new Gerente());
-           //}
-           //catch
-           // { }
+            }
+            catch
+            { }
             //}
         }
     }

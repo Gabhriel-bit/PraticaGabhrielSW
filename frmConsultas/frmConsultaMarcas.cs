@@ -13,18 +13,11 @@ namespace Projeto_ICI.frmConsultas
         frmCadastros.frmCadastroMarcas frmCadMarca;
         Controllers.ctrlMarcas umCtrlMarca;
         Classes.marcas umaMarca;
-        public frmConsultaMarcas()
+
+        public frmConsultaMarcas(Controllers.ctrlMarcas pCtrlMarca)
         {
             InitializeComponent();
-            frmCadMarca = new frmCadastros.frmCadastroMarcas();
-            umCtrlMarca = new Controllers.ctrlMarcas();
-            umaMarca = new Classes.marcas();
-            carregarDados(umCtrlMarca);
-        }
-        public frmConsultaMarcas(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlMarca = new Controllers.ctrlMarcas(pUmaConexao);
+            umCtrlMarca = pCtrlMarca;
             umaMarca = new Classes.marcas();
             carregarDados(umCtrlMarca);
         }
@@ -36,23 +29,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umaMarca = (Classes.marcas)pOBJ;
         }
-        private Classes.marcas dataGridToMarca()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlMarca = new Classes.marcas((int)row[0].Value, (int)row[2].Value,
-                                                (string)row[3].Value, (string)row[4].Value,
-                                                (string)row[1].Value);
-                return vlMarca;
-            }
 
-        }
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadMarca.ClearTxTBox();
@@ -62,10 +39,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlMarca = dataGridToMarca();
+            var vlMarca = (Classes.marcas)dataGridToObj(umCtrlMarca, out string vlMsg);
             if (vlMarca == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione uma e apenas uma marca");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -83,10 +65,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlMarca = dataGridToMarca();
+            var vlMarca = (Classes.marcas)dataGridToObj(umCtrlMarca, out string vlMsg);
             if (vlMarca == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione uma e apenas uma marca");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -106,10 +93,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlMarca = dataGridToMarca();
+                var vlMarca = (Classes.marcas)dataGridToObj(umCtrlMarca, out string vlMsg);
                 if (vlMarca == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione uma e apenas uma marca!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -131,13 +123,13 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlMarca.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlMarca.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlMarca.Pesquisar("marca", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlMarca.Pesquisar("marca", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

@@ -27,7 +27,13 @@ namespace Projeto_ICI.Controllers
         {
             return "";
         }
-        public virtual DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public virtual DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
+        {
+            pMsg = "";
+            return null;
+        }
+
+        public virtual object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
         {
             pMsg = "";
             return null;
@@ -36,12 +42,15 @@ namespace Projeto_ICI.Controllers
         protected string ExecucaoComandQuery(string pComandText)
         {
             var conn = new SqlCommand();
+            string vlTitle = this.ToString().Replace("Projeto_ICI.Controllers.ctrl", "Controller ") + ":\n";
+            var vlMsg = "";
             try
             {
                 if (conn == null && conn.Transaction == null)
                 { return "Erro ao conectar ao banco de dados"; }
 
                 //Abre uma conexão com o banco e inicia uma transação
+                vlMsg = vlTitle + "Erro ao conectar ao banco de dados (linhas: 54-55)\n";
                 conn.Connection = conexao.OpenConnection;
                 conn.Transaction = conexao.OpenConnection.BeginTransaction();
 
@@ -49,6 +58,7 @@ namespace Projeto_ICI.Controllers
                 conn.CommandText = pComandText;
 
                 //execuda a string no banco de dados e encerra a transação
+                vlMsg = vlTitle + "Erro ao finalizar execução no Bando de dados (linhas: 62-64)\n";
                 conn.ExecuteNonQuery();
                 conn.Transaction.Commit();
                 conexao.CloseConnection();
@@ -58,7 +68,7 @@ namespace Projeto_ICI.Controllers
             {
                 if (conn.Transaction != null)
                 { conn.Transaction.Rollback(); }
-                return e.Message;
+                return vlMsg + e.Message;
             }
         }
 
@@ -71,18 +81,18 @@ namespace Projeto_ICI.Controllers
             try
             {
                 //Abre uma conexão com o banco e inicia uma transação
-                vlMsg = vlTitle + "Erro ao conectar ao banco de dados (linhas: 74-77)";
+                vlMsg = vlTitle + "Erro ao conectar ao banco de dados (linhas: 74-77)\n";
                 conn.Connection = conexao.OpenConnection;
                 conn.Transaction = conexao.OpenConnection.BeginTransaction();
 
                 conn.CommandText = pComandText;
 
-                vlMsg = vlTitle + "Erro ao carregar tabelas (linhas: 80-82)";
+                vlMsg = vlTitle + "Erro ao carregar tabelas (linhas: 80-82)\n";
                 SqlDataAdapter adp = new SqlDataAdapter(conn);
                 DataTable resultado = new DataTable();
                 adp.Fill(resultado);
 
-                vlMsg = vlTitle + "Erro ao finalizar execução no Bando de dados (linhas: 85-86)";
+                vlMsg = vlTitle + "Erro ao finalizar execução no Bando de dados (linhas: 85-86)\n";
                 conn.Transaction.Commit();
                 conexao.CloseConnection();
 
@@ -93,7 +103,7 @@ namespace Projeto_ICI.Controllers
             {
                 if (conn.Transaction != null)
                 { conn.Transaction.Rollback(); }
-                pMsgErro = vlMsg + '\n' + e.Message;
+                pMsgErro = vlMsg + e.Message;
                 return new DataTable();
             }
         }

@@ -11,49 +11,23 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroProdutos : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         frmConsultas.frmConsultaSubgrupos frmConsSubGrupo;
-        List<Classes.subgrupos> listaSubgrupos;
         Classes.subgrupos umSubgrupo;
 
         frmConsultas.frmConsultaFornecedores frmConsForn;
-        List<Classes.fornecedores> listaForn;
         Classes.fornecedores umForn;
 
         frmConsultas.frmConsultaModelos frmConsModelo;
-        List<Classes.modelos> listaModelos;
         Classes.modelos umModelo;
 
         Controllers.ctrlProdutos umaCtrlProduto;
-        public frmCadastroProdutos()
+
+        public frmCadastroProdutos(Controllers.ctrlProdutos pCtrlProduto)
         {
             InitializeComponent();
-            umaCtrlProduto = new Controllers.ctrlProdutos();
-
-            frmConsSubGrupo = new frmConsultas.frmConsultaSubgrupos();
-            listaSubgrupos = new List<Classes.subgrupos>();
+            umaCtrlProduto = pCtrlProduto;
             umSubgrupo = new Classes.subgrupos();
-
-            frmConsForn = new frmConsultas.frmConsultaFornecedores();
-            listaForn = new List<Classes.fornecedores>();
             umForn = new Classes.fornecedores();
-
-            frmConsModelo = new frmConsultas.frmConsultaModelos();
-            listaModelos = new List<Classes.modelos>();
             umModelo = new Classes.modelos();
-        }
-        public frmCadastroProdutos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umaCtrlProduto = new Controllers.ctrlProdutos(pUmaConexao);
-
-            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgS);
-            umSubgrupo = new Classes.subgrupos();
-
-            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection(out string vlMsgF);
-            umForn = new Classes.fornecedores();
-
-            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgM);
-            umModelo = new Classes.modelos();
-            showErrorMsg(new string[] { vlMsgF, vlMsgM, vlMsgS});
 
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
             btn_PesquisarModelo.Image = umImgPesquisaSair;
@@ -150,14 +124,7 @@ namespace Projeto_ICI.frmCadastros
                 for (int i = 0; i <= lv_Fornecedores.Items.Count - 1; i++)
                 {
                     var item = (Classes.fornecedores)lv_Fornecedores.Items[i].Tag;
-                    foreach (Classes.fornecedores vlForn in listaForn)
-                    {
-                        if (vlForn.Codigo == item.Codigo)
-                        {
-                            vlListaForn.Add(vlForn.ThisFornecedor);
-                            break;
-                        }
-                    }
+                    vlListaForn.Add(item.ThisFornecedor);
                 }
                 return vlListaForn;
             }
@@ -199,8 +166,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoFornecedor.Text = umForn.Codigo.ToString();
                 txtb_Fornecedor.Text = umForn.Fornecedor;
             }
-            listaForn = umaCtrlProduto.CTRLFornecedor.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
         private void btn_PesquisarSubGrupo_Click(object sender, EventArgs e)
         {
@@ -214,8 +179,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoSubGrupo.Text = umSubgrupo.Codigo.ToString();
                 txtb_SubGrupo.Text = umSubgrupo.Subgrupo;
             }
-            listaSubgrupos = umaCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
         private void btn_PesquisarModelo_Click(object sender, EventArgs e)
         {
@@ -230,8 +193,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Modelo.Text = umModelo.Modelo;
                 txtb_Marca.Text = umModelo.UmaMarca.Marca;
             }
-            listaModelos = umaCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
         private void btn_Remover_Click(object sender, EventArgs e)
         {
@@ -247,21 +208,15 @@ namespace Projeto_ICI.frmCadastros
         }
         private void btn_Adicionar_Click(object sender, EventArgs e)
         {
-            if (lv_Fornecedores != null && txtb_Fornecedor.Text != "" && listaForn.Count > 0)
+            if (lv_Fornecedores != null && txtb_Fornecedor.Text != "")
             {
-                foreach (Classes.fornecedores vlForn in listaForn)
-                {
-                    if (vlForn.Codigo == int.Parse(txtb_CodigoFornecedor.Text))
-                    {
-                        umForn.ThisFornecedor = vlForn;
-                        break;
-                    }
-                }
                 string[] item = { umForn.Codigo.ToString(),
                                   umForn.Fornecedor,
                                   umForn.CNPJ_CPF };
                 var lvItem = new ListViewItem(item);
-                lvItem.Tag = umForn; bool vlFind = false;
+                lvItem.Tag = umForn.ThisFornecedor;
+
+                bool vlFind = false;
                 foreach (ListViewItem vlItems in lv_Fornecedores.Items)
                 {
                     if (((Classes.fornecedores)vlItems.Tag).Codigo == umForn.Codigo)
@@ -288,15 +243,29 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoFornecedor.Text, out int i))
+                if (int.TryParse(txtb_CodigoFornecedor.Text, out int vlCodigo))
                 {
-                    foreach (Classes.fornecedores vlForn in listaForn)
+                    var vlForn =
+                         (Classes.fornecedores)umaCtrlProduto.CTRLFornecedor.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlForn != null)
                     {
-                        if (vlForn.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Fornecedor.Text = vlForn.Fornecedor;
-                            umForn = vlForn.ThisFornecedor;
+                            umForn.ThisFornecedor = vlForn;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Fornecedor.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Fornecedor.Clear();
                     }
                 }
             }
@@ -309,15 +278,29 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoSubGrupo.Text, out int i))
+                if (int.TryParse(txtb_CodigoSubGrupo.Text, out int vlCodigo))
                 {
-                    foreach (Classes.subgrupos vlSubgrupo in listaSubgrupos)
+                    var vlSubgrupo =
+                         (Classes.subgrupos)umaCtrlProduto.CTRLSubgrupo.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlSubgrupo != null)
                     {
-                        if (vlSubgrupo.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_SubGrupo.Text = vlSubgrupo.Subgrupo;
-                            umSubgrupo = vlSubgrupo.ThisSubgrupo;
+                            umSubgrupo.ThisSubgrupo = vlSubgrupo;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_SubGrupo.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_SubGrupo.Clear();
                     }
                 }
             }
@@ -331,16 +314,32 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoModelo.Text, out int i))
+                if (int.TryParse(txtb_CodigoModelo.Text, out int vlCodigo))
                 {
-                    foreach (Classes.modelos vlModelo in listaModelos)
+                    var vlModelo =
+                         (Classes.modelos)umaCtrlProduto.CTRLModelo.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlModelo != null)
                     {
-                        if (vlModelo.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Modelo.Text = vlModelo.Modelo;
                             txtb_Marca.Text = vlModelo.UmaMarca.Marca;
-                            umModelo = vlModelo.ThisModelo;
+                            umModelo.ThisModelo = vlModelo;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Modelo.Clear();
+                            txtb_Marca.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Modelo.Clear();
+                        txtb_Marca.Clear();
                     }
                 }
             }
@@ -367,8 +366,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.Clear();
-                e.Cancel = false;
+                if (umaCtrlProduto.Pesquisar("produto", txtb_Produto.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Produto, "Produto já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Produto, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Produto, null);
+                    e.Cancel = false;
+                }
             }
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)

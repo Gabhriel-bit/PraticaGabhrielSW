@@ -13,18 +13,11 @@ namespace Projeto_ICI.frmConsultas
         frmCadastros.frmCadastroCargos frmCadCargo;
         Controllers.ctrlCargos umCtrlCargos;
         Classes.cargos umCargo;
-        public frmConsultaCargos()
+
+        public frmConsultaCargos(Controllers.ctrlCargos pCtrlCargo)
         {
             InitializeComponent();
-            frmCadCargo = new frmCadastros.frmCadastroCargos();
-            umCtrlCargos = new Controllers.ctrlCargos();
-            umCargo = new Classes.cargos();
-            carregarDados(umCtrlCargos);
-        }
-        public frmConsultaCargos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCargos = new Controllers.ctrlCargos(pUmaConexao);
+            umCtrlCargos = pCtrlCargo;
             umCargo = new Classes.cargos();
             carregarDados(umCtrlCargos);
         }
@@ -37,23 +30,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umCargo = (Classes.cargos)pOBJ;
         }
-        private Classes.cargos dataGridToCargo()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlCargo = new Classes.cargos((int)row[0].Value, (int)row[4].Value,
-                                                 (string)row[5].Value, (string)row[6].Value,
-                                                 bool.Parse((string)row[3].Value),
-                                                 (string)row[1].Value, (string)row[2].Value);
-                return vlCargo;
-            }
-        }
+
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadCargo.ClearTxTBox();
@@ -62,10 +39,15 @@ namespace Projeto_ICI.frmConsultas
         }
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlCargo = dataGridToCargo();
+            var vlCargo = (Classes.cargos)dataGridToObj(umCtrlCargos, out string vlMsg);
             if (vlCargo == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um cargo");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -83,10 +65,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlCargo = dataGridToCargo();
+            var vlCargo = (Classes.cargos)dataGridToObj(umCtrlCargos, out string vlMsg);
             if (vlCargo == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um cargo!");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -106,10 +93,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlCargo = dataGridToCargo();
+                var vlCargo = (Classes.cargos)dataGridToObj(umCtrlCargos, out string vlMsg);
                 if (vlCargo == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um cargo!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -130,13 +122,13 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCargos.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCargos.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlCargos.Pesquisar("cargo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlCargos.Pesquisar("cargo", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

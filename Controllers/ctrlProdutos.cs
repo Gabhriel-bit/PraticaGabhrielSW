@@ -23,20 +23,14 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoProdutos umDaoProdutos;
 
-        public ctrlProdutos()
+        public ctrlProdutos(BancoDados.conexoes pUmaConexao, DAOs.daoProdutos pDaoProduto,
+            Controllers.ctrlModelos pCtrlModelo, Controllers.ctrlSubgrupos pCtrlSubgrupo,
+            Controllers.ctrlFornecedores pCtrlForn)
         {
-            umDaoProdutos = new DAOs.daoProdutos();
-            umaCtrlModelo = new ctrlModelos();
-            umCtrlFornecedor = new ctrlFornecedores();
-            umaCtrlSubgrupo = new ctrlSubgrupos();
-        }
-
-        public ctrlProdutos(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoProdutos = new DAOs.daoProdutos();
-            umaCtrlModelo = new ctrlModelos(pUmaConexao);
-            umCtrlFornecedor = new ctrlFornecedores(pUmaConexao);
-            umaCtrlSubgrupo = new ctrlSubgrupos(pUmaConexao);
+            umDaoProdutos = pDaoProduto;
+            umaCtrlModelo = pCtrlModelo;
+            umCtrlFornecedor = pCtrlForn;
+            umaCtrlSubgrupo = pCtrlSubgrupo;
 
             UmaConexao = pUmaConexao;
         }
@@ -104,18 +98,15 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
                        umDaoProdutos.PesquisarToString("produtos",
-                       camposSelList.Replace("modelo", "codigoModelo"), "", ""), out string vlMsg);
-            var vlListaModelo = umaCtrlModelo.PesquisarCollection(out string vlMsgMod);
-            var vlListaSubgrupo = umaCtrlSubgrupo.PesquisarCollection(out string vlMsgSubgrup);
-            pMsg = vlMsg + '\n' + vlMsgMod + '\n' + vlMsgSubgrup;
-            if (vlTabelaCondicoesPagamento == null)
+                       camposSelList.Replace("modelo", "codigoModelo"), "", ""), out pMsg);
+
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
             {
                 return null;
             }
             else
             {
                 List<Classes.produtos> lista = new List<Classes.produtos>();
-                string vlMsgForn = "";
                 foreach (DataRow row in vlTabelaCondicoesPagamento.Rows)
                 {
                     var vlProduto = new
@@ -125,24 +116,69 @@ namespace Projeto_ICI.Controllers
                                          (string)row[6],
                                          decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
                                          (int)row[3], (int)row[4]);
-                    vlProduto.UmModelo.Codigo = (int)row[7];
-                    foreach (Classes.modelos vlModelo in vlListaModelo)
-                    {
-                        if (vlModelo.Codigo == vlProduto.UmModelo.Codigo)
-                        { vlProduto.UmModelo.ThisModelo = vlModelo; }
-                    }
-                    vlProduto.UmSubgrupo.Codigo = (int)row[8];
-                    foreach (Classes.subgrupos vlSubgrupo in vlListaSubgrupo)
-                    {
-                        if (vlSubgrupo.Codigo == vlProduto.UmSubgrupo.Codigo)
-                        { vlProduto.UmSubgrupo.ThisSubgrupo = vlSubgrupo; }
-                    }
-                    vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out vlMsgForn);
-                    pMsg += $"\nErro ao carrgar fornecedores do produto '{vlProduto.Produto}'\n-->" + vlMsgForn;
+                    vlProduto.UmModelo = (Classes.modelos)umaCtrlModelo.Pesquisar("codigo",
+                                                                                  ((int)row[7]).ToString(),
+                                                                                  out string vlMsgModelo,
+                                                                                  true);
+                    vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                        ((int)row[8]).ToString(),
+                                                                                        out string vlMsgSubgrupo,
+                                                                                        true);
+                    vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
+
+                    pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
+                            (vlMsgSubgrupo == "" ? "" : "\n" + vlMsgSubgrupo) +
+                            (vlMsgForn == "" ? "" : "\n" + 
+                            $"\nErro ao carrgar fornecedores do produto '{vlProduto.Produto}'\n-->" + vlMsgForn);
+
                     lista.Add(vlProduto);
                 }
-                pMsg = "";
                 return lista;
+            }
+        }
+
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("produtos.", "");
+            camposSelList = camposSelList.Replace("subgrupo", "codigoSubgrupo");
+            DataTable vlTabelaCondicoesPagamento =
+                 ExecuteComandSearchQuery(
+                       umDaoProdutos.PesquisarToString("produtos",
+                       camposSelList.Replace("modelo", "codigoModelo"), pCampo, pValor, default, pValorIgual),
+                       out pMsg);
+
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaCondicoesPagamento.Rows[0];
+                var vlProduto = new
+                    Classes.produtos((int)row[0], (int)row[9],
+                                        (string)row[10], (string)row[11],
+                                        (string)row[1], (string)row[5],
+                                        (string)row[6],
+                                        decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
+                                        (int)row[3], (int)row[4]);
+                vlProduto.UmModelo = (Classes.modelos)umaCtrlModelo.Pesquisar("codigo",
+                                                                                ((int)row[7]).ToString(),
+                                                                                out string vlMsgModelo,
+                                                                                true);
+
+                vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                    ((int)row[8]).ToString(),
+                                                                                    out string vlMsgSubgrupo,
+                                                                                    true);
+
+                vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
+
+                pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
+                        (vlMsgSubgrupo == "" ? "" : "\n" + vlMsgSubgrupo) +
+                        (vlMsgForn == "" ? "" : "\n" +
+                        $"\nErro ao carrgar fornecedores do produto '{vlProduto.Produto}'\n-->" + vlMsgForn);
+
+                return vlProduto;
             }
         }
 
@@ -155,7 +191,7 @@ namespace Projeto_ICI.Controllers
                                                    "codigoProduto", pCodigoProduto.ToString()), out string vlMsg);
             var vlListaForn = umCtrlFornecedor.PesquisarCollection(out string vlMsgForn);
             pMsg = vlMsg + '\n' + vlMsgForn;
-            if (vlTabelaParcalasCondPag == null)
+            if (vlTabelaParcalasCondPag.Rows.Count == 0)
             {
                 return null;
             }
@@ -175,12 +211,12 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlProduto = new Classes.produtos();
-            DataTable vlTable = ExecuteComandSearchQuery(umDaoProdutos.PesquisarToString("produtos, subgrupos, modelos",
-                                camposSelect, pCampo, pValor, vlProduto.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+            DataTable vlTable = ExecuteComandSearchQuery(
+                                    umDaoProdutos.PesquisarToString("produtos, subgrupos, modelos",
+                                    camposSelect, pCampo, pValor, vlProduto.toStringSearchPesquisa()), out pMsg);
             return vlTable;
         }
     }

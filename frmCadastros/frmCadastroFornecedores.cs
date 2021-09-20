@@ -11,38 +11,18 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroFornecedores : Projeto_ICI.frmCadastros.frmCadastroPessoas
     {
         private frmConsultas.frmConsultaCondicoesPagamento frmConsCondPag;
-        private List<Classes.condicoesPagamento> listaCondPag;
         private Classes.condicoesPagamento umCondPag;
 
         private Controllers.ctrlFornecedores umCtrlForn;
-        public frmCadastroFornecedores()
+
+        public frmCadastroFornecedores(Controllers.ctrlFornecedores pCtrlForn)
         {
             InitializeComponent();
-            umCtrlForn = new Controllers.ctrlFornecedores();
+            umCtrlForn = pCtrlForn;
+            umCtrlCidade = pCtrlForn.CTRLCidade;
 
-            frmConsCondPag = new frmConsultas.frmConsultaCondicoesPagamento();
-            listaCondPag = new List<Classes.condicoesPagamento>();
             umCondPag = new Classes.condicoesPagamento();
-
-            frmConsCidade = new frmConsultas.frmConsultaCidades();
-            listaCidades = new List<Classes.cidades>();
             umaCidade = new Classes.cidades();
-
-            rb_Fisica.Checked = true;
-        }
-
-        public frmCadastroFornecedores(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlForn = new Controllers.ctrlFornecedores(pUmaConexao);
-
-            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
-            umCondPag = new Classes.condicoesPagamento();
-
-            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            umaCidade = new Classes.cidades();
-            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag});
-
             rb_Fisica.Checked = true;
 
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
@@ -167,14 +147,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCondPag.Text = umCondPag.Codigo.ToString();
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
-            listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
-        }
-
-        private void btn_PesquisarCidade_Click(object sender, EventArgs e)
-        {
-            listaCidades = umCtrlForn.CTRLCidade.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void txtb_CPF_CNPJ_Validating(object sender, CancelEventArgs e)
@@ -211,13 +183,29 @@ namespace Projeto_ICI.frmCadastros
         {
             if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
             {
-                errorMSG.SetError(lbl_Cliente, "Nome inválido!");
+                errorMSG.SetError(lbl_Fornecedor, "Nome inválido!");
                 e.Cancel = closing;
             }
             else
             {
-                errorMSG.SetError(lbl_Cliente, null);
-                e.Cancel = false;
+                if (umCtrlForn.Pesquisar("fornecedor", txtb_Fornecedor.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Fornecedor, "Nome já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Fornecedor, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Fornecedor, null);
+                    e.Cancel = false;
+                }
             }
         }
         protected override bool validacaoCelularTelefone()
@@ -246,7 +234,7 @@ namespace Projeto_ICI.frmCadastros
             closing = true;
             if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
             {
-                errorMSG.SetError(lbl_Cliente, "Campo 'Fornecedor' é obrigatório!");
+                errorMSG.SetError(lbl_Fornecedor, "Campo 'Fornecedor' é obrigatório!");
                 txtb_Fornecedor.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Logradouro.Text))
@@ -332,20 +320,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoCondPag.Text, out int i))
+                if (int.TryParse(txtb_CodigoCondPag.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.condicoesPagamento vlCondPag in listaCondPag)
+                    var vlCondPag =
+                         (Classes.condicoesPagamento)umCtrlForn.CTRLCondPag.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlCondPag != null)
                     {
-                        if (vlCondPag.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_CondicaoPag.Text = vlCondPag.CondicaoPag;
-                            umCondPag = vlCondPag.ThisCondPag;
-                            vlFind = true;
+                            umCondPag.ThisCondPag = vlCondPag;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_CondicaoPag.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_CondicaoPag.Clear(); }
+                    else
+                    {
+                        txtb_CondicaoPag.Clear();
+                    }
                 }
             }
         }

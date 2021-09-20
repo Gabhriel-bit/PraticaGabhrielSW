@@ -232,89 +232,11 @@
     <Compile Include="frmCadastros\frmCadastroPaises.Designer.cs">
       <DependentUpon>frmCadastroPaises.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConsultas\frmConsultaDepositos.cs">
+    <Compile Include="frmCadastros\frmCadastroCompras.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConsultas\frmConsultaDepositos.Designer.cs">
-      <DependentUpon>frmConsultaDepositos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFormasPagamento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFormasPagamento.Designer.cs">
-      <DependentUpon>frmConsultaFormasPagamento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaProdutos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaProdutos.Designer.cs">
-      <DependentUpon>frmConsultaProdutos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFornecedores.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFornecedores.Designer.cs">
-      <DependentUpon>frmConsultaFornecedores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaPai.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaPai.Designer.cs">
-      <DependentUpon>frmConsultaPai.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCondicoesPagamento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCondicoesPagamento.Designer.cs">
-      <DependentUpon>frmConsultaCondicoesPagamento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaGrupos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaGrupos.Designer.cs">
-      <DependentUpon>frmConsultaGrupos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaSubgrupos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaSubgrupos.Designer.cs">
-      <DependentUpon>frmConsultaSubgrupos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCargos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCargos.Designer.cs">
-      <DependentUpon>frmConsultaCargos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFuncionarios.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaFuncionarios.Designer.cs">
-      <DependentUpon>frmConsultaFuncionarios.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaClientes.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaClientes.Designer.cs">
-      <DependentUpon>frmConsultaClientes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaModelos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaModelos.Designer.cs">
-      <DependentUpon>frmConsultaModelos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaMarcas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaMarcas.Designer.cs">
-      <DependentUpon>frmConsultaMarcas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCidades.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConsultas\frmConsultaCidades.Designer.cs">
-      <DependentUpon>frmConsultaCidades.cs</DependentUpon>
+    <Compile Include="frmCadastros\frmCadastroCompras.Designer.cs">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
     </Compile>
     <Compile Include="frmConsultas\frmConsultaEstados.cs">
       <SubType>Form</SubType>
@@ -322,17 +244,107 @@
     <Compile Include="frmConsultas\frmConsultaEstados.Designer.cs">
       <DependentUpon>frmConsultaEstados.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConsultas\frmConsultaDepositos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaDepositos.Designer.cs">
+      <DependentUpon>frmConsultaDepositos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCondicoesPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCondicoesPagamento.Designer.cs">
+      <DependentUpon>frmConsultaCondicoesPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaClientes.Designer.cs">
+      <DependentUpon>frmConsultaClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCidades.Designer.cs">
+      <DependentUpon>frmConsultaCidades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCargos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCargos.Designer.cs">
+      <DependentUpon>frmConsultaCargos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaCompras.Designer.cs">
+      <DependentUpon>frmConsultaCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFornecedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFornecedores.Designer.cs">
+      <DependentUpon>frmConsultaFornecedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFuncionarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFuncionarios.Designer.cs">
+      <DependentUpon>frmConsultaFuncionarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaGrupos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaGrupos.Designer.cs">
+      <DependentUpon>frmConsultaGrupos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaMarcas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaMarcas.Designer.cs">
+      <DependentUpon>frmConsultaMarcas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaModelos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaModelos.Designer.cs">
+      <DependentUpon>frmConsultaModelos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmConsultas\frmConsultaPaises.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmConsultas\frmConsultaPaises.Designer.cs">
       <DependentUpon>frmConsultaPaises.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConsultas\frmConsultaPai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaPai.Designer.cs">
+      <DependentUpon>frmConsultaPai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaProdutos.Designer.cs">
+      <DependentUpon>frmConsultaProdutos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAcesso\Gerente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmAcesso\Gerente.Designer.cs">
       <DependentUpon>Gerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaSubgrupos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaSubgrupos.Designer.cs">
+      <DependentUpon>frmConsultaSubgrupos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmFormasPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmFormasPagamento.Designer.cs">
+      <DependentUpon>frmFormasPagamento.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -393,29 +405,32 @@
     <EmbeddedResource Include="frmCadastros\frmCadastroSubGrupos.resx">
       <DependentUpon>frmCadastroSubGrupos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaDepositos.resx">
-      <DependentUpon>frmConsultaDepositos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaFormasPagamento.resx">
-      <DependentUpon>frmConsultaFormasPagamento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaProdutos.resx">
-      <DependentUpon>frmConsultaProdutos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaFornecedores.resx">
-      <DependentUpon>frmConsultaFornecedores.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaPai.resx">
-      <DependentUpon>frmConsultaPai.cs</DependentUpon>
+    <EmbeddedResource Include="frmCadastros\frmCadastroCompras.resx">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaCargos.resx">
       <DependentUpon>frmConsultaCargos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaCidades.resx">
+      <DependentUpon>frmConsultaCidades.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaClientes.resx">
       <DependentUpon>frmConsultaClientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaCompras.resx">
+      <DependentUpon>frmConsultaCompras.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaCondicoesPagamento.resx">
       <DependentUpon>frmConsultaCondicoesPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaDepositos.resx">
+      <DependentUpon>frmConsultaDepositos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaEstados.resx">
+      <DependentUpon>frmConsultaEstados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaFornecedores.resx">
+      <DependentUpon>frmConsultaFornecedores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaFuncionarios.resx">
       <DependentUpon>frmConsultaFuncionarios.cs</DependentUpon>
@@ -423,26 +438,29 @@
     <EmbeddedResource Include="frmConsultas\frmConsultaGrupos.resx">
       <DependentUpon>frmConsultaGrupos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaModelos.resx">
-      <DependentUpon>frmConsultaModelos.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaMarcas.resx">
       <DependentUpon>frmConsultaMarcas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaEstados.resx">
-      <DependentUpon>frmConsultaEstados.cs</DependentUpon>
+    <EmbeddedResource Include="frmConsultas\frmConsultaModelos.resx">
+      <DependentUpon>frmConsultaModelos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaPaises.resx">
       <DependentUpon>frmConsultaPaises.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmConsultaCidades.resx">
-      <DependentUpon>frmConsultaCidades.cs</DependentUpon>
+    <EmbeddedResource Include="frmConsultas\frmConsultaPai.resx">
+      <DependentUpon>frmConsultaPai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaProdutos.resx">
+      <DependentUpon>frmConsultaProdutos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAcesso\Gerente.resx">
+      <DependentUpon>Gerente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaSubgrupos.resx">
       <DependentUpon>frmConsultaSubgrupos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAcesso\Gerente.resx">
-      <DependentUpon>Gerente.cs</DependentUpon>
+    <EmbeddedResource Include="frmConsultas\frmFormasPagamento.resx">
+      <DependentUpon>frmFormasPagamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

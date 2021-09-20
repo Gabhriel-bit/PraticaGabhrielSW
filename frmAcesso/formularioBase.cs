@@ -529,5 +529,10 @@ namespace Projeto_ICI
                 return false;
             }
         }
+
+        private void formularioBase_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            errorMSG.Clear();
+        }
     }
 }

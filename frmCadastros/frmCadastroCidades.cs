@@ -13,23 +13,12 @@ namespace Projeto_ICI.frmCadastros
         frmConsultas.frmConsultaEstados frmConsEstado;
         Controllers.ctrlCidades umCtrlCidade;
         Classes.estados umEstado;
-        List<Classes.estados> listaEstados;
-        public frmCadastroCidades()
-        {
-            InitializeComponent();
-            frmConsEstado = new frmConsultas.frmConsultaEstados();
-            umCtrlCidade = new Controllers.ctrlCidades();
-            umEstado = new Classes.estados();
-            listaEstados = new List<Classes.estados>();
-        }
 
-        public frmCadastroCidades(BancoDados.conexoes pUmaConexao)
+        public frmCadastroCidades(Controllers.ctrlCidades pCtrlCidade)
         {
             InitializeComponent();
-            umCtrlCidade = new Controllers.ctrlCidades(pUmaConexao);
+            umCtrlCidade = pCtrlCidade;
             umEstado = new Classes.estados();
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -48,8 +37,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoEstado.Text = umEstado.Codigo.ToString();
                 txtb_Estado.Text = umEstado.Estado;
             }
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         public override void CarregarTxtBox(object pUmObjeto)
@@ -94,8 +81,24 @@ namespace Projeto_ICI.frmCadastros
         {
             if (ValidacaoNome(txtb_Cidade.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Cidade, null);
-                e.Cancel = false;
+                if (umCtrlCidade.Pesquisar("cidade", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Cidade, "Cidade já cadastrada!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Cidade, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Cidade, null);
+                    e.Cancel = false;
+                }
             }
             else
             {
@@ -142,20 +145,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoEstado.Text, out int i))
+                if (int.TryParse(txtb_CodigoEstado.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.estados vlEstado in listaEstados)
+                    var vlEstado = 
+                         (Classes.estados)umCtrlCidade.CTRLEstado.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlEstado != null)
                     {
-                        if (vlEstado.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Estado.Text = vlEstado.Estado;
-                            umEstado = vlEstado.ThisEstado;
-                            vlFind = true;
+                            umEstado.ThisEstado = vlEstado;
+                        }
+                        else
+                        { 
+                            showErrorMsg(vlMsg);
+                            txtb_Estado.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_Estado.Clear(); }
+                    else
+                    {
+                        txtb_Estado.Clear();
+                    }
                 }
             }
         }

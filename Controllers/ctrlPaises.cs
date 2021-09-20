@@ -16,13 +16,9 @@ namespace Projeto_ICI.Controllers
                                            "dataUltAlt as ultima_Alteração";
         private DAOs.daoPaises umDaoPais;
 
-        public ctrlPaises()
+        public ctrlPaises(BancoDados.conexoes pUmaConexa, DAOs.daoPaises pDaoPais)
         {
-            umDaoPais = new DAOs.daoPaises();
-        }
-        public ctrlPaises(BancoDados.conexoes pUmaConexa)
-        {
-            umDaoPais = new DAOs.daoPaises();
+            umDaoPais = pDaoPais;
             UmaConexao = pUmaConexa;
         }
 
@@ -77,9 +73,8 @@ namespace Projeto_ICI.Controllers
         {
             DataTable vlTabelaPaises =
                           ExecuteComandSearchQuery(
-                                 umDaoPais.PesquisarToString("paises", camposSelect, "", ""), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaPaises == null)
+                                 umDaoPais.PesquisarToString("paises", camposSelect, "", ""), out pMsg);
+            if (vlTabelaPaises.Rows.Count == 0)
             {
                 return null;
             }
@@ -98,11 +93,32 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            DataTable vlTabelaPaises =
+              ExecuteComandSearchQuery(
+                     umDaoPais.PesquisarToString("paises", camposSelect, pCampo, pValor, default, pValorIgual),
+                     out pMsg);
+
+            if (vlTabelaPaises.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaPaises.Rows[0];
+                return new Classes.paises((int)row[0], (int)row[5],
+                                         (string)row[6], (string)row[7],
+                                         (string)row[1], (string)row[3],
+                                         (string)row[2], (string)row[4]);
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlTable = ExecuteComandSearchQuery(
-                          umDaoPais.PesquisarToString("paises", camposSelect, pCampo, pValor), out string vlMsg);
-            pMsg = vlMsg;
+                          umDaoPais.PesquisarToString("paises", camposSelect, pCampo, pValor, default, pValorIgual),
+                          out pMsg);
             return vlTable;
         }
     }

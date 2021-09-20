@@ -14,18 +14,11 @@ namespace Projeto_ICI.frmCadastros
         Controllers.ctrlEstados umCtrlEstado;
         Classes.paises umPais;
         List<Classes.paises> listaPaises;
-        public frmCadastroEstados()
+
+        public frmCadastroEstados(Controllers.ctrlEstados pCtrlEstado)
         {
             InitializeComponent();
-            frmConsPais = new frmConsultas.frmConsultaPaises();
-            umCtrlEstado = new Controllers.ctrlEstados();
-            umPais = new Classes.paises();
-            listaPaises = new List<Classes.paises>();
-        }
-        public frmCadastroEstados(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlEstado = new Controllers.ctrlEstados(pUmaConexao);
+            umCtrlEstado = pCtrlEstado;
             umPais = new Classes.paises();
             listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
             showErrorMsg(vlMsg);
@@ -96,20 +89,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoPais.Text, out int i))
+                if (int.TryParse(txtb_CodigoPais.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.paises vlPais in listaPaises)
+                    var vlPais =
+                         (Classes.paises)umCtrlEstado.CTRLPais.Pesquisar("codigo",
+                                                                         vlCodigo.ToString(),
+                                                                          out string vlMsg,
+                                                                          false);
+                    if (vlPais != null)
                     {
-                        if (vlPais.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Pais.Text = vlPais.Pais;
-                            umPais = vlPais.ThisPais;
-                            vlFind = true;
+                            umPais.ThisPais = vlPais;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Pais.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_Pais.Clear(); }
+                    else
+                    {
+                        txtb_Pais.Clear();
+                    }
                 }
             }
         }
@@ -147,8 +150,24 @@ namespace Projeto_ICI.frmCadastros
         {
             if (ValidacaoNome(txtb_Estado.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Estado, null);
-                e.Cancel = false;
+                if (umCtrlEstado.Pesquisar("estado", txtb_Estado.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Estado, "Estado já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Estado, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Estado, null);
+                    e.Cancel = false;
+                }
             }
             else
             {

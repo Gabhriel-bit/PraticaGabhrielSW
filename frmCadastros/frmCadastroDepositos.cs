@@ -11,39 +11,20 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroDepositos : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         frmConsultas.frmConsultaCidades frmConsCidade;
-        List<Classes.cidades> listaCidades;
         Classes.cidades umaCidade;
 
         frmConsultas.frmConsultaProdutos frmConsProduto;
-        List<Classes.produtos> listaProdutos;
         Classes.produtos umProduto;
 
         Controllers.ctrlDepositos umCtrlDeposito;
 
-        public frmCadastroDepositos()
+        public frmCadastroDepositos(Controllers.ctrlDepositos pCtrlDeposito)
         {
             InitializeComponent();
-            umCtrlDeposito = new Controllers.ctrlDepositos();
-
-            frmConsCidade = new frmConsultas.frmConsultaCidades();
-            listaCidades = new List<Classes.cidades>();
+            umCtrlDeposito = pCtrlDeposito;
             umaCidade = new Classes.cidades();
 
-            frmConsProduto = new frmConsultas.frmConsultaProdutos();
-            listaProdutos = new List<Classes.produtos>();
             umProduto = new Classes.produtos();
-        }
-        public frmCadastroDepositos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlDeposito = new Controllers.ctrlDepositos(pUmaConexao);
-
-            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            umaCidade = new Classes.cidades();
-
-            listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsgDeposito);
-            umProduto = new Classes.produtos();
-            showErrorMsg(new string[] { vlMsgCidade, vlMsgDeposito});
 
             btn_PesquisarProduto.Image = umImgPesquisaSair;
             btn_Pesquisar.Image = umImgPesquisaSair;
@@ -129,14 +110,16 @@ namespace Projeto_ICI.frmCadastros
                 for (int i = 0; i <= lv_Produtos.Items.Count - 1; i++)
                 {
                     var item = (Classes.produtos)lv_Produtos.Items[i].Tag;
-                    foreach (Classes.produtos vlProduto in listaProdutos)
+                    var vlProduto = (Classes.produtos)umCtrlDeposito.CTRLProduto.Pesquisar("codigo",
+                                                                                       item.Codigo.ToString(),
+                                                                                       out string vlMsg,
+                                                                                       true);
+                    if (vlMsg != "")
                     {
-                        if (vlProduto.Codigo == item.Codigo)
-                        {
-                            vlListaProd.Add(vlProduto.ThisProduto);
-                            break;
-                        }
+                        showErrorMsg(vlMsg);
+                        return null;
                     }
+                    vlListaProd.Add(vlProduto.ThisProduto);
                 }
                 return vlListaProd;
             }
@@ -186,8 +169,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Cidade.Text = umaCidade.Cidade;
                 txtb_CodigoCidade.Text = umaCidade.Codigo.ToString();
             }
-            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -202,8 +183,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoProduto.Text = umProduto.Codigo.ToString();
                 txtb_Produto.Text = umProduto.Produto;
             }
-            listaProdutos = umCtrlDeposito.CTRLProduto.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)
@@ -266,16 +245,8 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
         {
-            if (lv_Produtos != null && txtb_Produto.Text != "" && listaProdutos.Count > 0)
+            if (lv_Produtos != null && txtb_Produto.Text != "")
             {
-                foreach (Classes.produtos vlProduto in listaProdutos)
-                {
-                    if (vlProduto.Codigo == int.Parse(txtb_CodigoProduto.Text))
-                    {
-                        umProduto.ThisProduto = vlProduto;
-                        break;
-                    }
-                }
                 string[] item = { umProduto.Codigo.ToString(),
                                   umProduto.Produto,
                                   umProduto.UmModelo.UmaMarca.Marca,
@@ -287,7 +258,7 @@ namespace Projeto_ICI.frmCadastros
                                   umProduto.Saldo.ToString(),
                                   umProduto.Custo.ToString()};
                 var lvItem = new ListViewItem(item);
-                lvItem.Tag = umProduto;
+                lvItem.Tag = umProduto.ThisProduto;
                 if (lv_Produtos.Items.Count != 0 && !lv_Produtos.Items.Contains(lvItem))
                 {
                     errorMSG.SetError(lbl_btn_Adicionar, "O produto já está adicionado!");
@@ -310,20 +281,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoProduto.Text, out int i))
+                if (int.TryParse(txtb_CodigoProduto.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.produtos vlProduto in listaProdutos)
+                    var vlProduto =
+                         (Classes.produtos)umCtrlDeposito.CTRLProduto.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            true);
+                    if (vlProduto != null)
                     {
-                        if (vlProduto.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Produto.Text = vlProduto.Produto;
-                            umProduto = vlProduto.ThisProduto;
-                            vlFind = true;
+                            umProduto.ThisProduto = vlProduto;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Produto.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_Produto.Clear(); }
+                    else
+                    {
+                        txtb_Produto.Clear();
+                    }
                 }
             }
         }
@@ -336,20 +317,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoCidade.Text, out int i))
+                if (int.TryParse(txtb_CodigoCidade.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.cidades vlCidade in listaCidades)
+                    var vlCidade =
+                         (Classes.cidades)umCtrlDeposito.CTRLCidade.Pesquisar("codigo",
+                                                                              vlCodigo.ToString(),
+                                                                              out string vlMsg,
+                                                                              false);
+                    if (vlCidade != null)
                     {
-                        if (vlCidade.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_Cidade.Text = vlCidade.Cidade;
-                            umaCidade = vlCidade.ThisCidade;
-                            vlFind = true;
+                            vlCidade.ThisCidade = vlCidade;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Cidade.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_CodigoCidade.Clear(); }
+                    else
+                    {
+                        txtb_Cidade.Clear();
+                    }
                 }
             }
         }
@@ -406,8 +397,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.Clear();
-                e.Cancel = false;
+                if (umCtrlDeposito.Pesquisar("deposito", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Deposito, "Deposito já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Deposito, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Deposito, null);
+                    e.Cancel = false;
+                }
             }
         }
 

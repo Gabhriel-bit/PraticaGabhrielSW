@@ -22,18 +22,12 @@ namespace Projeto_ICI.Controllers
         private ctrlCidades umaCtrlCidade;
         private ctrlCargos umaCtrlCargo;
 
-        public ctrlFuncionarios()
+        public ctrlFuncionarios(BancoDados.conexoes pUmaConexao, DAOs.daoFuncionarios pDaoFunc,
+            Controllers.ctrlCargos pCtrlCargo, Controllers.ctrlCidades pCtrlCidade)
         {
-            umDaoFunc = new DAOs.daoFuncionarios();
-            umaCtrlCidade = new ctrlCidades();
-            umaCtrlCargo = new ctrlCargos();
-        }
-
-        public ctrlFuncionarios(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoFunc = new DAOs.daoFuncionarios();
-            umaCtrlCidade = new ctrlCidades(pUmaConexao);
-            umaCtrlCargo = new ctrlCargos(pUmaConexao);
+            umDaoFunc = pDaoFunc;
+            umaCtrlCidade = pCtrlCidade;
+            umaCtrlCargo = pCtrlCargo;
             UmaConexao = pUmaConexao;
         }
 
@@ -90,11 +84,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaFunc =
                  ExecuteComandSearchQuery(
                        umDaoFunc.PesquisarToString("funcionarios",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
-            var vlListaCidades = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
-            var vlListaCargos = umaCtrlCargo.PesquisarCollection(out string vlMsgCargo);
-            pMsg = vlMsg + '\n' + vlMsgCidade + '\n' + vlMsgCargo;
-            if (vlTabelaFunc == null)
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out pMsg);
+
+            if (vlTabelaFunc.Rows.Count == 0)
             {
                 return null;
             }
@@ -115,32 +107,73 @@ namespace Projeto_ICI.Controllers
                                                           decimal.Parse(row[17].ToString(), vgEstilo, vgProv),
                                                           decimal.Parse(row[18].ToString(), vgEstilo, vgProv),
                                                           (string)row[13], (string)row[14]);
-                    vlFunc.UmCargo.Codigo = (int)row[2];
-                    vlFunc.UmaCidade.Codigo = (int)row[5];
-                    foreach (Classes.cargos vlCargo in vlListaCargos)
-                    {
-                        if (vlCargo.Codigo == vlFunc.UmCargo.Codigo)
-                        { vlFunc.UmCargo.ThisCargo = vlCargo; }
-                    }
-                    foreach (Classes.cidades vlCidade in vlListaCidades)
-                    {
-                        if (vlCidade.Codigo == vlFunc.UmaCidade.Codigo)
-                        { vlFunc.UmaCidade.ThisCidade = vlCidade; }
-                    }
+                    vlFunc.UmCargo = (Classes.cargos)umaCtrlCargo.Pesquisar("codigo",
+                                                                            ((int)row[2]).ToString(),
+                                                                            out string vlMsgCargo,
+                                                                            true);
+                    vlFunc.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                                ((int)row[5]).ToString(),
+                                                                                out string vlMsgCidade,
+                                                                                true);
+                    pMsg += (vlMsgCargo == "" ? "" : vlMsgCargo) +
+                            (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade);
+
                     lista.Add(vlFunc);
                 }
-                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("funcionarios.", "");
+            camposSelList = camposSelList.Replace("cargo", "codigoCargo");
+            DataTable vlTabelaFunc =
+                 ExecuteComandSearchQuery(
+                       umDaoFunc.PesquisarToString("funcionarios",
+                       camposSelList.Replace("cidade", "codigoCidade"), pCampo, pValor, default, pValorIgual),
+                       out pMsg);
+
+            if (vlTabelaFunc.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaFunc.Rows[0];
+                var vlFunc = new Classes.funcionarios((int)row[0], (int)row[19],
+                                                        (string)row[20], (string)row[21],
+                                                        (string)row[1], (string)row[7],
+                                                        (string)row[8], (string)row[9],
+                                                        (string)row[6], (string)row[10],
+                                                        (string)row[3], (string)row[4],
+                                                        (string)row[11], (string)row[12],
+                                                        (string)row[15],
+                                                        decimal.Parse(row[16].ToString(), vgEstilo, vgProv),
+                                                        decimal.Parse(row[17].ToString(), vgEstilo, vgProv),
+                                                        decimal.Parse(row[18].ToString(), vgEstilo, vgProv),
+                                                        (string)row[13], (string)row[14]);
+                vlFunc.UmCargo = (Classes.cargos)umaCtrlCargo.Pesquisar("codigo",
+                                                                        ((int)row[2]).ToString(),
+                                                                        out string vlMsgCargo,
+                                                                        true);
+                vlFunc.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                            ((int)row[5]).ToString(),
+                                                                            out string vlMsgCidade,
+                                                                            true);
+                pMsg = (vlMsgCargo == "" ? "" : vlMsgCargo) +
+                        (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade);
+
+                return vlFunc;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlFunc = new Classes.funcionarios();
             var vlTable = ExecuteComandSearchQuery(
                        umDaoFunc.PesquisarToString("funcionarios, cidades, cargos", camposSelect,
-                       pCampo, pValor, vlFunc.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+                       pCampo, pValor, vlFunc.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }
     }

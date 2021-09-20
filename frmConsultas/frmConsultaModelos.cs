@@ -14,18 +14,11 @@ namespace Projeto_ICI.frmConsultas
         Controllers.ctrlModelos umCtrlModelos;
         List<Classes.marcas> listaMarcas;
         Classes.modelos umModelo;
-        public frmConsultaModelos()
+
+        public frmConsultaModelos(Controllers.ctrlModelos pCtrlModelo)
         {
             InitializeComponent();
-            frmCadModelo = new frmCadastros.frmCadastroModelos();
-            umCtrlModelos = new Controllers.ctrlModelos();
-            umModelo = new Classes.modelos();
-            carregarDados(umCtrlModelos);
-        }
-        public frmConsultaModelos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlModelos = new Controllers.ctrlModelos(pUmaConexao);
+            umCtrlModelos = pCtrlModelo;
             umModelo = new Classes.modelos();
             carregarDados(umCtrlModelos);
         }
@@ -44,28 +37,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umModelo = (Classes.modelos)pOBJ;
         }
-        private Classes.modelos dataGridToModelo()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlModelo = new Classes.modelos((int)row[0].Value, (int)row[4].Value,
-                                                   (string)row[5].Value, (string)row[6].Value,
-                                                   (string)row[1].Value, (string)row[2].Value);
-                vlModelo.UmaMarca.Codigo = (int)row[3].Value;
-                foreach (Classes.marcas vlMarca in listaMarcas)
-                {
-                    if (vlMarca.Codigo == vlModelo.UmaMarca.Codigo)
-                    { vlModelo.UmaMarca.ThisMarca = vlMarca; }
-                }
-                return vlModelo;
-            }
-        }
+
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadModelo.ClearTxTBox();
@@ -75,7 +47,7 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlModelo = dataGridToModelo();
+            var vlModelo = (Classes.modelos)dataGridToObj(umCtrlModelos, out string vlMsg);
             if (vlModelo == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um modelo");
@@ -96,7 +68,7 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlModelo = dataGridToModelo();
+            var vlModelo = (Classes.modelos)dataGridToObj(umCtrlModelos, out string vlMsg);
             if (vlModelo == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um modelo");
@@ -120,7 +92,7 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlModelo = dataGridToModelo();
+                var vlModelo = (Classes.modelos)dataGridToObj(umCtrlModelos, out string vlMsg);
                 if (vlModelo == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um modelo!");
@@ -145,12 +117,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlModelos.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlModelos.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlModelos.Pesquisar("modelo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlModelos.Pesquisar("modelo", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {

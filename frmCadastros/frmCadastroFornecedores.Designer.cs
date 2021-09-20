@@ -30,7 +30,7 @@ namespace Projeto_ICI.frmCadastros
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroFornecedores));
-            this.lbl_Cliente = new System.Windows.Forms.Label();
+            this.lbl_Fornecedor = new System.Windows.Forms.Label();
             this.txtb_Fornecedor = new System.Windows.Forms.TextBox();
             this.lbl_CondicaoPag = new System.Windows.Forms.Label();
             this.txtb_CondicaoPag = new System.Windows.Forms.TextBox();
@@ -48,8 +48,6 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CPF_CNPJ.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_CPF_CNPJ_Validating);
             // 
             // btn_PesquisarCidade
-            // 
-            this.btn_PesquisarCidade.Click += new System.EventHandler(this.btn_PesquisarCidade_Click);
             // 
             // txtb_CodigoUsu
             // 
@@ -86,15 +84,15 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_DataUltAlt.Location = new System.Drawing.Point(244, 372);
             // 
-            // lbl_Cliente
+            // lbl_Fornecedor
             // 
-            this.lbl_Cliente.AutoSize = true;
-            this.lbl_Cliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Cliente.Location = new System.Drawing.Point(96, 18);
-            this.lbl_Cliente.Name = "lbl_Cliente";
-            this.lbl_Cliente.Size = new System.Drawing.Size(75, 15);
-            this.lbl_Cliente.TabIndex = 21;
-            this.lbl_Cliente.Text = "Fornecedor*";
+            this.lbl_Fornecedor.AutoSize = true;
+            this.lbl_Fornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Fornecedor.Location = new System.Drawing.Point(96, 18);
+            this.lbl_Fornecedor.Name = "lbl_Fornecedor";
+            this.lbl_Fornecedor.Size = new System.Drawing.Size(75, 15);
+            this.lbl_Fornecedor.TabIndex = 21;
+            this.lbl_Fornecedor.Text = "Fornecedor*";
             // 
             // txtb_Fornecedor
             // 
@@ -203,7 +201,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.lbl_tipoPessoa);
             this.Controls.Add(this.lbl_CondicaoPag);
             this.Controls.Add(this.txtb_CondicaoPag);
-            this.Controls.Add(this.lbl_Cliente);
+            this.Controls.Add(this.lbl_Fornecedor);
             this.Controls.Add(this.txtb_Fornecedor);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastroFornecedores";
@@ -244,7 +242,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.lbl_CodigoUsu, 0);
             this.Controls.SetChildIndex(this.txtb_CodigoUsu, 0);
             this.Controls.SetChildIndex(this.txtb_Fornecedor, 0);
-            this.Controls.SetChildIndex(this.lbl_Cliente, 0);
+            this.Controls.SetChildIndex(this.lbl_Fornecedor, 0);
             this.Controls.SetChildIndex(this.txtb_CondicaoPag, 0);
             this.Controls.SetChildIndex(this.lbl_CondicaoPag, 0);
             this.Controls.SetChildIndex(this.lbl_tipoPessoa, 0);
@@ -261,7 +259,7 @@ namespace Projeto_ICI.frmCadastros
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_Cliente;
+        private System.Windows.Forms.Label lbl_Fornecedor;
         private System.Windows.Forms.TextBox txtb_Fornecedor;
         private System.Windows.Forms.Label lbl_CondicaoPag;
         private System.Windows.Forms.TextBox txtb_CondicaoPag;

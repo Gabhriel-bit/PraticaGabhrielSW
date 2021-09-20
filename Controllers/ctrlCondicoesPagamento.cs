@@ -17,16 +17,11 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoCondicoesPagamento umDaoCondPag;
 
-        public ctrlCondicoesPagamento()
+        public ctrlCondicoesPagamento(BancoDados.conexoes pUmaConexao,
+            Controllers.ctrlFormasPagamento pCtrlFormPag, DAOs.daoCondicoesPagamento pDaoCondPag)
         {
-            umDaoCondPag = new DAOs.daoCondicoesPagamento();
-            umaCtrlFromaPag = new ctrlFormasPagamento();
-        }
-
-        public ctrlCondicoesPagamento(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoCondPag = new DAOs.daoCondicoesPagamento();
-            umaCtrlFromaPag = new ctrlFormasPagamento(pUmaConexao);
+            umDaoCondPag = pDaoCondPag;
+            umaCtrlFromaPag = pCtrlFormPag;
             UmaConexao = pUmaConexao;
         }
 
@@ -87,9 +82,8 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
                        umDaoCondPag.PesquisarToString("condicoesPagamento",
-                            camposSelect, "", ""), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaCondicoesPagamento == null)
+                            camposSelect, "", ""), out pMsg);
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
             {
                 return null;
             }
@@ -106,7 +100,7 @@ namespace Projeto_ICI.Controllers
                                                    decimal.Parse(row[4].ToString(), vgEstilo, vgProv),
                                                    decimal.Parse(row[5].ToString(), vgEstilo, vgProv));
                     vlCondPag.ListaParcelas = PesquisarCollection(vlCondPag.Codigo, out string vlMsgParc);
-                    pMsg += "Erro ao carrgar parcelas " +
+                    pMsg += vlMsgParc == "" ? "" : "Erro ao carrgar parcelas " +
                         $"da condição de pagamento '{vlCondPag.CondicaoPag}'\n-->" + vlMsgParc;
                     lista.Add(vlCondPag);
                 }
@@ -120,9 +114,8 @@ namespace Projeto_ICI.Controllers
                 ExecuteComandSearchQuery(
                     umDaoCondPag.PesquisarToString("parcelasCondicaoPagamento",
                                                    camposSelectParcelas,
-                                                   "codigoCondPag", pCodigoCondPang.ToString()), out string vlMsg);
-            pMsg = vlMsg;
-            if (vlTabelaParcalasCondPag == null)
+                                                   "codigoCondPag", pCodigoCondPang.ToString()), out pMsg);
+            if (vlTabelaParcalasCondPag.Rows.Count == 0)
             {
                 return null;
             }
@@ -133,28 +126,54 @@ namespace Projeto_ICI.Controllers
                 {
                     var vlParcela = new Classes.parcelasCondPag((int)row[0], (int)row[1],
                                                                 (int)row[2],
-                                                                decimal.Parse(row[3].ToString(), vgEstilo, vgProv));
-                    vlParcela.UmaFormaPag.Codigo = (int)row[4];
-                    var vlListaFormaPag = umaCtrlFromaPag.PesquisarCollection(out string vlMsgFormPag);
-                    if (vlMsgFormPag != "")
-                    { pMsg += "\nErro ao carregar formas de pagamento: " + vlMsgFormPag; }
-                    foreach (Classes.formasPagamento vlFormPag in vlListaFormaPag)
-                    {
-                        if (vlFormPag.Codigo == vlParcela.UmaFormaPag.Codigo)
-                        { vlParcela.UmaFormaPag.ThisFormPag = vlFormPag; }
-                    }
+                                                                decimal.Parse(row[3].ToString(),
+                                                                vgEstilo, vgProv));
+                    vlParcela.UmaFormaPag = 
+                        (Classes.formasPagamento)umaCtrlFromaPag.Pesquisar("codigo",
+                                                                           ((int)row[4]).ToString(),
+                                                                           out string vlMsgFormPag,
+                                                                           true);
+                    pMsg += vlMsgFormPag;
                     listaParcelas.Add(vlParcela);
                 }
                 return listaParcelas;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            DataTable vlTabelaCondicoesPagamento =
+                 ExecuteComandSearchQuery(
+                       umDaoCondPag.PesquisarToString("condicoesPagamento",
+                            camposSelect, pCampo, pValor, default, pValorIgual), out pMsg);
+
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaCondicoesPagamento.Rows[0];
+                var vlCondPag = new
+                    Classes.condicoesPagamento((int)row[0], (int)row[6],
+                                                (string)row[7], (string)row[8],
+                                                (string)row[1], (int)row[2],
+                                                decimal.Parse(row[3].ToString(), vgEstilo, vgProv),
+                                                decimal.Parse(row[4].ToString(), vgEstilo, vgProv),
+                                                decimal.Parse(row[5].ToString(), vgEstilo, vgProv));
+                vlCondPag.ListaParcelas = PesquisarCollection(vlCondPag.Codigo, out string vlMsgParc);
+                pMsg = vlMsgParc == "" ? "" : "Erro ao carrgar parcelas " +
+                    $"da condição de pagamento '{vlCondPag.CondicaoPag}'\n-->" + vlMsgParc;
+
+                return vlCondPag;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlTable = ExecuteComandSearchQuery(
                           umDaoCondPag.PesquisarToString("condicoesPagamento",
-                            camposSelect, pCampo, pValor), out string vlMsg);
-            pMsg = vlMsg;
+                            camposSelect, pCampo, pValor, default, pValorIgual), out pMsg);
             return vlTable;
         }
     }

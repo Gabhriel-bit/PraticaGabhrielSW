@@ -16,18 +16,11 @@ namespace Projeto_ICI.frmConsultas
         List<Classes.cargos> listaCargos;
         List<Classes.cidades> listaCidades;
         Classes.funcionarios umFunc;
-        public frmConsultaFuncionarios()
+
+        public frmConsultaFuncionarios(Controllers.ctrlFuncionarios pCtrlFunc)
         {
             InitializeComponent();
-            frmCadFunc = new frmCadastros.frmCadastroFuncionarios();
-            umCtrlFunc = new Controllers.ctrlFuncionarios();
-            umFunc = new Classes.funcionarios();
-            carregarDados(umCtrlFunc);
-        }
-        public frmConsultaFuncionarios(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlFunc = new Controllers.ctrlFuncionarios(pUmaConexao);
+            umCtrlFunc = pCtrlFunc;
             umFunc = new Classes.funcionarios();
             carregarDados(umCtrlFunc);
         }
@@ -40,7 +33,7 @@ namespace Projeto_ICI.frmConsultas
             base.carregarDados(pCTRL);
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
             listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade});
+            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade });
         }
         public override void ConhecaOBJ(object pOBJ)
         {
@@ -52,51 +45,18 @@ namespace Projeto_ICI.frmConsultas
             frmCadFunc.ShowDialog();
             carregarDados(umCtrlFunc);
         }
-        private Classes.funcionarios dataGridToFuncionario()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlFunc = new Classes.funcionarios((int)row[0].Value, (int)row[19].Value,
-                                                      (string)row[20].Value, (string)row[21].Value,
-                                                      (string)row[1].Value, (string)row[7].Value,
-                                                      (string)row[8].Value, (string)row[9].Value,
-                                                      (string)row[6].Value, (string)row[10].Value,
-                                                      (string)row[3].Value, (string)row[4].Value,
-                                                      (string)row[11].Value, (string)row[12].Value,
-                                                      (string)row[15].Value,
-                                                      decimal.Parse(row[16].Value.ToString(), vgEstilo, vgProv),
-                                                      decimal.Parse(row[17].Value.ToString(), vgEstilo, vgProv),
-                                                      decimal.Parse(row[18].Value.ToString(), vgEstilo, vgProv),
-                                                      (string)row[13].Value, (string)row[14].Value);
 
-                vlFunc.UmCargo.Codigo = (int)row[2].Value;
-                foreach (Classes.cargos vlCargo in listaCargos)
-                {
-                    if (vlCargo.Codigo == vlFunc.UmCargo.Codigo)
-                    { vlFunc.UmCargo.ThisCargo = vlCargo; }
-                }
-
-                vlFunc.UmaCidade.Codigo = (int)row[5].Value;
-                foreach (Classes.cidades vlCidade in listaCidades)
-                {
-                    if (vlCidade.Codigo == vlFunc.UmaCidade.Codigo)
-                    { vlFunc.UmaCidade.ThisCidade = vlCidade; }
-                }
-                return vlFunc;
-            }
-        }
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlFunc = dataGridToFuncionario();
+            var vlFunc = (Classes.funcionarios)dataGridToObj(umCtrlFunc, out string vlMsg);
             if (vlFunc == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um funcionário");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -114,10 +74,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlFunc = dataGridToFuncionario();
+            var vlFunc = (Classes.funcionarios)dataGridToObj(umCtrlFunc, out string vlMsg);
             if (vlFunc == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um funcionário");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -137,10 +102,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlFunc = dataGridToFuncionario();
+                var vlFunc = (Classes.funcionarios)dataGridToObj(umCtrlFunc, out string vlMsg);
                 if (vlFunc == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um funcionário!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -157,30 +127,30 @@ namespace Projeto_ICI.frmConsultas
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("", "", out vlMsg);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("", "", default, out vlMsg);
             }
             else if (ValidacaoCPF(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), out vlMsg);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoCNPJ(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), out vlMsg);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlFunc.Pesquisar("funcionario", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlFunc.Pesquisar("funcionario", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

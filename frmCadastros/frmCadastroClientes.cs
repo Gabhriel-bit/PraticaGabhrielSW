@@ -11,38 +11,18 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroClientes : Projeto_ICI.frmCadastros.frmCadastroPessoas
     {
         private frmConsultas.frmConsultaCondicoesPagamento frmConsCondPag;
-        List<Classes.condicoesPagamento> listaCondPag;
         Classes.condicoesPagamento umCondPag;
 
         Controllers.ctrlClientes umCtrlCliente;
-        public frmCadastroClientes()
+
+        public frmCadastroClientes(Controllers.ctrlClientes pCtrlCliente)
         {
             InitializeComponent();
-            umCtrlCliente = new Controllers.ctrlClientes();
-
-            frmConsCondPag = new frmConsultas.frmConsultaCondicoesPagamento();
-            listaCondPag = new List<Classes.condicoesPagamento>();
-            umCondPag = new Classes.condicoesPagamento();
-
-            frmConsCidade = new frmConsultas.frmConsultaCidades();
-            listaCidades = new List<Classes.cidades>();
-            umaCidade = new Classes.cidades();
-
-            rb_Fisica.Checked = true;
-            closing = false;
-        }
-        public frmCadastroClientes(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlCliente = new Controllers.ctrlClientes(pUmaConexao);
-
-            listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
-            listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            showErrorMsg(new string[] { vlMsgCondPag, vlMsgCidade});
+            umCtrlCliente = pCtrlCliente;
+            umCtrlCidade = pCtrlCliente.CTRLCidade;
 
             umaCidade = new Classes.cidades();
             rb_Fisica.Checked = true;
-            closing = false;
 
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
         }
@@ -154,11 +134,6 @@ namespace Projeto_ICI.frmCadastros
                 }
             }
         }
-        private void btn_PesquisarCidade_Click(object sender, EventArgs e)
-        {
-            listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
-        }
         protected override void validacaoCPF_CNPJ(object sender, CancelEventArgs e)
         {
             errorMSG.Clear();
@@ -194,9 +169,24 @@ namespace Projeto_ICI.frmCadastros
         {
             if (ValidacaoNome(txtb_Cliente.Text, 2, true))
             {
-                errorMSG.SetError(lbl_Cliente, null);
-                e.Cancel = false;
-
+                if (umCtrlCliente.Pesquisar("cliente", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Cliente, "Cliente já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Cliente, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Cliente, null);
+                    e.Cancel = false;
+                }
             }
             else
             {
@@ -320,8 +310,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoCondPag.Text = umCondPag.Codigo.ToString();
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
-            listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoCondPag_TextChanged(object sender, EventArgs e)
@@ -332,20 +320,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoCondPag.Text, out int i))
+                if (int.TryParse(txtb_CodigoCondPag.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.condicoesPagamento vlCondPag in listaCondPag)
+                    var vlCondPag =
+                    (Classes.condicoesPagamento)umCtrlCliente.CTRLCondPag.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlCondPag != null)
                     {
-                        if (vlCondPag.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_CondicaoPag.Text = vlCondPag.CondicaoPag;
-                            umCondPag = vlCondPag.ThisCondPag;
-                            vlFind = true;
+                            umCondPag.ThisCondPag = vlCondPag;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_CondicaoPag.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_CondicaoPag.Clear(); }
+                    else
+                    {
+                        txtb_CondicaoPag.Clear();
+                    }
                 }
             }
         }

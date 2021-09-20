@@ -18,16 +18,11 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoModelos umDaoModelo;
 
-        public ctrlModelos()
+        public ctrlModelos(BancoDados.conexoes pUmaConexao, DAOs.daoModelos pDaoModelo,
+            Controllers.ctrlMarcas pCtrlMarca)
         {
-            umDaoModelo = new DAOs.daoModelos();
-            umaCtrlMarca = new ctrlMarcas();
-        }
-
-        public ctrlModelos(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoModelo = new DAOs.daoModelos();
-            umaCtrlMarca = new ctrlMarcas(pUmaConexao);
+            umDaoModelo = pDaoModelo;
+            umaCtrlMarca = pCtrlMarca;
             UmaConexao = pUmaConexao;
         }
 
@@ -81,10 +76,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaModelo =
                  ExecuteComandSearchQuery(
                        umDaoModelo.PesquisarToString("modelos",
-                       camposSelList.Replace("marca", "codigoMarca"), "", ""), out string vlMsg);
-            var vlListamarcas = umaCtrlMarca.PesquisarCollection(out string vlMsgMarca);
-            pMsg = vlMsg + '\n' + vlMsgMarca;
-            if (vlTabelaModelo == null)
+                       camposSelList.Replace("marca", "codigoMarca"), "", ""), out pMsg);
+
+            if (vlTabelaModelo.Rows.Count == 0)
             {
                 return null;
             }
@@ -98,26 +92,52 @@ namespace Projeto_ICI.Controllers
                     var vlModelo = new Classes.modelos((int)row[0], (int)row[4],
                                                        (string)row[5], (string)row[6],
                                                        (string)row[1], (string)row[2]);
-                    vlModelo.UmaMarca.Codigo = (int)row[3];
-                    foreach (Classes.marcas vlMarca in vlListamarcas)
-                    {
-                        if (vlMarca.Codigo == vlModelo.UmaMarca.Codigo)
-                        { vlModelo.UmaMarca.ThisMarca = vlMarca; }
-                    }
+                    vlModelo.UmaMarca = (Classes.marcas)umaCtrlMarca.Pesquisar("codigo",
+                                                                               ((int)row[3]).ToString(),
+                                                                               out string vlMsgMarca,
+                                                                               true);
+
+                    pMsg += vlMsgMarca;
                     lista.Add(vlModelo);
                 }
-                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("modelos.", "");
+            DataTable vlTabelaModelo =
+                 ExecuteComandSearchQuery(
+                       umDaoModelo.PesquisarToString("modelos",
+                       camposSelList.Replace("marca", "codigoMarca"), pCampo, pValor, default, pValorIgual),
+                                             out pMsg);
+
+            if (vlTabelaModelo.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaModelo.Rows[0];
+                var vlModelo = new Classes.modelos((int)row[0], (int)row[4],
+                                                    (string)row[5], (string)row[6],
+                                                    (string)row[1], (string)row[2]);
+                vlModelo.UmaMarca = (Classes.marcas)umaCtrlMarca.Pesquisar("codigo",
+                                                                           ((int)row[3]).ToString(),
+                                                                           out string vlMsgMarca,
+                                                                           true);
+                pMsg = vlMsgMarca;
+                return vlModelo;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlModelo = new Classes.modelos();
             var vlTable = ExecuteComandSearchQuery(
                           umDaoModelo.PesquisarToString("modelos, marcas", camposSelect,
-                          pCampo, pValor, vlModelo.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+                          pCampo, pValor, vlModelo.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }
     }

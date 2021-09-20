@@ -15,19 +15,11 @@ namespace Projeto_ICI.frmConsultas
         Controllers.ctrlEstados umCtrlEstado;
         List<Classes.paises> listaPaises;
         Classes.estados umEstado;
-        public frmConsultaEstados()
-        {
-            InitializeComponent();
-            frmCadEstado = new frmCadastros.frmCadastroEstados();
-            umCtrlEstado = new Controllers.ctrlEstados();
-            umEstado = new Classes.estados();
-            carregarDados(umCtrlEstado);
-        }
 
-        public frmConsultaEstados(BancoDados.conexoes pUmaConexao)
+        public frmConsultaEstados(Controllers.ctrlEstados pCtrlEstado)
         {
             InitializeComponent();
-            umCtrlEstado = new Controllers.ctrlEstados(pUmaConexao);
+            umCtrlEstado = pCtrlEstado;
             umEstado = new Classes.estados();
             carregarDados(umCtrlEstado);
         }
@@ -47,29 +39,6 @@ namespace Projeto_ICI.frmConsultas
             umEstado = (Classes.estados)pOBJ;
         }
 
-        private Classes.estados dataGridToEstado()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlEstado = new Classes.estados((int)row[0].Value, (int)row[4].Value,
-                                                   (string)row[5].Value, (string)row[6].Value,
-                                                   (string)row[1].Value, (string)row[2].Value);
-                vlEstado.UmPais.Pais = (string)row[3].Value;
-                foreach (Classes.paises vlPais in listaPaises)
-                {
-                    if (vlPais.Pais == vlEstado.UmPais.Pais)
-                    { vlEstado.UmPais.ThisPais = vlPais; }
-                }
-                return vlEstado;
-            }
-        }
-
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadEstado.ClearTxTBox();
@@ -79,10 +48,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlEstado = dataGridToEstado();
+            var vlEstado = (Classes.estados)dataGridToObj(umCtrlEstado, out string vlMsg);
             if (vlEstado == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um estado");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -100,10 +74,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlEstado = dataGridToEstado();
+            var vlEstado = (Classes.estados)dataGridToObj(umCtrlEstado, out string vlMsg);
             if (vlEstado == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um estado");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -124,10 +103,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlEstado = dataGridToEstado();
+                var vlEstado = (Classes.estados)dataGridToObj(umCtrlEstado, out string vlMsg);
                 if (vlEstado == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um estado!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -149,12 +133,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlEstado.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlEstado.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlEstado.Pesquisar("estado", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlEstado.Pesquisar("estado", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {

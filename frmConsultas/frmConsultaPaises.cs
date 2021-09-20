@@ -13,19 +13,11 @@ namespace Projeto_ICI.frmConsultas
         frmCadastros.frmCadastroPaises frmCadPais;
         Controllers.ctrlPaises umCtrlPais;
         Classes.paises umPais;
-        public frmConsultaPaises()
-        {
-            InitializeComponent();
-            frmCadPais = new frmCadastros.frmCadastroPaises(new BancoDados.conexoes());
-            umCtrlPais = new Controllers.ctrlPaises(new BancoDados.conexoes());
-            umPais = new Classes.paises();
-            carregarDados(umCtrlPais);
-        }
 
-        public frmConsultaPaises(BancoDados.conexoes pUmaConexao)
+        public frmConsultaPaises(Controllers.ctrlPaises pCtrlPais)
         {
             InitializeComponent();
-            umCtrlPais = new Controllers.ctrlPaises(pUmaConexao);
+            umCtrlPais = pCtrlPais;
             umPais = new Classes.paises();
             carregarDados(umCtrlPais);
         }
@@ -37,24 +29,6 @@ namespace Projeto_ICI.frmConsultas
         {
             umPais = (Classes.paises)pOBJ;
         }
-        private Classes.paises dataGridToPais()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlPais = new Classes.paises((int)row[0].Value, (int)row[5].Value,
-                                                (string)row[6].Value, (string)row[7].Value,
-                                                (string)row[1].Value, (string)row[3].Value,
-                                                (string)row[2].Value, (string)row[4].Value);
-                return vlPais;
-            }
-
-        }
 
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
@@ -65,10 +39,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlPais = dataGridToPais();
+            var vlPais = (Classes.paises)dataGridToObj(umCtrlPais, out string vlMsg);
             if (vlPais == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um país");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -86,10 +65,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlPais = dataGridToPais();
+            var vlPais = (Classes.paises)dataGridToObj(umCtrlPais, out string vlMsg);
             if (vlPais == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um país!");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -110,10 +94,15 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlPais = dataGridToPais();
+                var vlPais = (Classes.paises)dataGridToObj(umCtrlPais, out string vlMsg);
                 if (vlPais == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um país!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
@@ -135,13 +124,13 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlPais.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlPais.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlPais.Pesquisar("pais", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlPais.Pesquisar("pais", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else

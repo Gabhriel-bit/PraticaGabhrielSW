@@ -17,16 +17,11 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoEstados umDaoEstado;
 
-        public ctrlEstados()
+        public ctrlEstados(BancoDados.conexoes pUmaConexao, DAOs.daoEstados pDaoEstado,
+            Controllers.ctrlPaises pCtrlPais)
         {
-            umDaoEstado = new DAOs.daoEstados();
-            umaCtrlPais = new ctrlPaises();
-        }
-
-        public ctrlEstados(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoEstado = new DAOs.daoEstados();
-            umaCtrlPais = new ctrlPaises(pUmaConexao);
+            umDaoEstado = pDaoEstado;
+            umaCtrlPais = pCtrlPais;
             UmaConexao = pUmaConexao;
         }
 
@@ -80,10 +75,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaEstados =
                  ExecuteComandSearchQuery(
                        umDaoEstado.PesquisarToString("estados",
-                       camposSelList.Replace("pais", "codigoPais"), "", ""), out string vlMsg);
-            var vlListaPaises = umaCtrlPais.PesquisarCollection(out string vlMsgPaises);
-            pMsg = vlMsg + "\n" + vlMsgPaises;
-            if (vlTabelaEstados == null)
+                       camposSelList.Replace("pais", "codigoPais"), "", ""), out pMsg);
+
+            if (vlTabelaEstados.Rows.Count == 0)
             {
                 return null;
             }
@@ -97,26 +91,53 @@ namespace Projeto_ICI.Controllers
                     var vlEstado = new Classes.estados((int)row[0], (int)row[4],
                                                        (string)row[5], (string)row[6],
                                                        (string)row[1], (string)row[2]);
-                    vlEstado.UmPais.Codigo = (int)row[3];
-                    foreach (Classes.paises vlPais in vlListaPaises)
-                    {
-                        if (vlPais.Codigo == vlEstado.UmPais.Codigo)
-                        { vlEstado.UmPais.ThisPais = vlPais; }
-                    }
+
+                    vlEstado.UmPais = (Classes.paises)umaCtrlPais.Pesquisar("codigo",
+                                                                            ((int)row[3]).ToString(),
+                                                                            out string vlMsgPais,
+                                                                            true);
+                    pMsg += vlMsgPais; 
+
                     lista.Add(vlEstado);
                 }
-                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
+        {
+            var camposSelList = camposSelect.Replace("estados.", "");
+            DataTable vlTabelaEstados =
+                 ExecuteComandSearchQuery(
+                       umDaoEstado.PesquisarToString("estados",
+                       camposSelList.Replace("pais", "codigoPais"), pCampo, pValor, default, pDisponivel),
+                       out pMsg);
+
+            if (vlTabelaEstados.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaEstados.Rows[0];
+                var vlEstado = new Classes.estados((int)row[0], (int)row[4],
+                                                    (string)row[5], (string)row[6],
+                                                    (string)row[1], (string)row[2]);
+                vlEstado.UmPais = (Classes.paises)umaCtrlPais.Pesquisar("codigo",
+                                                                        ((int)row[3]).ToString(),
+                                                                        out string vlMsgPais,
+                                                                        true);
+                pMsg = vlMsgPais;
+                return vlEstado;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlEstado = new Classes.estados();
             var vlTable = ExecuteComandSearchQuery(
                           umDaoEstado.PesquisarToString("estados, paises", camposSelect,
-                          pCampo, pValor, vlEstado.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+                          pCampo, pValor, vlEstado.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }
     }

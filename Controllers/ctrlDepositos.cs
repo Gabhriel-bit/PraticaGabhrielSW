@@ -21,18 +21,12 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoDepositos umDaoDeposito;
 
-        public ctrlDepositos()
+        public ctrlDepositos(BancoDados.conexoes pUmaConexao, DAOs.daoDepositos pDaoDeposito,
+            Controllers.ctrlCidades pCtrlCidade, Controllers.ctrlProdutos pCtrlProduto)
         {
-            umDaoDeposito = new DAOs.daoDepositos();
-            umaCtrlCidade = new ctrlCidades();
-            umaCtrlProduto = new ctrlProdutos();
-        }
-
-        public ctrlDepositos(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoDeposito = new DAOs.daoDepositos();
-            umaCtrlCidade = new ctrlCidades(pUmaConexao);
-            umaCtrlProduto = new ctrlProdutos(pUmaConexao);
+            umDaoDeposito = pDaoDeposito;
+            umaCtrlCidade = pCtrlCidade;
+            umaCtrlProduto = pCtrlProduto;
             UmaConexao = pUmaConexao;
         }
 
@@ -96,10 +90,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaCondicoesPagamento =
                  ExecuteComandSearchQuery(
                        umDaoDeposito.PesquisarToString("depositos",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
-            var vlListaCidade = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
-            pMsg = vlMsg + '\n' + vlMsgCidade;
-            if (vlTabelaCondicoesPagamento == null)
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out pMsg);
+
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
             {
                 return null;
             }
@@ -114,18 +107,58 @@ namespace Projeto_ICI.Controllers
                                          (string)row[1], (string)row[2],
                                          (string)row[3], (string)row[4],
                                          (string)row[5], (string)row[6]);
-                    vlDeposito.UmaCidade.Codigo = (int)row[7];
-                    foreach (Classes.cidades vlCidade in vlListaCidade)
-                    {
-                        if (vlCidade.Codigo == vlDeposito.UmaCidade.Codigo)
-                        { vlDeposito.UmaCidade.ThisCidade = vlCidade; }
-                    }
+                    vlDeposito.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                                   ((int)row[7]).ToString(),
+                                                                                   out string vlMsgCidade,
+                                                                                   true);
+                    
                     vlDeposito.ListaProd = PesquisarCollection(vlDeposito.Codigo, out string vlMsgProd);
-                    pMsg += $"\nErro ao carrgar produtos do Deposito '{vlDeposito.Deposito}'\n-->" + vlMsgProd;
+
+                    pMsg += (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade) +
+                            (vlMsgProd == "" ? "" :
+                     $"\nErro ao carrgar produtos do Deposito '{vlDeposito.Deposito}'\n-->" + vlMsgProd);
+
                     lista.Add(vlDeposito);
                 }
-                pMsg = "";
                 return lista;
+            }
+        }
+
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
+        {
+            var camposSelList = camposSelect.Replace("depositos.", "");
+            DataTable vlTabelaCondicoesPagamento =
+                 ExecuteComandSearchQuery(
+                       umDaoDeposito.PesquisarToString("depositos",
+                       camposSelList.Replace("cidade", "codigoCidade"), pCampo, pValor, default, pDisponivel),
+                       out pMsg);
+
+            if (vlTabelaCondicoesPagamento.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaCondicoesPagamento.Rows[0];
+                var vlDeposito = new
+                    Classes.depositos((int)row[0], (int)row[8],
+                                        (string)row[9], (string)row[10],
+                                        (string)row[1], (string)row[2],
+                                        (string)row[3], (string)row[4],
+                                        (string)row[5], (string)row[6]);
+
+                vlDeposito.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                                ((int)row[7]).ToString(),
+                                                                                out string vlMsgCidade,
+                                                                                true);
+
+                vlDeposito.ListaProd = PesquisarCollection(vlDeposito.Codigo, out string vlMsgProd);
+
+                pMsg = (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade) +
+                        (vlMsgProd == "" ? "" :
+                    $"\nErro ao carrgar produtos do Deposito '{vlDeposito.Deposito}'\n-->" + vlMsgProd);
+
+                return vlDeposito;
             }
         }
 
@@ -138,7 +171,7 @@ namespace Projeto_ICI.Controllers
                                                    "codigoDeposito", pCodigoProduto.ToString()), out string vlMsg);
             var vlListaProd = umaCtrlProduto.PesquisarCollection(out string vlMsgProd);
             pMsg = vlMsg + "\n-->" + vlMsgProd;
-            if (vlTabelaProdutoDeposito == null)
+            if (vlTabelaProdutoDeposito.Rows.Count == 0)
             {
                 return null;
             }
@@ -158,12 +191,12 @@ namespace Projeto_ICI.Controllers
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlDeposito = new Classes.depositos();
             var vlTable = ExecuteComandSearchQuery(
                          umDaoDeposito.PesquisarToString("depositos, cidades", camposSelect,
-                         pCampo, pValor, vlDeposito.toStringSearchPesquisa()), out string vlMsg);
+                         pCampo, pValor, vlDeposito.toStringSearchPesquisa(), pValorIgual), out string vlMsg);
             pMsg = vlMsg;
             return vlTable;
         }

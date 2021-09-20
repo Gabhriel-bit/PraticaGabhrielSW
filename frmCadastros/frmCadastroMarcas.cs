@@ -11,15 +11,11 @@ namespace Projeto_ICI.frmCadastros
     public partial class frmCadastroMarcas : Projeto_ICI.frmCadastros.frmCadastroPai
     {
         private Controllers.ctrlMarcas umCtrlMarca;
-        public frmCadastroMarcas()
+
+        public frmCadastroMarcas(Controllers.ctrlMarcas pCtrlMarca)
         {
             InitializeComponent();
-            umCtrlMarca = new Controllers.ctrlMarcas();
-        }
-        public frmCadastroMarcas(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlMarca = new Controllers.ctrlMarcas(pUmaConexao);
+            umCtrlMarca = pCtrlMarca;
         }
         public override void BloquearTxtBox()
         {
@@ -51,8 +47,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.SetError(lbl_Marca, null);
-                e.Cancel = false;
+                if (umCtrlMarca.Pesquisar("marca", txtb_Marca.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Marca, "Marca já cadastrada!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Marca, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Marca, null);
+                    e.Cancel = false;
+                }
             }
         }
 

@@ -18,16 +18,11 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoCidades umDaoCidade;
 
-        public ctrlCidades()
+        public ctrlCidades(BancoDados.conexoes pUmaConexao, DAOs.daoCidades pDaoCidade,
+            Controllers.ctrlEstados pCtrlEstado)
         {
-            umDaoCidade = new DAOs.daoCidades();
-            umaCtrlEstado = new ctrlEstados();
-        }
-
-        public ctrlCidades(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoCidade = new DAOs.daoCidades();
-            umaCtrlEstado = new ctrlEstados(pUmaConexao);
+            umDaoCidade = pDaoCidade;
+            umaCtrlEstado = pCtrlEstado;
             UmaConexao = pUmaConexao;
         }
 
@@ -82,10 +77,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
                        umDaoCidade.PesquisarToString("cidades",
-                       camposSelList.Replace("estado", "codigoEstado"), "", ""), out string vlMsg);
-            var vlListaEstados = umaCtrlEstado.PesquisarCollection(out string vlMsgEstado);
-            pMsg = vlMsg + '\n' + vlMsgEstado;
-            if (vlTabelaCidades == null)
+                       camposSelList.Replace("estado", "codigoEstado"), "", ""), out pMsg);
+
+            if (vlTabelaCidades.Rows.Count == 0)
             {
                 return null;
             }
@@ -99,26 +93,50 @@ namespace Projeto_ICI.Controllers
                     var vlCidade = new Classes.cidades((int)row[0], (int)row[4],
                                                        (string)row[5], (string)row[6],
                                                        (string)row[1], (string)row[2]);
-                    vlCidade.UmEstado.Codigo = (int)row[3];
-                    foreach (Classes.estados vlEstado in vlListaEstados)
-                    {
-                        if (vlEstado.Codigo == vlCidade.UmEstado.Codigo)
-                        { vlCidade.UmEstado.ThisEstado = vlEstado; }
-                    }
+
+                    vlCidade.UmEstado = (Classes.estados)umaCtrlEstado.Pesquisar("codigo",
+                                                                                ((int)row[3]).ToString(),
+                                                                                out string vlMsgEstado,
+                                                                                true);
+                    pMsg += vlMsgEstado;
                     lista.Add(vlCidade);
                 }
                 pMsg = "";
                 return lista;
             }
         }
-
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("cidades.", "");
+            DataTable vlTabelaCidades =
+                 ExecuteComandSearchQuery(
+                       umDaoCidade.PesquisarToString("cidades",
+                       camposSelList.Replace("estado", "codigoEstado"), pCampo, pValor, default, pValorIgual),
+                       out pMsg);
+            if (vlTabelaCidades.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaCidades.Rows[0];
+                var vlCidade = new Classes.cidades((int)row[0], (int)row[4],
+                                                    (string)row[5], (string)row[6],
+                                                    (string)row[1], (string)row[2]);
+                vlCidade.UmEstado = (Classes.estados)umaCtrlEstado.Pesquisar("codigo",
+                                                                            ((int)row[3]).ToString(),
+                                                                            out string vlMsgEstado,
+                                                                            true);
+                pMsg = vlMsgEstado;
+                return vlCidade;
+            }
+        }
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlCidade = new Classes.cidades();
             var vlTable = ExecuteComandSearchQuery(
                        umDaoCidade.PesquisarToString("cidades, estados", camposSelect,
-                       pCampo, pValor, vlCidade.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+                       pCampo, pValor, vlCidade.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }
     }

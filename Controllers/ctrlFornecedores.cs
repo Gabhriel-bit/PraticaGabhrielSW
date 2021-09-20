@@ -22,18 +22,12 @@ namespace Projeto_ICI.Controllers
         private ctrlCidades umaCtrlCidade;
         private ctrlCondicoesPagamento umaCtrlCondPag;
 
-        public ctrlFornecedores()
+        public ctrlFornecedores(BancoDados.conexoes pUmaConexao, DAOs.daoFornecedores pDaoForn,
+            Controllers.ctrlCidades pCtrlCidade, Controllers.ctrlCondicoesPagamento pCtrlCondPag)
         {
-            umDaoForn = new DAOs.daoFornecedores();
-            umaCtrlCidade = new ctrlCidades();
-            umaCtrlCondPag = new ctrlCondicoesPagamento();
-        }
-
-        public ctrlFornecedores(BancoDados.conexoes pUmaConexao)
-        {
-            umDaoForn = new DAOs.daoFornecedores();
-            umaCtrlCidade = new ctrlCidades(pUmaConexao);
-            umaCtrlCondPag = new ctrlCondicoesPagamento(pUmaConexao);
+            umDaoForn = pDaoForn;
+            umaCtrlCidade = pCtrlCidade;
+            umaCtrlCondPag = pCtrlCondPag;
             UmaConexao = pUmaConexao;
         }
 
@@ -90,11 +84,9 @@ namespace Projeto_ICI.Controllers
             DataTable vlTabelaFunc =
                  ExecuteComandSearchQuery(
                        umDaoForn.PesquisarToString("fornecedores",
-                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out string vlMsg);
-            var vlListaCidades = umaCtrlCidade.PesquisarCollection(out string vlMsgCidade);
-            var vlListaCondPag = umaCtrlCondPag.PesquisarCollection(out string vlMsgCondPag);
-            pMsg = vlMsg + '\n' + vlMsgCidade + '\n' + vlMsgCondPag;
-            if (vlTabelaFunc == null)
+                       camposSelList.Replace("cidade", "codigoCidade"), "", ""), out pMsg);
+
+            if (vlTabelaFunc.Rows.Count == 0)
             {
                 return null;
             }
@@ -111,32 +103,70 @@ namespace Projeto_ICI.Controllers
                                                           (string)row[3], (string)row[4],
                                                           (string)row[11], (string)row[12],
                                                           (string)row[13]);
-                    vlForn.UmaCondPag.Codigo = (int)row[2];
-                    vlForn.UmaCidade.Codigo = (int)row[5];
-                    foreach (Classes.condicoesPagamento vlCondPag in vlListaCondPag)
-                    {
-                        if (vlCondPag.Codigo == vlForn.UmaCondPag.Codigo)
-                        { vlForn.UmaCondPag.ThisCondPag = vlCondPag; }
-                    }
-                    foreach (Classes.cidades vlCidade in vlListaCidades)
-                    {
-                        if (vlCidade.Codigo == vlForn.UmaCidade.Codigo)
-                        { vlForn.UmaCidade.ThisCidade = vlCidade; }
-                    }
+                    vlForn.UmaCondPag =
+                              (Classes.condicoesPagamento)umaCtrlCondPag.Pesquisar("codigo",
+                                                                                   ((int)row[2]).ToString(),
+                                                                                   out string vlMsgCondPag,
+                                                                                   true);
+                    vlForn.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                                ((int)row[5]).ToString(),
+                                                                                out string vlMsgCidade,
+                                                                                true);
+                    pMsg += (vlMsgCondPag == "" ? "" : vlMsgCondPag) +
+                            (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade);
                     lista.Add(vlForn);
                 }
-                pMsg = "";
                 return lista;
             }
         }
 
-        public override DataTable Pesquisar(string pCampo, string pValor, out string pMsg)
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
+        {
+            var camposSelList = camposSelect.Replace("fornecedores.", "");
+            camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento", "codigoCondPag");
+            DataTable vlTabelaFunc =
+                 ExecuteComandSearchQuery(
+                       umDaoForn.PesquisarToString("fornecedores",
+                       camposSelList.Replace("cidade", "codigoCidade"), pCampo, pValor, default, pDisponivel),
+                       out pMsg);
+
+            if (vlTabelaFunc.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                DataRow row = vlTabelaFunc.Rows[0];
+                var vlForn = new Classes.fornecedores((int)row[0], (int)row[14],
+                                                        (string)row[15], (string)row[16],
+                                                        (string)row[1], (string)row[7],
+                                                        (string)row[8], (string)row[9],
+                                                        (string)row[6], (string)row[10],
+                                                        (string)row[3], (string)row[4],
+                                                        (string)row[11], (string)row[12],
+                                                        (string)row[13]);
+                vlForn.UmaCondPag =
+                          (Classes.condicoesPagamento)umaCtrlCondPag.Pesquisar("codigo",
+                                                                               ((int)row[2]).ToString(),
+                                                                               out string vlMsgCondPag,
+                                                                               true);
+                vlForn.UmaCidade = (Classes.cidades)umaCtrlCidade.Pesquisar("codigo",
+                                                                            ((int)row[5]).ToString(),
+                                                                            out string vlMsgCidade,
+                                                                            true);
+                pMsg = (vlMsgCondPag == "" ? "" : vlMsgCondPag) +
+                       (vlMsgCidade == "" ? "" : "\n" + vlMsgCidade);
+
+                return vlForn;
+            }
+        }
+
+        public override DataTable Pesquisar(string pCampo, string pValor, bool pValorIgual, out string pMsg)
         {
             var vlForn = new Classes.fornecedores();
-            var vlTable = ExecuteComandSearchQuery(umDaoForn.PesquisarToString("condicoesPagamento," +
-                          " fornecedores, cidades", camposSelect, pCampo, pValor,
-                          vlForn.toStringSearchPesquisa()), out string vlMsg);
-            pMsg = vlMsg;
+            var vlTable = ExecuteComandSearchQuery(umDaoForn.PesquisarToString("fornecedores," +
+                          " condicoesPagamento, cidades", camposSelect, pCampo, pValor,
+                          vlForn.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }
     }

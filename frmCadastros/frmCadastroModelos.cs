@@ -13,22 +13,12 @@ namespace Projeto_ICI.frmCadastros
         frmConsultas.frmConsultaMarcas frmConsMarca;
         Controllers.ctrlModelos umCtrlModelos;
         Classes.marcas umaMarca;
-        List<Classes.marcas> listaMarcas;
-        public frmCadastroModelos()
+
+        public frmCadastroModelos(Controllers.ctrlModelos pCtrlModelo)
         {
             InitializeComponent();
-            frmConsMarca = new frmConsultas.frmConsultaMarcas();
-            umCtrlModelos = new Controllers.ctrlModelos();
+            umCtrlModelos = pCtrlModelo;
             umaMarca = new Classes.marcas();
-            listaMarcas = new List<Classes.marcas>();
-        }
-        public frmCadastroModelos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlModelos = new Controllers.ctrlModelos(pUmaConexao);
-            umaMarca = new Classes.marcas();
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
         public override void SetFrmCons(Form pFrmCad)
@@ -78,8 +68,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoMarca.Text = umaMarca.Codigo.ToString();
                 txtb_Marca.Text = umaMarca.Marca;
             }
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoMarca_TextChanged(object sender, EventArgs e)
@@ -90,15 +78,29 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoMarca.Text, out int i))
+                if (int.TryParse(txtb_CodigoMarca.Text, out int vlCodigo))
                 {
-                    foreach (Classes.marcas vlPais in listaMarcas)
+                    var vlMarca =
+                         (Classes.marcas)umCtrlModelos.CTRLMarca.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            false);
+                    if (vlMarca != null)
                     {
-                        if (vlPais.Codigo == i)
+                        if (vlMsg == "")
                         {
-                            txtb_Marca.Text = vlPais.Marca;
-                            umaMarca = vlPais.ThisMarca;
+                            txtb_Marca.Text = vlMarca.Marca;
+                            umaMarca.ThisMarca = vlMarca;
                         }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Marca.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Marca.Clear();
                     }
                 }
             }
@@ -143,8 +145,24 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                errorMSG.SetError(lbl_Modelo, null);
-                e.Cancel = false;
+                if (umCtrlModelos.Pesquisar("modelo", txtb_Modelo.Text, true, out string vlMsg).Rows.Count != 0)
+                {
+                    if (vlMsg == "")
+                    {
+                        errorMSG.SetError(lbl_Modelo, "Modelo já cadastrado!");
+                        e.Cancel = closing;
+                    }
+                    else
+                    {
+                        errorMSG.SetError(lbl_Modelo, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(lbl_Modelo, null);
+                    e.Cancel = false;
+                }
             }
         }
 

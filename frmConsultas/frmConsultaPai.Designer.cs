@@ -164,7 +164,7 @@ namespace Projeto_ICI.frmConsultas
         protected System.Windows.Forms.Button btn_Excluir;
         protected System.Windows.Forms.Button btn_Alterar;
         protected System.Windows.Forms.Button btn_Inserir;
-        protected System.Windows.Forms.DataGridView dataGridView;
         protected System.Windows.Forms.Label lbl_Pesquisa;
+        public System.Windows.Forms.DataGridView dataGridView;
     }
 }

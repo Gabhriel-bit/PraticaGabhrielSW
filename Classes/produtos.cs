@@ -14,6 +14,8 @@ namespace Projeto_ICI.Classes
         private decimal Fcusto;
         private int Funidade;
         private int Fsaldo;
+        private decimal FpesoBruto;
+        private decimal FpesoLiquido;
         private modelos umModelo;
         private subgrupos umSubgrupo;
         private List<fornecedores> listaForn;
@@ -81,6 +83,10 @@ namespace Projeto_ICI.Classes
         { get => FcodigoBarras; set => FcodigoBarras = value; }
         public decimal Custo
         { get => Fcusto; set => Fcusto = value; }
+        public decimal PesoLiquido
+        { get => FpesoLiquido; set => FpesoLiquido = value; }
+        public decimal PesoBruto
+        { get => FpesoBruto; set => FpesoBruto = value; }
         public int Unidade
         { get => Funidade; set => Funidade = value; }
         public int Saldo

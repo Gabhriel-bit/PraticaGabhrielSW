@@ -16,18 +16,11 @@ namespace Projeto_ICI.frmConsultas
         Classes.depositos umDeposito;
 
         List<Classes.cidades> listaCidades;
-        public frmConsultaDepositos()
+
+        public frmConsultaDepositos(Controllers.ctrlDepositos pCtrlDeposito)
         {
             InitializeComponent();
-            frmCadDeposito = new frmCadastros.frmCadastroDepositos();
-            umCtrlDeposito = new ctrlDepositos();
-            umDeposito = new Classes.depositos();
-            listaCidades = new List<Classes.cidades>();
-        }
-        public frmConsultaDepositos(BancoDados.conexoes pUmaConexao)
-        {
-            InitializeComponent();
-            umCtrlDeposito = new ctrlDepositos(pUmaConexao);
+            umCtrlDeposito = pCtrlDeposito;
             umDeposito = new Classes.depositos();
             carregarDados(umCtrlDeposito);
         }
@@ -42,33 +35,6 @@ namespace Projeto_ICI.frmConsultas
             showErrorMsg(vlMsg);
         }
 
-        private Classes.depositos dataGridToDeposito()
-        {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                return null;
-            }
-            else
-            {
-                var row = dataGridView.SelectedRows[0].Cells;
-                var vlProduto = new
-                    Classes.depositos((int)row[0].Value, (int)row[8].Value,
-                                     (string)row[9].Value, (string)row[10].Value,
-                                     (string)row[1].Value, (string)row[2].Value,
-                                     (string)row[3].Value, (string)row[4].Value,
-                                     (string)row[5].Value, (string)row[6].Value);
-                vlProduto.UmaCidade.Codigo = (int)row[7].Value;
-                foreach (Classes.cidades vlCidade in listaCidades)
-                {
-                    if (vlCidade.Codigo == vlProduto.UmaCidade.Codigo)
-                    { vlProduto.UmaCidade.ThisCidade = vlCidade; }
-                }
-                vlProduto.ListaProd = umCtrlDeposito.PesquisarCollection(vlProduto.Codigo, out string vlMsg);
-                showErrorMsg(vlMsg);
-                return vlProduto;
-            }
-        }
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadDeposito.ClearTxTBox();
@@ -78,10 +44,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlDeposito = dataGridToDeposito();
+            var vlDeposito = (Classes.depositos)dataGridToObj(umCtrlDeposito, out string vlMsg);
             if (vlDeposito == null)
             {
                 errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um deposito");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -99,10 +70,15 @@ namespace Projeto_ICI.frmConsultas
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlDeposito = dataGridToDeposito();
+            var vlDeposito = (Classes.depositos)dataGridToObj(umCtrlDeposito, out string vlMsg);
             if (vlDeposito == null)
             {
                 errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um deposito");
+                this.dataGridView.Focus();
+            }
+            else if (vlMsg != "")
+            {
+                errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                 this.dataGridView.Focus();
             }
             else
@@ -130,12 +106,12 @@ namespace Projeto_ICI.frmConsultas
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlDeposito.Pesquisar("codigo", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlDeposito.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlDeposito.Pesquisar("deposito", txtb_Pesquisa.Text, out vlMsg);
+                dataGridView.DataSource = umCtrlDeposito.Pesquisar("deposito", txtb_Pesquisa.Text, false, out vlMsg);
             }
             else
             {
@@ -148,16 +124,21 @@ namespace Projeto_ICI.frmConsultas
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlProduto = dataGridToDeposito();
-                if (vlProduto == null)
+                var vlDeposito = (Classes.depositos)dataGridToObj(umCtrlDeposito, out string vlMsg);
+                if (vlDeposito == null)
                 {
                     errorMSG.SetError(btn_Sair, "Selecione um e apenas um deposito!");
+                    this.dataGridView.Focus();
+                }
+                else if (vlMsg != "")
+                {
+                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else
                 {
                     errorMSG.SetError(btn_Sair, null);
-                    umDeposito.ThisDeposito = vlProduto;
+                    umDeposito.ThisDeposito = vlDeposito;
                 }
             }
         }

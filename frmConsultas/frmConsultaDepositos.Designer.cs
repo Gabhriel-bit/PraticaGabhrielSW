@@ -51,9 +51,8 @@ namespace Projeto_ICI.frmConsultas
             // frmConsultaDepositos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(592, 425);
+            this.ClientSize = new System.Drawing.Size(611, 377);
             this.Name = "frmConsultaDepositos";
-            this.Text = "Consulta de Depositos";
             this.Load += new System.EventHandler(this.frmConsultaDepositos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);
