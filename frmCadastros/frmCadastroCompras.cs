@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Projeto_ICI.frmComprasVendas
+namespace Projeto_ICI.frmCadastros
 {
     public partial class frmCadastroCompras : Projeto_ICI.formularioBase
     {

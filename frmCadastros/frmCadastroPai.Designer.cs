@@ -46,7 +46,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_CodigoUsu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtb_CodigoUsu.Enabled = false;
-            this.txtb_CodigoUsu.Location = new System.Drawing.Point(17, 388);
+            this.txtb_CodigoUsu.Location = new System.Drawing.Point(17, 668);
             this.txtb_CodigoUsu.Name = "txtb_CodigoUsu";
             this.txtb_CodigoUsu.Size = new System.Drawing.Size(73, 20);
             this.txtb_CodigoUsu.TabIndex = 19;
@@ -58,7 +58,7 @@ namespace Projeto_ICI.frmCadastros
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_CodigoUsu.AutoSize = true;
             this.lbl_CodigoUsu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoUsu.Location = new System.Drawing.Point(14, 370);
+            this.lbl_CodigoUsu.Location = new System.Drawing.Point(14, 650);
             this.lbl_CodigoUsu.Name = "lbl_CodigoUsu";
             this.lbl_CodigoUsu.Size = new System.Drawing.Size(71, 15);
             this.lbl_CodigoUsu.TabIndex = 18;
@@ -68,7 +68,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_Sair.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Sair.Location = new System.Drawing.Point(656, 383);
+            this.btn_Sair.Location = new System.Drawing.Point(795, 663);
             this.btn_Sair.Name = "btn_Sair";
             this.btn_Sair.Size = new System.Drawing.Size(66, 25);
             this.btn_Sair.TabIndex = 15;
@@ -80,7 +80,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.btn_Cadastro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Cadastro.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Cadastro.Location = new System.Drawing.Point(584, 382);
+            this.btn_Cadastro.Location = new System.Drawing.Point(723, 662);
             this.btn_Cadastro.Name = "btn_Cadastro";
             this.btn_Cadastro.Size = new System.Drawing.Size(66, 25);
             this.btn_Cadastro.TabIndex = 14;
@@ -102,7 +102,7 @@ namespace Projeto_ICI.frmCadastros
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_UltAlt.AutoSize = true;
             this.lbl_UltAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_UltAlt.Location = new System.Drawing.Point(234, 369);
+            this.lbl_UltAlt.Location = new System.Drawing.Point(234, 649);
             this.lbl_UltAlt.Name = "lbl_UltAlt";
             this.lbl_UltAlt.Size = new System.Drawing.Size(44, 15);
             this.lbl_UltAlt.TabIndex = 12;
@@ -114,7 +114,7 @@ namespace Projeto_ICI.frmCadastros
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_DataCad.AutoSize = true;
             this.lbl_DataCad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_DataCad.Location = new System.Drawing.Point(119, 369);
+            this.lbl_DataCad.Location = new System.Drawing.Point(119, 649);
             this.lbl_DataCad.Name = "lbl_DataCad";
             this.lbl_DataCad.Size = new System.Drawing.Size(56, 15);
             this.lbl_DataCad.TabIndex = 11;
@@ -134,7 +134,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_DataCadastro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtb_DataCadastro.Enabled = false;
-            this.txtb_DataCadastro.Location = new System.Drawing.Point(122, 388);
+            this.txtb_DataCadastro.Location = new System.Drawing.Point(122, 668);
             this.txtb_DataCadastro.Name = "txtb_DataCadastro";
             this.txtb_DataCadastro.Size = new System.Drawing.Size(85, 20);
             this.txtb_DataCadastro.TabIndex = 20;
@@ -143,7 +143,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_DataUltAlt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtb_DataUltAlt.Enabled = false;
-            this.txtb_DataUltAlt.Location = new System.Drawing.Point(237, 388);
+            this.txtb_DataUltAlt.Location = new System.Drawing.Point(237, 668);
             this.txtb_DataUltAlt.Name = "txtb_DataUltAlt";
             this.txtb_DataUltAlt.Size = new System.Drawing.Size(85, 20);
             this.txtb_DataUltAlt.TabIndex = 21;
@@ -151,7 +151,7 @@ namespace Projeto_ICI.frmCadastros
             // frmCadastroPai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(734, 421);
+            this.ClientSize = new System.Drawing.Size(873, 701);
             this.Controls.Add(this.txtb_DataUltAlt);
             this.Controls.Add(this.txtb_DataCadastro);
             this.Controls.Add(this.txtb_CodigoUsu);

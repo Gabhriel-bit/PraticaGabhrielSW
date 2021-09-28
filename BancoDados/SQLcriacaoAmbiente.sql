@@ -22,6 +22,22 @@ GO
 USE praticaDBGabhriel
 GO
 
+IF OBJECT_ID('servicos') IS NULL
+BEGIN
+    CREATE TABLE servicos (
+		servico    VARCHAR(50) NOT NULL UNIQUE,
+		descricao  VARCHAR(100),
+		preco      NUMERIC(8,4) NOT NULL,
+		codigo     INT PRIMARY KEY IDENTITY,
+		codigoUsu  INT  NOT NULL,
+		dataCad    VARCHAR(10) NOT NULL,
+		dataUltAlt VARCHAR(10) NOT NULL,
+
+	    disponivel    INT NOT NULL default 1--,
+		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	);
+END
+
 IF OBJECT_ID('paises') IS NULL
 BEGIN
     CREATE TABLE paises (

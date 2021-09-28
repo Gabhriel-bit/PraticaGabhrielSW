@@ -47,6 +47,7 @@ namespace Projeto_ICI
             this.mnItem_Produtos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Paises = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Subgrupos = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnItem_Servicos = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cargosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +64,7 @@ namespace Projeto_ICI
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paisesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_Principal.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,7 +97,8 @@ namespace Projeto_ICI
             this.mnItem_Modelos,
             this.mnItem_Produtos,
             this.mnItem_Paises,
-            this.mnItem_Subgrupos});
+            this.mnItem_Subgrupos,
+            this.mnItem_Servicos});
             this.consultasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("consultasToolStripMenuItem.Image")));
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(106, 25);
@@ -206,6 +209,13 @@ namespace Projeto_ICI
             this.mnItem_Subgrupos.Text = "&Subgrupos";
             this.mnItem_Subgrupos.Click += new System.EventHandler(this.mnItem_Subgrupos_Click);
             // 
+            // mnItem_Servicos
+            // 
+            this.mnItem_Servicos.Name = "mnItem_Servicos";
+            this.mnItem_Servicos.Size = new System.Drawing.Size(255, 26);
+            this.mnItem_Servicos.Text = "&Serviços";
+            this.mnItem_Servicos.Click += new System.EventHandler(this.mnItem_Servicos_Click);
+            // 
             // cadastrosToolStripMenuItem
             // 
             this.cadastrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -223,7 +233,8 @@ namespace Projeto_ICI
             this.modelosToolStripMenuItem,
             this.produtosToolStripMenuItem,
             this.paisesToolStripMenuItem,
-            this.subgruposToolStripMenuItem});
+            this.subgruposToolStripMenuItem,
+            this.servicosToolStripMenuItem});
             this.cadastrosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cadastrosToolStripMenuItem.Image")));
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(107, 25);
@@ -334,11 +345,18 @@ namespace Projeto_ICI
             this.subgruposToolStripMenuItem.Text = "&Subgrupos";
             this.subgruposToolStripMenuItem.Click += new System.EventHandler(this.subgruposToolStripMenuItem_Click);
             // 
+            // servicosToolStripMenuItem
+            // 
+            this.servicosToolStripMenuItem.Name = "servicosToolStripMenuItem";
+            this.servicosToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.servicosToolStripMenuItem.Text = "&Serviços";
+            this.servicosToolStripMenuItem.Click += new System.EventHandler(this.servicosToolStripMenuItem_Click);
+            // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 388);
+            this.ClientSize = new System.Drawing.Size(740, 404);
             this.Controls.Add(this.menu_Principal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_Principal;
@@ -386,6 +404,8 @@ namespace Projeto_ICI
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paisesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subgruposToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnItem_Servicos;
+        private System.Windows.Forms.ToolStripMenuItem servicosToolStripMenuItem;
     }
 }
 

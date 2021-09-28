@@ -11,8 +11,6 @@ namespace Projeto_ICI
 {
     public partial class Gerente : Form
     {
-        private List<string> itensConsulta;
-        private List<string> itensCadastro;
 
         private daoCargos umaDaoCargo;
         private daoCidades umaDaoCidade;
@@ -28,6 +26,7 @@ namespace Projeto_ICI
         private daoModelos umaDaoModelo;
         private daoPaises umaDaoPais;
         private daoProdutos umaDaoProduto;
+        private daoServicos umaDaoServico;
         private daoSubgrupos umaDaoSubgrupo;
 
         private ctrlCargos umCtrlCargo;
@@ -44,6 +43,7 @@ namespace Projeto_ICI
         private ctrlModelos umCtrlModelo;
         private ctrlPaises umCtrlPais;
         private ctrlProdutos umCtrlProduto;
+        private ctrlServicos umCtrlServico;
         private ctrlSubgrupos umCtrlSubgrupo;
 
         private frmCadastroCargos frmCadCargo;
@@ -60,6 +60,7 @@ namespace Projeto_ICI
         private frmCadastroPaises frmCadPais;
         private frmCadastroProdutos frmCadProduto;
         private frmCadastroFormasPagamento frmCadFormPag;
+        private frmCadastroServicos frmCadServico;
         private frmCadastroSubGrupos frmCadSubgrupo;
 
         private frmConsultaCargos frmConsCargo;
@@ -76,6 +77,7 @@ namespace Projeto_ICI
         private frmConsultaPaises frmConsPais;
         private frmConsultaProdutos frmConsProduto;
         private frmConsultasFormasPagamento frmConsFormPag;
+        private frmConsultaServicos frmConsServico;
         private frmConsultaSubgrupos frmConsSubgrupo;
 
         private BancoDados.conexoes umaConexao;
@@ -84,8 +86,10 @@ namespace Projeto_ICI
         {
             InitializeComponent();
             InicializarAtributos();
-           //frmComprasVendas.frmCadastroCompras f = new frmComprasVendas.frmCadastroCompras();
-           // f.ShowDialog();
+            frmCadastros.frmCadastroCompras h = new frmCadastroCompras();
+            //h.ShowDialog();
+            frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
+            //f.ShowDialog();
         }
         private void InicializarAtributos()
         {
@@ -108,6 +112,7 @@ namespace Projeto_ICI
                 umaDaoModelo = new daoModelos();
                 umaDaoPais = new daoPaises();
                 umaDaoProduto = new daoProdutos();
+                umaDaoServico = new daoServicos();
                 umaDaoSubgrupo = new daoSubgrupos();
 
                 umCtrlCargo = new ctrlCargos(umaConexao, umaDaoCargo);
@@ -124,6 +129,7 @@ namespace Projeto_ICI
                 umCtrlProduto = new ctrlProdutos(umaConexao, umaDaoProduto, umCtrlModelo, umCtrlSubgrupo, umCtrlForn);
                 umCtrlCliente = new ctrlClientes(umaConexao, umCtrlCidade, umCtrlCondPag, umaDaoCliente);
                 umCtrlDeposito = new ctrlDepositos(umaConexao, umaDaoDeposito, umCtrlCidade, umCtrlProduto);
+                umCtrlServico = new ctrlServicos(umaConexao, umaDaoServico);
                 umCtrlFunc = new ctrlFuncionarios(umaConexao, umaDaoFunc, umCtrlCargo, umCtrlCidade);
                 
 
@@ -142,6 +148,7 @@ namespace Projeto_ICI
                 frmCadPais = new frmCadastroPaises(umCtrlPais);
                 frmCadProduto = new frmCadastroProdutos(umCtrlProduto);
                 frmCadFormPag = new frmCadastroFormasPagamento(umCtrlFormPag);
+                frmCadServico = new frmCadastroServicos(umCtrlServico);
                 frmCadSubgrupo = new frmCadastroSubGrupos(umCtrlSubgrupo);
 
                 //formulários de consulta
@@ -159,6 +166,7 @@ namespace Projeto_ICI
                 frmConsPais = new frmConsultaPaises(umCtrlPais);
                 frmConsProduto = new frmConsultaProdutos(umCtrlProduto);
                 frmConsFormPag = new frmConsultasFormasPagamento(umCtrlFormPag);
+                frmConsServico = new frmConsultaServicos(umCtrlServico);
                 frmConsSubgrupo = new frmConsultaSubgrupos(umCtrlSubgrupo);
 
                 //vincula os formulários de consulta com seus respectivos cadastros
@@ -176,6 +184,7 @@ namespace Projeto_ICI
                 frmConsPais.SetFrmCad(frmCadPais);
                 frmConsProduto.SetFrmCad(frmCadProduto);
                 frmConsFormPag.SetFrmCad(frmCadFormPag);
+                frmConsServico.SetFrmCad(frmCadServico);
                 frmConsSubgrupo.SetFrmCad(frmCadSubgrupo);
 
                 //vincula os formulários de consulta com os formulários de cadastro com dependência
@@ -200,9 +209,7 @@ namespace Projeto_ICI
 
         private void carregarListaConsulta()
         {
-            itensConsulta = new List<string>();
-            MessageBox.Show(mnItem_Cargos.Name);
-
+            
         }
 
         private void mnItem_Cargos_Click(object sender, EventArgs e)
@@ -353,6 +360,16 @@ namespace Projeto_ICI
         private void subgruposToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadSubgrupo.ShowDialog();
+        }
+
+        private void mnItem_Servicos_Click(object sender, EventArgs e)
+        {
+            frmConsServico.ShowDialog();
+        }
+
+        private void servicosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadServico.ShowDialog();
         }
     }
 }

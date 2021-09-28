@@ -69,6 +69,7 @@
     <Compile Include="BancoDados\conexoes.cs" />
     <Compile Include="Classes\cargos.cs" />
     <Compile Include="Classes\cidades.cs" />
+    <Compile Include="Classes\servicos.cs" />
     <Compile Include="Classes\ordensServico.cs" />
     <Compile Include="Classes\funcionarios.cs" />
     <Compile Include="Classes\clientes.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="Classes\parcelasCondPag.cs" />
     <Compile Include="Classes\condicoesPagamento.cs" />
     <Compile Include="Classes\pai.cs" />
+    <Compile Include="Classes\transportadoras.cs" />
+    <Compile Include="Classes\veiculos.cs" />
     <Compile Include="Controllers\controllers.cs" />
     <Compile Include="Controllers\ctrlCargos.cs" />
     <Compile Include="Controllers\ctrlCidades.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Controllers\ctrlMarcas.cs" />
     <Compile Include="Controllers\ctrlModelos.cs" />
     <Compile Include="Controllers\ctrlPaises.cs" />
+    <Compile Include="Controllers\ctrlServicos.cs" />
     <Compile Include="Controllers\ctrlSubgrupos.cs" />
     <Compile Include="Controllers\ctrlProdutos.cs" />
     <Compile Include="DAOs\daoCargos.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="DAOs\daoPaises.cs" />
     <Compile Include="DAOs\daoProdutos.cs" />
     <Compile Include="DAOs\daos.cs" />
+    <Compile Include="DAOs\daoServicos.cs" />
     <Compile Include="DAOs\daoSubgrupos.cs" />
     <Compile Include="frmAcesso\frmLogin.cs">
       <SubType>Form</SubType>
@@ -129,6 +134,30 @@
     </Compile>
     <Compile Include="frmAcesso\formularioBase.Designer.cs">
       <DependentUpon>formularioBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroCompras.Designer.cs">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroOrdensServico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroOrdensServico.Designer.cs">
+      <DependentUpon>frmCadastroOrdensServico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroEquipamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroEquipamentos.Designer.cs">
+      <DependentUpon>frmCadastroEquipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroServicos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroServicos.Designer.cs">
+      <DependentUpon>frmCadastroServicos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCadastros\frmCadastroPessoas.cs">
       <SubType>Form</SubType>
@@ -232,11 +261,23 @@
     <Compile Include="frmCadastros\frmCadastroPaises.Designer.cs">
       <DependentUpon>frmCadastroPaises.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCadastros\frmCadastroCompras.cs">
+    <Compile Include="frmConsultas\frmConsultaEquipamentos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCadastros\frmCadastroCompras.Designer.cs">
-      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    <Compile Include="frmConsultas\frmConsultaEquipamentos.Designer.cs">
+      <DependentUpon>frmConsultaEquipamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaOrdensServico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaOrdensServico.Designer.cs">
+      <DependentUpon>frmConsultaOrdensServico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaServicos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaServicos.Designer.cs">
+      <DependentUpon>frmConsultaServicos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmConsultas\frmConsultaEstados.cs">
       <SubType>Form</SubType>
@@ -354,6 +395,15 @@
     <EmbeddedResource Include="frmAcesso\formularioBase.resx">
       <DependentUpon>formularioBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroCompras.resx">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroOrdensServico.resx">
+      <DependentUpon>frmCadastroOrdensServico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroEquipamentos.resx">
+      <DependentUpon>frmCadastroEquipamentos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCadastros\frmCadastroPessoas.resx">
       <DependentUpon>frmCadastroPessoas.cs</DependentUpon>
     </EmbeddedResource>
@@ -402,11 +452,14 @@
     <EmbeddedResource Include="frmCadastros\frmCadastroPaises.resx">
       <DependentUpon>frmCadastroPaises.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroServicos.resx">
+      <DependentUpon>frmCadastroServicos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCadastros\frmCadastroSubGrupos.resx">
       <DependentUpon>frmCadastroSubGrupos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCadastros\frmCadastroCompras.resx">
-      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    <EmbeddedResource Include="frmConsultas\frmConsultaServicos.resx">
+      <DependentUpon>frmConsultaServicos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaCargos.resx">
       <DependentUpon>frmConsultaCargos.cs</DependentUpon>
