@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_ICI.Controllers
 {
-    public class ctrlPaises : controllers
+    public class ctrlPaises : ctrl
     {
         public const string camposSelect = "codigo, pais as país, ddi as DDI, moeda, sigla, " +
                                            "codigoUsu as usuário, " +

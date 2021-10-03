@@ -10,8 +10,7 @@ namespace Projeto_ICI.DAOs
     public class daoEstados : daos
     {
         public const string nameTable = "estados";
-        public daoEstados()
-        { }
+        public daoEstados(){ }
         public override string Inserir(object pObj)
         {
             if (pObj == null)

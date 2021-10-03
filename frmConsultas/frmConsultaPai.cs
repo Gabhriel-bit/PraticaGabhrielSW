@@ -37,7 +37,7 @@ namespace Projeto_ICI.frmConsultas
         {
             
         }
-        protected virtual void carregarDados(Controllers.controllers pCTRL)
+        protected virtual void carregarDados(Controllers.ctrl pCTRL)
         {
             this.dataGridView.DataSource = pCTRL.Pesquisar("", "", default, out string vlMsg);
             showErrorMsg(vlMsg);
@@ -66,7 +66,7 @@ namespace Projeto_ICI.frmConsultas
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
 
-        protected virtual object dataGridToObj(Controllers.controllers pCtrl, out string pMsg)
+        protected virtual object dataGridToObj(Controllers.ctrl pCtrl, out string pMsg)
         {
             if (dataGridView.SelectedRows.Count == 0 ||
                 dataGridView.SelectedRows[0].Cells[0].Value == null)

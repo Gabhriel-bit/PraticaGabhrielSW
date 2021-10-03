@@ -32,7 +32,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umForn = (Classes.fornecedores)pOBJ;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaCondPag = umCtrlForn.CTRLCondPag.PesquisarCollection(out string vlMsgConPag);

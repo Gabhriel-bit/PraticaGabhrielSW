@@ -13,7 +13,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroEstados frmCadEstado;
         Controllers.ctrlEstados umCtrlEstado;
-        List<Classes.paises> listaPaises;
         Classes.estados umEstado;
 
         public frmConsultaEstados(Controllers.ctrlEstados pCtrlEstado)
@@ -26,12 +25,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadEstado = (frmCadastros.frmCadastroEstados)pFrmCad;
-        }
-        protected override void carregarDados(controllers pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         public override void ConhecaOBJ(object pOBJ)

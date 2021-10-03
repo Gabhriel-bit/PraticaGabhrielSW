@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_ICI.Controllers
 {
-    public class ctrlMarcas : controllers
+    public class ctrlMarcas : ctrl
     {
         public const string camposSelect = "codigo, marca, " +
                                            "codigoUsu as usuário, " +

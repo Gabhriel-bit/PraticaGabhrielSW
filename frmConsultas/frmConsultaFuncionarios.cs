@@ -28,7 +28,7 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadFunc = (frmCadastros.frmCadastroFuncionarios)pFrmCad;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);

@@ -32,7 +32,7 @@ namespace Projeto_ICI.frmConsultas
         {
             umaCidade = (Classes.cidades)pOBJ;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);

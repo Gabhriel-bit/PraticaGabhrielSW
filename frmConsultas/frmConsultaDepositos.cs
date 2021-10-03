@@ -28,7 +28,7 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadDeposito = (frmCadastros.frmCadastroDepositos)pFrmCad;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);

@@ -53,7 +53,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoUsu.Clear();
         }
 
-        protected void ObjToDataBase(object pObj, Controllers.controllers pCtrl)
+        protected void ObjToDataBase(object pObj, Controllers.ctrl pCtrl)
         {
             string msg = "";
             if (Btn_Acao == "Salvar")

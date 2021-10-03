@@ -17,6 +17,7 @@ namespace Projeto_ICI
         private daoClientes umaDaoCliente;
         private daoCondicoesPagamento umaDaoCondPag;
         private daoDepositos umaDaoDeposito;
+        private daoEquipamentos umaDaoEquip;
         private daoEstados umaDaoEstado;
         private daoFormasPagamento umaDaoFormPag;
         private daoFornecedores umaDaoForn;
@@ -34,6 +35,7 @@ namespace Projeto_ICI
         private ctrlClientes umCtrlCliente;
         private ctrlCondicoesPagamento umCtrlCondPag;
         private ctrlDepositos umCtrlDeposito;
+        private ctrlEquipamentos umCtrlEquip;
         private ctrlEstados umCtrlEstado;
         private ctrlFormasPagamento umCtrlFormPag;
         private ctrlFornecedores umCtrlForn;
@@ -51,6 +53,7 @@ namespace Projeto_ICI
         private frmCadastroClientes frmCadCliente;
         private frmCadastroCondicoesPagamento frmCadCondPag;
         private frmCadastroDepositos frmCadDeposito;
+        private frmCadastroEquipamentos frmCadEquip;
         private frmCadastroEstados frmCadEstado;
         private frmCadastroFornecedores frmCadFornecedor;
         private frmCadastroFuncionarios frmCadFuncionario;
@@ -68,6 +71,7 @@ namespace Projeto_ICI
         private frmConsultaClientes frmConsCliente;
         private frmConsultaCondicoesPagamento frmConsCondPag;
         private frmConsultaDepositos frmConsDeposito;
+        private frmConsultaEquipamentos frmConsEquip;
         private frmConsultaEstados frmConsEstado;
         private frmConsultaFornecedores frmConsFornecedor;
         private frmConsultaFuncionarios frmConsFuncionario;
@@ -86,11 +90,13 @@ namespace Projeto_ICI
         {
             InitializeComponent();
             InicializarAtributos();
+            mnItem_Equipamentos.Click += MnItem_Equipamentos_Click;
             frmCadastros.frmCadastroCompras h = new frmCadastroCompras();
             //h.ShowDialog();
             frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
             //f.ShowDialog();
         }
+
         private void InicializarAtributos()
         {
             try
@@ -102,7 +108,8 @@ namespace Projeto_ICI
                 umaDaoCidade = new daoCidades();
                 umaDaoCliente = new daoClientes();
                 umaDaoCondPag = new daoCondicoesPagamento();
-                umaDaoDeposito= new daoDepositos();
+                umaDaoDeposito = new daoDepositos();
+                umaDaoEquip = new daoEquipamentos();
                 umaDaoEstado = new daoEstados();
                 umaDaoFormPag = new daoFormasPagamento();
                 umaDaoForn = new daoFornecedores();
@@ -122,6 +129,7 @@ namespace Projeto_ICI
                 umCtrlEstado = new ctrlEstados(umaConexao, umaDaoEstado, umCtrlPais);
                 umCtrlSubgrupo = new ctrlSubgrupos(umaConexao, umaDaoSubgrupo, umCtrlGrupo);
                 umCtrlModelo = new ctrlModelos(umaConexao, umaDaoModelo, umCtrlMarca);
+                umCtrlEquip = new ctrlEquipamentos(umaConexao, umaDaoEquip, umCtrlModelo);
                 umCtrlFormPag = new ctrlFormasPagamento(umaConexao, umaDaoFormPag);
                 umCtrlCidade = new ctrlCidades(umaConexao, umaDaoCidade, umCtrlEstado);
                 umCtrlCondPag = new ctrlCondicoesPagamento(umaConexao, umCtrlFormPag, umaDaoCondPag);
@@ -139,6 +147,7 @@ namespace Projeto_ICI
                 frmCadCliente = new frmCadastroClientes(umCtrlCliente);
                 frmCadCondPag = new frmCadastroCondicoesPagamento(umCtrlCondPag);
                 frmCadDeposito = new frmCadastroDepositos(umCtrlDeposito);
+                frmCadEquip = new frmCadastroEquipamentos(umCtrlEquip);
                 frmCadEstado = new frmCadastroEstados(umCtrlEstado);
                 frmCadFornecedor = new frmCadastroFornecedores(umCtrlForn);
                 frmCadFuncionario = new frmCadastroFuncionarios(umCtrlFunc);
@@ -157,6 +166,7 @@ namespace Projeto_ICI
                 frmConsCliente = new frmConsultaClientes(umCtrlCliente);
                 frmConsCondPag = new frmConsultaCondicoesPagamento(umCtrlCondPag);
                 frmConsDeposito = new frmConsultaDepositos(umCtrlDeposito);
+                frmConsEquip = new frmConsultaEquipamentos(umCtrlEquip);
                 frmConsEstado = new frmConsultaEstados(umCtrlEstado);
                 frmConsFornecedor = new frmConsultaFornecedores(umCtrlForn);
                 frmConsFuncionario = new frmConsultaFuncionarios(umCtrlFunc);
@@ -175,6 +185,7 @@ namespace Projeto_ICI
                 frmConsCliente.SetFrmCad(frmCadCliente);
                 frmConsCondPag.SetFrmCad(frmCadCondPag);
                 frmConsDeposito.SetFrmCad(frmCadDeposito);
+                frmConsEquip.SetFrmCad(frmCadEquip);
                 frmConsEstado.SetFrmCad(frmCadEstado);
                 frmConsFornecedor.SetFrmCad(frmCadFornecedor);
                 frmConsFuncionario.SetFrmCad(frmCadFuncionario);
@@ -192,6 +203,7 @@ namespace Projeto_ICI
                 frmCadCliente.SetFrmCons(new Form[] { frmConsCondPag,frmConsCidade });
                 frmCadCondPag.SetFrmCons(frmConsFormPag);
                 frmCadDeposito.SetFrmCons(new Form[] { frmConsCidade, frmConsProduto });
+                frmCadEquip.SetFrmCons(frmConsModelo);
                 frmCadEstado.SetFrmCons(frmConsPais);
                 frmCadFornecedor.SetFrmCons(new Form[] { frmConsCondPag, frmConsCidade });
                 frmCadFuncionario.SetFrmCons(new Form[] { frmConsCidade, frmConsCargo });
@@ -370,6 +382,10 @@ namespace Projeto_ICI
         private void servicosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadServico.ShowDialog();
+        }
+        private void MnItem_Equipamentos_Click(object sender, EventArgs e)
+        {
+            frmConsEquip.ShowDialog();
         }
     }
 }

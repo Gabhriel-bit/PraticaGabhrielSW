@@ -27,7 +27,7 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadSubGrupo = (frmCadastros.frmCadastroSubGrupos)pFrmCad;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);

@@ -28,7 +28,7 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadCliente = (frmCadastros.frmCadastroClientes)pFrmCad;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);

@@ -30,7 +30,7 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadProduto = (frmCadastros.frmCadastroProdutos)pFrmCad;
         }
-        protected override void carregarDados(controllers pCTRL)
+        protected override void carregarDados(ctrl pCTRL)
         {
             base.carregarDados(pCTRL);
             listaSubgrupos = umCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgSubg);

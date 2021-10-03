@@ -65,6 +65,7 @@ namespace Projeto_ICI
             this.paisesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnItem_Equipamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_Principal.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,7 +99,8 @@ namespace Projeto_ICI
             this.mnItem_Produtos,
             this.mnItem_Paises,
             this.mnItem_Subgrupos,
-            this.mnItem_Servicos});
+            this.mnItem_Servicos,
+            this.mnItem_Equipamentos});
             this.consultasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("consultasToolStripMenuItem.Image")));
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(106, 25);
@@ -352,6 +354,12 @@ namespace Projeto_ICI
             this.servicosToolStripMenuItem.Text = "&Serviços";
             this.servicosToolStripMenuItem.Click += new System.EventHandler(this.servicosToolStripMenuItem_Click);
             // 
+            // mnItem_Equipamentos
+            // 
+            this.mnItem_Equipamentos.Name = "mnItem_Equipamentos";
+            this.mnItem_Equipamentos.Size = new System.Drawing.Size(255, 26);
+            this.mnItem_Equipamentos.Text = "&Equipamentos";
+            // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,6 +414,7 @@ namespace Projeto_ICI
         private System.Windows.Forms.ToolStripMenuItem subgruposToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnItem_Servicos;
         private System.Windows.Forms.ToolStripMenuItem servicosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnItem_Equipamentos;
     }
 }
 

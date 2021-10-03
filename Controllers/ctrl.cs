@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_ICI.Controllers
 {
-    public class controllers
+    public class ctrl
     {
 
         protected BancoDados.conexoes conexao;

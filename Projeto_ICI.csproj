@@ -69,6 +69,7 @@
     <Compile Include="BancoDados\conexoes.cs" />
     <Compile Include="Classes\cargos.cs" />
     <Compile Include="Classes\cidades.cs" />
+    <Compile Include="Classes\equipamentos.cs" />
     <Compile Include="Classes\servicos.cs" />
     <Compile Include="Classes\ordensServico.cs" />
     <Compile Include="Classes\funcionarios.cs" />
@@ -89,12 +90,13 @@
     <Compile Include="Classes\pai.cs" />
     <Compile Include="Classes\transportadoras.cs" />
     <Compile Include="Classes\veiculos.cs" />
-    <Compile Include="Controllers\controllers.cs" />
+    <Compile Include="Controllers\ctrl.cs" />
     <Compile Include="Controllers\ctrlCargos.cs" />
     <Compile Include="Controllers\ctrlCidades.cs" />
     <Compile Include="Controllers\ctrlClientes.cs" />
     <Compile Include="Controllers\ctrlCondicoesPagamento.cs" />
     <Compile Include="Controllers\ctrlDepositos.cs" />
+    <Compile Include="Controllers\ctrlEquipamentos.cs" />
     <Compile Include="Controllers\ctrlEstados.cs" />
     <Compile Include="Controllers\ctrlFormasPagamento.cs" />
     <Compile Include="Controllers\ctrlFornecedores.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="DAOs\daoClientes.cs" />
     <Compile Include="DAOs\daoCondicoesPagamento.cs" />
     <Compile Include="DAOs\daoDepositos.cs" />
+    <Compile Include="DAOs\daoEquipamentos.cs" />
     <Compile Include="DAOs\daoEstados.cs" />
     <Compile Include="DAOs\daoFormasPagamento.cs" />
     <Compile Include="DAOs\daoFornecedores.cs" />
@@ -457,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCadastros\frmCadastroSubGrupos.resx">
       <DependentUpon>frmCadastroSubGrupos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaEquipamentos.resx">
+      <DependentUpon>frmConsultaEquipamentos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaServicos.resx">
       <DependentUpon>frmConsultaServicos.cs</DependentUpon>

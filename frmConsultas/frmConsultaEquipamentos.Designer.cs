@@ -29,7 +29,36 @@ namespace Projeto_ICI.frmConsultas
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // btn_Pesquisar
+            // 
+            this.btn_Pesquisar.Click += new System.EventHandler(this.btn_Pesquisar_Click);
+            // 
+            // btn_Excluir
+            // 
+            this.btn_Excluir.Click += new System.EventHandler(this.btn_Excluir_Click);
+            // 
+            // btn_Alterar
+            // 
+            this.btn_Alterar.Click += new System.EventHandler(this.btn_Alterar_Click);
+            // 
+            // btn_Inserir
+            // 
+            this.btn_Inserir.Click += new System.EventHandler(this.btn_Inserir_Click);
+            // 
+            // frmConsultaEquipamentos
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(611, 377);
+            this.Name = "frmConsultaEquipamentos";
+            this.Text = "Consulta de Equipamentos";
+            this.Load += new System.EventHandler(this.frmConsultaEquipamentos_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

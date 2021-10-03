@@ -13,15 +13,12 @@ namespace Projeto_ICI.frmCadastros
         frmConsultas.frmConsultaPaises frmConsPais;
         Controllers.ctrlEstados umCtrlEstado;
         Classes.paises umPais;
-        List<Classes.paises> listaPaises;
 
         public frmCadastroEstados(Controllers.ctrlEstados pCtrlEstado)
         {
             InitializeComponent();
             umCtrlEstado = pCtrlEstado;
             umPais = new Classes.paises();
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
 
             btn_Pesquisar.Image = umImgPesquisaSair;
         }
@@ -77,8 +74,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Pais.Text = umPais.Pais;
                 
             }
-            listaPaises = umCtrlEstado.CTRLPais.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoPais_TextChanged(object sender, EventArgs e)

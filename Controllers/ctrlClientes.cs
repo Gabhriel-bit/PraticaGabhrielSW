@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_ICI.Controllers
 {
-    public class ctrlClientes : controllers
+    public class ctrlClientes : ctrl
     {
         public const string camposSelect = "clientes.codigo, cliente, " +
                                            "condicaoPagamento as condição_pagamento, " +

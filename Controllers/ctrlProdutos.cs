@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_ICI.Controllers
 {
-    public class ctrlProdutos : controllers
+    public class ctrlProdutos : ctrl
     {
         public const string camposSelect = "produtos.codigo, produto, custo, unidade, saldo, " +
                                            "referencia as referência, codigoBarras, " +

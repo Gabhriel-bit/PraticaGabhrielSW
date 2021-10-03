@@ -33,11 +33,11 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Equipamento = new System.Windows.Forms.TextBox();
             this.lbl_Volgatem = new System.Windows.Forms.Label();
             this.txtb_Voltagem = new System.Windows.Forms.TextBox();
-            this.lbl_CodigoMarca = new System.Windows.Forms.Label();
-            this.txtb_CodigoMarca = new System.Windows.Forms.TextBox();
+            this.lbl_CodigoModelo = new System.Windows.Forms.Label();
+            this.txtb_CodigoModelo = new System.Windows.Forms.TextBox();
             this.lbl_Modelo = new System.Windows.Forms.Label();
             this.txtb_Modelo = new System.Windows.Forms.TextBox();
-            this.btn_PesquisarModelo = new System.Windows.Forms.Button();
+            this.btn_Pesquisar = new System.Windows.Forms.Button();
             this.lbl_Marca = new System.Windows.Forms.Label();
             this.txtb_Marca = new System.Windows.Forms.TextBox();
             this.lbl_ObsTecnica = new System.Windows.Forms.Label();
@@ -60,6 +60,7 @@ namespace Projeto_ICI.frmCadastros
             // btn_Cadastro
             // 
             this.btn_Cadastro.Location = new System.Drawing.Point(338, 320);
+            this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
             // lbl_UltAlt
             // 
@@ -94,6 +95,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Equipamento.Name = "txtb_Equipamento";
             this.txtb_Equipamento.Size = new System.Drawing.Size(223, 20);
             this.txtb_Equipamento.TabIndex = 72;
+            this.txtb_Equipamento.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Equipamento_Validating);
             // 
             // lbl_Volgatem
             // 
@@ -113,29 +115,30 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Voltagem.Size = new System.Drawing.Size(61, 20);
             this.txtb_Voltagem.TabIndex = 74;
             // 
-            // lbl_CodigoMarca
+            // lbl_CodigoModelo
             // 
-            this.lbl_CodigoMarca.AutoSize = true;
-            this.lbl_CodigoMarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoMarca.Location = new System.Drawing.Point(21, 86);
-            this.lbl_CodigoMarca.Name = "lbl_CodigoMarca";
-            this.lbl_CodigoMarca.Size = new System.Drawing.Size(65, 15);
-            this.lbl_CodigoMarca.TabIndex = 77;
-            this.lbl_CodigoMarca.Text = "Código M*";
+            this.lbl_CodigoModelo.AutoSize = true;
+            this.lbl_CodigoModelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_CodigoModelo.Location = new System.Drawing.Point(21, 86);
+            this.lbl_CodigoModelo.Name = "lbl_CodigoModelo";
+            this.lbl_CodigoModelo.Size = new System.Drawing.Size(65, 15);
+            this.lbl_CodigoModelo.TabIndex = 77;
+            this.lbl_CodigoModelo.Text = "Código M*";
             // 
-            // txtb_CodigoMarca
+            // txtb_CodigoModelo
             // 
-            this.txtb_CodigoMarca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_CodigoMarca.Location = new System.Drawing.Point(24, 104);
-            this.txtb_CodigoMarca.Name = "txtb_CodigoMarca";
-            this.txtb_CodigoMarca.Size = new System.Drawing.Size(69, 20);
-            this.txtb_CodigoMarca.TabIndex = 76;
+            this.txtb_CodigoModelo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_CodigoModelo.Location = new System.Drawing.Point(24, 104);
+            this.txtb_CodigoModelo.Name = "txtb_CodigoModelo";
+            this.txtb_CodigoModelo.Size = new System.Drawing.Size(69, 20);
+            this.txtb_CodigoModelo.TabIndex = 76;
+            this.txtb_CodigoModelo.TextChanged += new System.EventHandler(this.txtb_CodigoModelo_TextChanged);
             // 
             // lbl_Modelo
             // 
             this.lbl_Modelo.AutoSize = true;
             this.lbl_Modelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Modelo.Location = new System.Drawing.Point(187, 86);
+            this.lbl_Modelo.Location = new System.Drawing.Point(96, 86);
             this.lbl_Modelo.Name = "lbl_Modelo";
             this.lbl_Modelo.Size = new System.Drawing.Size(54, 15);
             this.lbl_Modelo.TabIndex = 79;
@@ -145,24 +148,27 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Modelo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Modelo.Enabled = false;
-            this.txtb_Modelo.Location = new System.Drawing.Point(190, 104);
+            this.txtb_Modelo.Location = new System.Drawing.Point(99, 104);
             this.txtb_Modelo.Name = "txtb_Modelo";
             this.txtb_Modelo.Size = new System.Drawing.Size(167, 20);
             this.txtb_Modelo.TabIndex = 78;
             // 
-            // btn_PesquisarModelo
+            // btn_Pesquisar
             // 
-            this.btn_PesquisarModelo.Location = new System.Drawing.Point(363, 99);
-            this.btn_PesquisarModelo.Name = "btn_PesquisarModelo";
-            this.btn_PesquisarModelo.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarModelo.TabIndex = 80;
-            this.btn_PesquisarModelo.UseVisualStyleBackColor = true;
+            this.btn_Pesquisar.Location = new System.Drawing.Point(363, 99);
+            this.btn_Pesquisar.Name = "btn_Pesquisar";
+            this.btn_Pesquisar.Size = new System.Drawing.Size(26, 25);
+            this.btn_Pesquisar.TabIndex = 80;
+            this.btn_Pesquisar.UseVisualStyleBackColor = true;
+            this.btn_Pesquisar.Click += new System.EventHandler(this.btn_Pesquisar_Click);
+            this.btn_Pesquisar.MouseEnter += new System.EventHandler(this.btn_Pesquisar_MouseEnter);
+            this.btn_Pesquisar.MouseLeave += new System.EventHandler(this.btn_Pesquisar_MouseLeave);
             // 
             // lbl_Marca
             // 
             this.lbl_Marca.AutoSize = true;
             this.lbl_Marca.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Marca.Location = new System.Drawing.Point(96, 86);
+            this.lbl_Marca.Location = new System.Drawing.Point(269, 86);
             this.lbl_Marca.Name = "lbl_Marca";
             this.lbl_Marca.Size = new System.Drawing.Size(42, 15);
             this.lbl_Marca.TabIndex = 82;
@@ -172,7 +178,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Marca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Marca.Enabled = false;
-            this.txtb_Marca.Location = new System.Drawing.Point(99, 104);
+            this.txtb_Marca.Location = new System.Drawing.Point(272, 104);
             this.txtb_Marca.Name = "txtb_Marca";
             this.txtb_Marca.Size = new System.Drawing.Size(85, 20);
             this.txtb_Marca.TabIndex = 81;
@@ -204,16 +210,17 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_ObsTecnica);
             this.Controls.Add(this.lbl_Marca);
             this.Controls.Add(this.txtb_Marca);
-            this.Controls.Add(this.btn_PesquisarModelo);
+            this.Controls.Add(this.btn_Pesquisar);
             this.Controls.Add(this.lbl_Modelo);
             this.Controls.Add(this.txtb_Modelo);
-            this.Controls.Add(this.lbl_CodigoMarca);
-            this.Controls.Add(this.txtb_CodigoMarca);
+            this.Controls.Add(this.lbl_CodigoModelo);
+            this.Controls.Add(this.txtb_CodigoModelo);
             this.Controls.Add(this.lbl_Volgatem);
             this.Controls.Add(this.txtb_Voltagem);
             this.Controls.Add(this.lbl_Equipamento);
             this.Controls.Add(this.txtb_Equipamento);
             this.Name = "frmCadastroEquipamentos";
+            this.Text = "Cadastro de Equipamentos";
             this.Controls.SetChildIndex(this.lbl_Codigo, 0);
             this.Controls.SetChildIndex(this.lbl_DataCad, 0);
             this.Controls.SetChildIndex(this.lbl_UltAlt, 0);
@@ -228,11 +235,11 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.lbl_Equipamento, 0);
             this.Controls.SetChildIndex(this.txtb_Voltagem, 0);
             this.Controls.SetChildIndex(this.lbl_Volgatem, 0);
-            this.Controls.SetChildIndex(this.txtb_CodigoMarca, 0);
-            this.Controls.SetChildIndex(this.lbl_CodigoMarca, 0);
+            this.Controls.SetChildIndex(this.txtb_CodigoModelo, 0);
+            this.Controls.SetChildIndex(this.lbl_CodigoModelo, 0);
             this.Controls.SetChildIndex(this.txtb_Modelo, 0);
             this.Controls.SetChildIndex(this.lbl_Modelo, 0);
-            this.Controls.SetChildIndex(this.btn_PesquisarModelo, 0);
+            this.Controls.SetChildIndex(this.btn_Pesquisar, 0);
             this.Controls.SetChildIndex(this.txtb_Marca, 0);
             this.Controls.SetChildIndex(this.lbl_Marca, 0);
             this.Controls.SetChildIndex(this.txtb_ObsTecnica, 0);
@@ -249,11 +256,11 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.TextBox txtb_Equipamento;
         private System.Windows.Forms.Label lbl_Volgatem;
         private System.Windows.Forms.TextBox txtb_Voltagem;
-        private System.Windows.Forms.Label lbl_CodigoMarca;
-        private System.Windows.Forms.TextBox txtb_CodigoMarca;
+        private System.Windows.Forms.Label lbl_CodigoModelo;
+        private System.Windows.Forms.TextBox txtb_CodigoModelo;
         private System.Windows.Forms.Label lbl_Modelo;
         private System.Windows.Forms.TextBox txtb_Modelo;
-        private System.Windows.Forms.Button btn_PesquisarModelo;
+        private System.Windows.Forms.Button btn_Pesquisar;
         private System.Windows.Forms.Label lbl_Marca;
         private System.Windows.Forms.TextBox txtb_Marca;
         private System.Windows.Forms.Label lbl_ObsTecnica;

@@ -209,6 +209,24 @@ BEGIN
 	);
 END
 
+IF OBJECT_ID('equipamentos') IS NULL
+BEGIN
+	CREATE TABLE equipamentos (
+		equipamento  VARCHAR(50) NOT NULL UNIQUE,
+		voltagem     VARCHAR(4),
+		obsTecnica   VARCHAR(250),
+		codigoModelo INT NOT NULL,
+		codigo       INT PRIMARY KEY IDENTITY,
+		codigoUsu    INT  NOT NULL,
+		dataCad      VARCHAR(10) NOT NULL,
+		dataUltAlt   VARCHAR(10) NOT NULL,
+		
+	    disponivel    INT NOT NULL default 1,
+		CONSTRAINT FK_codModeloEquip FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo)--,
+		--CONSTRAINT FK_codModeloUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	);
+END
+
 IF OBJECT_ID('formasPagamento') IS NULL
 BEGIN
 	CREATE TABLE formasPagamento (
