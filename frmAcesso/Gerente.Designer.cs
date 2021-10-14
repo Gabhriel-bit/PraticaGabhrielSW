@@ -48,6 +48,8 @@ namespace Projeto_ICI
             this.mnItem_Paises = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Subgrupos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Servicos = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnItem_Equipamentos = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnItem_Transportadoras = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cargosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +67,10 @@ namespace Projeto_ICI
             this.paisesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnItem_Equipamentos = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Comprar = new System.Windows.Forms.Button();
+            this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_Principal.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,7 +79,8 @@ namespace Projeto_ICI
             this.menu_Principal.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.menu_Principal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.consultasToolStripMenuItem,
-            this.cadastrosToolStripMenuItem});
+            this.cadastrosToolStripMenuItem,
+            this.sairToolStripMenuItem});
             this.menu_Principal.Location = new System.Drawing.Point(0, 0);
             this.menu_Principal.Name = "menu_Principal";
             this.menu_Principal.Size = new System.Drawing.Size(740, 29);
@@ -100,7 +106,8 @@ namespace Projeto_ICI
             this.mnItem_Paises,
             this.mnItem_Subgrupos,
             this.mnItem_Servicos,
-            this.mnItem_Equipamentos});
+            this.mnItem_Equipamentos,
+            this.mnItem_Transportadoras});
             this.consultasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("consultasToolStripMenuItem.Image")));
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(106, 25);
@@ -217,6 +224,18 @@ namespace Projeto_ICI
             this.mnItem_Servicos.Size = new System.Drawing.Size(255, 26);
             this.mnItem_Servicos.Text = "&Serviços";
             this.mnItem_Servicos.Click += new System.EventHandler(this.mnItem_Servicos_Click);
+            // 
+            // mnItem_Equipamentos
+            // 
+            this.mnItem_Equipamentos.Name = "mnItem_Equipamentos";
+            this.mnItem_Equipamentos.Size = new System.Drawing.Size(255, 26);
+            this.mnItem_Equipamentos.Text = "&Equipamentos";
+            // 
+            // mnItem_Transportadoras
+            // 
+            this.mnItem_Transportadoras.Name = "mnItem_Transportadoras";
+            this.mnItem_Transportadoras.Size = new System.Drawing.Size(255, 26);
+            this.mnItem_Transportadoras.Text = "&Transportadoras";
             // 
             // cadastrosToolStripMenuItem
             // 
@@ -354,17 +373,44 @@ namespace Projeto_ICI
             this.servicosToolStripMenuItem.Text = "&Serviços";
             this.servicosToolStripMenuItem.Click += new System.EventHandler(this.servicosToolStripMenuItem_Click);
             // 
-            // mnItem_Equipamentos
+            // btn_Comprar
             // 
-            this.mnItem_Equipamentos.Name = "mnItem_Equipamentos";
-            this.mnItem_Equipamentos.Size = new System.Drawing.Size(255, 26);
-            this.mnItem_Equipamentos.Text = "&Equipamentos";
+            this.btn_Comprar.Location = new System.Drawing.Point(12, 369);
+            this.btn_Comprar.Name = "btn_Comprar";
+            this.btn_Comprar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Comprar.TabIndex = 5;
+            this.btn_Comprar.Text = "Comprar";
+            this.btn_Comprar.UseVisualStyleBackColor = true;
+            this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
+            // 
+            // sairToolStripMenuItem
+            // 
+            this.sairToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.logoutToolStripMenuItem,
+            this.sairToolStripMenuItem1});
+            this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
+            this.sairToolStripMenuItem.Size = new System.Drawing.Size(49, 25);
+            this.sairToolStripMenuItem.Text = "Sair";
+            // 
+            // logoutToolStripMenuItem
+            // 
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            // 
+            // sairToolStripMenuItem1
+            // 
+            this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
+            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.sairToolStripMenuItem1.Text = "Sair";
+            this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
             // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 404);
+            this.Controls.Add(this.btn_Comprar);
             this.Controls.Add(this.menu_Principal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_Principal;
@@ -415,6 +461,11 @@ namespace Projeto_ICI
         private System.Windows.Forms.ToolStripMenuItem mnItem_Servicos;
         private System.Windows.Forms.ToolStripMenuItem servicosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnItem_Equipamentos;
+        private System.Windows.Forms.ToolStripMenuItem mnItem_Transportadoras;
+        private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem1;
+        private System.Windows.Forms.Button btn_Comprar;
     }
 }
 

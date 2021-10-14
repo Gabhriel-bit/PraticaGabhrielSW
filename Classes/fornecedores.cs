@@ -33,28 +33,6 @@ namespace Projeto_ICI.Classes
             UmaCidade = new cidades();
             umaCondPag = new condicoesPagamento();
         }
-        public fornecedores(string pFornecedor)
-        {
-            Codigo = 0;
-            CodigoUsu = 0;
-            DataCad = "";
-            DataUltAlt = "";
-
-            Ffornecedor = pFornecedor;
-            Logradouro = "";
-            Numero = "";
-            Complemento = "";
-            Bairro = "";
-            CEP = "";
-            Tel_celular = "";
-            Email = "";
-            CNPJ_CPF = "";
-            InscEst_RG = "";
-            DataFund_Nasc = "";
-
-            UmaCidade = new cidades();
-            umaCondPag = new condicoesPagamento();
-        }
 
         public fornecedores(int pCodigo, int pCodigoUsu, string pDataCad, string pDataUltAlt,
                             string pFornecedor, string pLograd, string pNumero, string pCpl,

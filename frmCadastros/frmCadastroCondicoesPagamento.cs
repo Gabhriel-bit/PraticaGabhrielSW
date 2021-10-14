@@ -15,7 +15,7 @@ namespace Projeto_ICI.frmCadastros
     {
         private frmConsultas.frmConsultasFormasPagamento frmConsFormPag;
         private Controllers.ctrlCondicoesPagamento umCtrlCondPag;
-        private List<Classes.formasPagamento> listaFormasPag;
+
         private List<Classes.parcelasCondPag> listaParcelas;
         private Classes.formasPagamento umaFormaPag;
         private Classes.parcelasCondPag umaParcelaCondPag;
@@ -24,8 +24,6 @@ namespace Projeto_ICI.frmCadastros
         {
             InitializeComponent();
             umCtrlCondPag = pCtrlCondPag;
-            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
 
             listaParcelas = new List<Classes.parcelasCondPag>();
             umaFormaPag = new Classes.formasPagamento();
@@ -146,8 +144,10 @@ namespace Projeto_ICI.frmCadastros
                                                               item.Numero,
                                                               item.Dias,
                                                               item.Porcentagem);
-                    vlParcela.UmaFormaPag.ThisFormPag = item.UmaFormaPag;
-                    pesquisarFormaPagamento(vlParcela.UmaFormaPag);
+                    vlParcela.UmaFormaPag = (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("codigo",
+                                                                             item.UmaFormaPag.Codigo.ToString(),
+                                                                             out string vlMsg,
+                                                                             false);
                     vlListaParcelas.Add(vlParcela);
                 }
                 return vlListaParcelas;
@@ -178,21 +178,6 @@ namespace Projeto_ICI.frmCadastros
             }
         }
 
-        private void pesquisarFormaPagamento(Classes.formasPagamento pParcela)
-        {
-            if (listaFormasPag != null)
-            {
-                foreach (Classes.formasPagamento vlParcela in listaFormasPag)
-                {
-                    if (vlParcela.FormaPag == pParcela.FormaPag)
-                    {
-                        pParcela.ThisFormPag = vlParcela;
-                        break;
-                    }
-                }
-            }
-        }
-
         private void txtb_TotalParcelas_Validating(object sender, CancelEventArgs e)
         {
             if (ValidacaoIntPositivo(txtb_TotalParcelas.Text, false))
@@ -214,7 +199,7 @@ namespace Projeto_ICI.frmCadastros
         {
             if (!ValidacaoDoubleMoeda(txtb_Porcentagem.Text))
             {
-                errorMSG.SetError(lbl_Porcentagem, "Insira um valor inteiro positivo com" +
+                errorMSG.SetError(lbl_Porcentagem, "Insira um valor inteiro positivo com " +
                                    "até 4 casas decimais  \nExempo: 25,2365");
                 return true;
             }
@@ -268,8 +253,10 @@ namespace Projeto_ICI.frmCadastros
                                             (lv_Parcelas.Items.Count + 1),
                                             int.Parse(txtb_Dias.Text),
                                             decimal.Parse(txtb_Porcentagem.Text.Replace(".", ","), vgEstilo, vgProv));
-                vlParcela.UmaFormaPag.FormaPag = txtb_FormaPag.Text;
-                pesquisarFormaPagamento(vlParcela.UmaFormaPag);
+                vlParcela.UmaFormaPag = (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("formaPagamento",
+                                                         txtb_FormaPag.Text,
+                                                         out string vlMsg,
+                                                         false);
                 var parcela = vlParcela.arrayStringValores(true);
                 var lvItem = new ListViewItem(parcela);
                 lvItem.Tag = vlParcela;
@@ -490,15 +477,15 @@ namespace Projeto_ICI.frmCadastros
         }
         private void txtb_TaxaJuros_Validating(object sender, CancelEventArgs e)
         {
-            if (decimal.TryParse(txtb_TaxaJuros.Text, out decimal _))
-            {
-                errorMSG.SetError(lbl_TaxaJuros, "Taxa de juros inválida");
-                e.Cancel = closing;
-            }
-            else
+            if (decimal.TryParse(txtb_TaxaJuros.Text.Replace(",", "."), out decimal _))
             {
                 errorMSG.SetError(lbl_TaxaJuros, null);
                 e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_TaxaJuros, "Taxa de juros inválida");
+                e.Cancel = closing;
             }
         }
         private void btn_PesquisarFormPagParc_Click(object sender, EventArgs e)
@@ -513,8 +500,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoFormPag.Text = umaFormaPag.Codigo.ToString();
                 txtb_FormaPag.Text = umaFormaPag.FormaPag;
             }
-            listaFormasPag = umCtrlCondPag.CTRLFormaPagamento.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         private void txtb_CodigoFormPag_TextChanged(object sender, EventArgs e)
@@ -525,20 +510,30 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                if (int.TryParse(txtb_CodigoFormPag.Text, out int i))
+                if (int.TryParse(txtb_CodigoFormPag.Text, out int vlCodigo))
                 {
-                    bool vlFind = false;
-                    foreach (Classes.formasPagamento vlFormPag in listaFormasPag)
+                    var vlFormPag =
+                    (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("codigo",
+                                                                             vlCodigo.ToString(),
+                                                                             out string vlMsg,
+                                                                             false);
+                    if (vlFormPag != null)
                     {
-                        if (vlFormPag.Codigo == i)
+                        if (vlMsg == "")
                         {
                             txtb_FormaPag.Text = vlFormPag.FormaPag;
-                            umaFormaPag = vlFormPag.ThisFormPag;
-                            vlFind = true;
+                            vlFormPag.ThisFormPag = vlFormPag;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_FormaPag.Clear();
                         }
                     }
-                    if (!vlFind)
-                    { txtb_FormaPag.Clear(); }
+                    else
+                    {
+                        txtb_FormaPag.Clear();
+                    }
                 }
             }
         }
@@ -569,12 +564,11 @@ namespace Projeto_ICI.frmCadastros
                                                                   int.Parse(vlString[0]),
                                                                   int.Parse(vlString[1]),
                                                                   decimal.Parse(vlString[2].Replace("%", ""), vgEstilo, vgProv));
-                        ((Classes.parcelasCondPag)vlClone.Tag).UmaFormaPag.FormaPag = vlString[3];
-                        if (vlString[3] != "")
-                        {
-                            pesquisarFormaPagamento(
-                                ((Classes.parcelasCondPag)vlClone.Tag).UmaFormaPag);
-                        }
+                        ((Classes.parcelasCondPag)vlClone.Tag).UmaFormaPag = 
+                            (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("formaPagamento",
+                                                                                                 vlString[3],
+                                                                                                 out string vlMsg,
+                                                                                                 false);
                     }
                     lista.Items.Add(vlClone);
                 }
@@ -632,7 +626,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Multa_Validating(object sender, CancelEventArgs e)
         {
-            if (decimal.TryParse(txtb_Multa.Text, out decimal _))
+            if (decimal.TryParse(txtb_Multa.Text.Replace(",", "."), out decimal _))
             {
                 errorMSG.Clear();
                 e.Cancel = false;
@@ -659,7 +653,7 @@ namespace Projeto_ICI.frmCadastros
                     if (int.Parse(txtb_Dias.Text) <= vlUltParc.Dias)
                     {
                         errorMSG.SetError(lbl_Dias, "O numero de dias não pode ser igual ou inferior\na ultima parcela!");
-                        txtb_Dias.Text = (vlUltParc.Dias + 7).ToString();
+                        txtb_Dias.Text = (vlUltParc.Dias + 1).ToString();
                         e.Cancel = closing;
                     }
                     else
@@ -683,7 +677,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Desconto_Validating(object sender, CancelEventArgs e)
         {
-            if (decimal.TryParse(txtb_Desconto.Text, out decimal _))
+            if (decimal.TryParse(txtb_Desconto.Text.Replace(",", "."), out decimal _))
             {
                 errorMSG.Clear();
                 e.Cancel = false;

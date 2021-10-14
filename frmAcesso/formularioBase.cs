@@ -38,11 +38,11 @@ namespace Projeto_ICI
         {
 
         }
-        public virtual void SetFrmCons(Form pFrmCad)
+        public virtual void SetFrmCons(Form pFrmCons)
         {
 
         }
-        public virtual void SetFrmCons(Form[] pFrmCad)
+        public virtual void SetFrmCons(Form[] pFrmCons)
         {
             
         }

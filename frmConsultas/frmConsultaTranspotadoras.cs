@@ -1,5 +1,4 @@
-﻿using Projeto_ICI.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,41 +8,41 @@ using System.Windows.Forms;
 
 namespace Projeto_ICI.frmConsultas
 {
-    public partial class frmConsultaFornecedores : Projeto_ICI.frmConsultas.frmConsultaPai
+    public partial class frmConsultaTranspotadoras : Projeto_ICI.frmConsultas.frmConsultaPai
     {
-        frmCadastros.frmCadastroFornecedores frmCadForn;
-        Controllers.ctrlFornecedores umCtrlForn;
-        Classes.fornecedores umForn;
+        frmCadastros.frmCadastroTransportadoras frmCadForn;
+        Controllers.ctrlTransportadoras umCtrlTransport;
+        Classes.transportadoras umTransport;
 
-        public frmConsultaFornecedores(Controllers.ctrlFornecedores pCtrlForn)
+        public frmConsultaTranspotadoras(Controllers.ctrlTransportadoras pCtrlForn)
         {
             InitializeComponent();
-            umCtrlForn = pCtrlForn;
-            umForn = new Classes.fornecedores();
-            carregarDados(umCtrlForn);
+            umCtrlTransport = pCtrlForn;
+            umTransport = new Classes.transportadoras();
+            carregarDados(umCtrlTransport);
         }
         public override void SetFrmCad(Form pFrmCad)
         {
-            frmCadForn = (frmCadastros.frmCadastroFornecedores)pFrmCad;
+            frmCadForn = (frmCadastros.frmCadastroTransportadoras)pFrmCad;
         }
         public override void ConhecaOBJ(object pOBJ)
         {
-            umForn = (Classes.fornecedores)pOBJ;
+            umTransport = (Classes.transportadoras)pOBJ;
         }
 
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadForn.ClearTxTBox();
             frmCadForn.ShowDialog();
-            carregarDados(umCtrlForn);
+            carregarDados(umCtrlTransport);
         }
 
         private void btn_Alterar_Click(object sender, EventArgs e)
         {
-            var vlForn = (Classes.fornecedores)dataGridToObj(umCtrlForn, out string vlMsg);
-            if (vlForn == null)
+            var vlTransport = (Classes.transportadoras)dataGridToObj(umCtrlTransport, out string vlMsg);
+            if (vlTransport == null)
             {
-                errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas um fornecedor");
+                errorMSG.SetError(btn_Alterar, "Selecão inválida!\nSelecione um e apenas uma transportadora");
                 this.dataGridView.Focus();
             }
             else if (vlMsg != "")
@@ -57,19 +56,19 @@ namespace Projeto_ICI.frmConsultas
                 frmCadForn.ClearTxTBox();
                 var btnName = frmCadForn.Btn_Acao;
                 frmCadForn.Btn_Acao = "Alterar";
-                frmCadForn.CarregarTxtBox(vlForn);
+                frmCadForn.CarregarTxtBox(vlTransport);
                 frmCadForn.ShowDialog();
                 frmCadForn.Btn_Acao = btnName;
-                carregarDados(umCtrlForn);
+                carregarDados(umCtrlTransport);
             }
         }
 
         private void btn_Excluir_Click(object sender, EventArgs e)
         {
-            var vlForn = (Classes.fornecedores)dataGridToObj(umCtrlForn, out string vlMsg);
-            if (vlForn == null)
+            var vlTransport = (Classes.transportadoras)dataGridToObj(umCtrlTransport, out string vlMsg);
+            if (vlTransport == null)
             {
-                errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas um fornecedor");
+                errorMSG.SetError(btn_Excluir, "Selecão inválida!\nSelecione um e apenas uma transportadora");
                 this.dataGridView.Focus();
             }
             else if (vlMsg != "")
@@ -83,21 +82,21 @@ namespace Projeto_ICI.frmConsultas
                 frmCadForn.ClearTxTBox();
                 var btnName = frmCadForn.Btn_Acao;
                 frmCadForn.BloquearTxtBox();
-                frmCadForn.CarregarTxtBox(vlForn);
+                frmCadForn.CarregarTxtBox(vlTransport);
                 frmCadForn.Btn_Acao = "Excluir";
                 frmCadForn.ShowDialog();
                 frmCadForn.Btn_Acao = btnName;
-                carregarDados(umCtrlForn);
+                carregarDados(umCtrlTransport);
             }
         }
         protected override void Sair()
         {
             if (btn_Sair.Text != "Sair")
             {
-                var vlForn = (Classes.fornecedores)dataGridToObj(umCtrlForn, out string vlMsg);
-                if (vlForn == null)
+                var vlTransport = (Classes.transportadoras)dataGridToObj(umCtrlTransport, out string vlMsg);
+                if (vlTransport == null)
                 {
-                    errorMSG.SetError(btn_Sair, "Selecione um e apenas um cliente!");
+                    errorMSG.SetError(btn_Sair, "Selecione apenas uma trasportadora!");
                     this.dataGridView.Focus();
                 }
                 else if (vlMsg != "")
@@ -108,7 +107,7 @@ namespace Projeto_ICI.frmConsultas
                 else
                 {
                     errorMSG.SetError(btn_Sair, null);
-                    umForn.ThisFornecedor = vlForn;
+                    umTransport.ThisTransportadora = vlTransport;
                 }
             }
         }
@@ -119,30 +118,30 @@ namespace Projeto_ICI.frmConsultas
             if (txtb_Pesquisa.Text == "")
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlForn.Pesquisar("", "", default, out vlMsg);
+                dataGridView.DataSource = umCtrlTransport.Pesquisar("", "", default, out vlMsg);
             }
             else if (ValidacaoCPF(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlForn.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), default, out vlMsg);
+                dataGridView.DataSource = umCtrlTransport.Pesquisar("cpf", FormatCPF(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoCNPJ(txtb_Pesquisa.Text))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlForn.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), default, out vlMsg);
+                dataGridView.DataSource = umCtrlTransport.Pesquisar("cnpj", FormatCNPJ(txtb_Pesquisa.Text), default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (int.TryParse(txtb_Pesquisa.Text, out _))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlForn.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
+                dataGridView.DataSource = umCtrlTransport.Pesquisar("codigo", txtb_Pesquisa.Text, default, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else if (ValidacaoNome(txtb_Pesquisa.Text, 1, true))
             {
                 errorMSG.SetError(lbl_Pesquisa, null);
-                dataGridView.DataSource = umCtrlForn.Pesquisar("fornecedor", txtb_Pesquisa.Text, false, out vlMsg);
+                dataGridView.DataSource = umCtrlTransport.Pesquisar("transportadora", txtb_Pesquisa.Text, false, out vlMsg);
                 txtb_Pesquisa.Clear();
             }
             else
@@ -153,9 +152,9 @@ namespace Projeto_ICI.frmConsultas
             txtb_Pesquisa.Clear();
         }
 
-        private void frmConsultaFornecedores_Load(object sender, EventArgs e)
+        private void frmConsultaTransportadoras_Load(object sender, EventArgs e)
         {
-            carregarDados(umCtrlForn);
+            carregarDados(umCtrlTransport);
         }
     }
 }

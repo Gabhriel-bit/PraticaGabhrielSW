@@ -12,7 +12,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroModelos frmCadModelo;
         Controllers.ctrlModelos umCtrlModelos;
-        List<Classes.marcas> listaMarcas;
         Classes.modelos umModelo;
 
         public frmConsultaModelos(Controllers.ctrlModelos pCtrlModelo)
@@ -26,12 +25,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadModelo = (frmCadastros.frmCadastroModelos)pFrmCad;
-        }
-        protected override void carregarDados(Controllers.ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaMarcas = umCtrlModelos.CTRLMarca.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
         public override void ConhecaOBJ(object pOBJ)
         {

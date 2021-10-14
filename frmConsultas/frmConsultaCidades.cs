@@ -13,7 +13,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroCidades frmCadCidade;
         Controllers.ctrlCidades umCtrlCidade;
-        List<Classes.estados> listaEstados;
         Classes.cidades umaCidade;
 
         public frmConsultaCidades(Controllers.ctrlCidades pCtrlCidade)
@@ -32,13 +31,6 @@ namespace Projeto_ICI.frmConsultas
         {
             umaCidade = (Classes.cidades)pOBJ;
         }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaEstados = umCtrlCidade.CTRLEstado.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
-        }
-
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadCidade.ClearTxTBox();

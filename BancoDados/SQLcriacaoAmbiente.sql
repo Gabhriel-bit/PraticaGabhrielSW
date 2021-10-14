@@ -97,6 +97,7 @@ BEGIN
 		marca       VARCHAR(50) NOT NULL,
 		modelo      VARCHAR(50) NOT NULL,
 		uf          VARCHAR(2) NOT NULL,
+
 		codigo      INT PRIMARY KEY IDENTITY,
 		codigoUsu   INT  NOT NULL,
 		dataCad     VARCHAR(10) NOT NULL,
@@ -110,17 +111,20 @@ END
 IF OBJECT_ID('transportadoras') IS NULL
 BEGIN
     CREATE TABLE transportadoras (
-		razaoSocial  VARCHAR(50) NOT NULL UNIQUE,
-		cnpj_cpf     VARCHAR(20) NOT NULL UNIQUE,
-		inscEst_rg   VARCHAR(20),
-		logradouro   VARCHAR(50) NOT NULL,
-        numero       VARCHAR(5) NOT NULL,
-        complemento  VARCHAR(50),
-        bairro       VARCHAR(50) NOT NULL,
-        cep          VARCHAR(10),
-        tel_Celular  VARCHAR(20) NOT NULL,
-        email        VARCHAR(30) NOT NULL,
-		codigoCidade INT NOT NULL,
+		transportadora  VARCHAR(50) NOT NULL UNIQUE,
+
+		cnpj_cpf      VARCHAR(20) NOT NULL UNIQUE,
+		inscEst_rg    VARCHAR(20),
+		logradouro    VARCHAR(50) NOT NULL,
+        numero        VARCHAR(5) NOT NULL,
+        complemento   VARCHAR(50),
+        bairro        VARCHAR(50) NOT NULL,
+        cep           VARCHAR(10),
+        tel_Celular   VARCHAR(20) NOT NULL,
+        email         VARCHAR(30) NOT NULL,
+		dataFund_Nasc VARCHAR(10),
+		codigoCidade  INT NOT NULL,
+
 		codigo       INT PRIMARY KEY IDENTITY,
 		codigoUsu    INT  NOT NULL,
 		dataCad      VARCHAR(10) NOT NULL,
@@ -267,6 +271,8 @@ BEGIN
 	dias          INT NOT NULL,
 	porcentagem   NUMERIC(8,4) NOT NULL,
 	codigoFormaPagamento INT NOT NULL,
+
+	disponivel    INT NOT NULL default 1, 
 	PRIMARY KEY (codigoCondPag, numero),
 	CONSTRAINT FK_codCondPag FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo),
 	CONSTRAINT FK_codFormPag FOREIGN KEY (codigoFormaPagamento) REFERENCES formasPagamento (codigo)
@@ -277,6 +283,7 @@ IF OBJECT_ID('funcionarios') IS NULL
 BEGIN
 	CREATE TABLE funcionarios (
 		funcionario     VARCHAR(50) NOT NULL UNIQUE,
+
         logradouro      VARCHAR(50) NOT NULL,
         numero          VARCHAR(5) NOT NULL,
         complemento     VARCHAR(50),
@@ -294,6 +301,7 @@ BEGIN
         dataVencCNH     VARCHAR(10), 		
 		codigoCidade    INT NOT NULL,
 		codigoCargo     INT NOT NULL,
+
 		codigo          INT PRIMARY KEY IDENTITY,
 		codigoUsu       INT  NOT NULL,
 		dataCad         VARCHAR(10) NOT NULL,
@@ -501,6 +509,7 @@ BEGIN
 		serie         VARCHAR(50) NOT NULL,
 		numero_nf     VARCHAR(50) NOT NULL,
 		codigoForn    INT  NOT NULL,
+
 		parcela       INT  NOT NULL,
 		vencimento    VARCHAR(10) NOT NULL,
 		dataPagamento VARCHAR(10) NOT NULL,
@@ -508,7 +517,6 @@ BEGIN
 		valorPago     NUMERIC(8,4) NOT NULL,
 		codigoUsu     INT  NOT NULL,
 		dataCad       VARCHAR(10) NOT NULL,
-		dataUltAlt    VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),

@@ -13,7 +13,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroSubGrupos frmCadSubGrupo;
         Controllers.ctrlSubgrupos umCtrlSubgrupo;
-        List<Classes.grupos> listaGrupos;
         Classes.subgrupos umSubgrupo;
 
         public frmConsultaSubgrupos(Controllers.ctrlSubgrupos pCtrlSubgrupo)
@@ -26,12 +25,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadSubGrupo = (frmCadastros.frmCadastroSubGrupos)pFrmCad;
-        }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaGrupos = umCtrlSubgrupo.CTRLGrupo.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
         }
 
         public override void ConhecaOBJ(object pOBJ)

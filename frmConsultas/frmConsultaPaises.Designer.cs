@@ -53,6 +53,7 @@ namespace Projeto_ICI.frmConsultas
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(611, 377);
             this.Name = "frmConsultaPaises";
+            this.Text = "Consulta de Paises";
             this.Load += new System.EventHandler(this.frmConsultaPaises_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);

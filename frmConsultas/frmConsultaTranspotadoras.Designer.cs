@@ -1,7 +1,7 @@
 ﻿
 namespace Projeto_ICI.frmConsultas
 {
-    partial class frmConsultaSubgrupos
+    partial class frmConsultaTranspotadoras
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -48,13 +48,13 @@ namespace Projeto_ICI.frmConsultas
             // 
             this.btn_Inserir.Click += new System.EventHandler(this.btn_Inserir_Click);
             // 
-            // frmConsultaSubgrupos
+            // frmConsultaTranspotadoras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(611, 377);
-            this.Name = "frmConsultaSubgrupos";
-            this.Text = "Consulta de Subgrupos";
-            this.Click += new System.EventHandler(this.frmConsultaSubgrupos_Load);
+            this.Name = "frmConsultaTranspotadoras";
+            this.Text = "Consulta de Transportadoras";
+            this.Load += new System.EventHandler(this.frmConsultaTransportadoras_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -94,6 +94,10 @@ namespace Projeto_ICI.DAOs
             string pCampo, string pValor, string[] pRefCampos = default, bool pValorIgual = false)
         {
             string vlNomeDao = ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
+            if (pNameTable.Split(',').Length == 1)
+            {
+                vlNomeDao = pNameTable;
+            }
             string search = $"select {pCamposSelecionados} from {pNameTable} " +
                             (pValorIgual ? " where " : $"where {vlNomeDao}.disponivel != 0 ");
 

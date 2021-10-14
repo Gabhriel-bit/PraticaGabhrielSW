@@ -15,9 +15,6 @@ namespace Projeto_ICI.frmConsultas
         Controllers.ctrlProdutos umCtrlProduto;
         Classes.produtos umProduto;
 
-        List<Classes.modelos> listaModelos;
-        List<Classes.subgrupos> listaSubgrupos;
-
         public frmConsultaProdutos(Controllers.ctrlProdutos pCtrlProduto)
         {
             InitializeComponent();
@@ -29,13 +26,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadProduto = (frmCadastros.frmCadastroProdutos)pFrmCad;
-        }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaSubgrupos = umCtrlProduto.CTRLSubgrupo.PesquisarCollection(out string vlMsgSubg);
-            listaModelos = umCtrlProduto.CTRLModelo.PesquisarCollection(out string vlMsgMod);
-            showErrorMsg(new string[] { vlMsgMod, vlMsgSubg });
         }
         public override void ConhecaOBJ(object pOBJ)
         {

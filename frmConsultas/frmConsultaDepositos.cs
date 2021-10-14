@@ -15,8 +15,6 @@ namespace Projeto_ICI.frmConsultas
         Controllers.ctrlDepositos umCtrlDeposito;
         Classes.depositos umDeposito;
 
-        List<Classes.cidades> listaCidades;
-
         public frmConsultaDepositos(Controllers.ctrlDepositos pCtrlDeposito)
         {
             InitializeComponent();
@@ -28,13 +26,6 @@ namespace Projeto_ICI.frmConsultas
         {
             frmCadDeposito = (frmCadastros.frmCadastroDepositos)pFrmCad;
         }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaCidades = umCtrlDeposito.CTRLCidade.PesquisarCollection(out string vlMsg);
-            showErrorMsg(vlMsg);
-        }
-
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
             frmCadDeposito.ClearTxTBox();

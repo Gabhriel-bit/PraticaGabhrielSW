@@ -13,8 +13,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroFuncionarios frmCadFunc;
         Controllers.ctrlFuncionarios umCtrlFunc;
-        List<Classes.cargos> listaCargos;
-        List<Classes.cidades> listaCidades;
         Classes.funcionarios umFunc;
 
         public frmConsultaFuncionarios(Controllers.ctrlFuncionarios pCtrlFunc)
@@ -27,13 +25,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadFunc = (frmCadastros.frmCadastroFuncionarios)pFrmCad;
-        }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaCargos = umCtrlFunc.CTRLCargo.PesquisarCollection(out string vlMsgCargo);
-            listaCidades = umCtrlFunc.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            showErrorMsg(new string[] { vlMsgCargo, vlMsgCidade });
         }
         public override void ConhecaOBJ(object pOBJ)
         {

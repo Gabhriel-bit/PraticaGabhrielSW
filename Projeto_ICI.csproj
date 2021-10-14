@@ -69,6 +69,8 @@
     <Compile Include="BancoDados\conexoes.cs" />
     <Compile Include="Classes\cargos.cs" />
     <Compile Include="Classes\cidades.cs" />
+    <Compile Include="Classes\compras.cs" />
+    <Compile Include="Classes\contasPagar.cs" />
     <Compile Include="Classes\equipamentos.cs" />
     <Compile Include="Classes\servicos.cs" />
     <Compile Include="Classes\ordensServico.cs" />
@@ -85,7 +87,6 @@
     <Compile Include="Classes\depositos.cs" />
     <Compile Include="Classes\estados.cs" />
     <Compile Include="Classes\paises.cs" />
-    <Compile Include="Classes\parcelasCondPag.cs" />
     <Compile Include="Classes\condicoesPagamento.cs" />
     <Compile Include="Classes\pai.cs" />
     <Compile Include="Classes\transportadoras.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Controllers\ctrlServicos.cs" />
     <Compile Include="Controllers\ctrlSubgrupos.cs" />
     <Compile Include="Controllers\ctrlProdutos.cs" />
+    <Compile Include="Controllers\ctrlTransportadoras.cs" />
     <Compile Include="DAOs\daoCargos.cs" />
     <Compile Include="DAOs\daoCidades.cs" />
     <Compile Include="DAOs\daoClientes.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="DAOs\daos.cs" />
     <Compile Include="DAOs\daoServicos.cs" />
     <Compile Include="DAOs\daoSubgrupos.cs" />
+    <Compile Include="DAOs\daoTransportadoras.cs" />
     <Compile Include="frmAcesso\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +267,12 @@
     <Compile Include="frmCadastros\frmCadastroPaises.Designer.cs">
       <DependentUpon>frmCadastroPaises.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCadastros\frmCadastroTransportadoras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroTransportadoras.Designer.cs">
+      <DependentUpon>frmCadastroTransportadoras.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmConsultas\frmConsultaEquipamentos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -384,6 +393,12 @@
     <Compile Include="frmConsultas\frmConsultaSubgrupos.Designer.cs">
       <DependentUpon>frmConsultaSubgrupos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConsultas\frmConsultaTranspotadoras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaTranspotadoras.Designer.cs">
+      <DependentUpon>frmConsultaTranspotadoras.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmConsultas\frmFormasPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -461,8 +476,14 @@
     <EmbeddedResource Include="frmCadastros\frmCadastroSubGrupos.resx">
       <DependentUpon>frmCadastroSubGrupos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroTransportadoras.resx">
+      <DependentUpon>frmCadastroTransportadoras.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaEquipamentos.resx">
       <DependentUpon>frmConsultaEquipamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaOrdensServico.resx">
+      <DependentUpon>frmConsultaOrdensServico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaServicos.resx">
       <DependentUpon>frmConsultaServicos.cs</DependentUpon>
@@ -517,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaSubgrupos.resx">
       <DependentUpon>frmConsultaSubgrupos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaTranspotadoras.resx">
+      <DependentUpon>frmConsultaTranspotadoras.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmFormasPagamento.resx">
       <DependentUpon>frmFormasPagamento.cs</DependentUpon>

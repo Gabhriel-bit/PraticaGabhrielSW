@@ -29,7 +29,19 @@ namespace Projeto_ICI.frmConsultas
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // frmConsultaOrdensServico
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(611, 377);
+            this.Name = "frmConsultaOrdensServico";
+            this.Text = "Consulta de Ordens de Serviço";
+            ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

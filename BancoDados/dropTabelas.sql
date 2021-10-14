@@ -1,5 +1,6 @@
 IF DB_ID('praticaDBGabhriel') IS NOT NULL
 BEGIN
+	USE praticaDBGabhriel
 
 	IF OBJECT_ID('contas_pagar') IS NOT NULL
 	BEGIN
@@ -66,6 +67,11 @@ BEGIN
 		DROP TABLE formasPagamento;
 	END
 	
+	IF OBJECT_ID('equipamentos') IS NOT NULL
+	BEGIN
+		DROP TABLE equipamentos;
+	END
+
 	IF OBJECT_ID('modelos') IS NOT NULL
 	BEGIN
 		DROP TABLE modelos;
@@ -114,5 +120,10 @@ BEGIN
 	IF OBJECT_ID('paises') IS NOT NULL
 	BEGIN
 		DROP TABLE paises;
+	END
+
+	IF OBJECT_ID('servicos') IS NOT NULL
+	BEGIN
+		DROP TABLE servicos;
 	END
 END

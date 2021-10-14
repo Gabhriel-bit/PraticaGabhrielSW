@@ -13,8 +13,6 @@ namespace Projeto_ICI.frmConsultas
     {
         frmCadastros.frmCadastroClientes frmCadCliente;
         Controllers.ctrlClientes umCtrlCliente;
-        List<Classes.condicoesPagamento> listaCondPag;
-        List<Classes.cidades> listaCidades;
         Classes.clientes umCliente;
 
         public frmConsultaClientes(Controllers.ctrlClientes pCtrlCliente)
@@ -27,13 +25,6 @@ namespace Projeto_ICI.frmConsultas
         public override void SetFrmCad(Form pFrmCad)
         {
             frmCadCliente = (frmCadastros.frmCadastroClientes)pFrmCad;
-        }
-        protected override void carregarDados(ctrl pCTRL)
-        {
-            base.carregarDados(pCTRL);
-            listaCondPag = umCtrlCliente.CTRLCondPag.PesquisarCollection(out string vlMsgCondPag);
-            listaCidades = umCtrlCliente.CTRLCidade.PesquisarCollection(out string vlMsgCidade);
-            showErrorMsg(new string[] { vlMsgCidade, vlMsgCondPag });
         }
         public override void ConhecaOBJ(object pOBJ)
         {
