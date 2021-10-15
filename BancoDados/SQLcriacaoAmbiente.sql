@@ -505,21 +505,24 @@ END
 IF OBJECT_ID('contas_pagar') IS NULL
 BEGIN
 	CREATE TABLE contas_pagar	 (
-		modelo        VARCHAR(50) NOT NULL,
-		serie         VARCHAR(50) NOT NULL,
-		numero_nf     VARCHAR(50) NOT NULL,
-		codigoForn    INT  NOT NULL,
+		modelo         VARCHAR(50) NOT NULL,
+		serie          VARCHAR(50) NOT NULL,
+		numero_nf      VARCHAR(50) NOT NULL,
+		codigoForn     INT  NOT NULL,
 
-		parcela       INT  NOT NULL,
-		vencimento    VARCHAR(10) NOT NULL,
-		dataPagamento VARCHAR(10) NOT NULL,
-		valorTotal    NUMERIC(8,4) NOT NULL,
-		valorPago     NUMERIC(8,4) NOT NULL,
-		codigoUsu     INT  NOT NULL,
-		dataCad       VARCHAR(10) NOT NULL,
+		parcela        INT  NOT NULL,
+		vencimento     VARCHAR(10) NOT NULL,
+		dataPagamento  VARCHAR(10) NOT NULL,
+		valorTotal     NUMERIC(8,4) NOT NULL,
+		valorPago      NUMERIC(8,4),
+
+		codigoFormaPag INT NOT NULL,
+		codigoUsu      INT  NOT NULL,
+		dataCad        VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),
+		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
 		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
 			REFERENCES nf_compra (modelo, serie, numero_nf, codigoForn)--,
 		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
