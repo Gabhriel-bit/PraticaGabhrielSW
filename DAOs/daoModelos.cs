@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.modelos vlModelo = (Classes.modelos)pObj;
                 return InserirToString(nameTable, vlModelo.arrayStringCampos(),
-                                       vlModelo.arryStringValores());
+                                       vlModelo.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.modelos vlModelo = (Classes.modelos)pObj;
                 return AlterarToString(nameTable, vlModelo.arrayStringCampos(),
-                                             vlModelo.arryStringValores());
+                                             vlModelo.arrayStringValores());
             }
         }
 

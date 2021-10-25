@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.transportadoras vlTransportadora = (Classes.transportadoras)pObj;
                 return InserirToString(nameTable, vlTransportadora.arrayStringCampos(),
-                                       vlTransportadora.arryStringValores());
+                                       vlTransportadora.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.transportadoras vlTransportadora = (Classes.transportadoras)pObj;
                 return AlterarToString(nameTable, vlTransportadora.arrayStringCampos(),
-                                             vlTransportadora.arryStringValores());
+                                             vlTransportadora.arrayStringValores());
             }
         }
 

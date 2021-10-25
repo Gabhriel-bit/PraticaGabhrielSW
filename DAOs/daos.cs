@@ -10,11 +10,11 @@ namespace Projeto_ICI.DAOs
 {
     public class daos
     {
-        public virtual string InserirToString(string pTabela, string[] pCampos, string[] pValores)
+        public virtual string InserirToString(string pTabela, string[] pCampos, string[] pValores, bool pAllVal = false)
         {
             //adiciona os campos das tabelas
             string insert = $"insert into {pTabela} (";
-            for (int i = 1; i <= pCampos.Length - 2; i++)
+            for (int i = (pAllVal ? 0 : 1); i <= pCampos.Length - 2; i++)
             {
                 insert += pCampos[i] + ", ";
             }
@@ -93,11 +93,10 @@ namespace Projeto_ICI.DAOs
         public string PesquisarToString(string pNameTable, string pCamposSelecionados,
             string pCampo, string pValor, string[] pRefCampos = default, bool pValorIgual = false)
         {
-            string vlNomeDao = ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
-            if (pNameTable.Split(',').Length == 1)
-            {
-                vlNomeDao = pNameTable;
-            }
+            string vlNomeDao = (pNameTable.Split(',').Length == 1)
+                               ? vlNomeDao = pNameTable
+                               : ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
+
             string search = $"select {pCamposSelecionados} from {pNameTable} " +
                             (pValorIgual ? " where " : $"where {vlNomeDao}.disponivel != 0 ");
 

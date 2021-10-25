@@ -20,7 +20,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.formasPagamento vlFormPag = (Classes.formasPagamento)pObj;
                 return InserirToString(nameTable, vlFormPag.arrayStringCampos(),
-                                       vlFormPag.arryStringValores());
+                                       vlFormPag.arrayStringValores());
             }
         }
 
@@ -34,7 +34,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.formasPagamento vlFormPag = (Classes.formasPagamento)pObj;
                 return AlterarToString(nameTable, vlFormPag.arrayStringCampos(),
-                                       vlFormPag.arryStringValores());
+                                       vlFormPag.arrayStringValores());
             }
         }
 

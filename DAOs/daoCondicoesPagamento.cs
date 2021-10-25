@@ -49,7 +49,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.condicoesPagamento vlCondPag = (Classes.condicoesPagamento)pObj;
                 return InserirToString(nameTable, vlCondPag.arrayStringCampos(),
-                                       vlCondPag.arryStringValores());
+                                       vlCondPag.arrayStringValores());
             }
         }
 
@@ -84,7 +84,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.condicoesPagamento vlCondPag = (Classes.condicoesPagamento)pObj;
                 return AlterarToString(nameTable, vlCondPag.arrayStringCampos(),
-                                       vlCondPag.arryStringValores());
+                                       vlCondPag.arrayStringValores());
             }
         }
 

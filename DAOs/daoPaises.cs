@@ -22,7 +22,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.paises vlPais = (Classes.paises)pObj;
                 return InserirToString(nameTable, vlPais.arrayStringCampos(),
-                                       vlPais.arryStringValores());
+                                       vlPais.arrayStringValores());
             }
         }
 
@@ -36,7 +36,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.paises vlPais = (Classes.paises)pObj;
                 return AlterarToString(nameTable, vlPais.arrayStringCampos(),
-                                       vlPais.arryStringValores());
+                                       vlPais.arrayStringValores());
             }
         }
 

@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.funcionarios vlFunc = (Classes.funcionarios)pObj;
                 return InserirToString(nameTable, vlFunc.arrayStringCampos(),
-                                       vlFunc.arryStringValores());
+                                       vlFunc.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.funcionarios vlFunc = (Classes.funcionarios)pObj;
                 return AlterarToString(nameTable, vlFunc.arrayStringCampos(),
-                                             vlFunc.arryStringValores());
+                                             vlFunc.arrayStringValores());
             }
         }
 

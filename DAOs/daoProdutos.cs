@@ -42,7 +42,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.produtos vlProduto = (Classes.produtos)pObj;
                 return InserirToString(nameTable, vlProduto.arrayStringCampos(),
-                                       vlProduto.arryStringValores());
+                                       vlProduto.arrayStringValores());
             }
         }
 
@@ -72,13 +72,13 @@ namespace Projeto_ICI.DAOs
         {
             if (pObj == null)
             {
-                return "Erro: Cidade está nula!";
+                return "Erro: Produto está nula!";
             }
             else
             {
                 Classes.produtos vlProduto = (Classes.produtos)pObj;
                 return AlterarToString(nameTable, vlProduto.arrayStringCampos(),
-                                       vlProduto.arryStringValores());
+                                       vlProduto.arrayStringValores());
             }
         }
 

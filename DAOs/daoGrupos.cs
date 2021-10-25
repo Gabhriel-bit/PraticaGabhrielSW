@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.grupos vlGrupo = (Classes.grupos)pObj;
                 return InserirToString(nameTable, vlGrupo.arrayStringCampos(),
-                                       vlGrupo.arryStringValores());
+                                       vlGrupo.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.grupos vlGrupo = (Classes.grupos)pObj;
                 return AlterarToString(nameTable, vlGrupo.arrayStringCampos(),
-                                       vlGrupo.arryStringValores());
+                                       vlGrupo.arrayStringValores());
             }
         }
 

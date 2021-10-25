@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.estados vlEstado = (Classes.estados)pObj;
                 return InserirToString(nameTable, vlEstado.arrayStringCampos(),
-                                       vlEstado.arryStringValores());
+                                       vlEstado.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.estados vlEstado = (Classes.estados)pObj;
                 return AlterarToString(nameTable, vlEstado.arrayStringCampos(),
-                                             vlEstado.arryStringValores());
+                                             vlEstado.arrayStringValores());
             }
         }
 

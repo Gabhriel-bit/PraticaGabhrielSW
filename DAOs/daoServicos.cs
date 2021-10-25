@@ -20,7 +20,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.servicos vlServico = (Classes.servicos)pObj;
                 return InserirToString(nameTable, vlServico.arrayStringCampos(),
-                                       vlServico.arryStringValores());
+                                       vlServico.arrayStringValores());
             }
         }
 
@@ -34,7 +34,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.servicos vlServico = (Classes.servicos)pObj;
                 return AlterarToString(nameTable, vlServico.arrayStringCampos(),
-                                       vlServico.arryStringValores());
+                                       vlServico.arrayStringValores());
             }
         }
 

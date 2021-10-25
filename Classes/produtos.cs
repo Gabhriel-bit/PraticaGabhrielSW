@@ -12,13 +12,16 @@ namespace Projeto_ICI.Classes
         private string Freferencia;
         private string FcodigoBarras;
         private decimal Fcusto;
-        private int Funidade;
+        private string Funidade;
         private int Fsaldo;
-        private decimal FpesoBruto;
-        private decimal FpesoLiquido;
         private modelos umModelo;
         private subgrupos umSubgrupo;
         private List<fornecedores> listaForn;
+
+
+        private decimal FpesoBruto;
+        private decimal FpesoLiquido;
+        private decimal FprecoUltCompra;
 
         public produtos()
         {
@@ -31,33 +34,20 @@ namespace Projeto_ICI.Classes
             Freferencia = "";
             FcodigoBarras = "";
             Fcusto = 0;
-            Funidade = 0;
+            Funidade = "";
             Fsaldo = 0;
             umModelo = new modelos();
             umSubgrupo = new subgrupos();
             listaForn = new List<fornecedores>();
-        }
-        public produtos(string pProduto, string pReferencia, string pCodBarras, decimal pCusto,
-                        int pUnidade, int pSaldo)
-        {
-            Codigo = 0;
-            CodigoUsu = 0;
-            DataCad = "";
-            DataUltAlt = "";
 
-            Fproduto = pProduto;
-            Freferencia = pReferencia;
-            FcodigoBarras = pCodBarras;
-            Fcusto = pCusto;
-            Funidade = pUnidade;
-            Fsaldo = pSaldo;
-            umModelo = new modelos();
-            umSubgrupo = new subgrupos();
-            listaForn = new List<fornecedores>();
+            FpesoBruto = 0;
+            FpesoLiquido = 0;
+            FprecoUltCompra = 0;
         }
         public produtos(int pCodigo, int pCodigoUsu, string pDataCad, string pDataUltAlt,
                         string pProduto, string pReferencia, string pCodBarras, decimal pCusto,
-                        int pUnidade, int pSaldo)
+                        string pUnidade, int pSaldo, decimal pPesoBruto, decimal pPesoLiq,
+                        decimal pPrecoUltCompra)
         {
             Codigo = pCodigo;
             CodigoUsu = pCodigoUsu;
@@ -73,6 +63,10 @@ namespace Projeto_ICI.Classes
             umModelo = new modelos();
             umSubgrupo = new subgrupos();
             listaForn = new List<fornecedores>();
+
+            FpesoBruto = pPesoBruto;
+            FpesoLiquido = pPesoLiq;
+            FprecoUltCompra = pPrecoUltCompra;
         }
 
         public string Produto
@@ -87,7 +81,9 @@ namespace Projeto_ICI.Classes
         { get => FpesoLiquido; set => FpesoLiquido = value; }
         public decimal PesoBruto
         { get => FpesoBruto; set => FpesoBruto = value; }
-        public int Unidade
+        public decimal UltimaCompra
+        { get => FprecoUltCompra; set => FprecoUltCompra = value; }
+        public string Unidade
         { get => Funidade; set => Funidade = value; }
         public int Saldo
         { get => Fsaldo; set => Fsaldo = value; }
@@ -126,11 +122,15 @@ namespace Projeto_ICI.Classes
             umModelo = ((produtos)pObj).UmModelo.ThisModelo;
             umSubgrupo = ((produtos)pObj).UmSubgrupo.ThisSubgrupo;
             listaForn = ((produtos)pObj).ListaFornecedores;
+            PesoBruto = ((produtos)pObj).PesoBruto;
+            PesoLiquido = ((produtos)pObj).PesoLiquido;
+            UltimaCompra = ((produtos)pObj).UltimaCompra;
         }
         private produtos Clone()
         {
             var clone = new produtos(Codigo, CodigoUsu, DataCad, DataUltAlt, Produto, Referencia,
-                                     CodigoBarras, Custo, Unidade, Saldo);
+                                     CodigoBarras, Custo, Unidade, Saldo, PesoBruto, PesoLiquido,
+                                     UltimaCompra);
             clone.UmModelo = umModelo.ThisModelo;
             clone.umSubgrupo = umSubgrupo.ThisSubgrupo;
             clone.ListaFornecedores = CloneListaForn();
@@ -144,8 +144,13 @@ namespace Projeto_ICI.Classes
                    Referencia + ';' +
                    CodigoBarras + ';' +
                    Custo.ToString() + ';' +
-                   Unidade.ToString() + ';' +
+                   Unidade + ';' +
                    Saldo.ToString() + ';' +
+
+                   PesoBruto.ToString() + ';' +
+                   PesoLiquido.ToString() + ';' +
+                   UltimaCompra.ToString() + ';' +
+
                    UmModelo.Codigo.ToString() + ';' +
                    UmSubgrupo.Codigo.ToString();
         }
@@ -159,6 +164,9 @@ namespace Projeto_ICI.Classes
                    "custo" + ';' +
                    "unidade" + ';' +
                    "saldo" + ';' +
+                   "peso_bruto" + ';' +
+                   "peso_liquid" + ';' +
+                   "precoUltCompra" + ';' +
                    "codigoModelo" + ';' +
                    "codigoSubgrupo";
         }

@@ -54,6 +54,9 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoModelo.Text = vlProduto.UmModelo.Codigo.ToString();
             txtb_Modelo.Text = vlProduto.UmModelo.Modelo;
             txtb_Marca.Text = vlProduto.UmModelo.UmaMarca.Marca;
+            txtb_PesoBruto.Text = vlProduto.PesoBruto.ToString();
+            txtb_PesoLiquido.Text = vlProduto.PesoLiquido.ToString();
+            txtb_PrecoUltCompra.Text = vlProduto.UltimaCompra.ToString();
             listToLv(vlProduto.ListaFornecedores);
         }
         public override void BloquearTxtBox()
@@ -64,11 +67,11 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoUsu.Enabled = false;
             txtb_CodigoModelo.Enabled = false;
             txtb_CodigoSubGrupo.Enabled = false;
-            txtb_Custo.Enabled = false;
             txtb_Produto.Enabled = false;
             txtb_Unidade.Enabled = false;
             txtb_Referencia.Enabled = false;
-            txtb_Saldo.Enabled = false;
+            txtb_PesoBruto.Enabled = false;
+            txtb_PesoLiquido.Enabled = false;
             lv_Fornecedores.Enabled = false;
 
             btn_Adicionar.Enabled = false;
@@ -85,11 +88,11 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoUsu.Enabled = true;
             txtb_CodigoModelo.Enabled = true;
             txtb_CodigoSubGrupo.Enabled = true;
-            txtb_Custo.Enabled = true;
             txtb_Produto.Enabled = true;
             txtb_Unidade.Enabled = true;
             txtb_Referencia.Enabled = true;
-            txtb_Saldo.Enabled = true;
+            txtb_PesoBruto.Enabled = true;
+            txtb_PesoLiquido.Enabled = true;
             lv_Fornecedores.Enabled = true;
 
             btn_Adicionar.Enabled = true;
@@ -104,6 +107,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoBarras.Clear();
             txtb_CodigoFornecedor.Clear();
             txtb_CodigoUsu.Clear();
+            txtb_Saldo.Clear();
             txtb_CodigoModelo.Clear();
             txtb_CodigoSubGrupo.Clear();
             txtb_Custo.Clear();
@@ -114,6 +118,9 @@ namespace Projeto_ICI.frmCadastros
             txtb_SubGrupo.Clear();
             txtb_Unidade.Clear();
             txtb_Referencia.Clear();
+            txtb_PesoBruto.Clear();
+            txtb_PesoLiquido.Clear();
+            txtb_PrecoUltCompra.Clear();
             lv_Fornecedores.Items.Clear();
         }
         private List<Classes.fornecedores> lvToList()
@@ -397,20 +404,26 @@ namespace Projeto_ICI.frmCadastros
             else if (string.IsNullOrEmpty(txtb_Unidade.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_Unidade, "O campo 'Unidade' é obrigatório!");
+                errorMSG.SetError(lbl_Unidade, "O campo 'UND' (unidade) é obrigatório!");
                 txtb_Unidade.Focus();
             }
-            else if (string.IsNullOrEmpty(txtb_Custo.Text))
+            else if (ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_Custo, "O campo 'Custo' é obrigatório!");
-                txtb_Custo.Focus();
+                errorMSG.SetError(lbl_Unidade, "O campo 'Peso Bruto' é obrigatório!");
+                txtb_PesoBruto.Focus();
             }
-            else if (string.IsNullOrEmpty(txtb_Saldo.Text))
+            else if (ValidacaoDoubleMoeda(txtb_PesoLiquido.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_Saldo, "O campo 'Saldo' é obrigatório!");
-                txtb_Saldo.Focus();
+                errorMSG.SetError(lbl_Unidade, "O campo 'Peso Liquido' é obrigatório!");
+                txtb_PesoLiquido.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Unidade.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Unidade, "O campo 'Unidade' é obrigatório!");
+                txtb_Unidade.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {
@@ -430,8 +443,11 @@ namespace Projeto_ICI.frmCadastros
                                                        txtb_Referencia.Text,
                                                        txtb_CodigoBarras.Text,
                                                        decimal.Parse(txtb_Custo.Text == "" ? "0" : txtb_Custo.Text.Replace(".", ","), vgEstilo, vgProv),
-                                                       int.Parse(txtb_Unidade.Text),
-                                                       int.Parse(txtb_Saldo.Text == "" ? "0" : txtb_Saldo.Text));
+                                                       txtb_Unidade.Text,
+                                                       int.Parse(txtb_Saldo.Text == "" ? "0" : txtb_Saldo.Text),
+                                                       decimal.Parse(txtb_PesoBruto.Text == "" ? "0" : txtb_PesoBruto.Text.Replace(".", ","), vgEstilo, vgProv),
+                                                       decimal.Parse(txtb_PesoLiquido.Text == "" ? "0" : txtb_PesoLiquido.Text.Replace(".", ","), vgEstilo, vgProv),
+                                                       decimal.Parse(txtb_PrecoUltCompra.Text == "" ? "0" : txtb_PrecoUltCompra.Text.Replace(".", ","), vgEstilo, vgProv));
                 vlProduto.UmModelo.ThisModelo = umModelo;
                 vlProduto.UmSubgrupo.ThisSubgrupo = umSubgrupo;
                 vlProduto.ListaFornecedores = lvToList();
@@ -467,21 +483,6 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarFornecedor_MouseLeave(object sender, EventArgs e)
         {
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
-        }
-
-        private void btn_CarregarImg_Click(object sender, EventArgs e)
-        {
-            abrirAqruivo.ShowDialog();
-            var vlDiretorio = abrirAqruivo.FileName;
-            if (!string.IsNullOrEmpty(vlDiretorio) && vlDiretorio != "openFileDialog")
-            {
-                picb_Foto.Image = Image.FromFile(vlDiretorio);
-            }
-        }
-
-        private void btn_RemoverImg_Click(object sender, EventArgs e)
-        {
-            picb_Foto.Image = null;
         }
 
         private void lbl_Custo_Validating(object sender, CancelEventArgs e)

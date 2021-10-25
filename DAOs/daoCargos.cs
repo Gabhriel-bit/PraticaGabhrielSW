@@ -20,7 +20,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.cargos vlCargo = (Classes.cargos)pObj;
                 return InserirToString(nameTable, vlCargo.arrayStringCampos(),
-                                       vlCargo.arryStringValores());
+                                       vlCargo.arrayStringValores());
             }
         }
 
@@ -34,7 +34,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.cargos vlCargo = (Classes.cargos)pObj;
                 return AlterarToString(nameTable, vlCargo.arrayStringCampos(),
-                                       vlCargo.arryStringValores());
+                                       vlCargo.arrayStringValores());
             }
         }
 

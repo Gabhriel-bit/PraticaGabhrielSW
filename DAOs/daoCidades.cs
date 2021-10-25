@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.cidades vlCidade = (Classes.cidades)pObj;
                 return InserirToString(nameTable, vlCidade.arrayStringCampos(),
-                                       vlCidade.arryStringValores());
+                                       vlCidade.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.cidades vlCidade = (Classes.cidades)pObj;
                 return AlterarToString(nameTable, vlCidade.arrayStringCampos(),
-                                             vlCidade.arryStringValores());
+                                             vlCidade.arrayStringValores());
             }
         }
 

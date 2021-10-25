@@ -32,9 +32,26 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_CodigoFornecedor = new System.Windows.Forms.Label();
             this.txtb_CodigoFornecedor = new System.Windows.Forms.TextBox();
             this.groupBox_Produtos = new System.Windows.Forms.GroupBox();
-            this.btn_Gerar = new System.Windows.Forms.Button();
+            this.lbl_TotalProdutos = new System.Windows.Forms.Label();
+            this.txtb_TotalProdutos = new System.Windows.Forms.TextBox();
             this.lbl_Unidade = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtb_Unidade = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lv_ItensCompra = new System.Windows.Forms.ListView();
+            this.btn_Remover = new System.Windows.Forms.Button();
+            this.btn_Alterar = new System.Windows.Forms.Button();
+            this.btn_Adicionar = new System.Windows.Forms.Button();
+            this.lbl_Quantidade = new System.Windows.Forms.Label();
+            this.txtb_Quantidade = new System.Windows.Forms.TextBox();
+            this.lbl_Custo = new System.Windows.Forms.Label();
+            this.txtb_Custo = new System.Windows.Forms.TextBox();
+            this.btn_PesquisarProduto = new System.Windows.Forms.Button();
+            this.lbl_Produto = new System.Windows.Forms.Label();
+            this.txtb_Produto = new System.Windows.Forms.TextBox();
+            this.lbl_CodigoProduto = new System.Windows.Forms.Label();
+            this.txtb_CodigoProduto = new System.Windows.Forms.TextBox();
+            this.btn_Gerar = new System.Windows.Forms.Button();
             this.lbl_Transpotadora = new System.Windows.Forms.Label();
             this.txtb_Transport = new System.Windows.Forms.TextBox();
             this.lbl_CodigoTransportadora = new System.Windows.Forms.Label();
@@ -45,26 +62,12 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Seguro = new System.Windows.Forms.TextBox();
             this.lbl_Frete = new System.Windows.Forms.Label();
             this.txtb_Frete = new System.Windows.Forms.TextBox();
-            this.lv_ItensCompra = new System.Windows.Forms.ListView();
-            this.lbl_Total = new System.Windows.Forms.Label();
             this.txtb_CodigoCondPag = new System.Windows.Forms.TextBox();
             this.lbl_CodigoCondPag = new System.Windows.Forms.Label();
             this.btn_PesquisarCondPag = new System.Windows.Forms.Button();
             this.lbl_CondicaoPag = new System.Windows.Forms.Label();
             this.txtb_CondicaoPag = new System.Windows.Forms.TextBox();
-            this.btn_Remover = new System.Windows.Forms.Button();
-            this.btn_Alterar = new System.Windows.Forms.Button();
-            this.btn_Adicionar = new System.Windows.Forms.Button();
             this.btn_PesquisaTransportadora = new System.Windows.Forms.Button();
-            this.lbl_Quantidade = new System.Windows.Forms.Label();
-            this.txtb_Quantidade = new System.Windows.Forms.TextBox();
-            this.lbl_Custo = new System.Windows.Forms.Label();
-            this.txtb_Custo = new System.Windows.Forms.TextBox();
-            this.btn_PesquisarProduto = new System.Windows.Forms.Button();
-            this.lbl_Produto = new System.Windows.Forms.Label();
-            this.txtb_Produto = new System.Windows.Forms.TextBox();
-            this.lbl_CodigoProduto = new System.Windows.Forms.Label();
-            this.txtb_CodigoProduto = new System.Windows.Forms.TextBox();
             this.btn_Limpar = new System.Windows.Forms.Button();
             this.lbl_DataChegada = new System.Windows.Forms.Label();
             this.btn_PesquisarFornecedor = new System.Windows.Forms.Button();
@@ -90,6 +93,8 @@ namespace Projeto_ICI.frmCadastros
             this.label16 = new System.Windows.Forms.Label();
             this.dt_Emissao = new System.Windows.Forms.DateTimePicker();
             this.dt_Chegada = new System.Windows.Forms.DateTimePicker();
+            this.lbl_TotalNota = new System.Windows.Forms.Label();
+            this.txtb_TotalNota = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.groupBox_Produtos.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +103,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_CodigoFornecedor.AutoSize = true;
             this.lbl_CodigoFornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoFornecedor.Location = new System.Drawing.Point(189, 9);
+            this.lbl_CodigoFornecedor.Location = new System.Drawing.Point(224, 9);
             this.lbl_CodigoFornecedor.Name = "lbl_CodigoFornecedor";
             this.lbl_CodigoFornecedor.Size = new System.Drawing.Size(51, 15);
             this.lbl_CodigoFornecedor.TabIndex = 141;
@@ -107,38 +112,24 @@ namespace Projeto_ICI.frmCadastros
             // txtb_CodigoFornecedor
             // 
             this.txtb_CodigoFornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_CodigoFornecedor.Location = new System.Drawing.Point(192, 27);
+            this.txtb_CodigoFornecedor.Location = new System.Drawing.Point(227, 27);
             this.txtb_CodigoFornecedor.Name = "txtb_CodigoFornecedor";
-            this.txtb_CodigoFornecedor.Size = new System.Drawing.Size(51, 20);
+            this.txtb_CodigoFornecedor.Size = new System.Drawing.Size(61, 20);
             this.txtb_CodigoFornecedor.TabIndex = 140;
             this.txtb_CodigoFornecedor.TextChanged += new System.EventHandler(this.txtb_CodigoFornecedor_TextChanged);
             // 
             // groupBox_Produtos
             // 
-            this.groupBox_Produtos.Controls.Add(this.btn_Gerar);
+            this.groupBox_Produtos.Controls.Add(this.lbl_TotalProdutos);
+            this.groupBox_Produtos.Controls.Add(this.txtb_TotalProdutos);
             this.groupBox_Produtos.Controls.Add(this.lbl_Unidade);
+            this.groupBox_Produtos.Controls.Add(this.label1);
             this.groupBox_Produtos.Controls.Add(this.txtb_Unidade);
-            this.groupBox_Produtos.Controls.Add(this.lbl_Transpotadora);
-            this.groupBox_Produtos.Controls.Add(this.txtb_Transport);
-            this.groupBox_Produtos.Controls.Add(this.lbl_CodigoTransportadora);
-            this.groupBox_Produtos.Controls.Add(this.txtb_CodigoTransport);
-            this.groupBox_Produtos.Controls.Add(this.lbl_OutrasDeps);
-            this.groupBox_Produtos.Controls.Add(this.txtb_OutrasDeps);
-            this.groupBox_Produtos.Controls.Add(this.lbl_Seguro);
-            this.groupBox_Produtos.Controls.Add(this.txtb_Seguro);
-            this.groupBox_Produtos.Controls.Add(this.lbl_Frete);
-            this.groupBox_Produtos.Controls.Add(this.txtb_Frete);
+            this.groupBox_Produtos.Controls.Add(this.textBox1);
             this.groupBox_Produtos.Controls.Add(this.lv_ItensCompra);
-            this.groupBox_Produtos.Controls.Add(this.lbl_Total);
-            this.groupBox_Produtos.Controls.Add(this.txtb_CodigoCondPag);
-            this.groupBox_Produtos.Controls.Add(this.lbl_CodigoCondPag);
-            this.groupBox_Produtos.Controls.Add(this.btn_PesquisarCondPag);
-            this.groupBox_Produtos.Controls.Add(this.lbl_CondicaoPag);
-            this.groupBox_Produtos.Controls.Add(this.txtb_CondicaoPag);
             this.groupBox_Produtos.Controls.Add(this.btn_Remover);
             this.groupBox_Produtos.Controls.Add(this.btn_Alterar);
             this.groupBox_Produtos.Controls.Add(this.btn_Adicionar);
-            this.groupBox_Produtos.Controls.Add(this.btn_PesquisaTransportadora);
             this.groupBox_Produtos.Controls.Add(this.lbl_Quantidade);
             this.groupBox_Produtos.Controls.Add(this.txtb_Quantidade);
             this.groupBox_Produtos.Controls.Add(this.lbl_Custo);
@@ -151,136 +142,68 @@ namespace Projeto_ICI.frmCadastros
             this.groupBox_Produtos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_Produtos.Location = new System.Drawing.Point(15, 96);
             this.groupBox_Produtos.Name = "groupBox_Produtos";
-            this.groupBox_Produtos.Size = new System.Drawing.Size(545, 330);
+            this.groupBox_Produtos.Size = new System.Drawing.Size(545, 243);
             this.groupBox_Produtos.TabIndex = 139;
             this.groupBox_Produtos.TabStop = false;
             this.groupBox_Produtos.Text = "Produtos";
             this.groupBox_Produtos.EnabledChanged += new System.EventHandler(this.groupBox_Produtos_EnabledChanged);
             // 
-            // btn_Gerar
+            // lbl_TotalProdutos
             // 
-            this.btn_Gerar.Location = new System.Drawing.Point(464, 300);
-            this.btn_Gerar.Name = "btn_Gerar";
-            this.btn_Gerar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Gerar.TabIndex = 112;
-            this.btn_Gerar.Text = "Gerar";
-            this.btn_Gerar.UseVisualStyleBackColor = true;
-            this.btn_Gerar.Click += new System.EventHandler(this.btn_Gerar_Click);
+            this.lbl_TotalProdutos.AutoSize = true;
+            this.lbl_TotalProdutos.Location = new System.Drawing.Point(435, 198);
+            this.lbl_TotalProdutos.Name = "lbl_TotalProdutos";
+            this.lbl_TotalProdutos.Size = new System.Drawing.Size(86, 15);
+            this.lbl_TotalProdutos.TabIndex = 153;
+            this.lbl_TotalProdutos.Text = "Total Produtos";
+            // 
+            // txtb_TotalProdutos
+            // 
+            this.txtb_TotalProdutos.Enabled = false;
+            this.txtb_TotalProdutos.Location = new System.Drawing.Point(438, 216);
+            this.txtb_TotalProdutos.Name = "txtb_TotalProdutos";
+            this.txtb_TotalProdutos.Size = new System.Drawing.Size(100, 21);
+            this.txtb_TotalProdutos.TabIndex = 152;
+            this.txtb_TotalProdutos.Text = "0";
+            this.txtb_TotalProdutos.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lbl_Unidade
             // 
             this.lbl_Unidade.AutoSize = true;
             this.lbl_Unidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Unidade.Location = new System.Drawing.Point(308, 19);
+            this.lbl_Unidade.Location = new System.Drawing.Point(255, 19);
             this.lbl_Unidade.Name = "lbl_Unidade";
             this.lbl_Unidade.Size = new System.Drawing.Size(59, 15);
             this.lbl_Unidade.TabIndex = 111;
             this.lbl_Unidade.Text = "Unidade*";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(467, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 15);
+            this.label1.TabIndex = 114;
+            this.label1.Text = "Desconto";
+            // 
             // txtb_Unidade
             // 
             this.txtb_Unidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Unidade.Location = new System.Drawing.Point(309, 37);
+            this.txtb_Unidade.Location = new System.Drawing.Point(258, 37);
             this.txtb_Unidade.Name = "txtb_Unidade";
             this.txtb_Unidade.Size = new System.Drawing.Size(58, 21);
             this.txtb_Unidade.TabIndex = 110;
             // 
-            // lbl_Transpotadora
+            // textBox1
             // 
-            this.lbl_Transpotadora.AutoSize = true;
-            this.lbl_Transpotadora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Transpotadora.Location = new System.Drawing.Point(75, 236);
-            this.lbl_Transpotadora.Name = "lbl_Transpotadora";
-            this.lbl_Transpotadora.Size = new System.Drawing.Size(91, 15);
-            this.lbl_Transpotadora.TabIndex = 109;
-            this.lbl_Transpotadora.Text = "Transportadora";
-            // 
-            // txtb_Transport
-            // 
-            this.txtb_Transport.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Transport.Enabled = false;
-            this.txtb_Transport.Location = new System.Drawing.Point(78, 254);
-            this.txtb_Transport.Name = "txtb_Transport";
-            this.txtb_Transport.Size = new System.Drawing.Size(150, 21);
-            this.txtb_Transport.TabIndex = 108;
-            // 
-            // lbl_CodigoTransportadora
-            // 
-            this.lbl_CodigoTransportadora.AutoSize = true;
-            this.lbl_CodigoTransportadora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoTransportadora.Location = new System.Drawing.Point(6, 236);
-            this.lbl_CodigoTransportadora.Name = "lbl_CodigoTransportadora";
-            this.lbl_CodigoTransportadora.Size = new System.Drawing.Size(51, 15);
-            this.lbl_CodigoTransportadora.TabIndex = 107;
-            this.lbl_CodigoTransportadora.Text = "Código*";
-            // 
-            // txtb_CodigoTransport
-            // 
-            this.txtb_CodigoTransport.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_CodigoTransport.Location = new System.Drawing.Point(9, 254);
-            this.txtb_CodigoTransport.Name = "txtb_CodigoTransport";
-            this.txtb_CodigoTransport.Size = new System.Drawing.Size(63, 21);
-            this.txtb_CodigoTransport.TabIndex = 106;
-            // 
-            // lbl_OutrasDeps
-            // 
-            this.lbl_OutrasDeps.AutoSize = true;
-            this.lbl_OutrasDeps.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_OutrasDeps.Location = new System.Drawing.Point(431, 236);
-            this.lbl_OutrasDeps.Name = "lbl_OutrasDeps";
-            this.lbl_OutrasDeps.Size = new System.Drawing.Size(101, 15);
-            this.lbl_OutrasDeps.TabIndex = 105;
-            this.lbl_OutrasDeps.Text = "Outras Despesas";
-            // 
-            // txtb_OutrasDeps
-            // 
-            this.txtb_OutrasDeps.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_OutrasDeps.Location = new System.Drawing.Point(434, 254);
-            this.txtb_OutrasDeps.Name = "txtb_OutrasDeps";
-            this.txtb_OutrasDeps.Size = new System.Drawing.Size(103, 21);
-            this.txtb_OutrasDeps.TabIndex = 104;
-            this.txtb_OutrasDeps.Text = "0";
-            this.txtb_OutrasDeps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbl_Seguro
-            // 
-            this.lbl_Seguro.AutoSize = true;
-            this.lbl_Seguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Seguro.Location = new System.Drawing.Point(347, 236);
-            this.lbl_Seguro.Name = "lbl_Seguro";
-            this.lbl_Seguro.Size = new System.Drawing.Size(47, 15);
-            this.lbl_Seguro.TabIndex = 103;
-            this.lbl_Seguro.Text = "Seguro";
-            // 
-            // txtb_Seguro
-            // 
-            this.txtb_Seguro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Seguro.Location = new System.Drawing.Point(350, 254);
-            this.txtb_Seguro.Name = "txtb_Seguro";
-            this.txtb_Seguro.Size = new System.Drawing.Size(78, 21);
-            this.txtb_Seguro.TabIndex = 102;
-            this.txtb_Seguro.Text = "0";
-            this.txtb_Seguro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbl_Frete
-            // 
-            this.lbl_Frete.AutoSize = true;
-            this.lbl_Frete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Frete.Location = new System.Drawing.Point(263, 236);
-            this.lbl_Frete.Name = "lbl_Frete";
-            this.lbl_Frete.Size = new System.Drawing.Size(35, 15);
-            this.lbl_Frete.TabIndex = 101;
-            this.lbl_Frete.Text = "Frete";
-            // 
-            // txtb_Frete
-            // 
-            this.txtb_Frete.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Frete.Location = new System.Drawing.Point(266, 254);
-            this.txtb_Frete.Name = "txtb_Frete";
-            this.txtb_Frete.Size = new System.Drawing.Size(78, 21);
-            this.txtb_Frete.TabIndex = 100;
-            this.txtb_Frete.Text = "0";
-            this.txtb_Frete.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBox1.Location = new System.Drawing.Point(468, 37);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(71, 21);
+            this.textBox1.TabIndex = 113;
+            this.textBox1.Text = "0";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lv_ItensCompra
             // 
@@ -290,62 +213,6 @@ namespace Projeto_ICI.frmCadastros
             this.lv_ItensCompra.Size = new System.Drawing.Size(533, 130);
             this.lv_ItensCompra.TabIndex = 73;
             this.lv_ItensCompra.UseCompatibleStateImageBehavior = false;
-            // 
-            // lbl_Total
-            // 
-            this.lbl_Total.AutoSize = true;
-            this.lbl_Total.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Total.Location = new System.Drawing.Point(430, 197);
-            this.lbl_Total.Name = "lbl_Total";
-            this.lbl_Total.Size = new System.Drawing.Size(62, 20);
-            this.lbl_Total.TabIndex = 99;
-            this.lbl_Total.Text = "Total: --";
-            // 
-            // txtb_CodigoCondPag
-            // 
-            this.txtb_CodigoCondPag.Location = new System.Drawing.Point(9, 300);
-            this.txtb_CodigoCondPag.Name = "txtb_CodigoCondPag";
-            this.txtb_CodigoCondPag.Size = new System.Drawing.Size(63, 21);
-            this.txtb_CodigoCondPag.TabIndex = 98;
-            this.txtb_CodigoCondPag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbl_CodigoCondPag
-            // 
-            this.lbl_CodigoCondPag.AutoSize = true;
-            this.lbl_CodigoCondPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoCondPag.Location = new System.Drawing.Point(6, 282);
-            this.lbl_CodigoCondPag.Name = "lbl_CodigoCondPag";
-            this.lbl_CodigoCondPag.Size = new System.Drawing.Size(51, 15);
-            this.lbl_CodigoCondPag.TabIndex = 97;
-            this.lbl_CodigoCondPag.Text = "Código*";
-            // 
-            // btn_PesquisarCondPag
-            // 
-            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(234, 296);
-            this.btn_PesquisarCondPag.Name = "btn_PesquisarCondPag";
-            this.btn_PesquisarCondPag.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarCondPag.TabIndex = 96;
-            this.btn_PesquisarCondPag.UseVisualStyleBackColor = true;
-            this.btn_PesquisarCondPag.Click += new System.EventHandler(this.btn_PesquisarCondPag_Click);
-            // 
-            // lbl_CondicaoPag
-            // 
-            this.lbl_CondicaoPag.AutoSize = true;
-            this.lbl_CondicaoPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CondicaoPag.Location = new System.Drawing.Point(75, 282);
-            this.lbl_CondicaoPag.Name = "lbl_CondicaoPag";
-            this.lbl_CondicaoPag.Size = new System.Drawing.Size(106, 15);
-            this.lbl_CondicaoPag.TabIndex = 95;
-            this.lbl_CondicaoPag.Text = "Cond. Pagamento";
-            // 
-            // txtb_CondicaoPag
-            // 
-            this.txtb_CondicaoPag.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_CondicaoPag.Enabled = false;
-            this.txtb_CondicaoPag.Location = new System.Drawing.Point(78, 300);
-            this.txtb_CondicaoPag.Name = "txtb_CondicaoPag";
-            this.txtb_CondicaoPag.Size = new System.Drawing.Size(147, 21);
-            this.txtb_CondicaoPag.TabIndex = 94;
             // 
             // btn_Remover
             // 
@@ -374,31 +241,22 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Adicionar.Text = "Adicionar";
             this.btn_Adicionar.UseVisualStyleBackColor = true;
             // 
-            // btn_PesquisaTransportadora
-            // 
-            this.btn_PesquisaTransportadora.Location = new System.Drawing.Point(234, 252);
-            this.btn_PesquisaTransportadora.Name = "btn_PesquisaTransportadora";
-            this.btn_PesquisaTransportadora.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisaTransportadora.TabIndex = 89;
-            this.btn_PesquisaTransportadora.UseVisualStyleBackColor = true;
-            this.btn_PesquisaTransportadora.Click += new System.EventHandler(this.btn_PesquisaTransportadora_Click);
-            // 
             // lbl_Quantidade
             // 
             this.lbl_Quantidade.AutoSize = true;
             this.lbl_Quantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Quantidade.Location = new System.Drawing.Point(370, 19);
+            this.lbl_Quantidade.Location = new System.Drawing.Point(320, 19);
             this.lbl_Quantidade.Name = "lbl_Quantidade";
-            this.lbl_Quantidade.Size = new System.Drawing.Size(76, 15);
+            this.lbl_Quantidade.Size = new System.Drawing.Size(45, 15);
             this.lbl_Quantidade.TabIndex = 80;
-            this.lbl_Quantidade.Text = "Quantidade*";
+            this.lbl_Quantidade.Text = "Quant*";
             // 
             // txtb_Quantidade
             // 
             this.txtb_Quantidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Quantidade.Location = new System.Drawing.Point(373, 37);
+            this.txtb_Quantidade.Location = new System.Drawing.Point(322, 37);
             this.txtb_Quantidade.Name = "txtb_Quantidade";
-            this.txtb_Quantidade.Size = new System.Drawing.Size(73, 21);
+            this.txtb_Quantidade.Size = new System.Drawing.Size(60, 21);
             this.txtb_Quantidade.TabIndex = 79;
             this.txtb_Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -406,24 +264,24 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Custo.AutoSize = true;
             this.lbl_Custo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Custo.Location = new System.Drawing.Point(454, 19);
+            this.lbl_Custo.Location = new System.Drawing.Point(388, 19);
             this.lbl_Custo.Name = "lbl_Custo";
-            this.lbl_Custo.Size = new System.Drawing.Size(43, 15);
+            this.lbl_Custo.Size = new System.Drawing.Size(64, 15);
             this.lbl_Custo.TabIndex = 78;
-            this.lbl_Custo.Text = "Custo*";
+            this.lbl_Custo.Text = "Preço unt*";
             // 
             // txtb_Custo
             // 
             this.txtb_Custo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Custo.Location = new System.Drawing.Point(452, 37);
+            this.txtb_Custo.Location = new System.Drawing.Point(388, 37);
             this.txtb_Custo.Name = "txtb_Custo";
-            this.txtb_Custo.Size = new System.Drawing.Size(87, 21);
+            this.txtb_Custo.Size = new System.Drawing.Size(74, 21);
             this.txtb_Custo.TabIndex = 77;
             this.txtb_Custo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btn_PesquisarProduto
             // 
-            this.btn_PesquisarProduto.Location = new System.Drawing.Point(277, 33);
+            this.btn_PesquisarProduto.Location = new System.Drawing.Point(226, 33);
             this.btn_PesquisarProduto.Name = "btn_PesquisarProduto";
             this.btn_PesquisarProduto.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarProduto.TabIndex = 73;
@@ -434,7 +292,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Produto.AutoSize = true;
             this.lbl_Produto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Produto.Location = new System.Drawing.Point(72, 19);
+            this.lbl_Produto.Location = new System.Drawing.Point(67, 19);
             this.lbl_Produto.Name = "lbl_Produto";
             this.lbl_Produto.Size = new System.Drawing.Size(50, 15);
             this.lbl_Produto.TabIndex = 76;
@@ -444,9 +302,9 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Produto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Produto.Enabled = false;
-            this.txtb_Produto.Location = new System.Drawing.Point(75, 37);
+            this.txtb_Produto.Location = new System.Drawing.Point(70, 37);
             this.txtb_Produto.Name = "txtb_Produto";
-            this.txtb_Produto.Size = new System.Drawing.Size(196, 21);
+            this.txtb_Produto.Size = new System.Drawing.Size(150, 21);
             this.txtb_Produto.TabIndex = 75;
             // 
             // lbl_CodigoProduto
@@ -464,12 +322,174 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoProduto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_CodigoProduto.Location = new System.Drawing.Point(6, 37);
             this.txtb_CodigoProduto.Name = "txtb_CodigoProduto";
-            this.txtb_CodigoProduto.Size = new System.Drawing.Size(63, 21);
+            this.txtb_CodigoProduto.Size = new System.Drawing.Size(58, 21);
             this.txtb_CodigoProduto.TabIndex = 73;
+            // 
+            // btn_Gerar
+            // 
+            this.btn_Gerar.Location = new System.Drawing.Point(404, 421);
+            this.btn_Gerar.Name = "btn_Gerar";
+            this.btn_Gerar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Gerar.TabIndex = 112;
+            this.btn_Gerar.Text = "Gerar";
+            this.btn_Gerar.UseVisualStyleBackColor = true;
+            this.btn_Gerar.Click += new System.EventHandler(this.btn_Gerar_Click);
+            // 
+            // lbl_Transpotadora
+            // 
+            this.lbl_Transpotadora.AutoSize = true;
+            this.lbl_Transpotadora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Transpotadora.Location = new System.Drawing.Point(81, 341);
+            this.lbl_Transpotadora.Name = "lbl_Transpotadora";
+            this.lbl_Transpotadora.Size = new System.Drawing.Size(91, 15);
+            this.lbl_Transpotadora.TabIndex = 109;
+            this.lbl_Transpotadora.Text = "Transportadora";
+            // 
+            // txtb_Transport
+            // 
+            this.txtb_Transport.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_Transport.Enabled = false;
+            this.txtb_Transport.Location = new System.Drawing.Point(84, 359);
+            this.txtb_Transport.Name = "txtb_Transport";
+            this.txtb_Transport.Size = new System.Drawing.Size(150, 20);
+            this.txtb_Transport.TabIndex = 108;
+            // 
+            // lbl_CodigoTransportadora
+            // 
+            this.lbl_CodigoTransportadora.AutoSize = true;
+            this.lbl_CodigoTransportadora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_CodigoTransportadora.Location = new System.Drawing.Point(12, 341);
+            this.lbl_CodigoTransportadora.Name = "lbl_CodigoTransportadora";
+            this.lbl_CodigoTransportadora.Size = new System.Drawing.Size(46, 15);
+            this.lbl_CodigoTransportadora.TabIndex = 107;
+            this.lbl_CodigoTransportadora.Text = "Código";
+            // 
+            // txtb_CodigoTransport
+            // 
+            this.txtb_CodigoTransport.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_CodigoTransport.Location = new System.Drawing.Point(15, 359);
+            this.txtb_CodigoTransport.Name = "txtb_CodigoTransport";
+            this.txtb_CodigoTransport.Size = new System.Drawing.Size(63, 20);
+            this.txtb_CodigoTransport.TabIndex = 106;
+            // 
+            // lbl_OutrasDeps
+            // 
+            this.lbl_OutrasDeps.AutoSize = true;
+            this.lbl_OutrasDeps.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_OutrasDeps.Location = new System.Drawing.Point(450, 342);
+            this.lbl_OutrasDeps.Name = "lbl_OutrasDeps";
+            this.lbl_OutrasDeps.Size = new System.Drawing.Size(101, 15);
+            this.lbl_OutrasDeps.TabIndex = 105;
+            this.lbl_OutrasDeps.Text = "Outras Despesas";
+            // 
+            // txtb_OutrasDeps
+            // 
+            this.txtb_OutrasDeps.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_OutrasDeps.Location = new System.Drawing.Point(453, 360);
+            this.txtb_OutrasDeps.Name = "txtb_OutrasDeps";
+            this.txtb_OutrasDeps.Size = new System.Drawing.Size(103, 20);
+            this.txtb_OutrasDeps.TabIndex = 104;
+            this.txtb_OutrasDeps.Text = "0";
+            this.txtb_OutrasDeps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lbl_Seguro
+            // 
+            this.lbl_Seguro.AutoSize = true;
+            this.lbl_Seguro.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Seguro.Location = new System.Drawing.Point(366, 341);
+            this.lbl_Seguro.Name = "lbl_Seguro";
+            this.lbl_Seguro.Size = new System.Drawing.Size(47, 15);
+            this.lbl_Seguro.TabIndex = 103;
+            this.lbl_Seguro.Text = "Seguro";
+            // 
+            // txtb_Seguro
+            // 
+            this.txtb_Seguro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_Seguro.Location = new System.Drawing.Point(369, 359);
+            this.txtb_Seguro.Name = "txtb_Seguro";
+            this.txtb_Seguro.Size = new System.Drawing.Size(78, 20);
+            this.txtb_Seguro.TabIndex = 102;
+            this.txtb_Seguro.Text = "0";
+            this.txtb_Seguro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lbl_Frete
+            // 
+            this.lbl_Frete.AutoSize = true;
+            this.lbl_Frete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Frete.Location = new System.Drawing.Point(279, 341);
+            this.lbl_Frete.Name = "lbl_Frete";
+            this.lbl_Frete.Size = new System.Drawing.Size(35, 15);
+            this.lbl_Frete.TabIndex = 101;
+            this.lbl_Frete.Text = "Frete";
+            // 
+            // txtb_Frete
+            // 
+            this.txtb_Frete.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_Frete.Location = new System.Drawing.Point(280, 359);
+            this.txtb_Frete.Name = "txtb_Frete";
+            this.txtb_Frete.Size = new System.Drawing.Size(81, 20);
+            this.txtb_Frete.TabIndex = 100;
+            this.txtb_Frete.Text = "0";
+            this.txtb_Frete.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtb_CodigoCondPag
+            // 
+            this.txtb_CodigoCondPag.Location = new System.Drawing.Point(15, 405);
+            this.txtb_CodigoCondPag.Name = "txtb_CodigoCondPag";
+            this.txtb_CodigoCondPag.Size = new System.Drawing.Size(63, 20);
+            this.txtb_CodigoCondPag.TabIndex = 98;
+            this.txtb_CodigoCondPag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lbl_CodigoCondPag
+            // 
+            this.lbl_CodigoCondPag.AutoSize = true;
+            this.lbl_CodigoCondPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_CodigoCondPag.Location = new System.Drawing.Point(12, 387);
+            this.lbl_CodigoCondPag.Name = "lbl_CodigoCondPag";
+            this.lbl_CodigoCondPag.Size = new System.Drawing.Size(51, 15);
+            this.lbl_CodigoCondPag.TabIndex = 97;
+            this.lbl_CodigoCondPag.Text = "Código*";
+            // 
+            // btn_PesquisarCondPag
+            // 
+            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(240, 401);
+            this.btn_PesquisarCondPag.Name = "btn_PesquisarCondPag";
+            this.btn_PesquisarCondPag.Size = new System.Drawing.Size(26, 25);
+            this.btn_PesquisarCondPag.TabIndex = 96;
+            this.btn_PesquisarCondPag.UseVisualStyleBackColor = true;
+            this.btn_PesquisarCondPag.Click += new System.EventHandler(this.btn_PesquisarCondPag_Click);
+            // 
+            // lbl_CondicaoPag
+            // 
+            this.lbl_CondicaoPag.AutoSize = true;
+            this.lbl_CondicaoPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_CondicaoPag.Location = new System.Drawing.Point(81, 387);
+            this.lbl_CondicaoPag.Name = "lbl_CondicaoPag";
+            this.lbl_CondicaoPag.Size = new System.Drawing.Size(106, 15);
+            this.lbl_CondicaoPag.TabIndex = 95;
+            this.lbl_CondicaoPag.Text = "Cond. Pagamento";
+            // 
+            // txtb_CondicaoPag
+            // 
+            this.txtb_CondicaoPag.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_CondicaoPag.Enabled = false;
+            this.txtb_CondicaoPag.Location = new System.Drawing.Point(84, 405);
+            this.txtb_CondicaoPag.Name = "txtb_CondicaoPag";
+            this.txtb_CondicaoPag.Size = new System.Drawing.Size(147, 20);
+            this.txtb_CondicaoPag.TabIndex = 94;
+            // 
+            // btn_PesquisaTransportadora
+            // 
+            this.btn_PesquisaTransportadora.Location = new System.Drawing.Point(240, 357);
+            this.btn_PesquisaTransportadora.Name = "btn_PesquisaTransportadora";
+            this.btn_PesquisaTransportadora.Size = new System.Drawing.Size(26, 25);
+            this.btn_PesquisaTransportadora.TabIndex = 89;
+            this.btn_PesquisaTransportadora.UseVisualStyleBackColor = true;
+            this.btn_PesquisaTransportadora.Click += new System.EventHandler(this.btn_PesquisaTransportadora_Click);
             // 
             // btn_Limpar
             // 
-            this.btn_Limpar.Location = new System.Drawing.Point(479, 432);
+            this.btn_Limpar.Location = new System.Drawing.Point(485, 421);
             this.btn_Limpar.Name = "btn_Limpar";
             this.btn_Limpar.Size = new System.Drawing.Size(75, 23);
             this.btn_Limpar.TabIndex = 113;
@@ -490,7 +510,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_PesquisarFornecedor
             // 
-            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(469, 24);
+            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(514, 24);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
             this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarFornecedor.TabIndex = 136;
@@ -511,7 +531,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Fornecedor.AutoSize = true;
             this.lbl_Fornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Fornecedor.Location = new System.Drawing.Point(246, 9);
+            this.lbl_Fornecedor.Location = new System.Drawing.Point(291, 9);
             this.lbl_Fornecedor.Name = "lbl_Fornecedor";
             this.lbl_Fornecedor.Size = new System.Drawing.Size(70, 15);
             this.lbl_Fornecedor.TabIndex = 133;
@@ -521,7 +541,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Fornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Fornecedor.Enabled = false;
-            this.txtb_Fornecedor.Location = new System.Drawing.Point(249, 27);
+            this.txtb_Fornecedor.Location = new System.Drawing.Point(294, 27);
             this.txtb_Fornecedor.Name = "txtb_Fornecedor";
             this.txtb_Fornecedor.Size = new System.Drawing.Size(214, 20);
             this.txtb_Fornecedor.TabIndex = 132;
@@ -530,18 +550,18 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_NumNF.AutoSize = true;
             this.lbl_NumNF.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_NumNF.Location = new System.Drawing.Point(115, 9);
+            this.lbl_NumNF.Location = new System.Drawing.Point(137, 9);
             this.lbl_NumNF.Name = "lbl_NumNF";
-            this.lbl_NumNF.Size = new System.Drawing.Size(71, 15);
+            this.lbl_NumNF.Size = new System.Drawing.Size(76, 15);
             this.lbl_NumNF.TabIndex = 131;
-            this.lbl_NumNF.Text = "Número NF";
+            this.lbl_NumNF.Text = "Número NF*";
             // 
             // txtb_NumNF
             // 
             this.txtb_NumNF.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_NumNF.Location = new System.Drawing.Point(116, 27);
+            this.txtb_NumNF.Location = new System.Drawing.Point(138, 27);
             this.txtb_NumNF.Name = "txtb_NumNF";
-            this.txtb_NumNF.Size = new System.Drawing.Size(70, 20);
+            this.txtb_NumNF.Size = new System.Drawing.Size(83, 20);
             this.txtb_NumNF.TabIndex = 130;
             // 
             // lbl_Modelo
@@ -558,7 +578,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Serie.AutoSize = true;
             this.lbl_Serie.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Serie.Location = new System.Drawing.Point(69, 9);
+            this.lbl_Serie.Location = new System.Drawing.Point(81, 9);
             this.lbl_Serie.Name = "lbl_Serie";
             this.lbl_Serie.Size = new System.Drawing.Size(41, 15);
             this.lbl_Serie.TabIndex = 128;
@@ -569,15 +589,15 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Modelo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Modelo.Location = new System.Drawing.Point(15, 27);
             this.txtb_Modelo.Name = "txtb_Modelo";
-            this.txtb_Modelo.Size = new System.Drawing.Size(51, 20);
+            this.txtb_Modelo.Size = new System.Drawing.Size(63, 20);
             this.txtb_Modelo.TabIndex = 127;
             // 
             // txtb_Serie
             // 
             this.txtb_Serie.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Serie.Location = new System.Drawing.Point(72, 27);
+            this.txtb_Serie.Location = new System.Drawing.Point(84, 27);
             this.txtb_Serie.Name = "txtb_Serie";
-            this.txtb_Serie.Size = new System.Drawing.Size(38, 20);
+            this.txtb_Serie.Size = new System.Drawing.Size(48, 20);
             this.txtb_Serie.TabIndex = 126;
             this.txtb_Serie.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -644,9 +664,9 @@ namespace Projeto_ICI.frmCadastros
             this.ch_Vencimento,
             this.ch_ValorTotal});
             this.lv_ParcelasContasPag.HideSelection = false;
-            this.lv_ParcelasContasPag.Location = new System.Drawing.Point(15, 466);
+            this.lv_ParcelasContasPag.Location = new System.Drawing.Point(15, 450);
             this.lv_ParcelasContasPag.Name = "lv_ParcelasContasPag";
-            this.lv_ParcelasContasPag.Size = new System.Drawing.Size(545, 113);
+            this.lv_ParcelasContasPag.Size = new System.Drawing.Size(545, 131);
             this.lv_ParcelasContasPag.TabIndex = 143;
             this.lv_ParcelasContasPag.UseCompatibleStateImageBehavior = false;
             // 
@@ -666,7 +686,7 @@ namespace Projeto_ICI.frmCadastros
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 450);
+            this.label16.Location = new System.Drawing.Point(12, 431);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(79, 13);
             this.label16.TabIndex = 142;
@@ -688,23 +708,62 @@ namespace Projeto_ICI.frmCadastros
             this.dt_Chegada.Size = new System.Drawing.Size(95, 20);
             this.dt_Chegada.TabIndex = 151;
             // 
+            // lbl_TotalNota
+            // 
+            this.lbl_TotalNota.AutoSize = true;
+            this.lbl_TotalNota.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_TotalNota.Location = new System.Drawing.Point(277, 387);
+            this.lbl_TotalNota.Name = "lbl_TotalNota";
+            this.lbl_TotalNota.Size = new System.Drawing.Size(34, 15);
+            this.lbl_TotalNota.TabIndex = 155;
+            this.lbl_TotalNota.Text = "Total";
+            // 
+            // txtb_TotalNota
+            // 
+            this.txtb_TotalNota.Enabled = false;
+            this.txtb_TotalNota.Location = new System.Drawing.Point(280, 405);
+            this.txtb_TotalNota.Name = "txtb_TotalNota";
+            this.txtb_TotalNota.Size = new System.Drawing.Size(100, 20);
+            this.txtb_TotalNota.TabIndex = 154;
+            this.txtb_TotalNota.Text = "0";
+            this.txtb_TotalNota.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // frmCadastroCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(578, 629);
+            this.Controls.Add(this.lbl_TotalNota);
+            this.Controls.Add(this.btn_Gerar);
+            this.Controls.Add(this.txtb_TotalNota);
             this.Controls.Add(this.btn_Limpar);
             this.Controls.Add(this.dt_Chegada);
             this.Controls.Add(this.dt_Emissao);
             this.Controls.Add(this.btn_Sair);
+            this.Controls.Add(this.lbl_Transpotadora);
             this.Controls.Add(this.btn_Salvar);
+            this.Controls.Add(this.txtb_Transport);
             this.Controls.Add(this.lbl_CodigoUsu);
+            this.Controls.Add(this.lbl_CodigoTransportadora);
             this.Controls.Add(this.txtb_CodigoUsu);
             this.Controls.Add(this.lbl_ChaveAcesso);
+            this.Controls.Add(this.txtb_CodigoTransport);
+            this.Controls.Add(this.lbl_OutrasDeps);
             this.Controls.Add(this.txtb_ChaveAcesso);
+            this.Controls.Add(this.txtb_OutrasDeps);
+            this.Controls.Add(this.txtb_CodigoCondPag);
+            this.Controls.Add(this.lbl_CodigoCondPag);
             this.Controls.Add(this.lv_ParcelasContasPag);
+            this.Controls.Add(this.btn_PesquisarCondPag);
+            this.Controls.Add(this.lbl_Seguro);
+            this.Controls.Add(this.lbl_CondicaoPag);
             this.Controls.Add(this.label16);
+            this.Controls.Add(this.txtb_CondicaoPag);
+            this.Controls.Add(this.txtb_Seguro);
             this.Controls.Add(this.lbl_CodigoFornecedor);
+            this.Controls.Add(this.lbl_Frete);
             this.Controls.Add(this.txtb_CodigoFornecedor);
+            this.Controls.Add(this.btn_PesquisaTransportadora);
+            this.Controls.Add(this.txtb_Frete);
             this.Controls.Add(this.groupBox_Produtos);
             this.Controls.Add(this.lbl_DataChegada);
             this.Controls.Add(this.btn_PesquisarFornecedor);
@@ -746,7 +805,6 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Label lbl_Frete;
         private System.Windows.Forms.TextBox txtb_Frete;
         private System.Windows.Forms.ListView lv_ItensCompra;
-        private System.Windows.Forms.Label lbl_Total;
         protected System.Windows.Forms.TextBox txtb_CodigoCondPag;
         protected System.Windows.Forms.Label lbl_CodigoCondPag;
         private System.Windows.Forms.Button btn_PesquisarCondPag;
@@ -790,5 +848,11 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.ColumnHeader ch_Parcela;
         private System.Windows.Forms.ColumnHeader ch_Vencimento;
         private System.Windows.Forms.ColumnHeader ch_ValorTotal;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lbl_TotalProdutos;
+        private System.Windows.Forms.TextBox txtb_TotalProdutos;
+        private System.Windows.Forms.Label lbl_TotalNota;
+        private System.Windows.Forms.TextBox txtb_TotalNota;
     }
 }

@@ -42,6 +42,46 @@ namespace Projeto_ICI.frmCadastros
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
         }
 
+        private bool conferir_Campos()
+        {
+            var vlResult = true;
+            if (lv_ItensCompra.Items.Count == 0)
+            {
+                errorMSG.SetError(btn_Gerar, "Não há itens para gerar as parcelas!");
+            }
+            else if (umCondPag.Codigo == 0)
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(btn_Gerar, "Seleciona uma condição de pagamento!");
+                txtb_CodigoCondPag.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Seguro.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(btn_Gerar, "Insira um valor para o seguro!\n" +
+                    "Caso seja não exista, insira 0");
+                txtb_Seguro.Text = "0";
+                txtb_Seguro.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Frete.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(btn_Gerar, "Insira um valor para o frete!\n" +
+                    "Caso seja não exista, insira 0");
+                txtb_Frete.Text = "0";
+                txtb_Frete.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_OutrasDeps.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(btn_Gerar, "Insira um valor para outras despesas!\n" +
+                    "Caso seja não exista, insira 0");
+                txtb_OutrasDeps.Text = "0";
+                txtb_OutrasDeps.Focus();
+            }
+            return vlResult;
+        }
+
         private void btn_Gerar_Click(object sender, EventArgs e)
         {
             if (lv_ItensCompra.Items.Count == 0)
@@ -114,12 +154,12 @@ namespace Projeto_ICI.frmCadastros
         {
             if (pValorItens)
             {
-                return decimal.Parse(lbl_Total.Text.Replace(".", ","), vgEstilo, vgProv);
+                return decimal.Parse(txtb_TotalProdutos.Text.Replace(".", ","), vgEstilo, vgProv);
             }
             return decimal.Parse(txtb_Frete.Text.Replace(".", ","), vgEstilo, vgProv) +
                    decimal.Parse(txtb_Seguro.Text.Replace(".", ","), vgEstilo, vgProv) +
                    decimal.Parse(txtb_OutrasDeps.Text.Replace(".", ","), vgEstilo, vgProv) +
-                   decimal.Parse(lbl_Total.Text.Replace(".", ","), vgEstilo, vgProv);
+                   decimal.Parse(txtb_TotalProdutos.Text.Replace(".", ","), vgEstilo, vgProv);
         }
         public override void SetFrmCons(Form[] pFrmCons)
         {
@@ -136,11 +176,12 @@ namespace Projeto_ICI.frmCadastros
             txtb_NumNF.Clear();
             txtb_CodigoFornecedor.Clear();
             txtb_Fornecedor.Clear();
-            lbl_Total.Text = "--";
             dt_Emissao.Value = DateTime.Now;
             dt_Chegada.Value = DateTime.Now;
             lv_ParcelasContasPag.Clear();
             txtb_ChaveAcesso.Clear();
+            txtb_TotalNota.Clear();
+            txtb_TotalProdutos.Clear();
             ClearGroupBoxProd();
 
         }
@@ -159,6 +200,30 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoCondPag.Clear();
             txtb_CondicaoPag.Clear();
         }
+
+        public void DesBloqTxTBox()
+        {
+            txtb_Modelo.Enabled = true;
+            txtb_Serie.Enabled = true;
+            txtb_NumNF.Enabled = true;
+            txtb_CodigoFornecedor.Enabled = true;
+            dt_Chegada.Enabled = true;
+            dt_Emissao.Enabled = true;
+            txtb_CodigoTransport.Enabled = true;
+            txtb_Frete.Enabled = true;
+            txtb_Seguro.Enabled = true;
+            txtb_OutrasDeps.Enabled = true;
+            txtb_CodigoCondPag.Enabled = true;
+            txtb_ChaveAcesso.Enabled = true;
+            txtb_CodigoUsu.Enabled = true;
+
+            btn_Adicionar.Enabled = true;
+            btn_Alterar.Enabled = true;
+            btn_Remover.Enabled = true;
+            btn_Gerar.Enabled = true;
+            btn_Limpar.Enabled = true;
+        }
+
         private void btn_Sair_Click(object sender, EventArgs e)
         {
 
@@ -167,6 +232,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Limpar_Click(object sender, EventArgs e)
         {
+            ClearTxTBox();
             ClearGroupBoxProd();
             groupBox_Produtos.Enabled = true;
             lv_ParcelasContasPag.Clear();

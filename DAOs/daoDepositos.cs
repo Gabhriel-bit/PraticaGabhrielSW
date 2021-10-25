@@ -42,7 +42,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.depositos vlProduto = (Classes.depositos)pObj;
                 return InserirToString(nameTable, vlProduto.arrayStringCampos(),
-                                       vlProduto.arryStringValores());
+                                       vlProduto.arrayStringValores());
             }
         }
 
@@ -78,7 +78,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.depositos vlProduto = (Classes.depositos)pObj;
                 return AlterarToString(nameTable, vlProduto.arrayStringCampos(),
-                                       vlProduto.arryStringValores());
+                                       vlProduto.arrayStringValores());
             }
         }
 

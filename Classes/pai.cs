@@ -60,7 +60,7 @@ namespace Projeto_ICI.Classes
         /// <summary>
         /// Retorna um vetor de strings referente a cada atributo da classe
         /// </summary>
-        public string[] arryStringValores()
+        public string[] arrayStringValores()
         {
             return toString().Split(';');
         }

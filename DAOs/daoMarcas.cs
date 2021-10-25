@@ -20,7 +20,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.marcas vlMarca = (Classes.marcas)pObj;
                 return InserirToString(nameTable, vlMarca.arrayStringCampos(),
-                                       vlMarca.arryStringValores());
+                                       vlMarca.arrayStringValores());
             }
         }
 
@@ -34,7 +34,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.marcas vlMarca = (Classes.marcas)pObj;
                 return AlterarToString(nameTable, vlMarca.arrayStringCampos(),
-                                       vlMarca.arryStringValores());
+                                       vlMarca.arrayStringValores());
             }
         }
 

@@ -380,9 +380,9 @@ BEGIN
         custo          NUMERIC(8,4) NOT NULL,
         unidade        INT NOT NULL,
         saldo          INT NOT NULL,
-		--foto           VARBINARY(MAX),
 		peso_bruto     NUMERIC(8,4) NOT NULL,
         peso_liquid    NUMERIC(8,4) NOT NULL,
+		precoUltCompra NUMERIC(8,4) NOT NULL,
 		codigoModelo   INT NOT NULL,
 		codigoSubgrupo INT,
 		codigo         INT PRIMARY KEY IDENTITY,
@@ -441,9 +441,9 @@ BEGIN
 	);
 END
 
-IF OBJECT_ID('nf_compra') IS NULL
+IF OBJECT_ID('compras') IS NULL
 BEGIN
-	CREATE TABLE nf_compra (
+	CREATE TABLE compras (
 		modelo          VARCHAR(50) NOT NULL,
 		serie           VARCHAR(50) NOT NULL,
 		numero_nf       VARCHAR(50) NOT NULL,
@@ -452,29 +452,28 @@ BEGIN
 		codigoVeiculo   INT,
 		codigoCondPag   INT NOT NULL,
 		chave_acesso    VARCHAR(50) NOT NULL,
-		nat_op          VARCHAR(50) NOT NULL,
-		dados_NFe       VARCHAR(50) NOT NULL,
-		valor_frete     NUMERIC(8,4),
-		valor_seguro    NUMERIC(8,4),
-		desconto        NUMERIC(8,4),
-		out_desp_acesso VARCHAR(50) NOT NULL,
+		nat_op          VARCHAR(50),
+		dados_NFe       VARCHAR(50),
+		valor_frete     NUMERIC(8,4) NOT NULL,
+		valor_seguro    NUMERIC(8,4) NOT NULL,
+		out_desp        VARCHAR(50) NOT NULL,
 		valor_IPI       NUMERIC(8,4),
-		fretePorconta   VARCHAR(50) NOT NULL,
+		fretePorconta   VARCHAR(50),
 		quantidade      INT NOT NULL,
-		especie         VARCHAR(50) NOT NULL,
-		marca           VARCHAR(50) NOT NULL,
+		especie         VARCHAR(50),
+		marca           VARCHAR(50),
 		numero          INT,
+		total_nota      NUMERIC(8,4) NOT NULL,
+		total_produtos  NUMERIC(8,4) NOT NULL,
 		peso_bruto      NUMERIC(8,4) NOT NULL,
 		peso_liquid     NUMERIC(8,4) NOT NULL,
 		data_emissao    VARCHAR(10) NOT NULL,
 		data_chegada    VARCHAR(10) NOT NULL,
 		codigoUsu       INT  NOT NULL,
-		dataCad         VARCHAR(10) NOT NULL,
-		dataUltAlt      VARCHAR(10) NOT NULL,
-		
+
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn),
-		CONSTRAINT FK_codFornNf FOREIGN KEY (codigoForn) REFERENCES fornecedores (codigo),
+		CONSTRAINT FK_codFornNf FOREIGN KEY (codigoForn) REFERENCES compras (codigo),
 		CONSTRAINT FK_codVeiculoNf FOREIGN KEY (codigoVeiculo) REFERENCES veiculos (codigo),
 		CONSTRAINT FK_codTranspNf FOREIGN KEY (codigoTransp) REFERENCES transportadoras (codigo),
 		CONSTRAINT FK_codCondPagNf FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo)--,
@@ -482,18 +481,21 @@ BEGIN
 	);
 END
 
-IF OBJECT_ID('produtos_nf') IS NULL
+IF OBJECT_ID('produtos_compra') IS NULL
 BEGIN
-	CREATE TABLE produtos_nf (
+	CREATE TABLE produtos_compra (
 		codigoProd INT  NOT NULL,
 		modelo     VARCHAR(50) NOT NULL,
 		serie      VARCHAR(50) NOT NULL,
 		numero_nf  VARCHAR(50) NOT NULL,
 		codigoForn INT  NOT NULL,
-		csosn      VARCHAR(50) NOT NULL,
-		cfop       VARCHAR(50) NOT NULL,
+
+		csosn      VARCHAR(50),
+		cfop       VARCHAR(50),
+		unidade    VARCHAR(5) NOT NULL,
 		quantidade INT NOT NULL,
 		valor_un   NUMERIC(8,4) NOT NULL,
+		desconto   NUMERIC(8,4) NOT NULL,
 		PRIMARY KEY(codigoProd, modelo, serie, numero_nf, codigoForn),
 		CONSTRAINT FK_codProdNf FOREIGN KEY (codigoProd) REFERENCES produtos (codigo),
 		CONSTRAINT FK_pkProdNf FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 

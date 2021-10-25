@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.clientes vlCliente = (Classes.clientes)pObj;
                 return InserirToString(nameTable, vlCliente.arrayStringCampos(),
-                                       vlCliente.arryStringValores());
+                                       vlCliente.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.clientes vlCliente = (Classes.clientes)pObj;
                 return AlterarToString(nameTable, vlCliente.arrayStringCampos(),
-                                             vlCliente.arryStringValores());
+                                             vlCliente.arrayStringValores());
             }
         }
 

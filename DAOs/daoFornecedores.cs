@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.fornecedores vlFornecedor = (Classes.fornecedores)pObj;
                 return InserirToString(nameTable, vlFornecedor.arrayStringCampos(),
-                                       vlFornecedor.arryStringValores());
+                                       vlFornecedor.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.fornecedores vlFornecedor = (Classes.fornecedores)pObj;
                 return AlterarToString(nameTable, vlFornecedor.arrayStringCampos(),
-                                             vlFornecedor.arryStringValores());
+                                             vlFornecedor.arrayStringValores());
             }
         }
 

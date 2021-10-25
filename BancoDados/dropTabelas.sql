@@ -7,14 +7,14 @@ BEGIN
 		DROP TABLE contas_pagar;
 	END
 	
-	IF OBJECT_ID('produtos_nf') IS NOT NULL
+	IF OBJECT_ID('produtos_compra') IS NOT NULL
 	BEGIN
-		DROP TABLE produtos_nf;
+		DROP TABLE produtos_compra;
 	END
 
-	IF OBJECT_ID('nf_compra') IS NOT NULL
+	IF OBJECT_ID('compras') IS NOT NULL
 	BEGIN
-		DROP TABLE nf_compra;
+		DROP TABLE compras;
 	END
 	
 	IF OBJECT_ID('deposito_produto') IS NOT NULL

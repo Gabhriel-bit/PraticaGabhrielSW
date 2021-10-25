@@ -68,49 +68,49 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_btn_Adicionar = new System.Windows.Forms.Label();
             this.lbl_btn_Pesquisar = new System.Windows.Forms.Label();
             this.lbl_btn_Remover = new System.Windows.Forms.Label();
-            this.picb_Foto = new System.Windows.Forms.PictureBox();
-            this.btn_CarregarImg = new System.Windows.Forms.Button();
-            this.btn_RemoverImg = new System.Windows.Forms.Button();
-            this.grupo_Foto = new System.Windows.Forms.GroupBox();
+            this.lbl_PrecoUltCompra = new System.Windows.Forms.Label();
+            this.txtb_PrecoUltCompra = new System.Windows.Forms.TextBox();
+            this.lbl_PesoBruto = new System.Windows.Forms.Label();
+            this.lbl_PesoLiquido = new System.Windows.Forms.Label();
+            this.txtb_PesoLiquido = new System.Windows.Forms.TextBox();
+            this.txtb_PesoBruto = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).BeginInit();
-            this.grupo_Foto.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtb_CodigoUsu
             // 
-            this.txtb_CodigoUsu.Location = new System.Drawing.Point(17, 543);
+            this.txtb_CodigoUsu.Location = new System.Drawing.Point(17, 492);
             // 
             // lbl_CodigoUsu
             // 
-            this.lbl_CodigoUsu.Location = new System.Drawing.Point(14, 525);
+            this.lbl_CodigoUsu.Location = new System.Drawing.Point(14, 474);
             // 
             // btn_Sair
             // 
-            this.btn_Sair.Location = new System.Drawing.Point(519, 538);
+            this.btn_Sair.Location = new System.Drawing.Point(454, 487);
             this.btn_Sair.TabIndex = 16;
             // 
             // btn_Cadastro
             // 
-            this.btn_Cadastro.Location = new System.Drawing.Point(447, 537);
+            this.btn_Cadastro.Location = new System.Drawing.Point(382, 486);
             this.btn_Cadastro.TabIndex = 15;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
             // 
             // lbl_UltAlt
             // 
-            this.lbl_UltAlt.Location = new System.Drawing.Point(234, 524);
+            this.lbl_UltAlt.Location = new System.Drawing.Point(234, 473);
             // 
             // lbl_DataCad
             // 
-            this.lbl_DataCad.Location = new System.Drawing.Point(119, 524);
+            this.lbl_DataCad.Location = new System.Drawing.Point(119, 473);
             // 
             // txtb_DataCadastro
             // 
-            this.txtb_DataCadastro.Location = new System.Drawing.Point(122, 542);
+            this.txtb_DataCadastro.Location = new System.Drawing.Point(122, 491);
             // 
             // txtb_DataUltAlt
             // 
-            this.txtb_DataUltAlt.Location = new System.Drawing.Point(237, 542);
+            this.txtb_DataUltAlt.Location = new System.Drawing.Point(237, 491);
             // 
             // lbl_Produto
             // 
@@ -303,46 +303,50 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoBarras.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_CodigoBarras.Location = new System.Drawing.Point(99, 90);
             this.txtb_CodigoBarras.Name = "txtb_CodigoBarras";
-            this.txtb_CodigoBarras.Size = new System.Drawing.Size(179, 20);
+            this.txtb_CodigoBarras.Size = new System.Drawing.Size(223, 20);
             this.txtb_CodigoBarras.TabIndex = 4;
             // 
             // lbl_Custo
             // 
             this.lbl_Custo.AutoSize = true;
             this.lbl_Custo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Custo.Location = new System.Drawing.Point(281, 72);
+            this.lbl_Custo.Location = new System.Drawing.Point(435, 18);
             this.lbl_Custo.Name = "lbl_Custo";
-            this.lbl_Custo.Size = new System.Drawing.Size(43, 15);
+            this.lbl_Custo.Size = new System.Drawing.Size(38, 15);
             this.lbl_Custo.TabIndex = 53;
-            this.lbl_Custo.Text = "Custo*";
+            this.lbl_Custo.Text = "Custo";
             this.lbl_Custo.Validating += new System.ComponentModel.CancelEventHandler(this.lbl_Custo_Validating);
             // 
             // txtb_Custo
             // 
             this.txtb_Custo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Custo.Location = new System.Drawing.Point(284, 90);
+            this.txtb_Custo.Enabled = false;
+            this.txtb_Custo.Location = new System.Drawing.Point(438, 36);
             this.txtb_Custo.Name = "txtb_Custo";
             this.txtb_Custo.Size = new System.Drawing.Size(69, 20);
             this.txtb_Custo.TabIndex = 5;
+            this.txtb_Custo.Text = "0";
             this.txtb_Custo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lbl_Saldo
             // 
             this.lbl_Saldo.AutoSize = true;
             this.lbl_Saldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Saldo.Location = new System.Drawing.Point(356, 72);
+            this.lbl_Saldo.Location = new System.Drawing.Point(323, 72);
             this.lbl_Saldo.Name = "lbl_Saldo";
-            this.lbl_Saldo.Size = new System.Drawing.Size(44, 15);
+            this.lbl_Saldo.Size = new System.Drawing.Size(39, 15);
             this.lbl_Saldo.TabIndex = 55;
-            this.lbl_Saldo.Text = "Saldo*";
+            this.lbl_Saldo.Text = "Saldo";
             // 
             // txtb_Saldo
             // 
             this.txtb_Saldo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Saldo.Location = new System.Drawing.Point(359, 90);
+            this.txtb_Saldo.Enabled = false;
+            this.txtb_Saldo.Location = new System.Drawing.Point(326, 90);
             this.txtb_Saldo.Name = "txtb_Saldo";
             this.txtb_Saldo.Size = new System.Drawing.Size(73, 20);
             this.txtb_Saldo.TabIndex = 6;
+            this.txtb_Saldo.Text = "0";
             this.txtb_Saldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_Saldo.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Saldo_Validating);
             // 
@@ -382,12 +386,12 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Fornecedor.Enabled = false;
             this.txtb_Fornecedor.Location = new System.Drawing.Point(99, 258);
             this.txtb_Fornecedor.Name = "txtb_Fornecedor";
-            this.txtb_Fornecedor.Size = new System.Drawing.Size(311, 20);
+            this.txtb_Fornecedor.Size = new System.Drawing.Size(242, 20);
             this.txtb_Fornecedor.TabIndex = 46;
             // 
             // btn_PesquisarFornecedor
             // 
-            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(416, 255);
+            this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(347, 253);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
             this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarFornecedor.TabIndex = 12;
@@ -398,7 +402,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Remover
             // 
-            this.btn_Remover.Location = new System.Drawing.Point(515, 255);
+            this.btn_Remover.Location = new System.Drawing.Point(446, 253);
             this.btn_Remover.Name = "btn_Remover";
             this.btn_Remover.Size = new System.Drawing.Size(61, 25);
             this.btn_Remover.TabIndex = 14;
@@ -418,7 +422,7 @@ namespace Projeto_ICI.frmCadastros
             this.lv_Fornecedores.Location = new System.Drawing.Point(24, 284);
             this.lv_Fornecedores.MultiSelect = false;
             this.lv_Fornecedores.Name = "lv_Fornecedores";
-            this.lv_Fornecedores.Size = new System.Drawing.Size(552, 177);
+            this.lv_Fornecedores.Size = new System.Drawing.Size(483, 177);
             this.lv_Fornecedores.TabIndex = 66;
             this.lv_Fornecedores.UseCompatibleStateImageBehavior = false;
             this.lv_Fornecedores.View = System.Windows.Forms.View.Details;
@@ -439,7 +443,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Adicionar
             // 
-            this.btn_Adicionar.Location = new System.Drawing.Point(448, 255);
+            this.btn_Adicionar.Location = new System.Drawing.Point(379, 253);
             this.btn_Adicionar.Name = "btn_Adicionar";
             this.btn_Adicionar.Size = new System.Drawing.Size(61, 25);
             this.btn_Adicionar.TabIndex = 13;
@@ -466,59 +470,80 @@ namespace Projeto_ICI.frmCadastros
             // lbl_btn_Remover
             // 
             this.lbl_btn_Remover.AutoSize = true;
-            this.lbl_btn_Remover.Location = new System.Drawing.Point(522, 243);
+            this.lbl_btn_Remover.Location = new System.Drawing.Point(453, 241);
             this.lbl_btn_Remover.Name = "lbl_btn_Remover";
             this.lbl_btn_Remover.Size = new System.Drawing.Size(0, 13);
             this.lbl_btn_Remover.TabIndex = 69;
             // 
-            // picb_Foto
+            // lbl_PrecoUltCompra
             // 
-            this.picb_Foto.BackColor = System.Drawing.Color.LightGray;
-            this.picb_Foto.InitialImage = null;
-            this.picb_Foto.Location = new System.Drawing.Point(10, 18);
-            this.picb_Foto.Name = "picb_Foto";
-            this.picb_Foto.Size = new System.Drawing.Size(128, 130);
-            this.picb_Foto.TabIndex = 70;
-            this.picb_Foto.TabStop = false;
+            this.lbl_PrecoUltCompra.AutoSize = true;
+            this.lbl_PrecoUltCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_PrecoUltCompra.Location = new System.Drawing.Point(402, 72);
+            this.lbl_PrecoUltCompra.Name = "lbl_PrecoUltCompra";
+            this.lbl_PrecoUltCompra.Size = new System.Drawing.Size(100, 15);
+            this.lbl_PrecoUltCompra.TabIndex = 71;
+            this.lbl_PrecoUltCompra.Text = "Preço ult compra";
             // 
-            // btn_CarregarImg
+            // txtb_PrecoUltCompra
             // 
-            this.btn_CarregarImg.Location = new System.Drawing.Point(10, 154);
-            this.btn_CarregarImg.Name = "btn_CarregarImg";
-            this.btn_CarregarImg.Size = new System.Drawing.Size(61, 25);
-            this.btn_CarregarImg.TabIndex = 72;
-            this.btn_CarregarImg.Text = "Carregar";
-            this.btn_CarregarImg.UseVisualStyleBackColor = true;
-            this.btn_CarregarImg.Click += new System.EventHandler(this.btn_CarregarImg_Click);
+            this.txtb_PrecoUltCompra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_PrecoUltCompra.Enabled = false;
+            this.txtb_PrecoUltCompra.Location = new System.Drawing.Point(405, 90);
+            this.txtb_PrecoUltCompra.Name = "txtb_PrecoUltCompra";
+            this.txtb_PrecoUltCompra.Size = new System.Drawing.Size(102, 20);
+            this.txtb_PrecoUltCompra.TabIndex = 70;
+            this.txtb_PrecoUltCompra.Text = "0";
+            this.txtb_PrecoUltCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // btn_RemoverImg
+            // lbl_PesoBruto
             // 
-            this.btn_RemoverImg.Location = new System.Drawing.Point(77, 154);
-            this.btn_RemoverImg.Name = "btn_RemoverImg";
-            this.btn_RemoverImg.Size = new System.Drawing.Size(61, 25);
-            this.btn_RemoverImg.TabIndex = 73;
-            this.btn_RemoverImg.Text = "Remover";
-            this.btn_RemoverImg.UseVisualStyleBackColor = true;
-            this.btn_RemoverImg.Click += new System.EventHandler(this.btn_RemoverImg_Click);
+            this.lbl_PesoBruto.AutoSize = true;
+            this.lbl_PesoBruto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_PesoBruto.Location = new System.Drawing.Point(400, 128);
+            this.lbl_PesoBruto.Name = "lbl_PesoBruto";
+            this.lbl_PesoBruto.Size = new System.Drawing.Size(71, 15);
+            this.lbl_PesoBruto.TabIndex = 73;
+            this.lbl_PesoBruto.Text = "Peso bruto*";
             // 
-            // grupo_Foto
+            // lbl_PesoLiquido
             // 
-            this.grupo_Foto.Controls.Add(this.btn_CarregarImg);
-            this.grupo_Foto.Controls.Add(this.btn_RemoverImg);
-            this.grupo_Foto.Controls.Add(this.picb_Foto);
-            this.grupo_Foto.Location = new System.Drawing.Point(438, 18);
-            this.grupo_Foto.Name = "grupo_Foto";
-            this.grupo_Foto.Size = new System.Drawing.Size(147, 192);
-            this.grupo_Foto.TabIndex = 74;
-            this.grupo_Foto.TabStop = false;
-            this.grupo_Foto.Text = "Foto";
-            this.grupo_Foto.Visible = false;
+            this.lbl_PesoLiquido.AutoSize = true;
+            this.lbl_PesoLiquido.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_PesoLiquido.Location = new System.Drawing.Point(400, 184);
+            this.lbl_PesoLiquido.Name = "lbl_PesoLiquido";
+            this.lbl_PesoLiquido.Size = new System.Drawing.Size(84, 15);
+            this.lbl_PesoLiquido.TabIndex = 75;
+            this.lbl_PesoLiquido.Text = "Peso Liquido*";
+            // 
+            // txtb_PesoLiquido
+            // 
+            this.txtb_PesoLiquido.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_PesoLiquido.Location = new System.Drawing.Point(403, 202);
+            this.txtb_PesoLiquido.Name = "txtb_PesoLiquido";
+            this.txtb_PesoLiquido.Size = new System.Drawing.Size(104, 20);
+            this.txtb_PesoLiquido.TabIndex = 74;
+            this.txtb_PesoLiquido.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtb_PesoBruto
+            // 
+            this.txtb_PesoBruto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_PesoBruto.Location = new System.Drawing.Point(403, 148);
+            this.txtb_PesoBruto.Name = "txtb_PesoBruto";
+            this.txtb_PesoBruto.Size = new System.Drawing.Size(104, 20);
+            this.txtb_PesoBruto.TabIndex = 76;
+            this.txtb_PesoBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(597, 576);
-            this.Controls.Add(this.grupo_Foto);
+            this.ClientSize = new System.Drawing.Size(532, 525);
+            this.Controls.Add(this.txtb_PesoBruto);
+            this.Controls.Add(this.lbl_PesoLiquido);
+            this.Controls.Add(this.txtb_PesoLiquido);
+            this.Controls.Add(this.lbl_PesoBruto);
+            this.Controls.Add(this.lbl_PrecoUltCompra);
+            this.Controls.Add(this.txtb_PrecoUltCompra);
             this.Controls.Add(this.lbl_btn_Remover);
             this.Controls.Add(this.lbl_btn_Pesquisar);
             this.Controls.Add(this.lbl_btn_Adicionar);
@@ -602,10 +627,13 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.lbl_btn_Adicionar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Pesquisar, 0);
             this.Controls.SetChildIndex(this.lbl_btn_Remover, 0);
-            this.Controls.SetChildIndex(this.grupo_Foto, 0);
+            this.Controls.SetChildIndex(this.txtb_PrecoUltCompra, 0);
+            this.Controls.SetChildIndex(this.lbl_PrecoUltCompra, 0);
+            this.Controls.SetChildIndex(this.lbl_PesoBruto, 0);
+            this.Controls.SetChildIndex(this.txtb_PesoLiquido, 0);
+            this.Controls.SetChildIndex(this.lbl_PesoLiquido, 0);
+            this.Controls.SetChildIndex(this.txtb_PesoBruto, 0);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picb_Foto)).EndInit();
-            this.grupo_Foto.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -651,9 +679,11 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Label lbl_btn_Adicionar;
         private System.Windows.Forms.Label lbl_btn_Pesquisar;
         private System.Windows.Forms.Label lbl_btn_Remover;
-        private System.Windows.Forms.PictureBox picb_Foto;
-        private System.Windows.Forms.Button btn_CarregarImg;
-        private System.Windows.Forms.Button btn_RemoverImg;
-        private System.Windows.Forms.GroupBox grupo_Foto;
+        private System.Windows.Forms.Label lbl_PrecoUltCompra;
+        private System.Windows.Forms.TextBox txtb_PrecoUltCompra;
+        private System.Windows.Forms.TextBox txtb_PesoLiquido;
+        private System.Windows.Forms.Label lbl_PesoBruto;
+        private System.Windows.Forms.Label lbl_PesoLiquido;
+        private System.Windows.Forms.TextBox txtb_PesoBruto;
     }
 }

@@ -20,7 +20,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.equipamentos vlEquip = (Classes.equipamentos)pObj;
                 return InserirToString(nameTable, vlEquip.arrayStringCampos(),
-                                       vlEquip.arryStringValores());
+                                       vlEquip.arrayStringValores());
             }
         }
 
@@ -34,7 +34,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.equipamentos vlEquip = (Classes.equipamentos)pObj;
                 return AlterarToString(nameTable, vlEquip.arrayStringCampos(),
-                                             vlEquip.arryStringValores());
+                                             vlEquip.arrayStringValores());
             }
         }
 

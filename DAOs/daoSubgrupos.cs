@@ -21,7 +21,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.subgrupos vlSubgrupo = (Classes.subgrupos)pObj;
                 return InserirToString(nameTable, vlSubgrupo.arrayStringCampos(),
-                                       vlSubgrupo.arryStringValores());
+                                       vlSubgrupo.arrayStringValores());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.subgrupos vlSubgrupo = (Classes.subgrupos)pObj;
                 return AlterarToString(nameTable, vlSubgrupo.arrayStringCampos(),
-                                             vlSubgrupo.arryStringValores());
+                                             vlSubgrupo.arrayStringValores());
             }
         }
 
