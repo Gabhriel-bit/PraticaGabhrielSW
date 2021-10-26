@@ -30,6 +30,7 @@ namespace Projeto_ICI
         private daoServicos umaDaoServico;
         private daoSubgrupos umaDaoSubgrupo;
         private daoTransportadoras umaDaoTransport;
+        private daoCompras umaDaoCompra; 
 
         private ctrlCargos umCtrlCargo;
         private ctrlCidades umCtrlCidade;
@@ -49,6 +50,7 @@ namespace Projeto_ICI
         private ctrlServicos umCtrlServico;
         private ctrlSubgrupos umCtrlSubgrupo;
         private ctrlTransportadoras umCtrlTransport;
+        private ctrlCompras umCtrlCompra;
 
         private frmCadastroCargos frmCadCargo;
         private frmCadastroCidades frmCadCidade;
@@ -68,6 +70,7 @@ namespace Projeto_ICI
         private frmCadastroServicos frmCadServico;
         private frmCadastroSubGrupos frmCadSubgrupo;
         private frmCadastroTransportadoras frmCadTransport;
+        private frmCadastroCompras frmCadCompra;
 
         private frmConsultaCargos frmConsCargo;
         private frmConsultaCidades frmConsCidade;
@@ -87,6 +90,7 @@ namespace Projeto_ICI
         private frmConsultaServicos frmConsServico;
         private frmConsultaSubgrupos frmConsSubgrupo;
         private frmConsultaTranspotadoras frmConsTranspot;
+        private frmConsultaCompras frmConsCompra;
 
         private BancoDados.conexoes umaConexao;
 
@@ -97,7 +101,7 @@ namespace Projeto_ICI
             mnItem_Equipamentos.Click += MnItem_Equipamentos_Click;
             mnItem_Transportadoras.Click += MnItem_Transportadoras_Click;
 
-            frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
+            //frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
             //f.ShowDialog();
         }
 
@@ -126,6 +130,7 @@ namespace Projeto_ICI
                 umaDaoServico = new daoServicos();
                 umaDaoSubgrupo = new daoSubgrupos();
                 umaDaoTransport = new daoTransportadoras();
+                umaDaoCompra = new daoCompras();
 
                 umCtrlCargo = new ctrlCargos(umaConexao, umaDaoCargo);
                 umCtrlPais = new ctrlPaises(umaConexao, umaDaoPais);
@@ -145,6 +150,8 @@ namespace Projeto_ICI
                 umCtrlServico = new ctrlServicos(umaConexao, umaDaoServico);
                 umCtrlFunc = new ctrlFuncionarios(umaConexao, umaDaoFunc, umCtrlCargo, umCtrlCidade);
                 umCtrlTransport = new ctrlTransportadoras(umaConexao, umaDaoTransport, umCtrlCidade);
+                umCtrlCompra = new ctrlCompras(umaConexao, umaDaoCompra, umCtrlTransport, umCtrlCondPag,
+                    umCtrlForn, umCtrlProduto);
                 
 
                 //formulários de cadastro
@@ -166,6 +173,7 @@ namespace Projeto_ICI
                 frmCadServico = new frmCadastroServicos(umCtrlServico);
                 frmCadSubgrupo = new frmCadastroSubGrupos(umCtrlSubgrupo);
                 frmCadTransport = new frmCadastroTransportadoras(umCtrlTransport);
+                frmCadCompra = new frmCadastroCompras(umCtrlCompra);
 
                 //formulários de consulta
                 frmConsCargo = new frmConsultaCargos(umCtrlCargo);
@@ -186,6 +194,7 @@ namespace Projeto_ICI
                 frmConsServico = new frmConsultaServicos(umCtrlServico);
                 frmConsSubgrupo = new frmConsultaSubgrupos(umCtrlSubgrupo);
                 frmConsTranspot = new frmConsultaTranspotadoras(umCtrlTransport);
+                frmConsCompra = new frmConsultaCompras(umCtrlCompra);
 
                 //vincula os formulários de consulta com seus respectivos cadastros
                 frmConsCargo.SetFrmCad(frmCadCargo);
@@ -206,6 +215,7 @@ namespace Projeto_ICI
                 frmConsServico.SetFrmCad(frmCadServico);
                 frmConsSubgrupo.SetFrmCad(frmCadSubgrupo);
                 frmConsTranspot.SetFrmCad(frmCadTransport);
+                frmConsCompra.SetFrmCad(frmCadCompra);
 
                 //vincula os formulários de consulta com os formulários de cadastro com dependência
                 frmCadCidade.SetFrmCons(frmConsEstado);
@@ -220,6 +230,7 @@ namespace Projeto_ICI
                 frmCadProduto.SetFrmCons(new Form[] { frmConsSubgrupo, frmConsFornecedor, frmConsModelo });
                 frmCadSubgrupo.SetFrmCons(frmConsGrupo);
                 frmCadTransport.SetFrmCons(frmConsCidade);
+                frmCadCompra.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsFornecedor, frmConsProduto });
             }
             catch (Exception e)
             {
@@ -409,10 +420,7 @@ namespace Projeto_ICI
 
         private void btn_Comprar_Click(object sender, EventArgs e)
         {
-            frmCadastros.frmCadastroCompras h = new frmCadastroCompras();
-            h.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, 
-                                      frmConsFornecedor, frmConsProduto});
-            h.ShowDialog();
+            frmConsCompra.ShowDialog();
         }
     }
 }

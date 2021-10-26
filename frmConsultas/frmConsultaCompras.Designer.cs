@@ -32,6 +32,10 @@ namespace Projeto_ICI.frmConsultas
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_Inserir
+            // 
+            this.btn_Inserir.Click += new System.EventHandler(this.btn_Inserir_Click);
+            // 
             // frmConsultaCompras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

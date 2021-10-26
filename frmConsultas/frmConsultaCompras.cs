@@ -10,9 +10,21 @@ namespace Projeto_ICI.frmConsultas
 {
     public partial class frmConsultaCompras : Projeto_ICI.frmConsultas.frmConsultaPai
     {
-        public frmConsultaCompras()
+        frmCadastros.frmCadastroCompras frmCadCompra;
+
+        public frmConsultaCompras(Controllers.ctrlCompras pCtrlCompra)
         {
             InitializeComponent();
+        }
+
+        public override void SetFrmCad(Form pFrmCad)
+        {
+            frmCadCompra = (frmCadastros.frmCadastroCompras)pFrmCad;
+        }
+
+        private void btn_Inserir_Click(object sender, EventArgs e)
+        {
+            frmCadCompra.ShowDialog();
         }
     }
 }

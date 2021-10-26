@@ -17,15 +17,18 @@ namespace Projeto_ICI.frmCadastros
         private frmConsultas.frmConsultaFornecedores frmConsForn;
         private frmConsultas.frmConsultaProdutos frmConsProduto;
 
+        private Controllers.ctrlCompras umCtrlCompra;
+
         private condicoesPagamento umCondPag;
         private transportadoras umaTranspot;
         private fornecedores umForn;
         private produtos umProduto;
+        private compras umaCompra;
 
         
 
         private List<contasPagar> umaListaItens;
-        public frmCadastroCompras()
+        public frmCadastroCompras(Controllers.ctrlCompras pCtrlCompra)
         {
             InitializeComponent();
 
@@ -33,13 +36,26 @@ namespace Projeto_ICI.frmCadastros
             umaTranspot = new transportadoras();
             umForn = new fornecedores();
             umProduto = new produtos();
+            umaCompra = new compras();
             umaListaItens = new List<contasPagar>();
+
+            umCtrlCompra = pCtrlCompra;
 
             groupBox_Produtos.Enabled = true;
             btn_PesquisarFornecedor.Image = umImgPesquisaSair;
             btn_PesquisarProduto.Image = umImgPesquisaSair;
             btn_PesquisaTransportadora.Image = umImgPesquisaSair;
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
+            BloquearTxtBox(true);
+        }
+
+        public override void SetFrmCons(Form[] pFrmCad)
+        {
+            frmConsCondPag = (frmConsultas.frmConsultaCondicoesPagamento)pFrmCad[0];
+            frmConsTransport = (frmConsultas.frmConsultaTranspotadoras)pFrmCad[1];
+            frmConsForn = (frmConsultas.frmConsultaFornecedores)pFrmCad[2];
+            frmConsProduto = (frmConsultas.frmConsultaProdutos)pFrmCad[3];
+
         }
 
         private bool conferir_Campos()
@@ -161,13 +177,6 @@ namespace Projeto_ICI.frmCadastros
                    decimal.Parse(txtb_OutrasDeps.Text.Replace(".", ","), vgEstilo, vgProv) +
                    decimal.Parse(txtb_TotalProdutos.Text.Replace(".", ","), vgEstilo, vgProv);
         }
-        public override void SetFrmCons(Form[] pFrmCons)
-        {
-            frmConsCondPag = (frmConsultas.frmConsultaCondicoesPagamento)pFrmCons[0];
-            frmConsTransport = (frmConsultas.frmConsultaTranspotadoras)pFrmCons[1];
-            frmConsForn = (frmConsultas.frmConsultaFornecedores)pFrmCons[2];
-            frmConsProduto = (frmConsultas.frmConsultaProdutos)pFrmCons[3];
-        }
 
         public void ClearTxTBox()
         {
@@ -207,21 +216,54 @@ namespace Projeto_ICI.frmCadastros
             txtb_Serie.Enabled = true;
             txtb_NumNF.Enabled = true;
             txtb_CodigoFornecedor.Enabled = true;
+
             dt_Chegada.Enabled = true;
             dt_Emissao.Enabled = true;
-            txtb_CodigoTransport.Enabled = true;
+
+            groupBox_Produtos.Enabled = true;
             txtb_Frete.Enabled = true;
             txtb_Seguro.Enabled = true;
             txtb_OutrasDeps.Enabled = true;
+
+            txtb_CodigoTransport.Enabled = true;
             txtb_CodigoCondPag.Enabled = true;
+
             txtb_ChaveAcesso.Enabled = true;
             txtb_CodigoUsu.Enabled = true;
 
-            btn_Adicionar.Enabled = true;
-            btn_Alterar.Enabled = true;
-            btn_Remover.Enabled = true;
             btn_Gerar.Enabled = true;
             btn_Limpar.Enabled = true;
+            btn_PesquisarCondPag.Enabled = true;
+            btn_PesquisarFornecedor.Enabled = true;
+            btn_PesquisaTransportadora.Enabled = true;
+        }
+
+        public void BloquearTxtBox(bool pPK)
+        {
+            txtb_Modelo.Enabled = pPK;
+            txtb_Serie.Enabled = pPK;
+            txtb_NumNF.Enabled = pPK;
+            txtb_CodigoFornecedor.Enabled = pPK;
+            btn_PesquisarFornecedor.Enabled = pPK;
+
+            dt_Chegada.Enabled = false;
+            dt_Emissao.Enabled = false;
+
+            groupBox_Produtos.Enabled = false;
+            txtb_Frete.Enabled = false;
+            txtb_Seguro.Enabled = false;
+            txtb_OutrasDeps.Enabled = false;
+
+            txtb_CodigoTransport.Enabled = false;
+            txtb_CodigoCondPag.Enabled = false;
+
+            txtb_ChaveAcesso.Enabled = false;
+            txtb_CodigoUsu.Enabled = false;
+
+            btn_Gerar.Enabled = false;
+            btn_Limpar.Enabled = false;
+            btn_PesquisarCondPag.Enabled = false;
+            btn_PesquisaTransportadora.Enabled = false;
         }
 
         private void btn_Sair_Click(object sender, EventArgs e)
@@ -254,6 +296,26 @@ namespace Projeto_ICI.frmCadastros
             {
                 txtb_CodigoFornecedor.Text = umForn.Codigo.ToString();
                 txtb_Fornecedor.Text = umForn.Fornecedor;
+            }
+            validarChaveCompra();
+        }
+
+        private void validarChaveCompra()
+        {
+            umaCompra.Modelo = txtb_Modelo.Text;
+            umaCompra.Serie = txtb_Serie.Text;
+            umaCompra.NumeroNF = txtb_NumNF.Text;
+            umaCompra.UmFornecedor = umForn.ThisFornecedor;
+            var vlPesquisa = umCtrlCompra.Pesquisar(umaCompra.ToStringPK.Split(';'),
+                                                    umaCompra.PK.Split(';'), out string vlMsg, true);
+            if (vlPesquisa != null)
+            {
+                MessageBox.Show($"Chave de pesquisa [ {umaCompra.ToStringPK} ] já está cadastrada!", "AVISO");
+                txtb_Modelo.Focus();
+            }
+            else
+            {
+                DesBloqTxTBox();
             }
         }
 
@@ -309,17 +371,18 @@ namespace Projeto_ICI.frmCadastros
             {
                 if (int.TryParse(txtb_CodigoFornecedor.Text, out int vlCodigo))
                 {
-                    var vlEstado =
-                         (Classes.fornecedores).CTRLEstado.Pesquisar("codigo",
+                    var vlForn =
+                         (Classes.fornecedores)umCtrlCompra.CTRLForn.Pesquisar("codigo",
                                                                             vlCodigo.ToString(),
                                                                             out string vlMsg,
                                                                             false);
-                    if (vlEstado != null)
+                    if (vlForn != null)
                     {
                         if (vlMsg == "")
                         {
-                            txtb_Fornecedor.Text = vlEstado.Estado;
-                            umForn.ThisFornecedor = vlEstado;
+                            txtb_Fornecedor.Text = vlForn.Fornecedor;
+                            umForn.ThisFornecedor = vlForn;
+                            validarChaveCompra();
                         }
                         else
                         {
@@ -332,6 +395,48 @@ namespace Projeto_ICI.frmCadastros
                         txtb_Fornecedor.Clear();
                     }
                 }
+            }
+        }
+
+        private void txtb_Modelo_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Modelo.Text))
+            {
+                errorMSG.SetError(lbl_Modelo, "Insira um valor válido!");
+                txtb_Modelo.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+                txtb_Serie.Focus();
+            }
+        }
+
+        private void txtb_Serie_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Serie.Text))
+            {
+                errorMSG.SetError(lbl_Serie, "Insira um valor válido!");
+                txtb_Serie.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+                txtb_NumNF.Focus();
+            }
+        }
+
+        private void txtb_NumNF_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_NumNF.Text))
+            {
+                errorMSG.SetError(lbl_NumNF, "Insira um valor válido!");
+                txtb_NumNF.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+                btn_PesquisarFornecedor.Focus();
             }
         }
     }

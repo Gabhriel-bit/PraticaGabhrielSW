@@ -115,7 +115,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoFornecedor.Location = new System.Drawing.Point(227, 27);
             this.txtb_CodigoFornecedor.Name = "txtb_CodigoFornecedor";
             this.txtb_CodigoFornecedor.Size = new System.Drawing.Size(61, 20);
-            this.txtb_CodigoFornecedor.TabIndex = 140;
+            this.txtb_CodigoFornecedor.TabIndex = 3;
             this.txtb_CodigoFornecedor.TextChanged += new System.EventHandler(this.txtb_CodigoFornecedor_TextChanged);
             // 
             // groupBox_Produtos
@@ -193,7 +193,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Unidade.Location = new System.Drawing.Point(258, 37);
             this.txtb_Unidade.Name = "txtb_Unidade";
             this.txtb_Unidade.Size = new System.Drawing.Size(58, 21);
-            this.txtb_Unidade.TabIndex = 110;
+            this.txtb_Unidade.TabIndex = 9;
             // 
             // textBox1
             // 
@@ -201,7 +201,7 @@ namespace Projeto_ICI.frmCadastros
             this.textBox1.Location = new System.Drawing.Point(468, 37);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(71, 21);
-            this.textBox1.TabIndex = 113;
+            this.textBox1.TabIndex = 12;
             this.textBox1.Text = "0";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -219,7 +219,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Remover.Location = new System.Drawing.Point(170, 200);
             this.btn_Remover.Name = "btn_Remover";
             this.btn_Remover.Size = new System.Drawing.Size(75, 23);
-            this.btn_Remover.TabIndex = 92;
+            this.btn_Remover.TabIndex = 15;
             this.btn_Remover.Text = "Remover";
             this.btn_Remover.UseVisualStyleBackColor = true;
             // 
@@ -228,7 +228,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Alterar.Location = new System.Drawing.Point(89, 200);
             this.btn_Alterar.Name = "btn_Alterar";
             this.btn_Alterar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Alterar.TabIndex = 91;
+            this.btn_Alterar.TabIndex = 14;
             this.btn_Alterar.Text = "Alterar";
             this.btn_Alterar.UseVisualStyleBackColor = true;
             // 
@@ -237,7 +237,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Adicionar.Location = new System.Drawing.Point(8, 200);
             this.btn_Adicionar.Name = "btn_Adicionar";
             this.btn_Adicionar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Adicionar.TabIndex = 90;
+            this.btn_Adicionar.TabIndex = 13;
             this.btn_Adicionar.Text = "Adicionar";
             this.btn_Adicionar.UseVisualStyleBackColor = true;
             // 
@@ -257,7 +257,9 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Quantidade.Location = new System.Drawing.Point(322, 37);
             this.txtb_Quantidade.Name = "txtb_Quantidade";
             this.txtb_Quantidade.Size = new System.Drawing.Size(60, 21);
-            this.txtb_Quantidade.TabIndex = 79;
+            this.txtb_Quantidade.TabIndex = 10;
+            this.txtb_Quantidade.Tag = "";
+            this.txtb_Quantidade.Text = "0";
             this.txtb_Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lbl_Custo
@@ -276,7 +278,8 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Custo.Location = new System.Drawing.Point(388, 37);
             this.txtb_Custo.Name = "txtb_Custo";
             this.txtb_Custo.Size = new System.Drawing.Size(74, 21);
-            this.txtb_Custo.TabIndex = 77;
+            this.txtb_Custo.TabIndex = 11;
+            this.txtb_Custo.Text = "0";
             this.txtb_Custo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btn_PesquisarProduto
@@ -284,7 +287,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_PesquisarProduto.Location = new System.Drawing.Point(226, 33);
             this.btn_PesquisarProduto.Name = "btn_PesquisarProduto";
             this.btn_PesquisarProduto.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarProduto.TabIndex = 73;
+            this.btn_PesquisarProduto.TabIndex = 8;
             this.btn_PesquisarProduto.UseVisualStyleBackColor = true;
             this.btn_PesquisarProduto.Click += new System.EventHandler(this.btn_PesquisarProduto_Click);
             // 
@@ -323,14 +326,14 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoProduto.Location = new System.Drawing.Point(6, 37);
             this.txtb_CodigoProduto.Name = "txtb_CodigoProduto";
             this.txtb_CodigoProduto.Size = new System.Drawing.Size(58, 21);
-            this.txtb_CodigoProduto.TabIndex = 73;
+            this.txtb_CodigoProduto.TabIndex = 7;
             // 
             // btn_Gerar
             // 
             this.btn_Gerar.Location = new System.Drawing.Point(404, 421);
             this.btn_Gerar.Name = "btn_Gerar";
             this.btn_Gerar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Gerar.TabIndex = 112;
+            this.btn_Gerar.TabIndex = 23;
             this.btn_Gerar.Text = "Gerar";
             this.btn_Gerar.UseVisualStyleBackColor = true;
             this.btn_Gerar.Click += new System.EventHandler(this.btn_Gerar_Click);
@@ -370,7 +373,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoTransport.Location = new System.Drawing.Point(15, 359);
             this.txtb_CodigoTransport.Name = "txtb_CodigoTransport";
             this.txtb_CodigoTransport.Size = new System.Drawing.Size(63, 20);
-            this.txtb_CodigoTransport.TabIndex = 106;
+            this.txtb_CodigoTransport.TabIndex = 16;
             // 
             // lbl_OutrasDeps
             // 
@@ -388,7 +391,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_OutrasDeps.Location = new System.Drawing.Point(453, 360);
             this.txtb_OutrasDeps.Name = "txtb_OutrasDeps";
             this.txtb_OutrasDeps.Size = new System.Drawing.Size(103, 20);
-            this.txtb_OutrasDeps.TabIndex = 104;
+            this.txtb_OutrasDeps.TabIndex = 22;
             this.txtb_OutrasDeps.Text = "0";
             this.txtb_OutrasDeps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -408,7 +411,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Seguro.Location = new System.Drawing.Point(369, 359);
             this.txtb_Seguro.Name = "txtb_Seguro";
             this.txtb_Seguro.Size = new System.Drawing.Size(78, 20);
-            this.txtb_Seguro.TabIndex = 102;
+            this.txtb_Seguro.TabIndex = 21;
             this.txtb_Seguro.Text = "0";
             this.txtb_Seguro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -428,7 +431,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Frete.Location = new System.Drawing.Point(280, 359);
             this.txtb_Frete.Name = "txtb_Frete";
             this.txtb_Frete.Size = new System.Drawing.Size(81, 20);
-            this.txtb_Frete.TabIndex = 100;
+            this.txtb_Frete.TabIndex = 20;
             this.txtb_Frete.Text = "0";
             this.txtb_Frete.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -437,7 +440,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoCondPag.Location = new System.Drawing.Point(15, 405);
             this.txtb_CodigoCondPag.Name = "txtb_CodigoCondPag";
             this.txtb_CodigoCondPag.Size = new System.Drawing.Size(63, 20);
-            this.txtb_CodigoCondPag.TabIndex = 98;
+            this.txtb_CodigoCondPag.TabIndex = 18;
             this.txtb_CodigoCondPag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lbl_CodigoCondPag
@@ -455,7 +458,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_PesquisarCondPag.Location = new System.Drawing.Point(240, 401);
             this.btn_PesquisarCondPag.Name = "btn_PesquisarCondPag";
             this.btn_PesquisarCondPag.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarCondPag.TabIndex = 96;
+            this.btn_PesquisarCondPag.TabIndex = 19;
             this.btn_PesquisarCondPag.UseVisualStyleBackColor = true;
             this.btn_PesquisarCondPag.Click += new System.EventHandler(this.btn_PesquisarCondPag_Click);
             // 
@@ -483,7 +486,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_PesquisaTransportadora.Location = new System.Drawing.Point(240, 357);
             this.btn_PesquisaTransportadora.Name = "btn_PesquisaTransportadora";
             this.btn_PesquisaTransportadora.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisaTransportadora.TabIndex = 89;
+            this.btn_PesquisaTransportadora.TabIndex = 17;
             this.btn_PesquisaTransportadora.UseVisualStyleBackColor = true;
             this.btn_PesquisaTransportadora.Click += new System.EventHandler(this.btn_PesquisaTransportadora_Click);
             // 
@@ -492,7 +495,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Limpar.Location = new System.Drawing.Point(485, 421);
             this.btn_Limpar.Name = "btn_Limpar";
             this.btn_Limpar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Limpar.TabIndex = 113;
+            this.btn_Limpar.TabIndex = 24;
             this.btn_Limpar.Text = "Limpar";
             this.btn_Limpar.UseVisualStyleBackColor = true;
             this.btn_Limpar.Visible = false;
@@ -513,7 +516,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(514, 24);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
             this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarFornecedor.TabIndex = 136;
+            this.btn_PesquisarFornecedor.TabIndex = 4;
             this.btn_PesquisarFornecedor.UseVisualStyleBackColor = true;
             this.btn_PesquisarFornecedor.Click += new System.EventHandler(this.btn_PesquisarFornecedor_Click);
             // 
@@ -562,7 +565,8 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_NumNF.Location = new System.Drawing.Point(138, 27);
             this.txtb_NumNF.Name = "txtb_NumNF";
             this.txtb_NumNF.Size = new System.Drawing.Size(83, 20);
-            this.txtb_NumNF.TabIndex = 130;
+            this.txtb_NumNF.TabIndex = 2;
+            this.txtb_NumNF.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_NumNF_Validating);
             // 
             // lbl_Modelo
             // 
@@ -590,7 +594,8 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Modelo.Location = new System.Drawing.Point(15, 27);
             this.txtb_Modelo.Name = "txtb_Modelo";
             this.txtb_Modelo.Size = new System.Drawing.Size(63, 20);
-            this.txtb_Modelo.TabIndex = 127;
+            this.txtb_Modelo.TabIndex = 0;
+            this.txtb_Modelo.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Modelo_Validating);
             // 
             // txtb_Serie
             // 
@@ -598,15 +603,15 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Serie.Location = new System.Drawing.Point(84, 27);
             this.txtb_Serie.Name = "txtb_Serie";
             this.txtb_Serie.Size = new System.Drawing.Size(48, 20);
-            this.txtb_Serie.TabIndex = 126;
-            this.txtb_Serie.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtb_Serie.TabIndex = 1;
+            this.txtb_Serie.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Serie_Validating);
             // 
             // btn_Sair
             // 
             this.btn_Sair.Location = new System.Drawing.Point(485, 599);
             this.btn_Sair.Name = "btn_Sair";
             this.btn_Sair.Size = new System.Drawing.Size(75, 23);
-            this.btn_Sair.TabIndex = 148;
+            this.btn_Sair.TabIndex = 27;
             this.btn_Sair.Text = "Sair";
             this.btn_Sair.UseVisualStyleBackColor = true;
             this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
@@ -616,7 +621,7 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Salvar.Location = new System.Drawing.Point(404, 599);
             this.btn_Salvar.Name = "btn_Salvar";
             this.btn_Salvar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Salvar.TabIndex = 149;
+            this.btn_Salvar.TabIndex = 26;
             this.btn_Salvar.Text = "Salvar";
             this.btn_Salvar.UseVisualStyleBackColor = true;
             // 
@@ -655,7 +660,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_ChaveAcesso.Location = new System.Drawing.Point(15, 602);
             this.txtb_ChaveAcesso.Name = "txtb_ChaveAcesso";
             this.txtb_ChaveAcesso.Size = new System.Drawing.Size(271, 20);
-            this.txtb_ChaveAcesso.TabIndex = 144;
+            this.txtb_ChaveAcesso.TabIndex = 25;
             // 
             // lv_ParcelasContasPag
             // 
@@ -698,7 +703,7 @@ namespace Projeto_ICI.frmCadastros
             this.dt_Emissao.Location = new System.Drawing.Point(15, 70);
             this.dt_Emissao.Name = "dt_Emissao";
             this.dt_Emissao.Size = new System.Drawing.Size(95, 20);
-            this.dt_Emissao.TabIndex = 150;
+            this.dt_Emissao.TabIndex = 5;
             // 
             // dt_Chegada
             // 
@@ -706,7 +711,7 @@ namespace Projeto_ICI.frmCadastros
             this.dt_Chegada.Location = new System.Drawing.Point(118, 70);
             this.dt_Chegada.Name = "dt_Chegada";
             this.dt_Chegada.Size = new System.Drawing.Size(95, 20);
-            this.dt_Chegada.TabIndex = 151;
+            this.dt_Chegada.TabIndex = 6;
             // 
             // lbl_TotalNota
             // 

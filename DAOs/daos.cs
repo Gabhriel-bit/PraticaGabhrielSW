@@ -125,5 +125,43 @@ namespace Projeto_ICI.DAOs
             }
             return search;
         }
+
+        public string PesquisarToString(string pNameTable, string pCamposSelecionados,
+                      string[] pCampos, string[] pValores, string[] pRefCampos = default, bool pValorIgual = false)
+        {
+            string vlNomeDao = (pNameTable.Split(',').Length == 1)
+                               ? vlNomeDao = pNameTable
+                               : ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
+
+            string search = $"select {pCamposSelecionados} from {pNameTable} " +
+                            (pValorIgual ? " where " : $"where {vlNomeDao}.disponivel != 0 ");
+            search += (search.Contains("disponivel") ? "AND " : "");
+
+            for (int i = 0; i<=pCampos.Count() -1; i++)
+            {
+                if (int.TryParse(pValores[i], out int _) ||
+                    decimal.TryParse(pValores[i], out decimal _))
+                    search += $"{pCampos[i]}={pValores[i].Replace(',', '.')} AND ";
+                else
+                {
+                    if (pValorIgual)
+                        search +=  $"{pCampos[i]} = '{pValores[i]}' AND ";
+                    else
+                        search += $"{pCampos[i]} like '%{pValores[i]}%' AND ";
+                }
+            }
+            search = search.Remove(search.Length - 5) + ';';
+            if (pRefCampos != null)
+            {
+                search = search.Remove(search.Length - 1) + " AND ";
+
+                foreach (string campo in pRefCampos)
+                {
+                    search += campo + " AND ";
+                }
+                search = search.Remove(search.Length - 5) + ";";
+            }
+            return search;
+        }
     }
 }

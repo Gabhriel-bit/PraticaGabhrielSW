@@ -67,10 +67,10 @@ namespace Projeto_ICI
             this.paisesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_Comprar = new System.Windows.Forms.Button();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Comprar = new System.Windows.Forms.Button();
             this.menu_Principal.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -373,16 +373,6 @@ namespace Projeto_ICI
             this.servicosToolStripMenuItem.Text = "&Serviços";
             this.servicosToolStripMenuItem.Click += new System.EventHandler(this.servicosToolStripMenuItem_Click);
             // 
-            // btn_Comprar
-            // 
-            this.btn_Comprar.Location = new System.Drawing.Point(12, 369);
-            this.btn_Comprar.Name = "btn_Comprar";
-            this.btn_Comprar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Comprar.TabIndex = 5;
-            this.btn_Comprar.Text = "Comprar";
-            this.btn_Comprar.UseVisualStyleBackColor = true;
-            this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
-            // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -395,15 +385,26 @@ namespace Projeto_ICI
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
             // 
             // sairToolStripMenuItem1
             // 
             this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
-            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(129, 26);
             this.sairToolStripMenuItem1.Text = "Sair";
             this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
+            // 
+            // btn_Comprar
+            // 
+            this.btn_Comprar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_Comprar.Location = new System.Drawing.Point(12, 369);
+            this.btn_Comprar.Name = "btn_Comprar";
+            this.btn_Comprar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Comprar.TabIndex = 5;
+            this.btn_Comprar.Text = "Comprar";
+            this.btn_Comprar.UseVisualStyleBackColor = true;
+            this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
             // 
             // Gerente
             // 

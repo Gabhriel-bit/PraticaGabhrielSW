@@ -83,6 +83,9 @@ namespace Projeto_ICI.Classes
 
         public string PK
         { get => Fmodelo + ';' + Fserie + ';' + Fnumero_NF + ';' + FumForn.Codigo.ToString(); }
+        public string ToStringPK
+        { get => "modelo;" + "serie;" + "numero_nf;" + "codigoForn"; }
+
         public string Modelo
         { get=> Fmodelo; set=> Fmodelo = value; }
         public string Serie

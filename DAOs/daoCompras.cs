@@ -21,7 +21,8 @@ namespace Projeto_ICI.DAOs
             else
             {
                 Classes.compras vlCompra = (Classes.compras)pObj;
-                return InserirToString(nameTable, vlCompra.arrayStringCampos(),
+                return InserirToString(nameTable,
+                                       vlCompra.arrayStringCampos(),
                                        vlCompra.arrayStringValores(), true);
             }
         }
@@ -30,7 +31,7 @@ namespace Projeto_ICI.DAOs
         {
             if (listaItens == null)
             {
-                return "Erro: Lista de parcelas está nula!";
+                return "Erro: Lista de itens está nula!";
             }
             else
             {
@@ -54,7 +55,7 @@ namespace Projeto_ICI.DAOs
         {
             if (pObj == null)
             {
-                return "Erro: Cidade está nula!";
+                return "Erro: Compra está nula!";
             }
             else
             {
@@ -94,7 +95,7 @@ namespace Projeto_ICI.DAOs
                 string insertion = "\n" + ExcluirItens(pPK);
                 foreach (Classes.itensCompra vlItem in listaItens)
                 {
-                    insertion += InserirToString("parcelasCondicaoPagamento",
+                    insertion += InserirToString("produtos_compra",
                                                  vlItem.arrayStringCampos(),
                                                  vlItem.arrayStringValores(), true)
                                                  + '\n';
