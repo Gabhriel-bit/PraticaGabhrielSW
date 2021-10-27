@@ -353,7 +353,7 @@ namespace Projeto_ICI.frmCadastros
         }
         private void txtb_Unidade_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Unidade.Text))
+            if (!string.IsNullOrEmpty(txtb_Unidade.Text))
             {
                 errorMSG.Clear();
                 e.Cancel = false;
@@ -407,23 +407,17 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Unidade, "O campo 'UND' (unidade) é obrigatório!");
                 txtb_Unidade.Focus();
             }
-            else if (ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_Unidade, "O campo 'Peso Bruto' é obrigatório!");
+                errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
                 txtb_PesoBruto.Focus();
             }
-            else if (ValidacaoDoubleMoeda(txtb_PesoLiquido.Text))
+            else if (!ValidacaoDoubleMoeda(txtb_PesoLiquido.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_Unidade, "O campo 'Peso Liquido' é obrigatório!");
+                errorMSG.SetError(lbl_PesoLiquido, "O campo 'Peso Liquido' é obrigatório!");
                 txtb_PesoLiquido.Focus();
-            }
-            else if (string.IsNullOrEmpty(txtb_Unidade.Text))
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_Unidade, "O campo 'Unidade' é obrigatório!");
-                txtb_Unidade.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {

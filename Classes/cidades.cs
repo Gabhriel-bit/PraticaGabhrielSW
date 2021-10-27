@@ -89,6 +89,7 @@ namespace Projeto_ICI.Classes
                    "ddd" + ';' +
                    "codigoEstado";
         }
+
         public override string[] toStringSearchPesquisa()
         {
             return new string[] { "codigoEstado = estados.codigo" };

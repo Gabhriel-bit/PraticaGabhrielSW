@@ -24,18 +24,20 @@ namespace Projeto_ICI.Controllers
         private ctrlTransportadoras umaCtrlTransp;
         private ctrlFornecedores umaCtrlForn;
         private ctrlProdutos umaCtrlProduto;
+        private ctrlContasPagar umaCtrlContaPagar;
 
         private DAOs.daoCompras umDaoCompra;
 
         public ctrlCompras(BancoDados.conexoes pUmaConexao, DAOs.daoCompras pDaoCondPag,
                            ctrlTransportadoras pCtrlTransp, ctrlCondicoesPagamento pCtrlCondPag,
-                           ctrlFornecedores pCtrlForn, ctrlProdutos pCtrlProduto)
+                           ctrlFornecedores pCtrlForn, ctrlProdutos pCtrlProduto, ctrlContasPagar pCtrlContaPagar)
         {
             umaCtrlCondPag = pCtrlCondPag;
             umaCtrlTransp = pCtrlTransp;
             umaCtrlForn = pCtrlForn;
             umaCtrlProduto = pCtrlProduto;
             umDaoCompra = pDaoCondPag;
+            umaCtrlContaPagar = pCtrlContaPagar;
             UmaConexao = pUmaConexao;
         }
 
@@ -43,6 +45,8 @@ namespace Projeto_ICI.Controllers
         { get => umaCtrlCondPag; }
         public ctrlTransportadoras CTRLTransport
         { get => umaCtrlTransp; }
+        public ctrlContasPagar CTRLContasPag
+        { get => umaCtrlContaPagar; }
         public ctrlFornecedores CTRLForn
         { get => umaCtrlForn; }
         public ctrlProdutos CTRLProduto
@@ -53,7 +57,9 @@ namespace Projeto_ICI.Controllers
             var vlCompra = (Classes.compras)pObjeto;
             var vlInserir = umDaoCompra.Inserir(pObjeto) +
                             umDaoCompra.InserirItens(vlCompra.UmaListaItens,
-                                                     vlCompra.PK);
+                                                     vlCompra.PK) +
+                            umaCtrlProduto.Alterar(vlCompra.UmaListaItens, true);
+                            umaCtrlContaPagar.Inserir(vlCompra.UmaListaContasPagar, true);
             var msg = ExecucaoComandQuery(vlInserir);
             if (msg == "sucesso")
             {
@@ -83,7 +89,9 @@ namespace Projeto_ICI.Controllers
         public override string Excluir(object pObjeto)
         {
             var vlCompra = (Classes.compras)pObjeto;
-            var vlInserir =  umDaoCompra.Excluir(pObjeto);
+            var vlInserir = umaCtrlContaPagar.Excluir(vlCompra.UmaListaContasPagar[0]) +
+                            umDaoCompra.ExcluirItens(vlCompra.PK) +
+                            umDaoCompra.Excluir(pObjeto);
 
             var msg = ExecucaoComandQuery(vlInserir);
             if (msg == "sucesso")

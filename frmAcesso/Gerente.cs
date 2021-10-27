@@ -30,7 +30,8 @@ namespace Projeto_ICI
         private daoServicos umaDaoServico;
         private daoSubgrupos umaDaoSubgrupo;
         private daoTransportadoras umaDaoTransport;
-        private daoCompras umaDaoCompra; 
+        private daoCompras umaDaoCompra;
+        private daoContasPagar UmaDaoContaPagar;
 
         private ctrlCargos umCtrlCargo;
         private ctrlCidades umCtrlCidade;
@@ -51,6 +52,7 @@ namespace Projeto_ICI
         private ctrlSubgrupos umCtrlSubgrupo;
         private ctrlTransportadoras umCtrlTransport;
         private ctrlCompras umCtrlCompra;
+        private ctrlContasPagar UmCtrlContaPagar;
 
         private frmCadastroCargos frmCadCargo;
         private frmCadastroCidades frmCadCidade;
@@ -131,6 +133,7 @@ namespace Projeto_ICI
                 umaDaoSubgrupo = new daoSubgrupos();
                 umaDaoTransport = new daoTransportadoras();
                 umaDaoCompra = new daoCompras();
+                UmaDaoContaPagar = new daoContasPagar();
 
                 umCtrlCargo = new ctrlCargos(umaConexao, umaDaoCargo);
                 umCtrlPais = new ctrlPaises(umaConexao, umaDaoPais);
@@ -150,8 +153,9 @@ namespace Projeto_ICI
                 umCtrlServico = new ctrlServicos(umaConexao, umaDaoServico);
                 umCtrlFunc = new ctrlFuncionarios(umaConexao, umaDaoFunc, umCtrlCargo, umCtrlCidade);
                 umCtrlTransport = new ctrlTransportadoras(umaConexao, umaDaoTransport, umCtrlCidade);
+                UmCtrlContaPagar = new ctrlContasPagar(umaConexao, UmaDaoContaPagar, umCtrlForn, umCtrlFormPag);
                 umCtrlCompra = new ctrlCompras(umaConexao, umaDaoCompra, umCtrlTransport, umCtrlCondPag,
-                    umCtrlForn, umCtrlProduto);
+                    umCtrlForn, umCtrlProduto, UmCtrlContaPagar);
                 
 
                 //formulários de cadastro

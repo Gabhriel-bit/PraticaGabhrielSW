@@ -378,7 +378,7 @@ BEGIN
         codigoBarras   VARCHAR(20),
 		ncm_sh         VARCHAR(20),
         custo          NUMERIC(8,4) NOT NULL,
-        unidade        INT NOT NULL,
+        unidade        VARCHAR(20) NOT NULL,
         saldo          INT NOT NULL,
 		peso_bruto     NUMERIC(8,4) NOT NULL,
         peso_liquid    NUMERIC(8,4) NOT NULL,
@@ -402,6 +402,8 @@ BEGIN
 	CREATE TABLE produto_fornecedor (
 		codigoProduto     INT  NOT NULL,
 		codigoFornecedor  INT  NOT NULL,
+
+		disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(codigoProduto, codigoFornecedor),
 		CONSTRAINT FK_codProdProd_forn FOREIGN KEY (codigoProduto) REFERENCES produtos (codigo),
 		CONSTRAINT FK_codFornProd_forn FOREIGN KEY (codigoFornecedor) REFERENCES fornecedores (codigo)
@@ -435,6 +437,8 @@ BEGIN
 	CREATE TABLE deposito_produto (
 		codigoProduto  INT  NOT NULL,
 		codigoDeposito INT  NOT NULL,
+
+		disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(codigoProduto, codigoDeposito),
 		CONSTRAINT FK_codProdDep_prod FOREIGN KEY (codigoProduto) REFERENCES produtos (codigo),
 		CONSTRAINT FK_codDepoDep_prod FOREIGN KEY (codigoDeposito) REFERENCES depositos (codigo)
@@ -473,7 +477,7 @@ BEGIN
 
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn),
-		CONSTRAINT FK_codFornNf FOREIGN KEY (codigoForn) REFERENCES compras (codigo),
+		CONSTRAINT FK_codFornNf FOREIGN KEY (codigoForn) REFERENCES fornecedores (codigo),
 		CONSTRAINT FK_codVeiculoNf FOREIGN KEY (codigoVeiculo) REFERENCES veiculos (codigo),
 		CONSTRAINT FK_codTranspNf FOREIGN KEY (codigoTransp) REFERENCES transportadoras (codigo),
 		CONSTRAINT FK_codCondPagNf FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo)--,
@@ -496,10 +500,11 @@ BEGIN
 		quantidade INT NOT NULL,
 		valor_un   NUMERIC(8,4) NOT NULL,
 		desconto   NUMERIC(8,4) NOT NULL,
+		disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(codigoProd, modelo, serie, numero_nf, codigoForn),
 		CONSTRAINT FK_codProdNf FOREIGN KEY (codigoProd) REFERENCES produtos (codigo),
 		CONSTRAINT FK_pkProdNf FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
-			REFERENCES nf_compra (modelo, serie, numero_nf, codigoForn)--,
+			REFERENCES compras (modelo, serie, numero_nf, codigoForn)--,
 		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)	
 	);
 END
@@ -511,8 +516,8 @@ BEGIN
 		serie          VARCHAR(50) NOT NULL,
 		numero_nf      VARCHAR(50) NOT NULL,
 		codigoForn     INT  NOT NULL,
-
 		parcela        INT  NOT NULL,
+
 		vencimento     VARCHAR(10) NOT NULL,
 		dataPagamento  VARCHAR(10) NOT NULL,
 		valorTotal     NUMERIC(8,4) NOT NULL,
@@ -526,7 +531,7 @@ BEGIN
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),
 		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
 		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
-			REFERENCES nf_compra (modelo, serie, numero_nf, codigoForn)--,
+			REFERENCES compras (modelo, serie, numero_nf, codigoForn)--,
 		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
 	);
 END

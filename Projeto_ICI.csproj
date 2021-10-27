@@ -97,6 +97,7 @@
     <Compile Include="Controllers\ctrlClientes.cs" />
     <Compile Include="Controllers\ctrlCompras.cs" />
     <Compile Include="Controllers\ctrlCondicoesPagamento.cs" />
+    <Compile Include="Controllers\ctrlContasPagar.cs" />
     <Compile Include="Controllers\ctrlDepositos.cs" />
     <Compile Include="Controllers\ctrlEquipamentos.cs" />
     <Compile Include="Controllers\ctrlEstados.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="DAOs\daoClientes.cs" />
     <Compile Include="DAOs\daoCompras.cs" />
     <Compile Include="DAOs\daoCondicoesPagamento.cs" />
+    <Compile Include="DAOs\daoContasPagar.cs" />
     <Compile Include="DAOs\daoDepositos.cs" />
     <Compile Include="DAOs\daoEquipamentos.cs" />
     <Compile Include="DAOs\daoEstados.cs" />

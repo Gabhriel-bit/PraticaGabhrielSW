@@ -104,11 +104,17 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.SetError(btn_Gerar, "Não há itens para gerar as parcelas!");
             }
-            else if (umCondPag.Codigo == 0)
+            else if (txtb_CondicaoPag.Text == "")
             {
                 errorMSG.Clear();
                 errorMSG.SetError(btn_Gerar, "Seleciona uma condição de pagamento!");
                 txtb_CodigoCondPag.Focus();
+            }
+            else if (txtb_Transport.Text == "")
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(btn_Gerar, "Seleciona uma transportadora!");
+                txtb_Transport.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Seguro.Text))
             {
@@ -152,9 +158,11 @@ namespace Projeto_ICI.frmCadastros
                                                  vlParcela.Numero, dt_Emissao.Value.AddDays(vlParcela.Dias).ToString(),
                                                  "", vlTotal * (vlParcela.Porcentagem / 100), 0, int.Parse(txtb_CodigoUsu.Text),
                                                  DateTime.Now.ToString("dd/MM/yyyy"));
+                vlListItem.UmaFormaPag = vlParcela.UmaFormaPag.ThisFormPag;
 
                 string[] vlLVStrItem = new string[] { vlListItem.Parcela.ToString(),
                                                       vlListItem.Vencimento,
+                                                      vlListItem.UmaFormaPag.FormaPag,
                                                       vlListItem.ValorTotal.ToString()};
 
 
@@ -164,6 +172,7 @@ namespace Projeto_ICI.frmCadastros
                 umaListaItens.Add(vlListItem);
                 lv_ParcelasContasPag.Items.Add(vlLVItem);
             }
+            umaCompra.UmaListaContasPagar = umaListaItens;
         }
 
         private decimal CalcularTotal(bool pValorItens = false)
@@ -200,7 +209,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_Produto.Clear();
             txtb_Quantidade.Clear();
             txtb_Unidade.Clear();
-            txtb_Custo.Clear();
+            txtb_PrecoUnt.Clear();
             txtb_CodigoTransport.Clear();
             txtb_Transport.Clear();
             txtb_Frete.Clear();
@@ -438,6 +447,193 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 btn_PesquisarFornecedor.Focus();
             }
+        }
+
+        private void dt_Emissao_Validating(object sender, CancelEventArgs e)
+        {
+            if (dt_Emissao.Value > DateTime.Now)
+            {
+                errorMSG.SetError(lbl_DataEmissao, "A data de emissão deve ser igual ou menor\n" +
+                                                   $"que a data atual ({DateTime.Now.ToString().Split(' ')[0]})");
+                dt_Emissao.Value = DateTime.Now;
+                dt_Emissao.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+            }
+        }
+
+        private void dt_Chegada_Validating(object sender, CancelEventArgs e)
+        {
+            if (dt_Chegada.Value > DateTime.Now)
+            {
+                errorMSG.SetError(lbl_DataChegada, "A data de chegada deve ser igual ou menor\n" +
+                                                   $"que a data atual ({DateTime.Now.ToString().Split(' ')[0]})");
+                dt_Chegada.Value = DateTime.Now;
+                dt_Chegada.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+            }
+        }
+
+        private void txtb_Unidade_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Unidade.Text))
+            {
+                errorMSG.SetError(lbl_Unidade, "Campo 'Unidade' é obrigatório!");
+                txtb_Unidade.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+            }
+        }
+
+        private void txtb_Quantidade_Validating(object sender, CancelEventArgs e)
+        {
+            if (!int.TryParse(txtb_Quantidade.Text, out int _))
+            {
+                errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
+                                                  "Insira um valor inteiro igual ou superior a 1");
+                txtb_Quantidade.Focus();
+            }
+            else
+                errorMSG.Clear();
+        }
+
+        private void txtb_Custo_Validating(object sender, CancelEventArgs e)
+        {
+            if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text))
+            {
+                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
+                txtb_PrecoUnt.Focus();
+            }
+            else
+                errorMSG.Clear();
+        }
+
+        private void textBox1_Validating(object sender, CancelEventArgs e)
+        {
+            if (!ValidacaoDoubleMoeda(txtb_Desconto.Text))
+            {
+                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_Desconto.Text}' inválido");
+                txtb_Desconto.Text = "0";
+            }
+            else
+                errorMSG.Clear();
+        }
+
+        private void btn_Adicionar_Click(object sender, EventArgs e)
+        {
+            if (lv_ItensCompra.Items.Count == 0)
+            {
+                errorMSG.SetError(btn_Adicionar, "Insira ao menos um item!");
+                btn_PesquisarProduto.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Produto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_CodigoProduto, "Selecione um produto");
+                btn_PesquisarProduto.Focus();
+            }
+            else if (string.IsNullOrEmpty(txtb_Unidade.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Unidade, "Campo 'Unidade' é obrigatório!");
+                txtb_Unidade.Focus();
+            }
+            else if (!int.TryParse(txtb_Quantidade.Text, out int _))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
+                                                  "Insira um valor inteiro igual ou superior a 1");
+                txtb_Quantidade.Focus();
+            }
+            else if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
+                txtb_PrecoUnt.Focus();
+            }
+            else if (!ValidacaoDoubleMoeda(txtb_Desconto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_Desconto.Text}' inválido");
+                txtb_Desconto.Text = "0";
+            }
+            else
+            {
+                errorMSG.Clear();
+                var vlItem = new itensCompra(txtb_Modelo.Text, txtb_Seguro.Text, txtb_NumNF.Text,
+                                                            txtb_Unidade.Text, int.Parse(txtb_Quantidade.Text),
+                                                            decimal.Parse(txtb_PrecoUnt.Text, vgEstilo, vgProv),
+                                                            decimal.Parse(txtb_Desconto.Text, vgEstilo, vgProv));
+                vlItem.UmProduto = umProduto.ThisProduto;
+                vlItem.UmFornecedor = umForn.ThisFornecedor;
+
+
+                var vlString = new string[] { vlItem.UmProduto.Produto, txtb_Unidade.Text, txtb_Quantidade.Text,
+                                              vlItem.PrecoUnidade.ToString(), vlItem.Desconto.ToString(), "NC",
+                                              (vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto).ToString() };
+
+                var vlLVItem = new ListViewItem(vlString);
+                vlLVItem.Tag = vlItem.ThisItenCompra;
+
+                umaCompra.UmaListaItens.Add(vlItem);
+                lv_ItensCompra.Items.Add(vlLVItem);
+            }
+
+        }
+
+        private void btn_Salvar_Click(object sender, EventArgs e)
+        {
+            if (lv_ParcelasContasPag.Items.Count == 0)
+            {
+                errorMSG.SetError(lbl_ContasPagar, "As parcelas não foram geradas!\nImpossivel cadastrar a compra.");
+                btn_Gerar.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+                umaCompra.Emissao = dt_Emissao.Text.Split(' ')[0];
+                umaCompra.Chegada = dt_Chegada.Text.Split(' ')[0];
+                umaCompra.ChaveAcesso = txtb_ChaveAcesso.Text;
+                umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
+                umaCompra.TotalNota = decimal.Parse(txtb_TotalNota.Text, vgEstilo, vgProv);
+                umaCompra.TotalProdutos = decimal.Parse(txtb_TotalProdutos.Text, vgEstilo, vgProv);
+
+
+                string msg = "";
+                if (Btn_Acao == "Salvar")
+                {
+                    msg = umCtrlCompra.Inserir(umaCompra);
+                }
+                else if (Btn_Acao == "Alterar")
+                {
+                    msg = umCtrlCompra.Alterar(umaCompra);
+                }
+                else if (Btn_Acao == "Excluir")
+                {
+                    msg = umCtrlCompra.Excluir(umaCompra);
+                }
+                if (msg.Contains("sucesso"))
+                {
+                    MessageBox.Show(msg, "Informação");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show(msg, "ERRO");
+                }
+            }
+        }
+        public string Btn_Acao
+        {
+            get => btn_Salvar.Text;
+            set => btn_Salvar.Text = value;
         }
     }
 }

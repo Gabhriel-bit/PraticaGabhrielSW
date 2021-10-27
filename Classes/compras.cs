@@ -31,6 +31,7 @@ namespace Projeto_ICI.Classes
         private decimal FpesoLiquido;
 
         private List<itensCompra> FumaListaItens;
+        private List<contasPagar> FumaListaContas;
 
         public compras()
         {
@@ -52,6 +53,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = 0;
             FpesoLiquido = 0;
             FumaListaItens = new List<itensCompra>();
+            FumaListaContas = new List<contasPagar>();
         }
 
         public compras(string pModelo, string pSerie, string pNumNF, string pDataEmissao, string pDataChegada,
@@ -79,6 +81,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = pPesoBruto;
             FpesoLiquido = pPesoLiq;
             FumaListaItens = new List<itensCompra>();
+            FumaListaContas = new List<contasPagar>();
         }
 
         public string PK
@@ -122,6 +125,8 @@ namespace Projeto_ICI.Classes
         { get => FumForn; set => FumForn = value; }
         public List<itensCompra> UmaListaItens
         { get => CloneListaItens(); set => FumaListaItens = value; }
+        public List<contasPagar> UmaListaContasPagar
+        { get => CloneListaContas(); set => FumaListaContas = value; }
         private List<itensCompra> CloneListaItens()
         {
             if (FumaListaItens.Count == 0)
@@ -134,6 +139,22 @@ namespace Projeto_ICI.Classes
                 foreach (itensCompra item in FumaListaItens)
                 {
                     lista.Add(item.ThisItenCompra);
+                }
+                return lista;
+            }
+        }
+        private List<contasPagar> CloneListaContas()
+        {
+            if (FumaListaContas.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                var lista = new List<contasPagar>();
+                foreach (contasPagar item in FumaListaContas)
+                {
+                    lista.Add(item.ThisContaPagar);
                 }
                 return lista;
             }
@@ -167,6 +188,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = vlCompra.PesoBruto;
             FpesoLiquido = vlCompra.PesoLiquido;
             FumaListaItens = vlCompra.UmaListaItens;
+            FumaListaContas = vlCompra.UmaListaContasPagar;
         }
 
         private compras Clone()
@@ -178,6 +200,7 @@ namespace Projeto_ICI.Classes
             vlObj.UmaTransportadora = UmaTransportadora.ThisTransportadora;
             vlObj.UmFornecedor = UmFornecedor.ThisFornecedor;
             vlObj.UmaListaItens = UmaListaItens;
+            vlObj.UmaListaContasPagar = UmaListaContasPagar;
             return vlObj;
         }
 

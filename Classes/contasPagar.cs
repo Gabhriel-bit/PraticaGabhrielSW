@@ -18,7 +18,8 @@ namespace Projeto_ICI.Classes
 		private string Fvencimento;
 		private string FdataPagament;
 		private decimal FvalorTotal;  
-		private decimal FvalorPago;   
+		private decimal FvalorPago;
+		private formasPagamento FumaFormaPag;
 
 		private int FcodigoUsu;   
 		private string FdataCad;
@@ -38,6 +39,7 @@ namespace Projeto_ICI.Classes
 			FdataCad = "";
 
 			FumForn = new fornecedores();
+			FumaFormaPag = new formasPagamento();
 		}
 
 		public contasPagar(string pModelo, string pSerie, string pNumNF, int pParcela,
@@ -57,7 +59,13 @@ namespace Projeto_ICI.Classes
 			FdataCad = pDataCad;
 
 			FumForn = new fornecedores();
+			FumaFormaPag = new formasPagamento();
 		}
+
+		public string PK
+		{ get => Fmodelo + ';' + Fserie + ';' + Fnumero_nf + ';' + FumForn.Codigo.ToString(); }
+		public string ToStringPK
+		{ get => "modelo;" + "serie;" + "numero_nf;" + "codigoForn"; }
 
 		public string Modelo
 		{ set => Fmodelo = value; get => Fmodelo; }
@@ -81,12 +89,22 @@ namespace Projeto_ICI.Classes
 		{ set => FdataCad = value; get => FdataCad; }
 		public fornecedores UmFornecedor
 		{ set => FumForn = value; get => FumForn; }
+		public formasPagamento UmaFormaPag
+		{ set => FumaFormaPag = value; get => FumaFormaPag; }
 
 		public contasPagar ThisContaPagar
 		{
-			get => new contasPagar(Modelo, Serie, NumeroNF, Parcela, Vencimento, DataPagamento,
-				                   ValorTotal, ValorPago, CodigoUsu, DataCadastro);
+			get => clone();
 			set => SetObj(value);
+		}
+
+		protected contasPagar clone()
+		{ 
+			var vlConta = new contasPagar(Modelo, Serie, NumeroNF, Parcela, Vencimento, DataPagamento,
+								   ValorTotal, ValorPago, CodigoUsu, DataCadastro);
+			vlConta.UmaFormaPag = UmaFormaPag.ThisFormPag;
+			vlConta.UmFornecedor = UmFornecedor.ThisFornecedor;
+			return vlConta;
 		}
 
 		protected void SetObj(object pObj)
@@ -105,6 +123,7 @@ namespace Projeto_ICI.Classes
 			FdataCad = vlUmaContaPagar.DataCadastro;
 
 			UmFornecedor = vlUmaContaPagar.UmFornecedor.ThisFornecedor;
+			UmaFormaPag = vlUmaContaPagar.UmaFormaPag.ThisFormPag;
 		}
 
 		public string toString()
@@ -119,7 +138,8 @@ namespace Projeto_ICI.Classes
 				   ValorTotal.ToString() + ';' +
 				   ValorPago.ToString() + ';' +
 				   CodigoUsu.ToString() + ';' +
-				   DataCadastro;
+				   DataCadastro + ';' +
+				   UmaFormaPag.Codigo.ToString();
 		}
 
 		public string toStringAttribute()
@@ -134,7 +154,22 @@ namespace Projeto_ICI.Classes
 				   "valorTotal" + ';' +
 				   "valorPago" + ';' +
 				   "codigoUsu" + ';' +
-				   "dataCad";
+				   "dataCad" + ';' +
+				   "codigoFormaPag";
+		}
+
+
+		public string[] arrayStringValores()
+		{
+			return toString().Split(';');
+		}
+		public string[] arrayStringCampos()
+		{
+			return toStringAttribute().Split(';');
+		}
+		public string[] toStringSearchPesquisa()
+		{
+			return new string[] { "codigoForn = fornecedores.codigo", "codigoFormaPag = formasPagamento.codigo" };
 		}
 	}
 }

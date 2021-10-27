@@ -15,6 +15,8 @@ namespace Projeto_ICI.frmConsultas
         public frmConsultaCompras(Controllers.ctrlCompras pCtrlCompra)
         {
             InitializeComponent();
+            btn_Excluir.Text = "Cancelar";
+            btn_Alterar.Visible = false;
         }
 
         public override void SetFrmCad(Form pFrmCad)

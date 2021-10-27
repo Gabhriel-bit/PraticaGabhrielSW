@@ -87,7 +87,32 @@ namespace Projeto_ICI.Controllers
             }
             return msg;
         }
+        public string Alterar(List<Classes.itensCompra> pListaProdutos, bool pSql)
+        {
+            var vlInserir = "";
+            foreach (Classes.itensCompra vlItem in pListaProdutos)
+            {
+                vlInserir += umDaoProdutos.Alterar(vlItem.UmProduto) +
+                             umDaoProdutos.AlterarProdForn(vlItem.UmProduto.ListaFornecedores, vlItem.UmProduto.Codigo);
+            }
+            if (pSql)
+                return vlInserir;
+            else
+            {
+                var msg = ExecucaoComandQuery(vlInserir);
+                if (msg == "sucesso")
+                {
+                    return $"Produto alterado com {msg}!";
+                }
+                if (msg.Contains("DELETE conflitou"))
+                {
+                    return $"Existe um registro que depende do produto\n" +
+                           $"Não foi possivel excluir o produto!";
+                }
+                return msg;
+            }
 
+        }
         public override string Excluir(object pObjeto)
         {
             var vlProduto = (Classes.produtos)pObjeto;

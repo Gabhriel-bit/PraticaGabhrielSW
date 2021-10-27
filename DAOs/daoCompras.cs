@@ -42,10 +42,6 @@ namespace Projeto_ICI.DAOs
                                                  vlItem.arrayStringCampos(),
                                                  vlItem.arrayStringValores(), true)
                                                  + '\n';
-                    insertion += AlterarToString("produtos",
-                                                 vlItem.UmProduto.arrayStringCampos(),
-                                                 vlItem.UmProduto.arrayStringValores())
-                                                 + '\n';
                 }
                 return insertion;
             }

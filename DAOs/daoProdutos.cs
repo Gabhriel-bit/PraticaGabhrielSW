@@ -42,7 +42,7 @@ namespace Projeto_ICI.DAOs
             {
                 Classes.produtos vlProduto = (Classes.produtos)pObj;
                 return InserirToString(nameTable, vlProduto.arrayStringCampos(),
-                                       vlProduto.arrayStringValores());
+                                       vlProduto.arrayStringValores(), false);
             }
         }
 

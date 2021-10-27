@@ -43,7 +43,10 @@ namespace Projeto_ICI.DAOs
         {
             return "";
         }
-
+        public virtual string Inserir(List<object> pObj)
+        {
+            return "";
+        }
         public string AlterarToString(string pTabela, string[] pCampos, string[] pValores)
         {
             //adiciona os campos e os valores do registro
@@ -79,12 +82,31 @@ namespace Projeto_ICI.DAOs
                           $"{pValor.Replace(',', '.')};";
             return excluir;
         }
-
+        public string ExcluirToString(string pTabela, string[] pCampos, string[] pValores)
+        {
+            var excluir = $"UPDATE {pTabela} SET disponivel = 0 where ";
+            for (int i = 1; i <= pValores.Length - 1; i++)
+            {
+                if ((int.TryParse(pValores[i], out int _) ||
+                    decimal.TryParse(pValores[i], out decimal _)) &&
+                    !pValores[i].Contains("+"))
+                {
+                    excluir += $"{pCampos[i]} = " +
+                        $"{pValores[i].Replace(',', '.')} AND ";
+                }
+                else
+                    excluir += $"{pCampos[i]} = '{pValores[i]}' AND ";
+            }
+            return excluir.Remove(excluir.Length - 5) + ";";
+        }
         public virtual string Excluir(object pObj)
         {
             return "";
         }
-
+        public virtual string Excluir(List<object> pObj)
+        {
+            return "";
+        }
         public virtual string Pesquisar(object pObj)
         {
             return "";
