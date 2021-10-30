@@ -151,30 +151,29 @@ namespace Projeto_ICI.Classes
                    PesoLiquido.ToString() + ';' +
                    UltimaCompra.ToString() + ';' +
 
-                   UmModelo.Codigo.ToString() + ';' +
-                   UmSubgrupo.Codigo.ToString();
+                   UmModelo.Codigo.ToString() +
+                   ((UmSubgrupo.Codigo != 0) ? "" : ';' + UmSubgrupo.Codigo.ToString());
         }
 
         public override string toStringAttribute()
         {
-            return base.toStringAttribute() + ';' +
-                   "produto" + ';' +
-                   "referencia" + ';' +
-                   "codigoBarras" + ';' +
-                   "custo" + ';' +
-                   "unidade" + ';' +
-                   "saldo" + ';' +
-                   "peso_bruto" + ';' +
-                   "peso_liquid" + ';' +
-                   "precoUltCompra" + ';' +
-                   "codigoModelo" + ';' +
-                   "codigoSubgrupo";
+            return base.toStringAttribute() +
+                   ";produto" +
+                   ";referencia" +
+                   ";codigoBarras" + 
+                   ";custo" +
+                   ";unidade" + 
+                   ";saldo" +
+                   ";peso_bruto" +
+                   ";peso_liquid" +
+                   ";precoUltCompra" +
+                   ";codigoModelo" +
+                   ";codigoSubgrupo";
         }
 
         public override string[] toStringSearchPesquisa()
         {
-            return new string[] { "codigoModelo = modelos.codigo",
-                                  "codigoSubgrupo = subgrupos.codigo"};
+            return new string[] { "codigoModelo = modelos.codigo", "codigoSubgrupo = subgrupos.codigo" };           
         }
     }
 }

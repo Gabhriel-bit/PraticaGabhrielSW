@@ -266,9 +266,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_SubGrupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_SubGrupo.Location = new System.Drawing.Point(96, 183);
             this.lbl_SubGrupo.Name = "lbl_SubGrupo";
-            this.lbl_SubGrupo.Size = new System.Drawing.Size(61, 15);
+            this.lbl_SubGrupo.Size = new System.Drawing.Size(66, 15);
             this.lbl_SubGrupo.TabIndex = 38;
-            this.lbl_SubGrupo.Text = "Subgrupo";
+            this.lbl_SubGrupo.Text = "Subgrupo*";
             // 
             // lbl_Referencia
             // 
@@ -356,9 +356,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_Fornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Fornecedor.Location = new System.Drawing.Point(96, 239);
             this.lbl_Fornecedor.Name = "lbl_Fornecedor";
-            this.lbl_Fornecedor.Size = new System.Drawing.Size(70, 15);
+            this.lbl_Fornecedor.Size = new System.Drawing.Size(75, 15);
             this.lbl_Fornecedor.TabIndex = 43;
-            this.lbl_Fornecedor.Text = "Fornecedor";
+            this.lbl_Fornecedor.Text = "Fornecedor*";
             // 
             // txtb_CodigoFornecedor
             // 

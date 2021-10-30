@@ -407,6 +407,14 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Unidade, "O campo 'UND' (unidade) é obrigatório!");
                 txtb_Unidade.Focus();
             }
+            else if (string.IsNullOrEmpty(txtb_SubGrupo.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_SubGrupo, "Campo 'Subgrupo' deve ser inserido" +
+                                              "usando o campo 'Código' ou o botão" +
+                                              "'Pesquisar'");
+                txtb_CodigoSubGrupo.Focus();
+            }
             else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
             {
                 errorMSG.Clear();
@@ -426,6 +434,12 @@ namespace Projeto_ICI.frmCadastros
                                               "usando o campo 'Código' ou o botão" +
                                               "'Pesquisar'");
                 txtb_CodigoModelo.Focus();
+            }
+            else if (lv_Fornecedores.Items.Count == 0)
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Fornecedor, "Insira ao menos um fornecedor");
+                txtb_CodigoFornecedor.Focus();
             }
             else
             {

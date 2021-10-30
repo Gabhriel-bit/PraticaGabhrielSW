@@ -15,7 +15,7 @@ namespace Projeto_ICI.Controllers
                                            "unidade, " +
                                            "saldo, " +
                                            "peso_bruto as Peso_bruto, " +
-                                           "peso_liquid as PEso_liquido, " +
+                                           "peso_liquid as Peso_liquido, " +
                                            "precoUltCompra as Ultima_compra, " +
                                            "referencia as referência, " +
                                            "codigoBarras, " +
@@ -157,10 +157,14 @@ namespace Projeto_ICI.Controllers
                                                                                   ((int)row[10]).ToString(),
                                                                                   out string vlMsgModelo,
                                                                                   true);
-                    vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                        ((int)row[11]).ToString(),
-                                                                                        out string vlMsgSubgrupo,
-                                                                                        true);
+                    string vlMsgSubgrupo = "";
+                    if (row.IsNull("codigoSubgrupo"))
+                    {
+                        vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                            ((int)row[11]).ToString(),
+                                                                                            out vlMsgSubgrupo,
+                                                                                            true);
+                    }
                     vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
 
                     pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
@@ -205,10 +209,14 @@ namespace Projeto_ICI.Controllers
                                                                               ((int)row[10]).ToString(),
                                                                               out string vlMsgModelo,
                                                                               true);
-                vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                    ((int)row[11]).ToString(),
-                                                                                    out string vlMsgSubgrupo,
-                                                                                    true);
+                string vlMsgSubgrupo = "";
+                if (row.IsNull("codigoSubgrupo"))
+                {
+                    vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                        ((int)row[11]).ToString(),
+                                                                                        out vlMsgSubgrupo,
+                                                                                        true);
+                }
                 vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
 
                 pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
