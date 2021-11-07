@@ -219,7 +219,9 @@ namespace Projeto_ICI.frmCadastros
             {
                 string[] item = { umForn.Codigo.ToString(),
                                   umForn.Fornecedor,
-                                  umForn.CNPJ_CPF };
+                                  umForn.CNPJ_CPF,
+                                  umForn.Email };
+
                 var lvItem = new ListViewItem(item);
                 lvItem.Tag = umForn.ThisFornecedor;
 
@@ -366,32 +368,8 @@ namespace Projeto_ICI.frmCadastros
         }
         private void txtb_Produto_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Produto.Text))
-            {
-                errorMSG.SetError(lbl_Produto, "O campo 'Produto' é obrigatório!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umaCtrlProduto.Pesquisar("produto", txtb_Produto.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Produto, "Produto já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Produto, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Produto, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Produto, lbl_Produto, "produto", umaCtrlProduto, e);
+
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {
@@ -407,6 +385,20 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Unidade, "O campo 'UND' (unidade) é obrigatório!");
                 txtb_Unidade.Focus();
             }
+            else if (string.IsNullOrEmpty(txtb_Modelo.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Modelo, "Campo 'Modelo' deve ser inserido" +
+                                              "usando o campo 'Código' ou o botão" +
+                                              "'Pesquisar'");
+                txtb_CodigoModelo.Focus();
+            }
+            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
+                txtb_PesoBruto.Focus();
+            }
             else if (string.IsNullOrEmpty(txtb_SubGrupo.Text))
             {
                 errorMSG.Clear();
@@ -415,25 +407,9 @@ namespace Projeto_ICI.frmCadastros
                                               "'Pesquisar'");
                 txtb_CodigoSubGrupo.Focus();
             }
-            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            else if (verificarPesoLiq())
             {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
-                txtb_PesoBruto.Focus();
-            }
-            else if (!ValidacaoDoubleMoeda(txtb_PesoLiquido.Text))
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_PesoLiquido, "O campo 'Peso Liquido' é obrigatório!");
                 txtb_PesoLiquido.Focus();
-            }
-            else if (string.IsNullOrEmpty(txtb_Modelo.Text))
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_Modelo, "Campo 'Modelo' deve ser inserido" +
-                                              "usando o campo 'Código' ou o botão" +
-                                              "'Pesquisar'");
-                txtb_CodigoModelo.Focus();
             }
             else if (lv_Fornecedores.Items.Count == 0)
             {
@@ -450,12 +426,12 @@ namespace Projeto_ICI.frmCadastros
                                                        txtb_Produto.Text,
                                                        txtb_Referencia.Text,
                                                        txtb_CodigoBarras.Text,
-                                                       decimal.Parse(txtb_Custo.Text == "" ? "0" : txtb_Custo.Text.Replace(".", ","), vgEstilo, vgProv),
+                                                       strToDecimal(txtb_Custo.Text),
                                                        txtb_Unidade.Text,
                                                        int.Parse(txtb_Saldo.Text == "" ? "0" : txtb_Saldo.Text),
-                                                       decimal.Parse(txtb_PesoBruto.Text == "" ? "0" : txtb_PesoBruto.Text.Replace(".", ","), vgEstilo, vgProv),
-                                                       decimal.Parse(txtb_PesoLiquido.Text == "" ? "0" : txtb_PesoLiquido.Text.Replace(".", ","), vgEstilo, vgProv),
-                                                       decimal.Parse(txtb_PrecoUltCompra.Text == "" ? "0" : txtb_PrecoUltCompra.Text.Replace(".", ","), vgEstilo, vgProv));
+                                                       strToDecimal(txtb_PesoBruto.Text),
+                                                       strToDecimal(txtb_PesoLiquido.Text),
+                                                       strToDecimal(txtb_PrecoUltCompra.Text));
                 vlProduto.UmModelo.ThisModelo = umModelo;
                 vlProduto.UmSubgrupo.ThisSubgrupo = umSubgrupo;
                 vlProduto.ListaFornecedores = lvToList();
@@ -520,5 +496,48 @@ namespace Projeto_ICI.frmCadastros
                 e.Cancel = closing;
             }
         }
+
+        private void txtb_PesoBruto_Validating(object sender, CancelEventArgs e)
+        {
+            if (ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_PesoBruto, "Campo 'Peso bruto' inválido!");
+                e.Cancel = closing;
+            }
+        }
+
+        private void txtb_PesoLiquido_Validating(object sender, CancelEventArgs e)
+        {
+            e.Cancel = verificarPesoLiq();
+        }
+
+        private bool verificarPesoLiq()
+        {
+            var vlPesoB = strToDecimal(txtb_PesoBruto.Text);
+            var vlPesoL = strToDecimal(txtb_PesoLiquido.Text);
+
+            errorMSG.Clear();
+            if (ValidacaoDoubleMoeda(txtb_PesoLiquido.Text) && (vlPesoL <= vlPesoB))
+            {
+                errorMSG.Clear();
+                return false;
+            }
+            else
+            {
+                var vlMsg = "Campo 'Peso líquido' inválido!";
+                if (vlPesoL > vlPesoB)
+                {
+                    vlMsg = "O peso líquiso deve ser igual ou inferior ao peso bruto!" +
+                            $"\nPeso bruto:   {vlPesoB}\nPeso líquido: {vlPesoL}";
+                }
+                errorMSG.SetError(lbl_PesoLiquido, vlMsg);
+                return closing;
+            }
+        } 
     }
 }

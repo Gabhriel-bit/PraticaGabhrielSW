@@ -133,32 +133,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Subgrupo_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Subgrupo.Text, 2, true))
-            {
-                if (umCtrlSubgrupo.Pesquisar("subgrupo", txtb_Subgrupo.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Subgrupo, "Subgrupo já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Subgrupo, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Subgrupo, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Subgrupo, "Subgrupo inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Subgrupo, lbl_Subgrupo, "subgrupo", umCtrlSubgrupo, e);
         }
 
         private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)

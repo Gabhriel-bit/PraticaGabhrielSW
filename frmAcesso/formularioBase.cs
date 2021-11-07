@@ -534,5 +534,10 @@ namespace Projeto_ICI
         {
             errorMSG.Clear();
         }
+
+        public decimal strToDecimal(string pNum)
+        {
+            return decimal.Parse(pNum == "" ? "0" : pNum.Replace(".", ","), vgEstilo, vgProv);
+        }
     }
 }

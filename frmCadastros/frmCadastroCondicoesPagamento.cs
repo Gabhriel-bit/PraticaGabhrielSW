@@ -108,7 +108,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 decimal entrada = txtb_Porcentagem.Text == "" ? 0 :
-                    Math.Round(decimal.Parse(txtb_Porcentagem.Text, vgEstilo, vgProv), 2);
+                    Math.Round(strToDecimal(txtb_Porcentagem.Text), 2);
                 string[] porcParcela = CalcularPorcParcelasTxT(int.Parse(txtb_TotalParcelas.Text), entrada.ToString());
                 int dias = 0;
                 if (clearLV)
@@ -205,8 +205,8 @@ namespace Projeto_ICI.frmCadastros
             }
             else
             {
-                decimal totalPorc = decimal.Parse(lbl_TotalPorc.Text.Remove(lbl_TotalPorc.Text.Length - 1), vgEstilo, vgProv);
-                decimal totalMaisNovaParcela = decimal.Parse(txtb_Porcentagem.Text.Replace(".", ","), vgEstilo, vgProv) + totalPorc;
+                decimal totalPorc = strToDecimal(lbl_TotalPorc.Text.Remove(lbl_TotalPorc.Text.Length - 1));
+                decimal totalMaisNovaParcela = strToDecimal(txtb_Porcentagem.Text) + totalPorc;
                 if (lbl_TotalPorc.Text == "100%")
                 {
                     errorMSG.SetError(lbl_Porcentagem, "Limite de parcelas já alcançou 100% !");
@@ -252,7 +252,7 @@ namespace Projeto_ICI.frmCadastros
                     Classes.parcelasCondPag(0,
                                             (lv_Parcelas.Items.Count + 1),
                                             int.Parse(txtb_Dias.Text),
-                                            decimal.Parse(txtb_Porcentagem.Text.Replace(".", ","), vgEstilo, vgProv));
+                                            strToDecimal(txtb_Porcentagem.Text));
                 vlParcela.UmaFormaPag = (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("formaPagamento",
                                                          txtb_FormaPag.Text,
                                                          out string vlMsg,
@@ -266,7 +266,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_CodigoFormPag.Clear();
                 txtb_FormaPag.Clear();
                 recalcularParcelas();
-                //}
             }
         }
 
@@ -437,32 +436,7 @@ namespace Projeto_ICI.frmCadastros
         }
         private void txtb_CondicaoPag_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_CondicaoPag.Text))
-            {
-                errorMSG.SetError(lbl_CondicaoPag, "Condição de pagamento inválida!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlCondPag.Pesquisar("condicaoPagamento", txtb_CondicaoPag.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_CondicaoPag, "Condição de pagamento já cadastrada!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_CondicaoPag, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_CondicaoPag, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_CondicaoPag, lbl_CondicaoPag, "condicaoPagamento", umCtrlCondPag, e);
         }
         private void txtb_Dias_Validating(object sender, CancelEventArgs e)
         {
@@ -563,7 +537,7 @@ namespace Projeto_ICI.frmCadastros
                         vlClone.Tag = new Classes.parcelasCondPag(0,
                                                                   int.Parse(vlString[0]),
                                                                   int.Parse(vlString[1]),
-                                                                  decimal.Parse(vlString[2].Replace("%", ""), vgEstilo, vgProv));
+                                                                  strToDecimal(vlString[2].Replace("%", "")));
                         ((Classes.parcelasCondPag)vlClone.Tag).UmaFormaPag = 
                             (Classes.formasPagamento)umCtrlCondPag.CTRLFormaPagamento.Pesquisar("formaPagamento",
                                                                                                  vlString[3],
@@ -600,13 +574,20 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Multa, "O campo 'Multa' é obrigatório!");
                 txtb_Multa.Focus();
             }
-            else if (lbl_TotalPorc.Text != "100%" && lbl_TotalPorc.Text != "100,0000%")
+            else if (lv_Parcelas.Items.Count <= 0)
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_Dias, "É necessário inserir ao menos uma parcela!");
                 txtb_Dias.Focus();
                 txtb_Dias.Text = "0";
                 txtb_Porcentagem.Text = "100";
+            }
+            else if (lbl_TotalPorc.Text != "100%" || lbl_TotalPorc.Text != "100.0000%"
+                     || lbl_TotalPorc.Text != "100,0000%")
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Porcentagem, "O valor da porcentagem das parcelas ainda não atingiu 100%");
+                txtb_Dias.Focus();
             }
             else
             {
@@ -616,9 +597,9 @@ namespace Projeto_ICI.frmCadastros
                                                                    txtb_DataUltAlt.Text,
                                                                    txtb_CondicaoPag.Text,
                                                                    int.Parse(txtb_TotalParcelas.Text),
-                                                                   decimal.Parse(txtb_TaxaJuros.Text.Replace(".", ","), vgEstilo, vgProv),
-                                                                   decimal.Parse(txtb_Multa.Text.Replace(".", ","), vgEstilo, vgProv),
-                                                                   decimal.Parse(txtb_Desconto.Text.Replace(".", ","), vgEstilo, vgProv));
+                                                                   strToDecimal(txtb_TaxaJuros.Text),
+                                                                   strToDecimal(txtb_Multa.Text),
+                                                                   strToDecimal(txtb_Desconto.Text));
                 vlCondicaoPag.ListaParcelas = lvToList();
                 ObjToDataBase(vlCondicaoPag, umCtrlCondPag);
             }
@@ -697,6 +678,11 @@ namespace Projeto_ICI.frmCadastros
         private void btn_PesquisarFormPagParc_MouseLeave(object sender, EventArgs e)
         {
             btn_PesquisarFormPagParc.Image = umImgPesquisaSair;
+        }
+
+        private void txtb_Dias_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_Dias, e);
         }
     }
 }

@@ -167,32 +167,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Cliente_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Cliente.Text, 2, true))
-            {
-                if (umCtrlCliente.Pesquisar("cliente", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Cliente, "Cliente já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Cliente, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Cliente, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Cliente, "Nome inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Cliente, lbl_Cliente, "cliente", umCtrlCliente, e);
         }
 
         protected override bool validacaoCelularTelefone()

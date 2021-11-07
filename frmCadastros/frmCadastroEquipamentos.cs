@@ -159,16 +159,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Equipamento_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Equipamento.Text))
-            {
-                errorMSG.SetError(lbl_Equipamento, "Equipamento inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                errorMSG.Clear();
-                e.Cancel = false;
-            }
+            ValidarNome(txtb_Equipamento, lbl_Equipamento, "equipamento", umCtrlEquip, e);
         }
 
         private void txtb_CodigoPais_KeyPress(object sender, KeyPressEventArgs e)

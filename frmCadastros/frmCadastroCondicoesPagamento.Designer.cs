@@ -258,6 +258,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Dias.Size = new System.Drawing.Size(52, 20);
             this.txtb_Dias.TabIndex = 6;
             this.txtb_Dias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtb_Dias.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtb_Dias_KeyPress);
             this.txtb_Dias.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Dias_Validating_1);
             // 
             // lbl_Porcentagem

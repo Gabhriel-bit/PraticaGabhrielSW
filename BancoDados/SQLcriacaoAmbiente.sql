@@ -391,8 +391,8 @@ BEGIN
 		dataUltAlt     VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codModeloProd FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo),
-		CONSTRAINT FK_codSubgrupoProd FOREIGN KEY (codigoSubgrupo) REFERENCES subgrupos (codigo)--,
+		CONSTRAINT FK_codModeloProd FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo)--,
+		--CONSTRAINT FK_codSubgrupoProd FOREIGN KEY (codigoSubgrupo) REFERENCES subgrupos (codigo),
 		--CONSTRAINT FK_codProdUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
 	);
 END

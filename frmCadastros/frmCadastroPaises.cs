@@ -72,32 +72,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Pais_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Pais.Text, 2, true))
-            {
-                if (umCtrlPais.Pesquisar("pais", txtb_Pais.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Pais, "País já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Pais, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Pais, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Pais, "País inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Pais, lbl_Pais, "pais", umCtrlPais, e);
         }
     }
 }

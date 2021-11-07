@@ -189,11 +189,9 @@ namespace Projeto_ICI.frmCadastros
                     txtb_Bairro.Text, txtb_CEP.Text, txtb_telCelular.Text,
                     txtb_Email.Text, txtb_CPF_CNPJ.Text, txtb_RG_InscEstadual.Text,
                     date_DataNasc_Fund.Text,
-                    decimal.Parse(txtb_SalarioBase.Text.Replace('.', ','), vgEstilo, vgProv),
-                    decimal.Parse((txtb_ComissaoVenda.Text == "") ? "0" :
-                        txtb_ComissaoVenda.Text.Replace('.', ','), vgEstilo, vgProv),
-                    decimal.Parse((txtb_ComissaoProd.Text == "") ? "0" :
-                        txtb_ComissaoProd.Text.Replace('.', ','), vgEstilo, vgProv),
+                    strToDecimal(txtb_SalarioBase.Text),
+                    strToDecimal(txtb_ComissaoVenda.Text),
+                    strToDecimal(txtb_ComissaoProd.Text),
                     txtb_CNH.Text,
                     txtb_CNH.Text == "" ? "" : date_DataVenc.Text);
 
@@ -286,32 +284,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Funcionario_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Funcionario.Text, 2, true))
-            {
-                if (umCtrlFunc.Pesquisar("funcionario", txtb_Funcionario.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Funcionario, "Funcionário já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Funcionario, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Funcionario, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Funcionario, "Funcionário inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Funcionario, lbl_Funcionario, "funcionario", umCtrlFunc, e);
         }
 
         private void txtb_ComissaoProd_Validating(object sender, CancelEventArgs e)

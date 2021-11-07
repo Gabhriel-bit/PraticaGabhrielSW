@@ -151,8 +151,8 @@ namespace Projeto_ICI.Classes
                    PesoLiquido.ToString() + ';' +
                    UltimaCompra.ToString() + ';' +
 
-                   UmModelo.Codigo.ToString() +
-                   ((UmSubgrupo.Codigo != 0) ? "" : ';' + UmSubgrupo.Codigo.ToString());
+                   UmModelo.Codigo.ToString() + ';' +
+                   UmSubgrupo.Codigo.ToString();
         }
 
         public override string toStringAttribute()

@@ -181,32 +181,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Fornecedor_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
-            {
-                errorMSG.SetError(lbl_Fornecedor, "Nome inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlForn.Pesquisar("fornecedor", txtb_Fornecedor.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Fornecedor, "Nome já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Fornecedor, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Fornecedor, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Fornecedor, lbl_Fornecedor, "fornecedor", umCtrlForn, e);
         }
         protected override bool validacaoCelularTelefone()
         {

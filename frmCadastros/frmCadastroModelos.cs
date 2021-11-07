@@ -138,32 +138,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Modelo_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Modelo.Text))
-            {
-                errorMSG.SetError(lbl_Modelo, "Modelo inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlModelos.Pesquisar("modelo", txtb_Modelo.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Modelo, "Modelo já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Modelo, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Modelo, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Modelo, lbl_Modelo, "modelo", umCtrlModelos, e);
         }
 
         private void btn_Pesquisar_MouseEnter(object sender, EventArgs e)

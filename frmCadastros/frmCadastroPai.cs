@@ -103,5 +103,51 @@ namespace Projeto_ICI.frmCadastros
             closing = false;
             errorMSG.Clear();
         }
+
+        protected virtual void ValidarNome(TextBox pTxtb, Label pLbl, string pCampo,
+                                           Controllers.ctrl pUmCtrl, CancelEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(pTxtb.Text))
+            {
+                var vlCargo =
+                    (Classes.pai)pUmCtrl.Pesquisar(pCampo, pTxtb.Text, out string vlMsg, true);
+                if (vlCargo != null)
+                {
+                    if (vlMsg == "")
+                    {
+                        if (Btn_Acao == "Salvar")
+                        {
+                            errorMSG.SetError(pLbl, $"O campo '{pCampo}' já está cadastrado!");
+                            e.Cancel = closing;
+                        }
+                        else if (vlCargo.Codigo.ToString() != txtb_Codigo.Text)
+                        {
+                            errorMSG.SetError(pLbl, $"O campo '{pCampo}' já está cadastrado!");
+                            e.Cancel = closing;
+                        }
+                        else
+                        {
+                            errorMSG.Clear();
+                            e.Cancel = false;
+                        }
+                    }
+                    else
+                    {
+                        errorMSG.SetError(pLbl, vlMsg);
+                        e.Cancel = closing;
+                    }
+                }
+                else
+                {
+                    errorMSG.SetError(pLbl, null);
+                    e.Cancel = false;
+                }
+            }
+            else
+            {
+                errorMSG.SetError(pLbl, $"O campo '{pCampo}' é inválido!");
+                e.Cancel = closing;
+            }
+        }
     }
 }

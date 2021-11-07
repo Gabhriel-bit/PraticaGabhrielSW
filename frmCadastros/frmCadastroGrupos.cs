@@ -39,32 +39,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Grupo_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Grupo.Text, 2, true))
-            {
-                errorMSG.SetError(txtb_Grupo, "Grupo inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlGrupo.Pesquisar("grupo", txtb_Grupo.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Grupo, "Grupo já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Grupo, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Grupo, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Grupo, lbl_Grupo, "grupo", umCtrlGrupo, e);
         }
 
         private void btn_Cadastro_Click_1(object sender, EventArgs e)

@@ -40,32 +40,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Marca_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoNome(txtb_Marca.Text, 2, true))
-            {
-                errorMSG.SetError(lbl_Marca, "Marca inválida!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlMarca.Pesquisar("marca", txtb_Marca.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Marca, "Marca já cadastrada!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Marca, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Marca, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Marca, lbl_Marca, "marca", umCtrlMarca, e);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

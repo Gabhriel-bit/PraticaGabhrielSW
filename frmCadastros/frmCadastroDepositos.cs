@@ -390,32 +390,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Deposito_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Deposito.Text))
-            {
-                errorMSG.SetError(lbl_Deposito, "Deposito inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlDeposito.Pesquisar("deposito", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Deposito, "Deposito já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Deposito, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Deposito, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Deposito, lbl_Deposito, "deposito", umCtrlDeposito, e);
         }
 
         private void txtb_Logradouro_Validating(object sender, CancelEventArgs e)

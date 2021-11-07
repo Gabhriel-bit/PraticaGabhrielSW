@@ -65,32 +65,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Cargo_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Cargo.Text, 2, true))
-            {
-                if (umCtrlCargo.Pesquisar("cargo", txtb_Cargo.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Cargo, "Cargo já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Cargo, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Cargo, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Cargo, "Cargo inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Cargo, lbl_Cargo, "cargo", umCtrlCargo, e);
         }
         private void btn_Cadastro_Click(object sender, EventArgs e)
         {

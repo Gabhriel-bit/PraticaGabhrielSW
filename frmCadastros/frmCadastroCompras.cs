@@ -179,12 +179,12 @@ namespace Projeto_ICI.frmCadastros
         {
             if (pValorItens)
             {
-                return decimal.Parse(txtb_TotalProdutos.Text.Replace(".", ","), vgEstilo, vgProv);
+                return strToDecimal(txtb_TotalProdutos.Text);
             }
-            return decimal.Parse(txtb_Frete.Text.Replace(".", ","), vgEstilo, vgProv) +
-                   decimal.Parse(txtb_Seguro.Text.Replace(".", ","), vgEstilo, vgProv) +
-                   decimal.Parse(txtb_OutrasDeps.Text.Replace(".", ","), vgEstilo, vgProv) +
-                   decimal.Parse(txtb_TotalProdutos.Text.Replace(".", ","), vgEstilo, vgProv);
+            return strToDecimal(txtb_Frete.Text) +
+                   strToDecimal(txtb_Seguro.Text) +
+                   strToDecimal(txtb_OutrasDeps.Text) +
+                   strToDecimal(txtb_TotalProdutos.Text);
         }
 
         public void ClearTxTBox()
@@ -569,8 +569,8 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 var vlItem = new itensCompra(txtb_Modelo.Text, txtb_Seguro.Text, txtb_NumNF.Text,
                                                             txtb_Unidade.Text, int.Parse(txtb_Quantidade.Text),
-                                                            decimal.Parse(txtb_PrecoUnt.Text, vgEstilo, vgProv),
-                                                            decimal.Parse(txtb_Desconto.Text, vgEstilo, vgProv));
+                                                            strToDecimal(txtb_PrecoUnt.Text),
+                                                            strToDecimal(txtb_Desconto.Text));
                 vlItem.UmProduto = umProduto.ThisProduto;
                 vlItem.UmFornecedor = umForn.ThisFornecedor;
 
@@ -602,8 +602,8 @@ namespace Projeto_ICI.frmCadastros
                 umaCompra.Chegada = dt_Chegada.Text.Split(' ')[0];
                 umaCompra.ChaveAcesso = txtb_ChaveAcesso.Text;
                 umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
-                umaCompra.TotalNota = decimal.Parse(txtb_TotalNota.Text, vgEstilo, vgProv);
-                umaCompra.TotalProdutos = decimal.Parse(txtb_TotalProdutos.Text, vgEstilo, vgProv);
+                umaCompra.TotalNota = strToDecimal(txtb_TotalNota.Text);
+                umaCompra.TotalProdutos = strToDecimal(txtb_TotalProdutos.Text);
 
 
                 string msg = "";

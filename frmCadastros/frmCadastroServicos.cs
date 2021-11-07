@@ -66,7 +66,7 @@ namespace Projeto_ICI.frmCadastros
                                  txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text),
                                  txtb_DataCadastro.Text, txtb_DataUltAlt.Text, txtb_Servico.Text,
                                  txtb_Descricao.Text,
-                                 decimal.Parse(txtb_Preco.Text == "" ? "0" : txtb_Preco.Text.Replace(".", ","), vgEstilo, vgProv));
+                                 strToDecimal(txtb_Preco.Text));
 
                 ObjToDataBase(vlServico, umCtrlServico);
             }
@@ -74,32 +74,8 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Servico_Validating(object sender, CancelEventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtb_Servico.Text))
-            {
-                if (umCtrlServico.Pesquisar("servico", txtb_Servico.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Servico, "Serviço já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Servico, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Servico, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Servico, "Serviço inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Servico, lbl_Servico, "servico", umCtrlServico, e);
+
         }
     }
 }

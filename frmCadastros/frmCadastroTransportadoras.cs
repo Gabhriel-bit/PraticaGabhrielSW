@@ -92,32 +92,8 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Transpotadora_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Transportadora.Text))
-            {
-                errorMSG.SetError(lbl_Transportadora, "Nome inválido!");
-                e.Cancel = closing;
-            }
-            else
-            {
-                if (umCtrlTransport.Pesquisar("transportadora", txtb_Transportadora.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Transportadora, "Nome já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Transportadora, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Transportadora, null);
-                    e.Cancel = false;
-                }
-            }
+            ValidarNome(txtb_Transportadora, lbl_Transportadora, "transportadora", umCtrlTransport, e);
+
         }
         protected override bool validacaoCelularTelefone()
         {

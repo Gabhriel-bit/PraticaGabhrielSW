@@ -143,32 +143,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Estado_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Estado.Text, 2, true))
-            {
-                if (umCtrlEstado.Pesquisar("estado", txtb_Estado.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Estado, "Estado já cadastrado!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Estado, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Estado, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Estado, "Estado inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Estado, lbl_Estado, "estado", umCtrlEstado, e);
         }
 
         private void txtb_CodigoPais_KeyPress(object sender, KeyPressEventArgs e)

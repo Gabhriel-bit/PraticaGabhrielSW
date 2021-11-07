@@ -79,32 +79,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Cidade_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoNome(txtb_Cidade.Text, 2, true))
-            {
-                if (umCtrlCidade.Pesquisar("cidade", txtb_Cidade.Text, true, out string vlMsg).Rows.Count != 0)
-                {
-                    if (vlMsg == "")
-                    {
-                        errorMSG.SetError(lbl_Cidade, "Cidade já cadastrada!");
-                        e.Cancel = closing;
-                    }
-                    else
-                    {
-                        errorMSG.SetError(lbl_Cidade, vlMsg);
-                        e.Cancel = closing;
-                    }
-                }
-                else
-                {
-                    errorMSG.SetError(lbl_Cidade, null);
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                errorMSG.SetError(lbl_Cidade, "Cidade inválido!");
-                e.Cancel = closing;
-            }
+            ValidarNome(txtb_Cidade, lbl_Cidade, "cidade", umCtrlCidade, e);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

@@ -21,18 +21,27 @@ namespace Projeto_ICI.DAOs
             //remove o espaço e a virgula final e adiciona a proxima sequencia de ações
             insert += pCampos[pCampos.Length - 1] + ") values (";
 
-            //insere os valores na sequencia dos campos especificados
-            for (int i = 1; i <= pCampos.Length - 1; i++)
+            try
             {
-                if ((int.TryParse(pValores[i], out int _) ||
-                    decimal.TryParse(pValores[i], out decimal _)) &&
-                    !pValores[i].Contains("+"))
+                for (int i = 1; i <= pValores.Length - 1; i++)
                 {
-                    insert += $"{pValores[i].Replace(',', '.')}, ";
+                    if ((int.TryParse(pValores[i], out int _) ||
+                        decimal.TryParse(pValores[i], out decimal _)) &&
+                        !pValores[i].Contains("+"))
+                    {
+                        insert += $"{pValores[i].Replace(',', '.')}, ";
+                    }
+                    else
+                        insert += $"'{pValores[i]}', ";
                 }
-                else
-                    insert += $"'{pValores[i]}', ";
             }
+            catch (Exception e)
+            {
+                string msg = e.Message;
+                throw;
+            }
+            //insere os valores na sequencia dos campos especificados
+
             //remove o espaço e a virgula final e adiciona ); para encerrar a inserção
             insert = insert.Remove(insert.Length - 2) + ");";
 
