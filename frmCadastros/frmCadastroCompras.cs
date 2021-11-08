@@ -241,6 +241,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoUsu.Enabled = true;
 
             btn_Gerar.Enabled = true;
+            btn_Salvar.Enabled = true;
             btn_Limpar.Enabled = true;
             btn_PesquisarCondPag.Enabled = true;
             btn_PesquisarFornecedor.Enabled = true;
@@ -271,6 +272,7 @@ namespace Projeto_ICI.frmCadastros
 
             btn_Gerar.Enabled = false;
             btn_Limpar.Enabled = false;
+            btn_Salvar.Enabled = false;
             btn_PesquisarCondPag.Enabled = false;
             btn_PesquisaTransportadora.Enabled = false;
         }
@@ -311,21 +313,33 @@ namespace Projeto_ICI.frmCadastros
 
         private void validarChaveCompra()
         {
-            umaCompra.Modelo = txtb_Modelo.Text;
-            umaCompra.Serie = txtb_Serie.Text;
-            umaCompra.NumeroNF = txtb_NumNF.Text;
-            umaCompra.UmFornecedor = umForn.ThisFornecedor;
-            var vlPesquisa = umCtrlCompra.Pesquisar(umaCompra.ToStringPK.Split(';'),
-                                                    umaCompra.PK.Split(';'), out string vlMsg, true);
-            if (vlPesquisa != null)
+            if (txtb_Fornecedor.Text == "")
             {
-                MessageBox.Show($"Chave de pesquisa [ {umaCompra.ToStringPK} ] já está cadastrada!", "AVISO");
-                txtb_Modelo.Focus();
+                errorMSG.SetError(lbl_Fornecedor, "Insira um fornecedor digitando um código " +
+                                                  "ou usado o botão de pesquisa!");
+                BloquearTxtBox(true);
+                txtb_CodigoFornecedor.Focus();
             }
             else
             {
-                DesBloqTxTBox();
+                umaCompra.Modelo = txtb_Modelo.Text;
+                umaCompra.Serie = txtb_Serie.Text;
+                umaCompra.NumeroNF = txtb_NumNF.Text;
+                umaCompra.UmFornecedor = umForn.ThisFornecedor;
+                var vlPesquisa = umCtrlCompra.Pesquisar(umaCompra.ToStringPK.Split(';'),
+                                                        umaCompra.PK.Split(';'), out string vlMsg, true);
+                if (vlPesquisa != null)
+                {
+                    MessageBox.Show($"Chave de pesquisa [ {umaCompra.ToStringPK} ] já está cadastrada!", "AVISO");
+                    txtb_Modelo.Focus();
+                    BloquearTxtBox(true);
+                }
+                else
+                {
+                    DesBloqTxTBox();
+                }
             }
+
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -528,12 +542,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
         {
-            if (lv_ItensCompra.Items.Count == 0)
-            {
-                errorMSG.SetError(btn_Adicionar, "Insira ao menos um item!");
-                btn_PesquisarProduto.Focus();
-            }
-            else if (string.IsNullOrEmpty(txtb_Produto.Text))
+            if (string.IsNullOrEmpty(txtb_Produto.Text))
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_CodigoProduto, "Selecione um produto");
@@ -558,16 +567,10 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
                 txtb_PrecoUnt.Focus();
             }
-            else if (!ValidacaoDoubleMoeda(txtb_Desconto.Text))
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_Desconto.Text}' inválido");
-                txtb_Desconto.Text = "0";
-            }
             else
             {
                 errorMSG.Clear();
-                var vlItem = new itensCompra(txtb_Modelo.Text, txtb_Seguro.Text, txtb_NumNF.Text,
+                var vlItem = new itensCompra(txtb_Modelo.Text, txtb_Serie.Text, txtb_NumNF.Text,
                                                             txtb_Unidade.Text, int.Parse(txtb_Quantidade.Text),
                                                             strToDecimal(txtb_PrecoUnt.Text),
                                                             strToDecimal(txtb_Desconto.Text));
@@ -575,8 +578,12 @@ namespace Projeto_ICI.frmCadastros
                 vlItem.UmFornecedor = umForn.ThisFornecedor;
 
 
-                var vlString = new string[] { vlItem.UmProduto.Produto, txtb_Unidade.Text, txtb_Quantidade.Text,
-                                              vlItem.PrecoUnidade.ToString(), vlItem.Desconto.ToString(), "NC",
+                var vlString = new string[] { vlItem.UmProduto.Produto, 
+                                              txtb_Unidade.Text,
+                                              txtb_Quantidade.Text,
+                                              vlItem.PrecoUnidade.ToString(),
+                                              vlItem.Desconto.ToString(),
+                                              "(AT)" + vlItem.UmProduto.Custo.ToString(),
                                               (vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto).ToString() };
 
                 var vlLVItem = new ListViewItem(vlString);
@@ -634,6 +641,152 @@ namespace Projeto_ICI.frmCadastros
         {
             get => btn_Salvar.Text;
             set => btn_Salvar.Text = value;
+        }
+
+        private void txtb_Fornecedor_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
+            {
+                BloquearTxtBox(false);
+            }
+            else
+            {
+                DesBloqTxTBox();          
+            }
+            validarChaveCompra();
+        }
+
+        private void txtb_CodigoFornecedor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_CodigoFornecedor, e);
+        }
+
+        private void txtb_CodigoProduto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_CodigoProduto, e);
+        }
+
+        private void txtb_CodigoTransport_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_CodigoTransport, e);
+        }
+
+        private void txtb_CodigoCondPag_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_CodigoCondPag, e);
+        }
+
+        private void txtb_Quantidade_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_Quantidade, e);
+        }
+
+        private void txtb_CodigoProduto_TextChanged(object sender, EventArgs e)
+        {
+            if (txtb_CodigoProduto.Text == "")
+            {
+                txtb_Produto.Clear();
+            }
+            else
+            {
+                if (int.TryParse(txtb_CodigoProduto.Text, out int vlCodigo))
+                {
+                    var vlProduto =
+                         (Classes.produtos)umCtrlCompra.CTRLProduto.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            true);
+                    if (vlProduto != null)
+                    {
+                        if (vlMsg == "")
+                        {
+                            txtb_Produto.Text = vlProduto.Produto;
+                            umProduto.ThisProduto = vlProduto;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Produto.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Produto.Clear();
+                    }
+                }
+            }
+        }
+
+        private void txtb_CodigoTransport_TextChanged(object sender, EventArgs e)
+        {
+            if (txtb_CodigoTransport.Text == "")
+            {
+                txtb_Transport.Clear();
+            }
+            else
+            {
+                if (int.TryParse(txtb_CodigoTransport.Text, out int vlCodigo))
+                {
+                    var vlTransport =
+                         (Classes.transportadoras)umCtrlCompra.CTRLTransport.Pesquisar("codigo",
+                                                                            vlCodigo.ToString(),
+                                                                            out string vlMsg,
+                                                                            true);
+                    if (vlTransport != null)
+                    {
+                        if (vlMsg == "")
+                        {
+                            txtb_Transport.Text = vlTransport.Transportadora;
+                            umaTranspot.ThisTransportadora = vlTransport;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Transport.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_Transport.Clear();
+                    }
+                }
+            }
+        }
+
+        private void txtb_CodigoCondPag_TextChanged(object sender, EventArgs e)
+        {
+            if (txtb_CodigoCondPag.Text == "")
+            {
+                txtb_CondicaoPag.Clear();
+            }
+            else
+            {
+                if (int.TryParse(txtb_CodigoCondPag.Text, out int vlCodigo))
+                {
+                    var vlCondPag =
+                         (Classes.condicoesPagamento)umCtrlCompra.CTRLContasPag.Pesquisar("codigo",
+                                                                                vlCodigo.ToString(),
+                                                                                out string vlMsg,
+                                                                                true);
+                    if (vlCondPag != null)
+                    {
+                        if (vlMsg == "")
+                        {
+                            txtb_CondicaoPag.Text = vlCondPag.CondicaoPag;
+                            umCondPag.ThisCondPag = vlCondPag;
+                        }
+                        else
+                        {
+                            showErrorMsg(vlMsg);
+                            txtb_Produto.Clear();
+                        }
+                    }
+                    else
+                    {
+                        txtb_CondicaoPag.Clear();
+                    }
+                }
+            }
         }
     }
 }

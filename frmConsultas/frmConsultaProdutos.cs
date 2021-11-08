@@ -94,12 +94,7 @@ namespace Projeto_ICI.frmConsultas
             if (btn_Sair.Text != "Sair")
             {
                 var vlProduto = (Classes.produtos)dataGridToObj(umCtrlProduto, out string vlMsg);
-                if (vlProduto == null)
-                {
-                    errorMSG.SetError(btn_Alterar, "Selecione um e apenas um produto!");
-                    this.dataGridView.Focus();
-                }
-                else if (vlMsg != "")
+                if (vlMsg != "")
                 {
                     errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();

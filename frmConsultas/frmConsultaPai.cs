@@ -68,16 +68,13 @@ namespace Projeto_ICI.frmConsultas
 
         protected virtual object dataGridToObj(Controllers.ctrl pCtrl, out string pMsg)
         {
-            if (dataGridView.SelectedRows.Count == 0 ||
-                dataGridView.SelectedRows[0].Cells[0].Value == null)
-            {
-                pMsg = "";
+            pMsg = "";
+            if (dataGridView.SelectedRows.Count == 0 || dataGridView.SelectedRows[0].Cells[0].Value == null)
                 return null;
-            }
             else
             {
                 var row = dataGridView.SelectedRows[0].Cells;
-                return pCtrl.Pesquisar("codigo", ((int)row[0].Value).ToString(), out pMsg, false);
+                return pCtrl.Pesquisar("codigo", ((int)row[0].Value).ToString(), out pMsg, false); 
             }
         }
     }
