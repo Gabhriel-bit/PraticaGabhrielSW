@@ -226,9 +226,11 @@ namespace Projeto_ICI.frmCadastros
             this.ch_Desconto,
             this.ch_PrecoOper,
             this.ch_SubTotal});
+            this.lv_ItensCompra.FullRowSelect = true;
             this.lv_ItensCompra.GridLines = true;
             this.lv_ItensCompra.HideSelection = false;
             this.lv_ItensCompra.Location = new System.Drawing.Point(6, 64);
+            this.lv_ItensCompra.MultiSelect = false;
             this.lv_ItensCompra.Name = "lv_ItensCompra";
             this.lv_ItensCompra.Size = new System.Drawing.Size(596, 130);
             this.lv_ItensCompra.TabIndex = 73;
@@ -270,13 +272,13 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Remover
             // 
-            this.btn_Remover.Enabled = false;
             this.btn_Remover.Location = new System.Drawing.Point(97, 200);
             this.btn_Remover.Name = "btn_Remover";
             this.btn_Remover.Size = new System.Drawing.Size(75, 23);
             this.btn_Remover.TabIndex = 15;
             this.btn_Remover.Text = "Remover";
             this.btn_Remover.UseVisualStyleBackColor = true;
+            this.btn_Remover.Click += new System.EventHandler(this.btn_Remover_Click);
             // 
             // btn_Adicionar
             // 

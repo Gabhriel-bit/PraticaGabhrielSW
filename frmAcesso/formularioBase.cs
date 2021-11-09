@@ -470,7 +470,7 @@ namespace Projeto_ICI
         }
         public static void ValidacaoCodigo(TextBox txtb, KeyPressEventArgs e)
         {
-            if (!ValidacaoIntPositivo(e.KeyChar.ToString(), false) && e.KeyChar != (char)Keys.Back)
+            if (!ValidacaoIntPositivo(e.KeyChar.ToString(), true) && e.KeyChar != (char)Keys.Back)
             {
                 if (!string.IsNullOrEmpty(txtb.Text))
                 {

@@ -106,7 +106,7 @@ namespace Projeto_ICI.Controllers
             }
             else
             {
-                DataRow row = vlTabelaFormaPag.Rows[0];
+                DataRow row = vlTabelaFormaPag.Rows[0];         
                 return new Classes.formasPagamento((int)row[0], (int)row[2],
                                                    (string)row[3], (string)row[4],
                                                    (string)row[1]);

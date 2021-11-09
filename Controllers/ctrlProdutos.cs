@@ -158,13 +158,11 @@ namespace Projeto_ICI.Controllers
                                                                                   out string vlMsgModelo,
                                                                                   true);
                     string vlMsgSubgrupo = "";
-                    if (row.IsNull("codigoSubgrupo"))
-                    {
-                        vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                            ((int)row[11]).ToString(),
-                                                                                            out vlMsgSubgrupo,
-                                                                                            true);
-                    }
+
+                    vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                        ((int)row[11]).ToString(),
+                                                                                        out vlMsgSubgrupo,
+                                                                                        true);
                     vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
 
                     pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
@@ -210,13 +208,11 @@ namespace Projeto_ICI.Controllers
                                                                               out string vlMsgModelo,
                                                                               true);
                 string vlMsgSubgrupo = "";
-                if (row.IsNull("codigoSubgrupo"))
-                {
-                    vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                        ((int)row[11]).ToString(),
-                                                                                        out vlMsgSubgrupo,
-                                                                                        true);
-                }
+
+                vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
+                                                                                    ((int)row[11]).ToString(),
+                                                                                    out vlMsgSubgrupo,
+                                                                                    true);
                 vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
 
                 pMsg += (vlMsgModelo == "" ? "" : vlMsgModelo) +
@@ -236,7 +232,7 @@ namespace Projeto_ICI.Controllers
                                                    camposSelectProduto_Forn,
                                                    "codigoProduto", pCodigoProduto.ToString()), out string vlMsg);
             var vlListaForn = umCtrlFornecedor.PesquisarCollection(out string vlMsgForn);
-            pMsg = vlMsg + '\n' + vlMsgForn;
+            pMsg = vlMsg + ((vlMsgForn == "") ? "" : + '\n' + vlMsgForn);
             if (vlTabelaParcalasCondPag.Rows.Count == 0)
             {
                 return null;

@@ -42,7 +42,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_FormaPag_Validating(object sender, CancelEventArgs e)
         {
-            ValidarNome(txtb_FormaPag, lbl_FormaPag, "formaPagamneto", umCtrlFormPag, e);
+            ValidarNome(txtb_FormaPag, lbl_FormaPag, "formaPagamento", umCtrlFormPag, e);
         }
 
         private void btn_Cadastro_Click(object sender, EventArgs e)

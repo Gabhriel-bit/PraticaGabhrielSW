@@ -79,7 +79,7 @@ namespace Projeto_ICI.Classes
             FumaCondPag = new condicoesPagamento();
 
             FpesoBruto = pPesoBruto;
-            FpesoLiquido = pPesoLiq;
+            FpesoLiquido = pPesoLiq;  
             FumaListaItens = new List<itensCompra>();
             FumaListaContas = new List<contasPagar>();
         }
@@ -124,10 +124,10 @@ namespace Projeto_ICI.Classes
         public fornecedores UmFornecedor
         { get => FumForn; set => FumForn = value; }
         public List<itensCompra> UmaListaItens
-        { get => CloneListaItens(); set => FumaListaItens = value; }
+        { get => FumaListaItens; set => FumaListaItens = value; }
         public List<contasPagar> UmaListaContasPagar
         { get => CloneListaContas(); set => FumaListaContas = value; }
-        private List<itensCompra> CloneListaItens()
+        public List<itensCompra> CloneListaItens()
         {
             if (FumaListaItens.Count == 0)
             {

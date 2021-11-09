@@ -64,12 +64,14 @@ namespace Projeto_ICI.frmCadastros
             if (lv_ItensCompra.Items.Count == 0)
             {
                 errorMSG.SetError(btn_Gerar, "Não há itens para gerar as parcelas!");
+                vlResult = false;
             }
             else if (umCondPag.Codigo == 0)
             {
                 errorMSG.Clear();
                 errorMSG.SetError(btn_Gerar, "Seleciona uma condição de pagamento!");
                 txtb_CodigoCondPag.Focus();
+                vlResult = false;
             }
             else if (string.IsNullOrEmpty(txtb_Seguro.Text))
             {
@@ -78,6 +80,7 @@ namespace Projeto_ICI.frmCadastros
                     "Caso seja não exista, insira 0");
                 txtb_Seguro.Text = "0";
                 txtb_Seguro.Focus();
+                vlResult = false;
             }
             else if (string.IsNullOrEmpty(txtb_Frete.Text))
             {
@@ -86,6 +89,7 @@ namespace Projeto_ICI.frmCadastros
                     "Caso seja não exista, insira 0");
                 txtb_Frete.Text = "0";
                 txtb_Frete.Focus();
+                vlResult = false;
             }
             else if (string.IsNullOrEmpty(txtb_OutrasDeps.Text))
             {
@@ -94,6 +98,7 @@ namespace Projeto_ICI.frmCadastros
                     "Caso seja não exista, insira 0");
                 txtb_OutrasDeps.Text = "0";
                 txtb_OutrasDeps.Focus();
+                vlResult = false;
             }
             return vlResult;
         }
@@ -102,24 +107,25 @@ namespace Projeto_ICI.frmCadastros
         {
             if (lv_ItensCompra.Items.Count == 0)
             {
-                errorMSG.SetError(btn_Gerar, "Não há itens para gerar as parcelas!");
+                errorMSG.SetError(btn_Adicionar, "Não há itens para gerar as parcelas!");
+                txtb_CodigoProduto.Focus();
             }
             else if (txtb_CondicaoPag.Text == "")
             {
                 errorMSG.Clear();
-                errorMSG.SetError(btn_Gerar, "Seleciona uma condição de pagamento!");
+                errorMSG.SetError(lbl_CondicaoPag, "Seleciona uma condição de pagamento!");
                 txtb_CodigoCondPag.Focus();
             }
             else if (txtb_Transport.Text == "")
             {
                 errorMSG.Clear();
-                errorMSG.SetError(btn_Gerar, "Seleciona uma transportadora!");
+                errorMSG.SetError(lbl_Transpotadora, "Seleciona uma transportadora!");
                 txtb_Transport.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Seguro.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(btn_Gerar, "Insira um valor para o seguro!\n" +
+                errorMSG.SetError(lbl_Seguro, "Insira um valor para o seguro!\n" +
                     "Caso seja não exista, insira 0");
                 txtb_Seguro.Text = "0";
                 txtb_Seguro.Focus();
@@ -127,7 +133,7 @@ namespace Projeto_ICI.frmCadastros
             else if (string.IsNullOrEmpty(txtb_Frete.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(btn_Gerar, "Insira um valor para o frete!\n" +
+                errorMSG.SetError(lbl_Frete, "Insira um valor para o frete!\n" +
                     "Caso seja não exista, insira 0");
                 txtb_Frete.Text = "0";
                 txtb_Frete.Focus();
@@ -135,7 +141,7 @@ namespace Projeto_ICI.frmCadastros
             else if (string.IsNullOrEmpty(txtb_OutrasDeps.Text))
             {
                 errorMSG.Clear();
-                errorMSG.SetError(btn_Gerar, "Insira um valor para outras despesas!\n" +
+                errorMSG.SetError(lbl_OutrasDeps, "Insira um valor para outras despesas!\n" +
                     "Caso seja não exista, insira 0");
                 txtb_OutrasDeps.Text = "0";
                 txtb_OutrasDeps.Focus();
@@ -150,7 +156,22 @@ namespace Projeto_ICI.frmCadastros
 
         private void CalcularParcelas()
         {
-            decimal vlTotal = CalcularTotal();
+            decimal vlTotal = strToDecimal(txtb_Frete.Text) +
+                              strToDecimal(txtb_Seguro.Text) +
+                              strToDecimal(txtb_OutrasDeps.Text);
+            if (vlTotal > 0)
+            {
+                var vlLista = calcularPorcItens();
+                int vlIndex = 0;
+                foreach(ListViewItem vlItem in lv_ItensCompra.Items)
+                {
+                    vlItem.SubItems[5].Text = ((vlLista[vlIndex] * vlTotal) / int.Parse(vlItem.SubItems[2].Text)).ToString();
+                    vlIndex += 1;
+                }
+            }
+            recalcularTotal();
+            txtb_TotalNota.Text = txtb_TotalProdutos.Text;
+            vlTotal = strToDecimal(txtb_TotalNota.Text);
             umaListaItens = new List<contasPagar>();
             foreach (parcelasCondPag vlParcela in umCondPag.ListaParcelas)
             {
@@ -165,7 +186,6 @@ namespace Projeto_ICI.frmCadastros
                                                       vlListItem.UmaFormaPag.FormaPag,
                                                       vlListItem.ValorTotal.ToString()};
 
-
                 ListViewItem vlLVItem = new ListViewItem(vlLVStrItem);
                 vlLVItem.Tag = vlListItem.ThisContaPagar;
 
@@ -175,16 +195,13 @@ namespace Projeto_ICI.frmCadastros
             umaCompra.UmaListaContasPagar = umaListaItens;
         }
 
-        private decimal CalcularTotal(bool pValorItens = false)
-        {
-            if (pValorItens)
-            {
-                return strToDecimal(txtb_TotalProdutos.Text);
-            }
-            return strToDecimal(txtb_Frete.Text) +
-                   strToDecimal(txtb_Seguro.Text) +
-                   strToDecimal(txtb_OutrasDeps.Text) +
-                   strToDecimal(txtb_TotalProdutos.Text);
+        private List<decimal> calcularPorcItens()
+        { 
+            var vlLista = new List<decimal>();
+            var vlTotalItens = strToDecimal(txtb_TotalProdutos.Text);
+            foreach (ListViewItem vlItem in lv_ItensCompra.Items)
+                vlLista.Add(strToDecimal(vlItem.SubItems[6].Text) / vlTotalItens);
+            return vlLista;
         }
 
         public void ClearTxTBox()
@@ -279,7 +296,6 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Sair_Click(object sender, EventArgs e)
         {
-
             Close();
         }
 
@@ -305,6 +321,7 @@ namespace Projeto_ICI.frmCadastros
             frmConsForn.Btn_Sair = nomeBtn;
             if (umForn.Codigo != 0)
             {
+                txtb_Fornecedor.Clear();
                 txtb_CodigoFornecedor.Text = umForn.Codigo.ToString();
                 txtb_Fornecedor.Text = umForn.Fornecedor;
             }
@@ -351,6 +368,7 @@ namespace Projeto_ICI.frmCadastros
             frmConsProduto.Btn_Sair = nomeBtn;
             if (umProduto.Codigo != 0)
             {
+                errorMSG.Clear();
                 txtb_CodigoProduto.Text = umProduto.Codigo.ToString();
                 txtb_Produto.Text = umProduto.Produto;
             }
@@ -365,6 +383,7 @@ namespace Projeto_ICI.frmCadastros
             frmConsCondPag.Btn_Sair = nomeBtn;
             if (umCondPag.Codigo != 0)
             {
+                errorMSG.Clear();
                 txtb_CodigoCondPag.Text = umCondPag.Codigo.ToString();
                 txtb_CondicaoPag.Text = umCondPag.CondicaoPag;
             }
@@ -379,6 +398,7 @@ namespace Projeto_ICI.frmCadastros
             frmConsTransport.Btn_Sair = nomeBtn;
             if (umaTranspot.Codigo != 0)
             {
+                errorMSG.Clear();
                 txtb_CodigoTransport.Text = umaTranspot.Codigo.ToString();
                 txtb_Transport.Text = umaTranspot.Transportadora;
             }
@@ -403,6 +423,7 @@ namespace Projeto_ICI.frmCadastros
                     {
                         if (vlMsg == "")
                         {
+                            txtb_Fornecedor.Clear();
                             txtb_Fornecedor.Text = vlForn.Fornecedor;
                             umForn.ThisFornecedor = vlForn;
                             validarChaveCompra();
@@ -533,11 +554,42 @@ namespace Projeto_ICI.frmCadastros
         {
             if (!ValidacaoDoubleMoeda(txtb_Desconto.Text))
             {
-                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_Desconto.Text}' inválido");
+                errorMSG.SetError(lbl_Desconto, $"Valor '{txtb_Desconto.Text}' inválido");
                 txtb_Desconto.Text = "0";
             }
             else
                 errorMSG.Clear();
+        }
+
+        private bool verificarItens(string pProduto)
+        {
+            if (lv_ItensCompra.Items.Count == 0)
+            { return false; }
+            else
+            {
+                foreach (ListViewItem vlItem in lv_ItensCompra.Items)
+                {
+                    var vlTag = (Classes.itensCompra)vlItem.Tag;
+                    if(vlTag != null)
+                        if (vlTag.UmProduto.Produto == pProduto)
+                            return true;
+                }
+                return false;
+            }
+        }
+
+        private void recalcularTotal()
+        {
+            decimal vlTotal = 0;
+            foreach (ListViewItem vlItem in lv_ItensCompra.Items)
+            {
+                vlItem.SubItems[6].Text = ((strToDecimal(vlItem.SubItems[3].Text)  +
+                                            strToDecimal(vlItem.SubItems[4].Text)  -
+                                            strToDecimal(vlItem.SubItems[5].Text)) *
+                                            strToDecimal(vlItem.SubItems[2].Text)).ToString();
+                vlTotal += strToDecimal(vlItem.SubItems[6].Text);
+            }
+            txtb_TotalProdutos.Text = vlTotal.ToString();
         }
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
@@ -546,6 +598,14 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_CodigoProduto, "Selecione um produto");
+                btn_PesquisarProduto.Focus();
+            }
+            else if (verificarItens(txtb_Produto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_CodigoProduto, "O produto já está na lista");
+                txtb_CodigoProduto.Clear();
+                txtb_Produto.Clear();
                 btn_PesquisarProduto.Focus();
             }
             else if (string.IsNullOrEmpty(txtb_Unidade.Text))
@@ -578,12 +638,12 @@ namespace Projeto_ICI.frmCadastros
                 vlItem.UmFornecedor = umForn.ThisFornecedor;
 
 
-                var vlString = new string[] { vlItem.UmProduto.Produto, 
+                var vlString = new string[] { vlItem.UmProduto.Produto,
                                               txtb_Unidade.Text,
                                               txtb_Quantidade.Text,
                                               vlItem.PrecoUnidade.ToString(),
                                               vlItem.Desconto.ToString(),
-                                              "(AT)" + vlItem.UmProduto.Custo.ToString(),
+                                              "0",
                                               (vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto).ToString() };
 
                 var vlLVItem = new ListViewItem(vlString);
@@ -591,6 +651,13 @@ namespace Projeto_ICI.frmCadastros
 
                 umaCompra.UmaListaItens.Add(vlItem);
                 lv_ItensCompra.Items.Add(vlLVItem);
+                txtb_Produto.Clear();
+                txtb_CodigoProduto.Clear();
+                txtb_Unidade.Clear();
+                txtb_PrecoUnt.Clear();
+                txtb_Desconto.Text = "0";
+                txtb_Quantidade.Text = "0";
+                recalcularTotal();
             }
 
         }
@@ -611,7 +678,6 @@ namespace Projeto_ICI.frmCadastros
                 umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
                 umaCompra.TotalNota = strToDecimal(txtb_TotalNota.Text);
                 umaCompra.TotalProdutos = strToDecimal(txtb_TotalProdutos.Text);
-
 
                 string msg = "";
                 if (Btn_Acao == "Salvar")
@@ -756,9 +822,7 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoCondPag_TextChanged(object sender, EventArgs e)
         {
             if (txtb_CodigoCondPag.Text == "")
-            {
                 txtb_CondicaoPag.Clear();
-            }
             else
             {
                 if (int.TryParse(txtb_CodigoCondPag.Text, out int vlCodigo))
@@ -782,10 +846,21 @@ namespace Projeto_ICI.frmCadastros
                         }
                     }
                     else
-                    {
                         txtb_CondicaoPag.Clear();
-                    }
                 }
+            }
+        }
+
+        private void btn_Remover_Click(object sender, EventArgs e)
+        {
+            if (lv_ItensCompra.Items.Count <= 0)
+                errorMSG.SetError(btn_Remover, "Não há itens na lista!");
+            if (lv_ItensCompra.SelectedIndices.Count == 0)
+                errorMSG.SetError(btn_Remover, "Selecione um item!");
+            else
+            {
+                errorMSG.Clear();
+                lv_ItensCompra.Items.Remove(lv_ItensCompra.Items[lv_ItensCompra.SelectedIndices[0]]);
             }
         }
     }

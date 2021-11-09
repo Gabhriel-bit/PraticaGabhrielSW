@@ -82,7 +82,6 @@ namespace Projeto_ICI.frmCadastros
         }
         public override void DesBloqTxTBox()
         {
-            base.DesBloqTxTBox();
             txtb_CodigoBarras.Enabled = true;
             txtb_CodigoFornecedor.Enabled = true;
             txtb_CodigoUsu.Enabled = true;

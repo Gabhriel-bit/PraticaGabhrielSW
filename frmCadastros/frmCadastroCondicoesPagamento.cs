@@ -58,7 +58,7 @@ namespace Projeto_ICI.frmCadastros
             //txtb_TotalParcelas.Enabled = true;
             lv_Parcelas.Enabled = true;
             txtb_CodigoFormPag.Enabled = true;
-            txtb_FormaPag.Enabled = true;
+            //txtb_FormaPag.Enabled = true;
             txtb_Porcentagem.Enabled = true;
             btn_Adicionar.Enabled = true;
             btn_Alterar.Enabled = true;
@@ -76,7 +76,7 @@ namespace Projeto_ICI.frmCadastros
             //txtb_TotalParcelas.Enabled = false;
             lv_Parcelas.Enabled = false;
             txtb_CodigoFormPag.Enabled = false;
-            txtb_FormaPag.Enabled = false;
+            //txtb_FormaPag.Enabled = false;
             txtb_Porcentagem.Enabled = false;
             btn_Adicionar.Enabled = false;
             btn_Alterar.Enabled = false;
@@ -582,8 +582,11 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Dias.Text = "0";
                 txtb_Porcentagem.Text = "100";
             }
-            else if (lbl_TotalPorc.Text != "100%" || lbl_TotalPorc.Text != "100.0000%"
-                     || lbl_TotalPorc.Text != "100,0000%")
+            else if (lbl_TotalPorc.Text != "100%"
+                     && lbl_TotalPorc.Text != "100,00%"
+                     && lbl_TotalPorc.Text != "100.00%"
+                     && lbl_TotalPorc.Text != "100.0000%"
+                     && lbl_TotalPorc.Text != "100,0000%")
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_Porcentagem, "O valor da porcentagem das parcelas ainda não atingiu 100%");
