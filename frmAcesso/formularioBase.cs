@@ -317,11 +317,11 @@ namespace Projeto_ICI
             }
             return true;
         }
-        public static bool ValidacaoDoubleMoeda(double pNum)
+        public static bool ValidacaoDoubleMoeda(double pNum, bool pIncZero)
         {
-            return ValidacaoDoubleMoeda(pNum.ToString());
+            return ValidacaoDoubleMoeda(pNum.ToString(), pIncZero);
         }
-        public static bool ValidacaoDoubleMoeda(string pNum)
+        public static bool ValidacaoDoubleMoeda(string pNum, bool pIncZero)
         {
             if (string.IsNullOrEmpty(pNum))
             { return false; }
@@ -329,7 +329,7 @@ namespace Projeto_ICI
             {
                 if (!double.TryParse(pNum, out double i))
                 { return false; }
-                else if (i <= 0)
+                else if (i <= (pIncZero ? -1 : 0))
                 { return false; }
                 else
                 {
@@ -535,9 +535,11 @@ namespace Projeto_ICI
             errorMSG.Clear();
         }
 
-        public decimal strToDecimal(string pNum)
+        public decimal strToDecimal(string pNum, int pCasasDec = 4)
         {
-            return decimal.Parse(pNum == "" ? "0" : pNum.Replace(".", ","), vgEstilo, vgProv);
+            var vlReturn = decimal.Parse(pNum == "" ? "0" 
+                                                    : pNum.Replace(".", ","), vgEstilo, vgProv);
+            return Math.Round(vlReturn, pCasasDec);
         }
     }
 }

@@ -375,21 +375,20 @@ namespace Projeto_ICI.Classes
             FprecoUn.ToString() + ';' +
             Fdesconto.ToString() + ';' +
             FumProduto.Codigo.ToString();
-            ;
         }
 
         public string toStringAttribute()
         {
-            return
-            "modelo" + ';' +
-            "serie" + ';' +
-            "numero_nf" + ';' +
-            "codigoForn" + ';' +
-            "unidade" + ';' +
-            "quantidade" + ';' +
-            "valor_un" + ';' +
-            "desconto" + ';' +
-            "codigoProd";
+                return
+                "modelo" + ';' +
+                "serie" + ';' +
+                "numero_nf" + ';' +
+                "codigoForn" + ';' +
+                "unidade" + ';' +
+                "quantidade" + ';' +
+                "valor_un" + ';' +
+                "desconto" + ';' +
+                "codigoProd";
         }
 
         public string[] arrayStringValores()

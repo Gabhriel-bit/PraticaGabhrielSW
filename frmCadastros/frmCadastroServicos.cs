@@ -54,7 +54,7 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.SetError(lbl_Servico, "Campo 'Serviço' inválido!");
             }
-            else if (!ValidacaoDoubleMoeda(txtb_Preco.Text))
+            else if (!ValidacaoDoubleMoeda(txtb_Preco.Text, false))
             {
                 errorMSG.SetError(lbl_Preco, "Campo 'Preço' inválido!");
             }

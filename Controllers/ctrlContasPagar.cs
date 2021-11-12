@@ -9,10 +9,11 @@ namespace Projeto_ICI.Controllers
 {
     public class ctrlContasPagar : ctrl
     {
-        public const string camposSelect =  "modelo, serie, numero_nf, fornecedor" +
-                                            "parcela, vencimento, formaPagamento" +
-                                            "valorTotal, valorPago, dataPagamento" +
-                                            "contasPagar.dataCad, contasPagar.codigoUsu";
+        public const string camposSelect =  "modelo, serie, numero_nf, fornecedor, " +
+                                            "parcela, vencimento, formaPagamento, " +
+                                            "valorTotal, valorPago, dataPagamento, " +
+                                            "contasPagar.dataCad, contasPagar.codigoUsu, " +
+                                            "descontoPag as Desconto, taxaJuros as Juros, multa";
 
         private ctrlFormasPagamento umCtrlFormaPag;
         private ctrlFornecedores umCtrlForn;
@@ -121,7 +122,10 @@ namespace Projeto_ICI.Controllers
                                                           (int)row[4], (string)row[5], (string)row[9],
                                                           decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
                                                           decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
-                                                          (int)row[11], (string)row[10]);
+                                                          (int)row[11], (string)row[10],
+                                                          decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
+                                                          decimal.Parse(row[13].ToString(), vgEstilo, vgProv),
+                                                          decimal.Parse(row[14].ToString(), vgEstilo, vgProv));
 
                     vlConta.UmFornecedor = (Classes.fornecedores)umCtrlForn.Pesquisar("codigo",
                                                                             ((int)row[3]).ToString(),
@@ -157,7 +161,10 @@ namespace Projeto_ICI.Controllers
                                                       (int)row[4], (string)row[5], (string)row[9],
                                                       decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
                                                       decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
-                                                      (int)row[11], (string)row[10]);
+                                                      (int)row[11], (string)row[10],
+                                                      decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
+                                                      decimal.Parse(row[13].ToString(), vgEstilo, vgProv),
+                                                      decimal.Parse(row[14].ToString(), vgEstilo, vgProv));
 
                 vlConta.UmFornecedor = (Classes.fornecedores)umCtrlForn.Pesquisar("codigo",
                                                                         ((int)row[3]).ToString(),

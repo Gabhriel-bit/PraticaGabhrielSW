@@ -526,6 +526,10 @@ BEGIN
 		codigoFormaPag INT NOT NULL,
 		codigoUsu      INT  NOT NULL,
 		dataCad        VARCHAR(10) NOT NULL,
+
+		descontoPag NUMERIC(8,4) NOT NULL, 
+		taxaJuros   NUMERIC(8,4) NOT NULL,
+		multa       NUMERIC(8,4) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),

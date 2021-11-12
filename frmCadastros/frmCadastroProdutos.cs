@@ -392,7 +392,7 @@ namespace Projeto_ICI.frmCadastros
                                               "'Pesquisar'");
                 txtb_CodigoModelo.Focus();
             }
-            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text, false))
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
@@ -470,7 +470,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void lbl_Custo_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoDoubleMoeda(txtb_Custo.Text))
+            if (ValidacaoDoubleMoeda(txtb_Custo.Text, false))
             {
                 errorMSG.Clear();
                 e.Cancel = false;
@@ -498,7 +498,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_PesoBruto_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoDoubleMoeda(txtb_PesoBruto.Text))
+            if (ValidacaoDoubleMoeda(txtb_PesoBruto.Text, false))
             {
                 errorMSG.Clear();
                 e.Cancel = false;
@@ -521,7 +521,7 @@ namespace Projeto_ICI.frmCadastros
             var vlPesoL = strToDecimal(txtb_PesoLiquido.Text);
 
             errorMSG.Clear();
-            if (ValidacaoDoubleMoeda(txtb_PesoLiquido.Text) && (vlPesoL <= vlPesoB))
+            if (ValidacaoDoubleMoeda(txtb_PesoLiquido.Text, false) && (vlPesoL <= vlPesoB))
             {
                 errorMSG.Clear();
                 return false;

@@ -116,12 +116,6 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_CondicaoPag, "Seleciona uma condição de pagamento!");
                 txtb_CodigoCondPag.Focus();
             }
-            else if (txtb_Transport.Text == "")
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_Transpotadora, "Seleciona uma transportadora!");
-                txtb_Transport.Focus();
-            }
             else if (string.IsNullOrEmpty(txtb_Seguro.Text))
             {
                 errorMSG.Clear();
@@ -151,6 +145,8 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 groupBox_Produtos.Enabled = false;
                 CalcularParcelas();
+                btn_Gerar.Enabled = false;
+                btn_Limpar.Visible = true;
             }
         }
 
@@ -159,13 +155,15 @@ namespace Projeto_ICI.frmCadastros
             decimal vlTotal = strToDecimal(txtb_Frete.Text) +
                               strToDecimal(txtb_Seguro.Text) +
                               strToDecimal(txtb_OutrasDeps.Text);
+        
             if (vlTotal > 0)
             {
                 var vlLista = calcularPorcItens();
                 int vlIndex = 0;
                 foreach(ListViewItem vlItem in lv_ItensCompra.Items)
                 {
-                    vlItem.SubItems[5].Text = ((vlLista[vlIndex] * vlTotal) / int.Parse(vlItem.SubItems[2].Text)).ToString();
+                    vlItem.SubItems[5].Text = ((vlLista[vlIndex] * vlTotal) /
+                                                int.Parse(vlItem.SubItems[2].Text)).ToString();
                     vlIndex += 1;
                 }
             }
@@ -175,10 +173,20 @@ namespace Projeto_ICI.frmCadastros
             umaListaItens = new List<contasPagar>();
             foreach (parcelasCondPag vlParcela in umCondPag.ListaParcelas)
             {
-                var vlListItem = new contasPagar(txtb_Modelo.Text, txtb_Serie.Text, txtb_NumNF.Text,
-                                                 vlParcela.Numero, dt_Emissao.Value.AddDays(vlParcela.Dias).ToString(),
-                                                 "", vlTotal * (vlParcela.Porcentagem / 100), 0, int.Parse(txtb_CodigoUsu.Text),
-                                                 DateTime.Now.ToString("dd/MM/yyyy"));
+                var vlListItem = new 
+                contasPagar(txtb_Modelo.Text,
+                            txtb_Serie.Text,
+                            txtb_NumNF.Text,
+                            vlParcela.Numero,
+                            dt_Emissao.Value.AddDays(vlParcela.Dias).ToString("dd/MM/yyyy"),
+                            "",
+                            (vlTotal * (vlParcela.Porcentagem / 100)),
+                            0, 
+                            int.Parse((txtb_CodigoUsu.Text == "" ? "0":  txtb_CodigoUsu.Text)),
+                            DateTime.Now.ToString("dd/MM/yyyy"),
+                            umCondPag.Desconto,
+                            umCondPag.TaxaJuros,
+                            umCondPag.Multa);
                 vlListItem.UmaFormaPag = vlParcela.UmaFormaPag.ThisFormPag;
 
                 string[] vlLVStrItem = new string[] { vlListItem.Parcela.ToString(),
@@ -196,15 +204,23 @@ namespace Projeto_ICI.frmCadastros
         }
 
         private List<decimal> calcularPorcItens()
-        { 
+        {
+            decimal vlSoma = 0;
+            decimal vlPorc = 0;
             var vlLista = new List<decimal>();
             var vlTotalItens = strToDecimal(txtb_TotalProdutos.Text);
             foreach (ListViewItem vlItem in lv_ItensCompra.Items)
-                vlLista.Add(strToDecimal(vlItem.SubItems[6].Text) / vlTotalItens);
+            {
+                vlPorc = strToDecimal(vlItem.SubItems[6].Text) / vlTotalItens;
+                vlLista.Add(vlPorc);
+                vlSoma += vlPorc;
+            }
+            if (vlSoma < 100)
+            { vlLista[0] += 100 - vlSoma; }
             return vlLista;
         }
 
-        public void ClearTxTBox()
+        public void ClearTxTBox(bool pIncGBProd = true)
         {
             txtb_Modelo.Clear();
             txtb_Serie.Clear();
@@ -213,11 +229,19 @@ namespace Projeto_ICI.frmCadastros
             txtb_Fornecedor.Clear();
             dt_Emissao.Value = DateTime.Now;
             dt_Chegada.Value = DateTime.Now;
-            lv_ParcelasContasPag.Clear();
+            lv_ParcelasContasPag.Items.Clear();
             txtb_ChaveAcesso.Clear();
             txtb_TotalNota.Clear();
             txtb_TotalProdutos.Clear();
-            ClearGroupBoxProd();
+            txtb_CodigoTransport.Clear();
+            txtb_Transport.Clear();
+            txtb_Frete.Clear();
+            txtb_Seguro.Clear();
+            txtb_OutrasDeps.Clear();
+            txtb_CodigoCondPag.Clear();
+            txtb_CondicaoPag.Clear();
+            if (pIncGBProd)
+            { ClearGroupBoxProd(); }
 
         }
         protected void ClearGroupBoxProd()
@@ -227,21 +251,12 @@ namespace Projeto_ICI.frmCadastros
             txtb_Quantidade.Clear();
             txtb_Unidade.Clear();
             txtb_PrecoUnt.Clear();
-            txtb_CodigoTransport.Clear();
-            txtb_Transport.Clear();
-            txtb_Frete.Clear();
-            txtb_Seguro.Clear();
-            txtb_OutrasDeps.Clear();
-            txtb_CodigoCondPag.Clear();
-            txtb_CondicaoPag.Clear();
+            lv_ItensCompra.Items.Clear();
         }
 
         public void DesBloqTxTBox()
         {
-            txtb_Modelo.Enabled = true;
-            txtb_Serie.Enabled = true;
-            txtb_NumNF.Enabled = true;
-            txtb_CodigoFornecedor.Enabled = true;
+            EnabledPKTxtBox(true);
 
             dt_Chegada.Enabled = true;
             dt_Emissao.Enabled = true;
@@ -259,7 +274,7 @@ namespace Projeto_ICI.frmCadastros
 
             btn_Gerar.Enabled = true;
             btn_Salvar.Enabled = true;
-            btn_Limpar.Enabled = true;
+            btn_Limpar.Visible = !btn_Gerar.Enabled;
             btn_PesquisarCondPag.Enabled = true;
             btn_PesquisarFornecedor.Enabled = true;
             btn_PesquisaTransportadora.Enabled = true;
@@ -267,11 +282,7 @@ namespace Projeto_ICI.frmCadastros
 
         public void BloquearTxtBox(bool pPK)
         {
-            txtb_Modelo.Enabled = pPK;
-            txtb_Serie.Enabled = pPK;
-            txtb_NumNF.Enabled = pPK;
-            txtb_CodigoFornecedor.Enabled = pPK;
-            btn_PesquisarFornecedor.Enabled = pPK;
+            EnabledPKTxtBox(pPK);
 
             dt_Chegada.Enabled = false;
             dt_Emissao.Enabled = false;
@@ -288,13 +299,22 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoUsu.Enabled = false;
 
             btn_Gerar.Enabled = false;
-            btn_Limpar.Enabled = false;
+            btn_Limpar.Visible = false;
             btn_Salvar.Enabled = false;
             btn_PesquisarCondPag.Enabled = false;
             btn_PesquisaTransportadora.Enabled = false;
         }
 
-        private void btn_Sair_Click(object sender, EventArgs e)
+        public void EnabledPKTxtBox(bool pPK)
+        {
+            txtb_Modelo.Enabled = pPK;
+            txtb_Serie.Enabled = pPK;
+            txtb_NumNF.Enabled = pPK;
+            txtb_CodigoFornecedor.Enabled = pPK;
+            btn_PesquisarFornecedor.Enabled = pPK;
+        }
+
+            private void btn_Sair_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -302,9 +322,8 @@ namespace Projeto_ICI.frmCadastros
         private void btn_Limpar_Click(object sender, EventArgs e)
         {
             ClearTxTBox();
-            ClearGroupBoxProd();
-            groupBox_Produtos.Enabled = true;
-            lv_ParcelasContasPag.Clear();
+            btn_Limpar.Visible = false;
+            EnabledPKTxtBox(true);
         }
 
         private void groupBox_Produtos_EnabledChanged(object sender, EventArgs e)
@@ -330,15 +349,28 @@ namespace Projeto_ICI.frmCadastros
 
         private void validarChaveCompra()
         {
-            if (txtb_Fornecedor.Text == "")
+            var vlBloq = true;
+            if (txtb_Modelo.Text == "")
+                errorMSG.SetError(lbl_Modelo, "Insira um modelo!");
+            else if (txtb_Serie.Text == "")
             {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Serie, "Insira uma série!");
+            }
+            else if (txtb_NumNF.Text == "")
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_NumNF, "Insira um número de nota fiscal!");
+            }
+            else if (txtb_Fornecedor.Text == "")
+            {
+                errorMSG.Clear();
                 errorMSG.SetError(lbl_Fornecedor, "Insira um fornecedor digitando um código " +
                                                   "ou usado o botão de pesquisa!");
-                BloquearTxtBox(true);
-                txtb_CodigoFornecedor.Focus();
             }
             else
             {
+                errorMSG.Clear();
                 umaCompra.Modelo = txtb_Modelo.Text;
                 umaCompra.Serie = txtb_Serie.Text;
                 umaCompra.NumeroNF = txtb_NumNF.Text;
@@ -349,14 +381,14 @@ namespace Projeto_ICI.frmCadastros
                 {
                     MessageBox.Show($"Chave de pesquisa [ {umaCompra.ToStringPK} ] já está cadastrada!", "AVISO");
                     txtb_Modelo.Focus();
-                    BloquearTxtBox(true);
                 }
                 else
-                {
-                    DesBloqTxTBox();
-                }
+                    vlBloq = false;
             }
-
+            if (vlBloq)
+            { BloquearTxtBox(vlBloq); }
+            else
+            { DesBloqTxTBox(); }
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -442,48 +474,6 @@ namespace Projeto_ICI.frmCadastros
             }
         }
 
-        private void txtb_Modelo_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtb_Modelo.Text))
-            {
-                errorMSG.SetError(lbl_Modelo, "Insira um valor válido!");
-                txtb_Modelo.Focus();
-            }
-            else
-            {
-                errorMSG.Clear();
-                txtb_Serie.Focus();
-            }
-        }
-
-        private void txtb_Serie_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtb_Serie.Text))
-            {
-                errorMSG.SetError(lbl_Serie, "Insira um valor válido!");
-                txtb_Serie.Focus();
-            }
-            else
-            {
-                errorMSG.Clear();
-                txtb_NumNF.Focus();
-            }
-        }
-
-        private void txtb_NumNF_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtb_NumNF.Text))
-            {
-                errorMSG.SetError(lbl_NumNF, "Insira um valor válido!");
-                txtb_NumNF.Focus();
-            }
-            else
-            {
-                errorMSG.Clear();
-                btn_PesquisarFornecedor.Focus();
-            }
-        }
-
         private void dt_Emissao_Validating(object sender, CancelEventArgs e)
         {
             if (dt_Emissao.Value > DateTime.Now)
@@ -529,7 +519,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Quantidade_Validating(object sender, CancelEventArgs e)
         {
-            if (!int.TryParse(txtb_Quantidade.Text, out int _))
+            if (!int.TryParse(txtb_Quantidade.Text, out int i) && (i <= 0))
             {
                 errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
                                                   "Insira um valor inteiro igual ou superior a 1");
@@ -541,7 +531,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Custo_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text))
+            if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text, false))
             {
                 errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
                 txtb_PrecoUnt.Focus();
@@ -552,7 +542,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void textBox1_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidacaoDoubleMoeda(txtb_Desconto.Text))
+            if (!ValidacaoDoubleMoeda(txtb_Desconto.Text, true))
             {
                 errorMSG.SetError(lbl_Desconto, $"Valor '{txtb_Desconto.Text}' inválido");
                 txtb_Desconto.Text = "0";
@@ -584,9 +574,9 @@ namespace Projeto_ICI.frmCadastros
             foreach (ListViewItem vlItem in lv_ItensCompra.Items)
             {
                 vlItem.SubItems[6].Text = ((strToDecimal(vlItem.SubItems[3].Text)  +
-                                            strToDecimal(vlItem.SubItems[4].Text)  -
                                             strToDecimal(vlItem.SubItems[5].Text)) *
-                                            strToDecimal(vlItem.SubItems[2].Text)).ToString();
+                                            strToDecimal(vlItem.SubItems[2].Text)  -
+                                            strToDecimal(vlItem.SubItems[4].Text)).ToString();
                 vlTotal += strToDecimal(vlItem.SubItems[6].Text);
             }
             txtb_TotalProdutos.Text = vlTotal.ToString();
@@ -614,14 +604,14 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Unidade, "Campo 'Unidade' é obrigatório!");
                 txtb_Unidade.Focus();
             }
-            else if (!int.TryParse(txtb_Quantidade.Text, out int _))
+            else if (!int.TryParse(txtb_Quantidade.Text, out int i) || (i <= 0))
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
                                                   "Insira um valor inteiro igual ou superior a 1");
                 txtb_Quantidade.Focus();
             }
-            else if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text))
+            else if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text, false))
             {
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
@@ -711,14 +701,6 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Fornecedor_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtb_Fornecedor.Text))
-            {
-                BloquearTxtBox(false);
-            }
-            else
-            {
-                DesBloqTxTBox();          
-            }
             validarChaveCompra();
         }
 
@@ -828,7 +810,7 @@ namespace Projeto_ICI.frmCadastros
                 if (int.TryParse(txtb_CodigoCondPag.Text, out int vlCodigo))
                 {
                     var vlCondPag =
-                         (Classes.condicoesPagamento)umCtrlCompra.CTRLContasPag.Pesquisar("codigo",
+                         (Classes.condicoesPagamento)umCtrlCompra.CTRLCondicaoPag.Pesquisar("codigo",
                                                                                 vlCodigo.ToString(),
                                                                                 out string vlMsg,
                                                                                 true);
@@ -862,6 +844,21 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 lv_ItensCompra.Items.Remove(lv_ItensCompra.Items[lv_ItensCompra.SelectedIndices[0]]);
             }
+        }
+
+        private void txtb_Modelo_TextChanged(object sender, EventArgs e)
+        {
+            validarChaveCompra();
+        }
+
+        private void txtb_Serie_TextChanged(object sender, EventArgs e)
+        {
+            validarChaveCompra();
+        }
+
+        private void txtb_NumNF_TextChanged(object sender, EventArgs e)
+        {
+            validarChaveCompra();
         }
     }
 }

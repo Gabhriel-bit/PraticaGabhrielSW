@@ -197,7 +197,7 @@ namespace Projeto_ICI.frmCadastros
 
         private bool confereTotalPorc()
         {
-            if (!ValidacaoDoubleMoeda(txtb_Porcentagem.Text))
+            if (!ValidacaoDoubleMoeda(txtb_Porcentagem.Text, false))
             {
                 errorMSG.SetError(lbl_Porcentagem, "Insira um valor inteiro positivo com " +
                                    "até 4 casas decimais  \nExempo: 25,2365");

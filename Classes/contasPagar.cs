@@ -21,6 +21,10 @@ namespace Projeto_ICI.Classes
 		private decimal FvalorPago;
 		private formasPagamento FumaFormaPag;
 
+		private decimal FdescontoPag;
+		private decimal FtaxaJuros;
+		private decimal Fmulta;
+
 		private int FcodigoUsu;   
 		private string FdataCad;
 
@@ -38,13 +42,18 @@ namespace Projeto_ICI.Classes
 			FcodigoUsu = 0;
 			FdataCad = "";
 
+			FdescontoPag = 0;
+			FtaxaJuros = 0;
+			Fmulta = 0;
+
 			FumForn = new fornecedores();
 			FumaFormaPag = new formasPagamento();
 		}
 
 		public contasPagar(string pModelo, string pSerie, string pNumNF, int pParcela,
 						   string pVencimento, string pDataPag, decimal pValorTotal,
-						   decimal pValorPago, int pCodigoUsu, string pDataCad)
+						   decimal pValorPago, int pCodigoUsu, string pDataCad, decimal pDescontoPag,
+						   decimal pTaxaJuros, decimal pMulta)
 		{
 			Fmodelo = pModelo;
 			Fserie = pSerie;
@@ -57,6 +66,10 @@ namespace Projeto_ICI.Classes
 
 			FcodigoUsu = pCodigoUsu;
 			FdataCad = pDataCad;
+
+			FdescontoPag = pDescontoPag;
+			FtaxaJuros = pTaxaJuros;
+			Fmulta = pMulta;
 
 			FumForn = new fornecedores();
 			FumaFormaPag = new formasPagamento();
@@ -91,7 +104,12 @@ namespace Projeto_ICI.Classes
 		{ set => FumForn = value; get => FumForn; }
 		public formasPagamento UmaFormaPag
 		{ set => FumaFormaPag = value; get => FumaFormaPag; }
-
+		public decimal DescontoPag
+		{ get => FdescontoPag; set => FdescontoPag = value; }
+		public decimal TaxaJuros
+		{ get => FtaxaJuros; set => FtaxaJuros = value; }
+		public decimal Multa
+		{ get => Fmulta; set => Fmulta = value; }
 		public contasPagar ThisContaPagar
 		{
 			get => clone();
@@ -101,7 +119,8 @@ namespace Projeto_ICI.Classes
 		protected contasPagar clone()
 		{ 
 			var vlConta = new contasPagar(Modelo, Serie, NumeroNF, Parcela, Vencimento, DataPagamento,
-								   ValorTotal, ValorPago, CodigoUsu, DataCadastro);
+								   ValorTotal, ValorPago, CodigoUsu, DataCadastro, DescontoPag,
+								   TaxaJuros, Multa);
 			vlConta.UmaFormaPag = UmaFormaPag.ThisFormPag;
 			vlConta.UmFornecedor = UmFornecedor.ThisFornecedor;
 			return vlConta;
@@ -122,6 +141,10 @@ namespace Projeto_ICI.Classes
 			FcodigoUsu = vlUmaContaPagar.CodigoUsu;
 			FdataCad = vlUmaContaPagar.DataCadastro;
 
+			FdescontoPag = vlUmaContaPagar.DescontoPag;
+			FtaxaJuros = vlUmaContaPagar.TaxaJuros;
+			Fmulta = vlUmaContaPagar.Multa;
+
 			UmFornecedor = vlUmaContaPagar.UmFornecedor.ThisFornecedor;
 			UmaFormaPag = vlUmaContaPagar.UmaFormaPag.ThisFormPag;
 		}
@@ -139,7 +162,10 @@ namespace Projeto_ICI.Classes
 				   ValorPago.ToString() + ';' +
 				   CodigoUsu.ToString() + ';' +
 				   DataCadastro + ';' +
-				   UmaFormaPag.Codigo.ToString();
+				   UmaFormaPag.Codigo.ToString() + ';' +
+				   DescontoPag.ToString() + ';' +
+				   TaxaJuros.ToString() + ';' +
+				   Multa.ToString();
 		}
 
 		public string toStringAttribute()
@@ -155,7 +181,10 @@ namespace Projeto_ICI.Classes
 				   "valorPago" + ';' +
 				   "codigoUsu" + ';' +
 				   "dataCad" + ';' +
-				   "codigoFormaPag";
+				   "codigoFormaPag" + ';' +
+				   "descontoPag" + ';' +
+				   "taxaJuros" + ';' +
+				   "multa";
 		}
 
 

@@ -82,7 +82,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_SalarioBase_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidacaoDoubleMoeda(txtb_SalarioBase.Text))
+            if (ValidacaoDoubleMoeda(txtb_SalarioBase.Text, false))
             {
                 errorMSG.SetError(lbl_SalarioBase, null);
                 e.Cancel = false;
