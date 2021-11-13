@@ -143,7 +143,7 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.Clear();
-                groupBox_Produtos.Enabled = false;
+                BloquearTxtBox(true);
                 CalcularParcelas();
                 btn_Gerar.Enabled = false;
                 btn_Limpar.Visible = true;
@@ -155,15 +155,19 @@ namespace Projeto_ICI.frmCadastros
             decimal vlTotal = strToDecimal(txtb_Frete.Text) +
                               strToDecimal(txtb_Seguro.Text) +
                               strToDecimal(txtb_OutrasDeps.Text);
-        
+            decimal vlDecimal = 0;
             if (vlTotal > 0)
             {
                 var vlLista = calcularPorcItens();
                 int vlIndex = 0;
+                
                 foreach(ListViewItem vlItem in lv_ItensCompra.Items)
                 {
-                    vlItem.SubItems[5].Text = ((vlLista[vlIndex] * vlTotal) /
-                                                int.Parse(vlItem.SubItems[2].Text)).ToString();
+                    vlDecimal = (vlTotal * vlLista[vlIndex] /
+                                 int.Parse(vlItem.SubItems[2].Text)) +
+                                 strToDecimal(vlItem.SubItems[3].Text) -
+                                 strToDecimal(vlItem.SubItems[4].Text);
+                    vlItem.SubItems[5].Text = Math.Round(vlDecimal, 4).ToString();
                     vlIndex += 1;
                 }
             }
@@ -171,8 +175,10 @@ namespace Projeto_ICI.frmCadastros
             txtb_TotalNota.Text = txtb_TotalProdutos.Text;
             vlTotal = strToDecimal(txtb_TotalNota.Text);
             umaListaItens = new List<contasPagar>();
+            vlDecimal = 0;
             foreach (parcelasCondPag vlParcela in umCondPag.ListaParcelas)
             {
+                vlDecimal = Math.Round((vlTotal * (vlParcela.Porcentagem / 100)), 4);
                 var vlListItem = new 
                 contasPagar(txtb_Modelo.Text,
                             txtb_Serie.Text,
@@ -180,7 +186,7 @@ namespace Projeto_ICI.frmCadastros
                             vlParcela.Numero,
                             dt_Emissao.Value.AddDays(vlParcela.Dias).ToString("dd/MM/yyyy"),
                             "",
-                            (vlTotal * (vlParcela.Porcentagem / 100)),
+                            vlDecimal,
                             0, 
                             int.Parse((txtb_CodigoUsu.Text == "" ? "0":  txtb_CodigoUsu.Text)),
                             DateTime.Now.ToString("dd/MM/yyyy"),
@@ -211,12 +217,10 @@ namespace Projeto_ICI.frmCadastros
             var vlTotalItens = strToDecimal(txtb_TotalProdutos.Text);
             foreach (ListViewItem vlItem in lv_ItensCompra.Items)
             {
-                vlPorc = strToDecimal(vlItem.SubItems[6].Text) / vlTotalItens;
+                vlPorc = Math.Round(strToDecimal(vlItem.SubItems[6].Text) / vlTotalItens, 4);
                 vlLista.Add(vlPorc);
                 vlSoma += vlPorc;
             }
-            if (vlSoma < 100)
-            { vlLista[0] += 100 - vlSoma; }
             return vlLista;
         }
 
@@ -388,7 +392,10 @@ namespace Projeto_ICI.frmCadastros
             if (vlBloq)
             { BloquearTxtBox(vlBloq); }
             else
-            { DesBloqTxTBox(); }
+            { 
+                DesBloqTxTBox();
+                EnabledPKTxtBox(false);
+            }
         }
 
         private void btn_PesquisarProduto_Click(object sender, EventArgs e)
@@ -402,6 +409,7 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.Clear();
                 txtb_CodigoProduto.Text = umProduto.Codigo.ToString();
+                txtb_Unidade.Text = umProduto.Unidade;
                 txtb_Produto.Text = umProduto.Produto;
             }
         }
@@ -519,7 +527,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void txtb_Quantidade_Validating(object sender, CancelEventArgs e)
         {
-            if (!int.TryParse(txtb_Quantidade.Text, out int i) && (i <= 0))
+            if (!int.TryParse(txtb_Quantidade.Text, out int i) || (i <= 0))
             {
                 errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
                                                   "Insira um valor inteiro igual ou superior a 1");
@@ -571,13 +579,15 @@ namespace Projeto_ICI.frmCadastros
         private void recalcularTotal()
         {
             decimal vlTotal = 0;
+            decimal vlSubTotal = 0;
             foreach (ListViewItem vlItem in lv_ItensCompra.Items)
             {
-                vlItem.SubItems[6].Text = ((strToDecimal(vlItem.SubItems[3].Text)  +
-                                            strToDecimal(vlItem.SubItems[5].Text)) *
-                                            strToDecimal(vlItem.SubItems[2].Text)  -
-                                            strToDecimal(vlItem.SubItems[4].Text)).ToString();
-                vlTotal += strToDecimal(vlItem.SubItems[6].Text);
+                vlSubTotal = strToDecimal(vlItem.SubItems[5].Text) *
+                             strToDecimal(vlItem.SubItems[2].Text);
+                if (vlSubTotal.ToString().Contains(",9999"))
+                    vlSubTotal += decimal.Parse("0,0001");
+                vlItem.SubItems[6].Text = vlSubTotal.ToString();
+                vlTotal += vlSubTotal;
             }
             txtb_TotalProdutos.Text = vlTotal.ToString();
         }
@@ -633,7 +643,7 @@ namespace Projeto_ICI.frmCadastros
                                               txtb_Quantidade.Text,
                                               vlItem.PrecoUnidade.ToString(),
                                               vlItem.Desconto.ToString(),
-                                              "0",
+                                              (vlItem.PrecoUnidade - vlItem.Desconto).ToString(),
                                               (vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto).ToString() };
 
                 var vlLVItem = new ListViewItem(vlString);
@@ -734,6 +744,7 @@ namespace Projeto_ICI.frmCadastros
             if (txtb_CodigoProduto.Text == "")
             {
                 txtb_Produto.Clear();
+                txtb_Unidade.Clear();
             }
             else
             {
@@ -749,17 +760,20 @@ namespace Projeto_ICI.frmCadastros
                         if (vlMsg == "")
                         {
                             txtb_Produto.Text = vlProduto.Produto;
+                            txtb_Unidade.Text = vlProduto.Unidade;
                             umProduto.ThisProduto = vlProduto;
                         }
                         else
                         {
                             showErrorMsg(vlMsg);
                             txtb_Produto.Clear();
+                            txtb_Unidade.Clear();
                         }
                     }
                     else
                     {
                         txtb_Produto.Clear();
+                        txtb_Unidade.Clear();
                     }
                 }
             }

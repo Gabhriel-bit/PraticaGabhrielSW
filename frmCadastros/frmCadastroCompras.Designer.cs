@@ -200,6 +200,7 @@ namespace Projeto_ICI.frmCadastros
             // txtb_Unidade
             // 
             this.txtb_Unidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_Unidade.Enabled = false;
             this.txtb_Unidade.Location = new System.Drawing.Point(296, 37);
             this.txtb_Unidade.Name = "txtb_Unidade";
             this.txtb_Unidade.Size = new System.Drawing.Size(72, 21);
