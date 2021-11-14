@@ -631,6 +631,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_NumNF.Size = new System.Drawing.Size(106, 20);
             this.txtb_NumNF.TabIndex = 2;
             this.txtb_NumNF.TextChanged += new System.EventHandler(this.txtb_NumNF_TextChanged);
+            this.txtb_NumNF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtb_NumNF_KeyPress);
             // 
             // lbl_Modelo
             // 
@@ -646,7 +647,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Serie.AutoSize = true;
             this.lbl_Serie.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Serie.Location = new System.Drawing.Point(95, 11);
+            this.lbl_Serie.Location = new System.Drawing.Point(94, 9);
             this.lbl_Serie.Name = "lbl_Serie";
             this.lbl_Serie.Size = new System.Drawing.Size(41, 15);
             this.lbl_Serie.TabIndex = 128;
@@ -664,7 +665,7 @@ namespace Projeto_ICI.frmCadastros
             // txtb_Serie
             // 
             this.txtb_Serie.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Serie.Location = new System.Drawing.Point(98, 29);
+            this.txtb_Serie.Location = new System.Drawing.Point(97, 27);
             this.txtb_Serie.Name = "txtb_Serie";
             this.txtb_Serie.Size = new System.Drawing.Size(57, 20);
             this.txtb_Serie.TabIndex = 1;
@@ -769,7 +770,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // ch_ValorTotal
             // 
-            this.ch_ValorTotal.Text = "Valor Total";
+            this.ch_ValorTotal.Text = "Valor Parc.";
             this.ch_ValorTotal.Width = 100;
             // 
             // lbl_ContasPagar

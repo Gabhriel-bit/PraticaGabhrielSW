@@ -75,12 +75,15 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_PesoLiquido = new System.Windows.Forms.Label();
             this.txtb_PesoLiquido = new System.Windows.Forms.TextBox();
             this.txtb_PesoBruto = new System.Windows.Forms.TextBox();
+            this.lbl_PrecoVenda = new System.Windows.Forms.Label();
+            this.txtb_PrecoVenda = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.SuspendLayout();
             // 
             // txtb_CodigoUsu
             // 
             this.txtb_CodigoUsu.Location = new System.Drawing.Point(17, 492);
+            this.txtb_CodigoUsu.TabIndex = 25;
             // 
             // lbl_CodigoUsu
             // 
@@ -89,13 +92,17 @@ namespace Projeto_ICI.frmCadastros
             // btn_Sair
             // 
             this.btn_Sair.Location = new System.Drawing.Point(454, 487);
-            this.btn_Sair.TabIndex = 18;
+            this.btn_Sair.TabIndex = 16;
             // 
             // btn_Cadastro
             // 
             this.btn_Cadastro.Location = new System.Drawing.Point(382, 486);
-            this.btn_Cadastro.TabIndex = 17;
+            this.btn_Cadastro.TabIndex = 15;
             this.btn_Cadastro.Click += new System.EventHandler(this.btn_Cadastro_Click);
+            // 
+            // txtb_Codigo
+            // 
+            this.txtb_Codigo.TabIndex = 28;
             // 
             // lbl_UltAlt
             // 
@@ -108,10 +115,12 @@ namespace Projeto_ICI.frmCadastros
             // txtb_DataCadastro
             // 
             this.txtb_DataCadastro.Location = new System.Drawing.Point(122, 491);
+            this.txtb_DataCadastro.TabIndex = 26;
             // 
             // txtb_DataUltAlt
             // 
             this.txtb_DataUltAlt.Location = new System.Drawing.Point(237, 491);
+            this.txtb_DataUltAlt.TabIndex = 27;
             // 
             // lbl_Produto
             // 
@@ -128,7 +137,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Produto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Produto.Location = new System.Drawing.Point(99, 36);
             this.txtb_Produto.Name = "txtb_Produto";
-            this.txtb_Produto.Size = new System.Drawing.Size(252, 20);
+            this.txtb_Produto.Size = new System.Drawing.Size(223, 20);
             this.txtb_Produto.TabIndex = 0;
             this.txtb_Produto.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Produto_Validating);
             // 
@@ -136,7 +145,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Unidade.AutoSize = true;
             this.lbl_Unidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Unidade.Location = new System.Drawing.Point(354, 18);
+            this.lbl_Unidade.Location = new System.Drawing.Point(323, 18);
             this.lbl_Unidade.Name = "lbl_Unidade";
             this.lbl_Unidade.Size = new System.Drawing.Size(39, 15);
             this.lbl_Unidade.TabIndex = 25;
@@ -145,7 +154,7 @@ namespace Projeto_ICI.frmCadastros
             // txtb_Unidade
             // 
             this.txtb_Unidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Unidade.Location = new System.Drawing.Point(357, 36);
+            this.txtb_Unidade.Location = new System.Drawing.Point(326, 36);
             this.txtb_Unidade.Name = "txtb_Unidade";
             this.txtb_Unidade.Size = new System.Drawing.Size(75, 20);
             this.txtb_Unidade.TabIndex = 1;
@@ -169,7 +178,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Modelo.Location = new System.Drawing.Point(99, 146);
             this.txtb_Modelo.Name = "txtb_Modelo";
             this.txtb_Modelo.Size = new System.Drawing.Size(165, 20);
-            this.txtb_Modelo.TabIndex = 26;
+            this.txtb_Modelo.TabIndex = 20;
             // 
             // lbl_CodigoModelo
             // 
@@ -219,14 +228,14 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Marca.Location = new System.Drawing.Point(270, 146);
             this.txtb_Marca.Name = "txtb_Marca";
             this.txtb_Marca.Size = new System.Drawing.Size(95, 20);
-            this.txtb_Marca.TabIndex = 36;
+            this.txtb_Marca.TabIndex = 21;
             // 
             // btn_PesquisarSubGrupo
             // 
             this.btn_PesquisarSubGrupo.Location = new System.Drawing.Point(371, 199);
             this.btn_PesquisarSubGrupo.Name = "btn_PesquisarSubGrupo";
             this.btn_PesquisarSubGrupo.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarSubGrupo.TabIndex = 12;
+            this.btn_PesquisarSubGrupo.TabIndex = 10;
             this.btn_PesquisarSubGrupo.UseVisualStyleBackColor = true;
             this.btn_PesquisarSubGrupo.Click += new System.EventHandler(this.btn_PesquisarSubGrupo_Click);
             this.btn_PesquisarSubGrupo.MouseEnter += new System.EventHandler(this.btn_PesquisarSubGrupo_MouseEnter);
@@ -239,7 +248,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_SubGrupo.Location = new System.Drawing.Point(99, 202);
             this.txtb_SubGrupo.Name = "txtb_SubGrupo";
             this.txtb_SubGrupo.Size = new System.Drawing.Size(266, 20);
-            this.txtb_SubGrupo.TabIndex = 41;
+            this.txtb_SubGrupo.TabIndex = 22;
             // 
             // lbl_CodigoSubGrupo
             // 
@@ -257,7 +266,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoSubGrupo.Location = new System.Drawing.Point(24, 202);
             this.txtb_CodigoSubGrupo.Name = "txtb_CodigoSubGrupo";
             this.txtb_CodigoSubGrupo.Size = new System.Drawing.Size(69, 20);
-            this.txtb_CodigoSubGrupo.TabIndex = 11;
+            this.txtb_CodigoSubGrupo.TabIndex = 9;
             this.txtb_CodigoSubGrupo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_CodigoSubGrupo.TextChanged += new System.EventHandler(this.txtb_CodigoSubGrupo_TextChanged);
             // 
@@ -304,14 +313,14 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoBarras.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_CodigoBarras.Location = new System.Drawing.Point(99, 90);
             this.txtb_CodigoBarras.Name = "txtb_CodigoBarras";
-            this.txtb_CodigoBarras.Size = new System.Drawing.Size(223, 20);
+            this.txtb_CodigoBarras.Size = new System.Drawing.Size(111, 20);
             this.txtb_CodigoBarras.TabIndex = 4;
             // 
             // lbl_Custo
             // 
             this.lbl_Custo.AutoSize = true;
             this.lbl_Custo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Custo.Location = new System.Drawing.Point(435, 18);
+            this.lbl_Custo.Location = new System.Drawing.Point(400, 186);
             this.lbl_Custo.Name = "lbl_Custo";
             this.lbl_Custo.Size = new System.Drawing.Size(38, 15);
             this.lbl_Custo.TabIndex = 53;
@@ -322,10 +331,10 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Custo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Custo.Enabled = false;
-            this.txtb_Custo.Location = new System.Drawing.Point(438, 36);
+            this.txtb_Custo.Location = new System.Drawing.Point(403, 204);
             this.txtb_Custo.Name = "txtb_Custo";
-            this.txtb_Custo.Size = new System.Drawing.Size(69, 20);
-            this.txtb_Custo.TabIndex = 2;
+            this.txtb_Custo.Size = new System.Drawing.Size(102, 20);
+            this.txtb_Custo.TabIndex = 19;
             this.txtb_Custo.Text = "0";
             this.txtb_Custo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -333,7 +342,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Saldo.AutoSize = true;
             this.lbl_Saldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Saldo.Location = new System.Drawing.Point(323, 72);
+            this.lbl_Saldo.Location = new System.Drawing.Point(431, 72);
             this.lbl_Saldo.Name = "lbl_Saldo";
             this.lbl_Saldo.Size = new System.Drawing.Size(39, 15);
             this.lbl_Saldo.TabIndex = 55;
@@ -343,10 +352,10 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_Saldo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_Saldo.Enabled = false;
-            this.txtb_Saldo.Location = new System.Drawing.Point(326, 90);
+            this.txtb_Saldo.Location = new System.Drawing.Point(434, 90);
             this.txtb_Saldo.Name = "txtb_Saldo";
             this.txtb_Saldo.Size = new System.Drawing.Size(73, 20);
-            this.txtb_Saldo.TabIndex = 5;
+            this.txtb_Saldo.TabIndex = 17;
             this.txtb_Saldo.Text = "0";
             this.txtb_Saldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_Saldo.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_Saldo_Validating);
@@ -367,7 +376,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoFornecedor.Location = new System.Drawing.Point(24, 258);
             this.txtb_CodigoFornecedor.Name = "txtb_CodigoFornecedor";
             this.txtb_CodigoFornecedor.Size = new System.Drawing.Size(69, 20);
-            this.txtb_CodigoFornecedor.TabIndex = 13;
+            this.txtb_CodigoFornecedor.TabIndex = 11;
             this.txtb_CodigoFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_CodigoFornecedor.TextChanged += new System.EventHandler(this.txtb_CodigoFornecedor_TextChanged);
             // 
@@ -388,14 +397,14 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_Fornecedor.Location = new System.Drawing.Point(99, 258);
             this.txtb_Fornecedor.Name = "txtb_Fornecedor";
             this.txtb_Fornecedor.Size = new System.Drawing.Size(242, 20);
-            this.txtb_Fornecedor.TabIndex = 46;
+            this.txtb_Fornecedor.TabIndex = 23;
             // 
             // btn_PesquisarFornecedor
             // 
             this.btn_PesquisarFornecedor.Location = new System.Drawing.Point(347, 253);
             this.btn_PesquisarFornecedor.Name = "btn_PesquisarFornecedor";
             this.btn_PesquisarFornecedor.Size = new System.Drawing.Size(26, 25);
-            this.btn_PesquisarFornecedor.TabIndex = 14;
+            this.btn_PesquisarFornecedor.TabIndex = 12;
             this.btn_PesquisarFornecedor.UseVisualStyleBackColor = true;
             this.btn_PesquisarFornecedor.Click += new System.EventHandler(this.btn_PesquisarFornecedor_Click);
             this.btn_PesquisarFornecedor.MouseEnter += new System.EventHandler(this.btn_PesquisarFornecedor_MouseEnter);
@@ -403,16 +412,19 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Remover
             // 
+            this.btn_Remover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Remover.Location = new System.Drawing.Point(446, 253);
             this.btn_Remover.Name = "btn_Remover";
             this.btn_Remover.Size = new System.Drawing.Size(61, 25);
-            this.btn_Remover.TabIndex = 16;
+            this.btn_Remover.TabIndex = 14;
             this.btn_Remover.Text = "Remover";
             this.btn_Remover.UseVisualStyleBackColor = true;
             this.btn_Remover.Click += new System.EventHandler(this.btn_Remover_Click);
             // 
             // lv_Fornecedores
             // 
+            this.lv_Fornecedores.AllowColumnReorder = true;
+            this.lv_Fornecedores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lv_Fornecedores.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_Codigo,
             this.ch_Fornecedor,
@@ -425,7 +437,7 @@ namespace Projeto_ICI.frmCadastros
             this.lv_Fornecedores.MultiSelect = false;
             this.lv_Fornecedores.Name = "lv_Fornecedores";
             this.lv_Fornecedores.Size = new System.Drawing.Size(483, 177);
-            this.lv_Fornecedores.TabIndex = 66;
+            this.lv_Fornecedores.TabIndex = 24;
             this.lv_Fornecedores.UseCompatibleStateImageBehavior = false;
             this.lv_Fornecedores.View = System.Windows.Forms.View.Details;
             // 
@@ -450,10 +462,11 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_Adicionar
             // 
+            this.btn_Adicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Adicionar.Location = new System.Drawing.Point(379, 253);
             this.btn_Adicionar.Name = "btn_Adicionar";
             this.btn_Adicionar.Size = new System.Drawing.Size(61, 25);
-            this.btn_Adicionar.TabIndex = 15;
+            this.btn_Adicionar.TabIndex = 13;
             this.btn_Adicionar.Text = "Adicionar";
             this.btn_Adicionar.UseVisualStyleBackColor = true;
             this.btn_Adicionar.Click += new System.EventHandler(this.btn_Adicionar_Click);
@@ -476,6 +489,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // lbl_btn_Remover
             // 
+            this.lbl_btn_Remover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_btn_Remover.AutoSize = true;
             this.lbl_btn_Remover.Location = new System.Drawing.Point(453, 241);
             this.lbl_btn_Remover.Name = "lbl_btn_Remover";
@@ -486,7 +500,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_PrecoUltCompra.AutoSize = true;
             this.lbl_PrecoUltCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_PrecoUltCompra.Location = new System.Drawing.Point(402, 72);
+            this.lbl_PrecoUltCompra.Location = new System.Drawing.Point(400, 128);
             this.lbl_PrecoUltCompra.Name = "lbl_PrecoUltCompra";
             this.lbl_PrecoUltCompra.Size = new System.Drawing.Size(100, 15);
             this.lbl_PrecoUltCompra.TabIndex = 71;
@@ -496,10 +510,10 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_PrecoUltCompra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_PrecoUltCompra.Enabled = false;
-            this.txtb_PrecoUltCompra.Location = new System.Drawing.Point(405, 90);
+            this.txtb_PrecoUltCompra.Location = new System.Drawing.Point(403, 146);
             this.txtb_PrecoUltCompra.Name = "txtb_PrecoUltCompra";
             this.txtb_PrecoUltCompra.Size = new System.Drawing.Size(102, 20);
-            this.txtb_PrecoUltCompra.TabIndex = 6;
+            this.txtb_PrecoUltCompra.TabIndex = 18;
             this.txtb_PrecoUltCompra.Text = "0";
             this.txtb_PrecoUltCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -507,7 +521,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_PesoBruto.AutoSize = true;
             this.lbl_PesoBruto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_PesoBruto.Location = new System.Drawing.Point(400, 128);
+            this.lbl_PesoBruto.Location = new System.Drawing.Point(213, 70);
             this.lbl_PesoBruto.Name = "lbl_PesoBruto";
             this.lbl_PesoBruto.Size = new System.Drawing.Size(71, 15);
             this.lbl_PesoBruto.TabIndex = 73;
@@ -517,7 +531,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_PesoLiquido.AutoSize = true;
             this.lbl_PesoLiquido.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_PesoLiquido.Location = new System.Drawing.Point(400, 184);
+            this.lbl_PesoLiquido.Location = new System.Drawing.Point(321, 72);
             this.lbl_PesoLiquido.Name = "lbl_PesoLiquido";
             this.lbl_PesoLiquido.Size = new System.Drawing.Size(84, 15);
             this.lbl_PesoLiquido.TabIndex = 75;
@@ -526,27 +540,52 @@ namespace Projeto_ICI.frmCadastros
             // txtb_PesoLiquido
             // 
             this.txtb_PesoLiquido.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_PesoLiquido.Location = new System.Drawing.Point(403, 202);
+            this.txtb_PesoLiquido.Location = new System.Drawing.Point(324, 90);
             this.txtb_PesoLiquido.Name = "txtb_PesoLiquido";
             this.txtb_PesoLiquido.Size = new System.Drawing.Size(104, 20);
-            this.txtb_PesoLiquido.TabIndex = 10;
+            this.txtb_PesoLiquido.TabIndex = 6;
+            this.txtb_PesoLiquido.Text = "0";
             this.txtb_PesoLiquido.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_PesoLiquido.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_PesoLiquido_Validating);
             // 
             // txtb_PesoBruto
             // 
             this.txtb_PesoBruto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_PesoBruto.Location = new System.Drawing.Point(403, 148);
+            this.txtb_PesoBruto.Location = new System.Drawing.Point(216, 90);
             this.txtb_PesoBruto.Name = "txtb_PesoBruto";
-            this.txtb_PesoBruto.Size = new System.Drawing.Size(104, 20);
-            this.txtb_PesoBruto.TabIndex = 9;
+            this.txtb_PesoBruto.Size = new System.Drawing.Size(102, 20);
+            this.txtb_PesoBruto.TabIndex = 5;
+            this.txtb_PesoBruto.Text = "0";
             this.txtb_PesoBruto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtb_PesoBruto.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_PesoBruto_Validating);
+            // 
+            // lbl_PrecoVenda
+            // 
+            this.lbl_PrecoVenda.AutoSize = true;
+            this.lbl_PrecoVenda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_PrecoVenda.Location = new System.Drawing.Point(404, 18);
+            this.lbl_PrecoVenda.Name = "lbl_PrecoVenda";
+            this.lbl_PrecoVenda.Size = new System.Drawing.Size(101, 15);
+            this.lbl_PrecoVenda.TabIndex = 77;
+            this.lbl_PrecoVenda.Text = "Preço Venda(%)*";
+            // 
+            // txtb_PrecoVenda
+            // 
+            this.txtb_PrecoVenda.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtb_PrecoVenda.Location = new System.Drawing.Point(407, 36);
+            this.txtb_PrecoVenda.Name = "txtb_PrecoVenda";
+            this.txtb_PrecoVenda.Size = new System.Drawing.Size(100, 20);
+            this.txtb_PrecoVenda.TabIndex = 2;
+            this.txtb_PrecoVenda.Text = "0";
+            this.txtb_PrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtb_PrecoVenda.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_PrecoVenda_Validating);
             // 
             // frmCadastroProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(532, 525);
+            this.Controls.Add(this.lbl_PrecoVenda);
+            this.Controls.Add(this.txtb_PrecoVenda);
             this.Controls.Add(this.txtb_PesoBruto);
             this.Controls.Add(this.lbl_PesoLiquido);
             this.Controls.Add(this.txtb_PesoLiquido);
@@ -642,6 +681,8 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.SetChildIndex(this.txtb_PesoLiquido, 0);
             this.Controls.SetChildIndex(this.lbl_PesoLiquido, 0);
             this.Controls.SetChildIndex(this.txtb_PesoBruto, 0);
+            this.Controls.SetChildIndex(this.txtb_PrecoVenda, 0);
+            this.Controls.SetChildIndex(this.lbl_PrecoVenda, 0);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -695,5 +736,7 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Label lbl_PesoLiquido;
         private System.Windows.Forms.TextBox txtb_PesoBruto;
         private System.Windows.Forms.ColumnHeader ch_Email;
+        private System.Windows.Forms.Label lbl_PrecoVenda;
+        private System.Windows.Forms.TextBox txtb_PrecoVenda;
     }
 }

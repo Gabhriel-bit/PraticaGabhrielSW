@@ -145,6 +145,12 @@
     <Compile Include="frmAcesso\formularioBase.Designer.cs">
       <DependentUpon>formularioBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCadastros\frmCadastroVendas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCadastros\frmCadastroVendas.Designer.cs">
+      <DependentUpon>frmCadastroVendas.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCadastros\frmCadastroCompras.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -482,6 +488,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCadastros\frmCadastroTransportadoras.resx">
       <DependentUpon>frmCadastroTransportadoras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCadastros\frmCadastroVendas.resx">
+      <DependentUpon>frmCadastroVendas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsultas\frmConsultaEquipamentos.resx">
       <DependentUpon>frmConsultaEquipamentos.cs</DependentUpon>

@@ -23,7 +23,7 @@ namespace Projeto_ICI.DAOs
 
             try
             {
-                for (int i = 1; i <= pValores.Length - 1; i++)
+                for (int i = (pAllVal ? 0 : 1); i <= pValores.Length - 1; i++)
                 {
                     if ((int.TryParse(pValores[i], out int _) ||
                         decimal.TryParse(pValores[i], out decimal _)) &&

@@ -13,7 +13,7 @@ namespace Projeto_ICI.Controllers
                                            "data_chegada as Chegada, total_nota as Total, " +
                                            "total_produtos as Total_Produtos, valor_frete as Frete, " +
                                            "valor_seguro as Seguro, out_desp as Outras_Deps, " +
-                                           "compras.peso_bruto as Peso_Bruto, compras.peso_liquid as Peso_Liquido," +
+                                           "compras.peso_bruto as Peso_Bruto, compras.peso_liquido as Peso_Liquido," +
                                            " transpotadora, condicaoPagamento as condição_pagamento, " +
                                            "compras.codigoUsu, chave_acesso";
 

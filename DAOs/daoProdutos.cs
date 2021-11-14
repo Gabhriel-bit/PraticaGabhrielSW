@@ -93,13 +93,13 @@ namespace Projeto_ICI.DAOs
                 string insertion = "\n" + "delete from produto_fornecedor where " +
                                          $"codigoProduto = {pCodigoProd};\n"; ;
                 string[] campo = { "codigoProduto", "codigoFornecedor" },
-                         valor = { pCodigoProd.ToString() };
+                         valor = { pCodigoProd.ToString(), ""};
                 foreach (Classes.fornecedores vlForn in listaFornecedores)
                 {
                     valor[1] = vlForn.Codigo.ToString();
-                    insertion += AlterarToString("produto_fornecedor",
-                                                 campo, valor
-                                                 ) + '\n';
+                    insertion += InserirToString("produto_fornecedor",
+                                                 campo, valor,
+                                                 true) + '\n';
                 }
                 return insertion;
             }

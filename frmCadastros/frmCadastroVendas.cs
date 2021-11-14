@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace Projeto_ICI.frmCadastros
 {
-    public partial class Form1 : Projeto_ICI.formularioBase
+    public partial class frmCadastroVendas : Projeto_ICI.formularioBase
     {
-        public Form1()
+        public frmCadastroVendas()
         {
             InitializeComponent();
         }

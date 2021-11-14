@@ -143,14 +143,40 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.Clear();
-                BloquearTxtBox(true);
+                BloquearTxtBox(false);
                 CalcularParcelas();
                 btn_Gerar.Enabled = false;
                 btn_Limpar.Visible = true;
+                btn_Salvar.Enabled = true;
             }
         }
 
         private void CalcularParcelas()
+        {
+            refaturarItensCompra();
+            gerarContasPagar();
+        }
+
+        private List<Classes.itensCompra> lvItensCompraToList()
+        {
+            var vlListaItensCompra = new List<Classes.itensCompra>();
+            decimal  vlPesoLiq = 0, vlPesoBruto = 0;
+            foreach (ListViewItem vlItem in lv_ItensCompra.Items)
+            {
+                var vlTag = (Classes.itensCompra)vlItem.Tag;
+                vlTag.UmProduto.Saldo = int.Parse(vlItem.SubItems[2].Text);
+                vlTag.UmProduto.Custo = strToDecimal(vlItem.SubItems[5].Text);
+                vlTag.UmProduto.UltimaCompra = strToDecimal(vlItem.SubItems[3].Text);
+                vlPesoBruto += vlTag.UmProduto.PesoBruto;
+                vlPesoLiq += vlTag.UmProduto.PesoLiquido;
+                vlListaItensCompra.Add(vlTag);
+            }
+            umaCompra.PesoBruto = vlPesoBruto;
+            umaCompra.PesoLiquido = vlPesoLiq;
+            return vlListaItensCompra;
+        }
+
+        private void refaturarItensCompra()
         {
             decimal vlTotal = strToDecimal(txtb_Frete.Text) +
                               strToDecimal(txtb_Seguro.Text) +
@@ -160,8 +186,8 @@ namespace Projeto_ICI.frmCadastros
             {
                 var vlLista = calcularPorcItens();
                 int vlIndex = 0;
-                
-                foreach(ListViewItem vlItem in lv_ItensCompra.Items)
+
+                foreach (ListViewItem vlItem in lv_ItensCompra.Items)
                 {
                     vlDecimal = (vlTotal * vlLista[vlIndex] /
                                  int.Parse(vlItem.SubItems[2].Text)) +
@@ -173,13 +199,17 @@ namespace Projeto_ICI.frmCadastros
             }
             recalcularTotal();
             txtb_TotalNota.Text = txtb_TotalProdutos.Text;
-            vlTotal = strToDecimal(txtb_TotalNota.Text);
+        }
+
+        private void gerarContasPagar()
+        {
+            var vlTotal = strToDecimal(txtb_TotalNota.Text);
             umaListaItens = new List<contasPagar>();
-            vlDecimal = 0;
+            decimal vlDecimal = 0;
             foreach (parcelasCondPag vlParcela in umCondPag.ListaParcelas)
             {
                 vlDecimal = Math.Round((vlTotal * (vlParcela.Porcentagem / 100)), 4);
-                var vlListItem = new 
+                var vlListItem = new
                 contasPagar(txtb_Modelo.Text,
                             txtb_Serie.Text,
                             txtb_NumNF.Text,
@@ -187,8 +217,8 @@ namespace Projeto_ICI.frmCadastros
                             dt_Emissao.Value.AddDays(vlParcela.Dias).ToString("dd/MM/yyyy"),
                             "",
                             vlDecimal,
-                            0, 
-                            int.Parse((txtb_CodigoUsu.Text == "" ? "0":  txtb_CodigoUsu.Text)),
+                            0,
+                            int.Parse((txtb_CodigoUsu.Text == "" ? "0" : txtb_CodigoUsu.Text)),
                             DateTime.Now.ToString("dd/MM/yyyy"),
                             umCondPag.Desconto,
                             umCondPag.TaxaJuros,
@@ -499,10 +529,10 @@ namespace Projeto_ICI.frmCadastros
 
         private void dt_Chegada_Validating(object sender, CancelEventArgs e)
         {
-            if (dt_Chegada.Value > DateTime.Now)
+            if (dt_Chegada.Value > dt_Emissao.Value)
             {
                 errorMSG.SetError(lbl_DataChegada, "A data de chegada deve ser igual ou menor\n" +
-                                                   $"que a data atual ({DateTime.Now.ToString().Split(' ')[0]})");
+                                                   $"que a data de Emissão ({dt_Emissao.Value.ToString().Split(' ')[0]})");
                 dt_Chegada.Value = DateTime.Now;
                 dt_Chegada.Focus();
             }
@@ -678,6 +708,13 @@ namespace Projeto_ICI.frmCadastros
                 umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
                 umaCompra.TotalNota = strToDecimal(txtb_TotalNota.Text);
                 umaCompra.TotalProdutos = strToDecimal(txtb_TotalProdutos.Text);
+                umaCompra.Frete = strToDecimal(txtb_Frete.Text);
+                umaCompra.Seguro = strToDecimal(txtb_Seguro.Text);
+                umaCompra.OutrasDeps = strToDecimal(txtb_OutrasDeps.Text);
+                umaCompra.UmFornecedor.ThisFornecedor = umForn;
+                umaCompra.UmaTransportadora.ThisTransportadora = umaTranspot;
+                umaCompra.UmaCondicaoPag.ThisCondPag = umCondPag;
+                umaCompra.UmaListaItens = lvItensCompraToList();
 
                 string msg = "";
                 if (Btn_Acao == "Salvar")
@@ -873,6 +910,11 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_NumNF_TextChanged(object sender, EventArgs e)
         {
             validarChaveCompra();
+        }
+
+        private void txtb_NumNF_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoCodigo(txtb_NumNF, e);
         }
     }
 }

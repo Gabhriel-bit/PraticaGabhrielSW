@@ -12,6 +12,7 @@ namespace Projeto_ICI.Classes
         private string Freferencia;
         private string FcodigoBarras;
         private decimal Fcusto;
+        private decimal FprecoVenda;
         private string Funidade;
         private int Fsaldo;
         private modelos umModelo;
@@ -34,6 +35,7 @@ namespace Projeto_ICI.Classes
             Freferencia = "";
             FcodigoBarras = "";
             Fcusto = 0;
+            FprecoVenda = 0;
             Funidade = "";
             Fsaldo = 0;
             umModelo = new modelos();
@@ -47,7 +49,7 @@ namespace Projeto_ICI.Classes
         public produtos(int pCodigo, int pCodigoUsu, string pDataCad, string pDataUltAlt,
                         string pProduto, string pReferencia, string pCodBarras, decimal pCusto,
                         string pUnidade, int pSaldo, decimal pPesoBruto, decimal pPesoLiq,
-                        decimal pPrecoUltCompra)
+                        decimal pPrecoUltCompra, decimal pPrecoVenda)
         {
             Codigo = pCodigo;
             CodigoUsu = pCodigoUsu;
@@ -58,6 +60,7 @@ namespace Projeto_ICI.Classes
             Freferencia = pReferencia;
             FcodigoBarras = pCodBarras;
             Fcusto = pCusto;
+            FprecoVenda = pPrecoVenda;
             Funidade = pUnidade;
             Fsaldo = pSaldo;
             umModelo = new modelos();
@@ -77,6 +80,8 @@ namespace Projeto_ICI.Classes
         { get => FcodigoBarras; set => FcodigoBarras = value; }
         public decimal Custo
         { get => Fcusto; set => Fcusto = value; }
+        public decimal PrecoVenda
+        { get => FprecoVenda; set => FprecoVenda = value; }
         public decimal PesoLiquido
         { get => FpesoLiquido; set => FpesoLiquido = value; }
         public decimal PesoBruto
@@ -117,6 +122,7 @@ namespace Projeto_ICI.Classes
             Freferencia = ((produtos)pObj).Referencia;
             FcodigoBarras = ((produtos)pObj).CodigoBarras;
             Fcusto = ((produtos)pObj).Custo;
+            FprecoVenda = ((produtos)pObj).PrecoVenda;
             Funidade = ((produtos)pObj).Unidade;
             Fsaldo = ((produtos)pObj).Saldo;
             umModelo = ((produtos)pObj).UmModelo.ThisModelo;
@@ -130,7 +136,7 @@ namespace Projeto_ICI.Classes
         {
             var clone = new produtos(Codigo, CodigoUsu, DataCad, DataUltAlt, Produto, Referencia,
                                      CodigoBarras, Custo, Unidade, Saldo, PesoBruto, PesoLiquido,
-                                     UltimaCompra);
+                                     UltimaCompra, PrecoVenda);
             clone.UmModelo = umModelo.ThisModelo;
             clone.umSubgrupo = umSubgrupo.ThisSubgrupo;
             clone.ListaFornecedores = CloneListaForn();
@@ -144,6 +150,7 @@ namespace Projeto_ICI.Classes
                    Referencia + ';' +
                    CodigoBarras + ';' +
                    Custo.ToString() + ';' +
+                   PrecoVenda.ToString() + ';' +
                    Unidade + ';' +
                    Saldo.ToString() + ';' +
 
@@ -162,6 +169,7 @@ namespace Projeto_ICI.Classes
                    ";referencia" +
                    ";codigoBarras" + 
                    ";custo" +
+                   ";precoVenda" +
                    ";unidade" + 
                    ";saldo" +
                    ";peso_bruto" +

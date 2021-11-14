@@ -426,6 +426,12 @@ namespace Projeto_ICI
         {
             frmConsCompra.ShowDialog();
         }
+
+        private void btn_AbrirOS_Click(object sender, EventArgs e)
+        {
+            var d = new frmCadastros.frmConsultaOrdensServico();
+            d.ShowDialog();
+        }
     }
 }
 

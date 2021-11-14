@@ -14,6 +14,5 @@ namespace Projeto_ICI.frmCadastros
         {
             InitializeComponent();
         }
-
     }
 }

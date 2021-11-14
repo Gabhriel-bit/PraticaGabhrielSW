@@ -48,6 +48,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_Referencia.Text = vlProduto.Referencia;
             txtb_CodigoBarras.Text = vlProduto.CodigoBarras;
             txtb_Custo.Text = vlProduto.Custo.ToString();
+            txtb_PrecoVenda.Text = vlProduto.PrecoVenda.ToString();
             txtb_Saldo.Text = vlProduto.Saldo.ToString();
             txtb_CodigoSubGrupo.Text = vlProduto.UmSubgrupo.Codigo.ToString();
             txtb_SubGrupo.Text = vlProduto.UmSubgrupo.Subgrupo;
@@ -149,7 +150,8 @@ namespace Projeto_ICI.frmCadastros
                 {
                     string[] vlStrForn = { vlForn.Codigo.ToString(),
                                            vlForn.Fornecedor,
-                                           vlForn.CNPJ_CPF };
+                                           vlForn.CNPJ_CPF,
+                                           vlForn.Email };
                     var lvItem = new ListViewItem(vlStrForn);
                     lvItem.Tag = vlForn.ThisFornecedor;
                     lv_Fornecedores.Items.Add(lvItem);
@@ -384,6 +386,22 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_Unidade, "O campo 'UND' (unidade) é obrigatório!");
                 txtb_Unidade.Focus();
             }
+            else if (string.IsNullOrEmpty(txtb_PrecoVenda.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PrecoVenda, "O campo 'Preço venda' é obrigatório!");
+                txtb_PrecoVenda.Focus();
+            }
+            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text, false))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
+                txtb_PesoBruto.Focus();
+            }
+            else if (verificarPesoLiq())
+            {
+                txtb_PesoLiquido.Focus();
+            }
             else if (string.IsNullOrEmpty(txtb_Modelo.Text))
             {
                 errorMSG.Clear();
@@ -392,12 +410,6 @@ namespace Projeto_ICI.frmCadastros
                                               "'Pesquisar'");
                 txtb_CodigoModelo.Focus();
             }
-            else if (!ValidacaoDoubleMoeda(txtb_PesoBruto.Text, false))
-            {
-                errorMSG.Clear();
-                errorMSG.SetError(lbl_PesoBruto, "O campo 'Peso Bruto' é obrigatório!");
-                txtb_PesoBruto.Focus();
-            }
             else if (string.IsNullOrEmpty(txtb_SubGrupo.Text))
             {
                 errorMSG.Clear();
@@ -405,10 +417,6 @@ namespace Projeto_ICI.frmCadastros
                                               "usando o campo 'Código' ou o botão" +
                                               "'Pesquisar'");
                 txtb_CodigoSubGrupo.Focus();
-            }
-            else if (verificarPesoLiq())
-            {
-                txtb_PesoLiquido.Focus();
             }
             else if (lv_Fornecedores.Items.Count == 0)
             {
@@ -430,7 +438,8 @@ namespace Projeto_ICI.frmCadastros
                                                        int.Parse(txtb_Saldo.Text == "" ? "0" : txtb_Saldo.Text),
                                                        strToDecimal(txtb_PesoBruto.Text),
                                                        strToDecimal(txtb_PesoLiquido.Text),
-                                                       strToDecimal(txtb_PrecoUltCompra.Text));
+                                                       strToDecimal(txtb_PrecoUltCompra.Text),
+                                                       strToDecimal(txtb_PrecoVenda.Text));
                 vlProduto.UmModelo.ThisModelo = umModelo;
                 vlProduto.UmSubgrupo.ThisSubgrupo = umSubgrupo;
                 vlProduto.ListaFornecedores = lvToList();
@@ -537,6 +546,20 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_PesoLiquido, vlMsg);
                 return closing;
             }
-        } 
+        }
+
+        private void txtb_PrecoVenda_Validating(object sender, CancelEventArgs e)
+        {
+            if (ValidacaoDoubleMoeda(txtb_PrecoVenda.Text, false))
+            {
+                errorMSG.Clear();
+                e.Cancel = false;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_PrecoVenda, "Campo 'Preço venda' inválido!");
+                e.Cancel = closing;
+            }
+        }
     }
 }

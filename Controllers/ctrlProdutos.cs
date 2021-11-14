@@ -12,6 +12,7 @@ namespace Projeto_ICI.Controllers
         public const string camposSelect = "produtos.codigo, " +
                                            "produto, " +
                                            "custo, " +
+                                           "precoVenda, " +
                                            "unidade, " +
                                            "saldo, " +
                                            "peso_bruto as Peso_bruto, " +
@@ -143,24 +144,23 @@ namespace Projeto_ICI.Controllers
                 List<Classes.produtos> lista = new List<Classes.produtos>();
                 foreach (DataRow row in vlTabelaCondicoesPagamento.Rows)
                 {
-                    var vlProduto = new
-                        Classes.produtos((int)row[0], (int)row[12],
-                                         (string)row[13], (string)row[14],
-                                         (string)row[1], (string)row[8],
-                                         (string)row[9],
-                                         decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
-                                         (string)row[3], (int)row[4],
-                                         decimal.Parse(row[5].ToString(), vgEstilo, vgProv),
-                                         decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
-                                         decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
+                    var vlProduto = new Classes.produtos((int)row[0], (int)row[13], (string)row[14],
+                                                         (string)row[15], (string)row[1], (string)row[9],
+                                                         (string)row[10],
+                                                         decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
+                                                         (string)row[4], (int)row[5],
+                                                         decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
+                                                         decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
+                                                         decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
+                                                         decimal.Parse(row[3].ToString(), vgEstilo, vgProv));
                     vlProduto.UmModelo = (Classes.modelos)umaCtrlModelo.Pesquisar("codigo",
-                                                                                  ((int)row[10]).ToString(),
+                                                                                  ((int)row[11]).ToString(),
                                                                                   out string vlMsgModelo,
                                                                                   true);
                     string vlMsgSubgrupo = "";
 
                     vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                        ((int)row[11]).ToString(),
+                                                                                        ((int)row[12]).ToString(),
                                                                                         out vlMsgSubgrupo,
                                                                                         true);
                     vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);
@@ -193,24 +193,23 @@ namespace Projeto_ICI.Controllers
             else
             {
                 DataRow row = vlTabelaCondicoesPagamento.Rows[0];
-                var vlProduto = new
-                        Classes.produtos((int)row[0], (int)row[12],
-                                         (string)row[13], (string)row[14],
-                                         (string)row[1], (string)row[8],
-                                         (string)row[9],
-                                         decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
-                                         (string)row[3], (int)row[4],
-                                         decimal.Parse(row[5].ToString(), vgEstilo, vgProv),
-                                         decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
-                                         decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
+                var vlProduto = new Classes.produtos((int)row[0], (int)row[13], (string)row[14],
+                                                     (string)row[15], (string)row[1], (string)row[9],
+                                                     (string)row[10],
+                                                     decimal.Parse(row[2].ToString(), vgEstilo, vgProv),
+                                                     (string)row[4], (int)row[5],
+                                                     decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
+                                                     decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
+                                                     decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
+                                                     decimal.Parse(row[3].ToString(), vgEstilo, vgProv));
                 vlProduto.UmModelo = (Classes.modelos)umaCtrlModelo.Pesquisar("codigo",
-                                                                              ((int)row[10]).ToString(),
+                                                                              ((int)row[11]).ToString(),
                                                                               out string vlMsgModelo,
                                                                               true);
                 string vlMsgSubgrupo = "";
 
                 vlProduto.UmSubgrupo = (Classes.subgrupos)umaCtrlSubgrupo.Pesquisar("codigo",
-                                                                                    ((int)row[11]).ToString(),
+                                                                                    ((int)row[12]).ToString(),
                                                                                     out vlMsgSubgrupo,
                                                                                     true);
                 vlProduto.ListaFornecedores = PesquisarCollection(vlProduto.Codigo, out string vlMsgForn);

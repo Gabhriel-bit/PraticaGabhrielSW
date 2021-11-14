@@ -71,7 +71,13 @@ namespace Projeto_ICI
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Comprar = new System.Windows.Forms.Button();
+            this.btn_AbrirOS = new System.Windows.Forms.Button();
+            this.gb_Atalhos = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btn_ = new System.Windows.Forms.Button();
             this.menu_Principal.SuspendLayout();
+            this.gb_Atalhos.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu_Principal
@@ -397,21 +403,73 @@ namespace Projeto_ICI
             // 
             // btn_Comprar
             // 
-            this.btn_Comprar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_Comprar.Location = new System.Drawing.Point(12, 369);
+            this.btn_Comprar.Location = new System.Drawing.Point(6, 82);
             this.btn_Comprar.Name = "btn_Comprar";
-            this.btn_Comprar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Comprar.TabIndex = 5;
+            this.btn_Comprar.Size = new System.Drawing.Size(83, 57);
+            this.btn_Comprar.TabIndex = 1;
             this.btn_Comprar.Text = "Comprar";
             this.btn_Comprar.UseVisualStyleBackColor = true;
             this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
+            // 
+            // btn_AbrirOS
+            // 
+            this.btn_AbrirOS.Location = new System.Drawing.Point(6, 19);
+            this.btn_AbrirOS.Name = "btn_AbrirOS";
+            this.btn_AbrirOS.Size = new System.Drawing.Size(83, 57);
+            this.btn_AbrirOS.TabIndex = 0;
+            this.btn_AbrirOS.Text = "Abrir OS";
+            this.btn_AbrirOS.UseVisualStyleBackColor = true;
+            this.btn_AbrirOS.Click += new System.EventHandler(this.btn_AbrirOS_Click);
+            // 
+            // gb_Atalhos
+            // 
+            this.gb_Atalhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gb_Atalhos.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.gb_Atalhos.Controls.Add(this.btn_);
+            this.gb_Atalhos.Controls.Add(this.button2);
+            this.gb_Atalhos.Controls.Add(this.button1);
+            this.gb_Atalhos.Controls.Add(this.btn_AbrirOS);
+            this.gb_Atalhos.Controls.Add(this.btn_Comprar);
+            this.gb_Atalhos.Location = new System.Drawing.Point(0, 32);
+            this.gb_Atalhos.Name = "gb_Atalhos";
+            this.gb_Atalhos.Size = new System.Drawing.Size(96, 334);
+            this.gb_Atalhos.TabIndex = 7;
+            this.gb_Atalhos.TabStop = false;
+            this.gb_Atalhos.Text = "Atalhos";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 145);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 57);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Vender";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 208);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(83, 57);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Relatório";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // btn_
+            // 
+            this.btn_.Location = new System.Drawing.Point(6, 271);
+            this.btn_.Name = "btn_";
+            this.btn_.Size = new System.Drawing.Size(83, 57);
+            this.btn_.TabIndex = 9;
+            this.btn_.UseVisualStyleBackColor = true;
             // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 404);
-            this.Controls.Add(this.btn_Comprar);
+            this.ClientSize = new System.Drawing.Size(740, 366);
+            this.Controls.Add(this.gb_Atalhos);
             this.Controls.Add(this.menu_Principal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_Principal;
@@ -420,6 +478,7 @@ namespace Projeto_ICI
             this.Text = "C. L. COMÉRCIO DE CARTUCHOS E INSUMOS PARA IMPRESSORAS LTDA.";
             this.menu_Principal.ResumeLayout(false);
             this.menu_Principal.PerformLayout();
+            this.gb_Atalhos.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -467,6 +526,11 @@ namespace Projeto_ICI
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem1;
         private System.Windows.Forms.Button btn_Comprar;
+        private System.Windows.Forms.Button btn_AbrirOS;
+        private System.Windows.Forms.GroupBox gb_Atalhos;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_;
     }
 }
 
