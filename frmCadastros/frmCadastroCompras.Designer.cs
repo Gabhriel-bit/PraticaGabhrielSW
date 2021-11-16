@@ -252,25 +252,30 @@ namespace Projeto_ICI.frmCadastros
             // ch_Quantidade
             // 
             this.ch_Quantidade.Text = "Quant.";
+            this.ch_Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ch_PrecoUnt
             // 
             this.ch_PrecoUnt.Text = "Preço unt.";
+            this.ch_PrecoUnt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_PrecoUnt.Width = 80;
             // 
             // ch_Desconto
             // 
             this.ch_Desconto.Text = "Desconto";
+            this.ch_Desconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_Desconto.Width = 80;
             // 
             // ch_PrecoOper
             // 
             this.ch_PrecoOper.Text = "Custo";
+            this.ch_PrecoOper.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_PrecoOper.Width = 80;
             // 
             // ch_SubTotal
             // 
             this.ch_SubTotal.Text = "Sub Total";
+            this.ch_SubTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_SubTotal.Width = 80;
             // 
             // btn_Remover
@@ -698,7 +703,7 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_CodigoUsu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_CodigoUsu.AutoSize = true;
             this.lbl_CodigoUsu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoUsu.Location = new System.Drawing.Point(289, 588);
+            this.lbl_CodigoUsu.Location = new System.Drawing.Point(12, 584);
             this.lbl_CodigoUsu.Name = "lbl_CodigoUsu";
             this.lbl_CodigoUsu.Size = new System.Drawing.Size(74, 15);
             this.lbl_CodigoUsu.TabIndex = 147;
@@ -709,7 +714,7 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoUsu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtb_CodigoUsu.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_CodigoUsu.Enabled = false;
-            this.txtb_CodigoUsu.Location = new System.Drawing.Point(292, 606);
+            this.txtb_CodigoUsu.Location = new System.Drawing.Point(15, 602);
             this.txtb_CodigoUsu.Name = "txtb_CodigoUsu";
             this.txtb_CodigoUsu.Size = new System.Drawing.Size(71, 20);
             this.txtb_CodigoUsu.TabIndex = 146;
@@ -719,7 +724,7 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_ChaveAcesso.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_ChaveAcesso.AutoSize = true;
             this.lbl_ChaveAcesso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_ChaveAcesso.Location = new System.Drawing.Point(12, 588);
+            this.lbl_ChaveAcesso.Location = new System.Drawing.Point(89, 584);
             this.lbl_ChaveAcesso.Name = "lbl_ChaveAcesso";
             this.lbl_ChaveAcesso.Size = new System.Drawing.Size(88, 15);
             this.lbl_ChaveAcesso.TabIndex = 145;
@@ -729,7 +734,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_ChaveAcesso.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtb_ChaveAcesso.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_ChaveAcesso.Location = new System.Drawing.Point(15, 606);
+            this.txtb_ChaveAcesso.Location = new System.Drawing.Point(92, 602);
             this.txtb_ChaveAcesso.Name = "txtb_ChaveAcesso";
             this.txtb_ChaveAcesso.Size = new System.Drawing.Size(271, 20);
             this.txtb_ChaveAcesso.TabIndex = 25;
@@ -771,6 +776,7 @@ namespace Projeto_ICI.frmCadastros
             // ch_ValorTotal
             // 
             this.ch_ValorTotal.Text = "Valor Parc.";
+            this.ch_ValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_ValorTotal.Width = 100;
             // 
             // lbl_ContasPagar

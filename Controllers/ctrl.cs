@@ -32,7 +32,11 @@ namespace Projeto_ICI.Controllers
             pMsg = "";
             return null;
         }
-
+        public virtual DataTable Pesquisar(string[] pCampo, string[] pValor, bool pValorIgual, out string pMsg)
+        {
+            pMsg = "";
+            return null;
+        }
         public virtual object Pesquisar(string pCampo, string pValor, out string pMsg, bool pDisponivel)
         {
             pMsg = "";
@@ -101,6 +105,7 @@ namespace Projeto_ICI.Controllers
             }
             catch (SqlException e)
             {
+                
                 if (conn.Transaction != null)
                 { conn.Transaction.Rollback(); }
                 pMsgErro = vlMsg + e.Message;

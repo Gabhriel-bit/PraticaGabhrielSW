@@ -96,7 +96,7 @@ namespace Projeto_ICI.frmConsultas
                 var vlProduto = (Classes.produtos)dataGridToObj(umCtrlProduto, out string vlMsg);
                 if (vlMsg != "")
                 {
-                    errorMSG.SetError(btn_Alterar, "Erro ao carregar!\n" + vlMsg);
+                    errorMSG.SetError(btn_Sair, "Erro ao carregar!\n" + vlMsg);
                     this.dataGridView.Focus();
                 }
                 else

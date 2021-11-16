@@ -25,7 +25,7 @@ namespace Projeto_ICI.frmCadastros
         private produtos umProduto;
         private compras umaCompra;
 
-        
+
 
         private List<contasPagar> umaListaItens;
         public frmCadastroCompras(Controllers.ctrlCompras pCtrlCompra)
@@ -160,7 +160,7 @@ namespace Projeto_ICI.frmCadastros
         private List<Classes.itensCompra> lvItensCompraToList()
         {
             var vlListaItensCompra = new List<Classes.itensCompra>();
-            decimal  vlPesoLiq = 0, vlPesoBruto = 0;
+            decimal vlPesoLiq = 0, vlPesoBruto = 0;
             foreach (ListViewItem vlItem in lv_ItensCompra.Items)
             {
                 var vlTag = (Classes.itensCompra)vlItem.Tag;
@@ -175,7 +175,43 @@ namespace Projeto_ICI.frmCadastros
             umaCompra.PesoLiquido = vlPesoLiq;
             return vlListaItensCompra;
         }
+        private void listToLvItensCompra(List<Classes.itensCompra> pLista)
+        {
+            decimal vlTotalProduto = 0;
+            decimal vlSubTotal = 0;
+            foreach (itensCompra vlItem in pLista)
+            {
+                vlSubTotal = vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto;
+                var vlLVItem = new ListViewItem(new string[] { vlItem.UmProduto.Produto,
+                                                              txtb_Unidade.Text,
+                                                              txtb_Quantidade.Text,
+                                                              vlItem.PrecoUnidade.ToString(),
+                                                              vlItem.Desconto.ToString(),
+                                                              (vlItem.PrecoUnidade - 
+                                                                    vlItem.Desconto).ToString(),
+                                                              vlSubTotal.ToString()});
 
+                vlLVItem.Tag = vlItem.ThisItenCompra;
+                lv_ItensCompra.Items.Add(vlLVItem);
+                vlTotalProduto += vlSubTotal;
+            }
+            txtb_TotalProdutos.Text = vlTotalProduto.ToString();
+        }
+        private void listToLvContasPagar(List<Classes.contasPagar> pLista)
+        {
+            decimal vlTotal = 0;
+            foreach (contasPagar vlItem in pLista)
+            {
+                ListViewItem vlLVItem = new ListViewItem(new string[] { vlItem.Parcela.ToString(),
+                                                                        vlItem.Vencimento,
+                                                                        vlItem.UmaFormaPag.FormaPag,
+                                                                        vlItem.ValorTotal.ToString()});
+                vlLVItem.Tag = vlItem.ThisContaPagar;
+                lv_ParcelasContasPag.Items.Add(vlLVItem);
+                vlTotal += vlItem.ValorTotal;
+            }
+            txtb_TotalNota.Text = vlTotal.ToString();
+        }
         private void refaturarItensCompra()
         {
             decimal vlTotal = strToDecimal(txtb_Frete.Text) +
@@ -304,7 +340,6 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoCondPag.Enabled = true;
 
             txtb_ChaveAcesso.Enabled = true;
-            txtb_CodigoUsu.Enabled = true;
 
             btn_Gerar.Enabled = true;
             btn_Salvar.Enabled = true;
@@ -330,7 +365,6 @@ namespace Projeto_ICI.frmCadastros
             txtb_CodigoCondPag.Enabled = false;
 
             txtb_ChaveAcesso.Enabled = false;
-            txtb_CodigoUsu.Enabled = false;
 
             btn_Gerar.Enabled = false;
             btn_Limpar.Visible = false;
@@ -348,7 +382,7 @@ namespace Projeto_ICI.frmCadastros
             btn_PesquisarFornecedor.Enabled = pPK;
         }
 
-            private void btn_Sair_Click(object sender, EventArgs e)
+        private void btn_Sair_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -356,8 +390,34 @@ namespace Projeto_ICI.frmCadastros
         private void btn_Limpar_Click(object sender, EventArgs e)
         {
             ClearTxTBox();
+            umaCompra.resetToBasic();
             btn_Limpar.Visible = false;
             EnabledPKTxtBox(true);
+        }
+
+        public void CarregarTxtBox(Classes.compras pUmaCompra)
+        {
+            txtb_Modelo.Text = pUmaCompra.Modelo;
+            txtb_Serie.Text = pUmaCompra.Serie;
+            txtb_NumNF.Text = pUmaCompra.NumeroNF;
+            txtb_Frete.Text = pUmaCompra.Frete.ToString();
+            txtb_Seguro.Text = pUmaCompra.Seguro.ToString();
+            dt_Chegada.Text = pUmaCompra.Chegada;
+            dt_Emissao.Text = pUmaCompra.Emissao;
+            txtb_ChaveAcesso.Text = pUmaCompra.ChaveAcesso;
+            txtb_CodigoUsu.Text = pUmaCompra.CodigoUsu.ToString();
+
+            txtb_Fornecedor.Text = pUmaCompra.UmFornecedor.Fornecedor;
+            txtb_CodigoFornecedor.Text = pUmaCompra.UmFornecedor.Codigo.ToString();
+            txtb_Transport.Text = pUmaCompra.UmaTransportadora.Transportadora;
+            txtb_CodigoTransport.Text = pUmaCompra.UmaTransportadora.Codigo.ToString();
+            txtb_CondicaoPag.Text = pUmaCompra.UmaCondicaoPag.CondicaoPag;
+            txtb_CodigoCondPag.Text = pUmaCompra.UmaCondicaoPag.Codigo.ToString();
+
+            listToLvItensCompra(pUmaCompra.UmaListaItens);
+            listToLvContasPagar(pUmaCompra.UmaListaContasPagar);
+
+            umaCompra.ThisCompra = pUmaCompra;
         }
 
         private void groupBox_Produtos_EnabledChanged(object sender, EventArgs e)
@@ -720,12 +780,12 @@ namespace Projeto_ICI.frmCadastros
                 if (Btn_Acao == "Salvar")
                 {
                     msg = umCtrlCompra.Inserir(umaCompra);
-                }
+                }/*
                 else if (Btn_Acao == "Alterar")
                 {
                     msg = umCtrlCompra.Alterar(umaCompra);
-                }
-                else if (Btn_Acao == "Excluir")
+                }*/
+                else if (Btn_Acao == "Cancelar")
                 {
                     msg = umCtrlCompra.Excluir(umaCompra);
                 }
@@ -893,7 +953,9 @@ namespace Projeto_ICI.frmCadastros
             else
             {
                 errorMSG.Clear();
-                lv_ItensCompra.Items.Remove(lv_ItensCompra.Items[lv_ItensCompra.SelectedIndices[0]]);
+                ListViewItem vlItem = lv_ItensCompra.Items[lv_ItensCompra.SelectedIndices[0]];
+                umaCompra.UmaListaItens.Remove((Classes.itensCompra)vlItem.Tag);
+                lv_ItensCompra.Items.Remove(vlItem);
             }
         }
 

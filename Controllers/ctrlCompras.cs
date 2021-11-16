@@ -14,7 +14,7 @@ namespace Projeto_ICI.Controllers
                                            "total_produtos as Total_Produtos, valor_frete as Frete, " +
                                            "valor_seguro as Seguro, out_desp as Outras_Deps, " +
                                            "compras.peso_bruto as Peso_Bruto, compras.peso_liquido as Peso_Liquido," +
-                                           " transpotadora, condicaoPagamento as condição_pagamento, " +
+                                           "codigoTransp, condicaoPagamento as condição_pagamento, " +
                                            "compras.codigoUsu, chave_acesso";
 
         public const string camposSelectItens = "modelo, serie, numero_nf, codigoForn, codigoProd, " +
@@ -104,8 +104,8 @@ namespace Projeto_ICI.Controllers
         {
             var camposSelList = camposSelect.Replace("compras.", "");
             camposSelList = camposSelList.Replace("condicaoPagamento " +
-                                                  "as condição_pagamento", "codigoCondPag");
-            camposSelList = camposSelect.Replace("transpotadora", "codigoTransp");
+                                                  "condicaoPagamento as condição_pagamento",
+                                                  "compras.codigoCondPag");
 
             DataTable vlTabelaCompras =
                  ExecuteComandSearchQuery(
@@ -193,8 +193,8 @@ namespace Projeto_ICI.Controllers
         public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
         {
             var camposSelList = camposSelect.Replace("compras.", "");
-            camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento", "codigoCondPag");
-            camposSelList = camposSelList.Replace("transpotadora", "codigoTransp");
+            camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento",
+                                                  "compras.codigoCondPag");
 
             DataTable vlTabelaCompras =
                  ExecuteComandSearchQuery(
@@ -243,7 +243,8 @@ namespace Projeto_ICI.Controllers
         public object Pesquisar(string[] pCampos, string[] pValores, out string pMsg, bool pValorIgual)
         {
             var camposSelList = camposSelect.Replace("compras.", "");
-            camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento", "codigoCondPag");
+            camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento",
+                                                  "compras.codigoCondPag.");
             camposSelList = camposSelList.Replace("transpotadora", "codigoTransp");
 
             DataTable vlTabelaCompras =
@@ -294,7 +295,16 @@ namespace Projeto_ICI.Controllers
         {
             var vlCompra = new Classes.compras();
             var vlTable = ExecuteComandSearchQuery(
-                          umDaoCompra.PesquisarToString("compras, fornecedores, transportadoras, condicoesPagamento",
+                          umDaoCompra.PesquisarToString("compras, fornecedores, condicoesPagamento",
+                          camposSelect, pCampo, pValor, vlCompra.toStringSearchPesquisa(), pValorIgual),
+                          out pMsg);
+            return vlTable;
+        }
+        public override DataTable Pesquisar(string[] pCampo, string[] pValor, bool pValorIgual, out string pMsg)
+        {
+            var vlCompra = new Classes.compras();
+            var vlTable = ExecuteComandSearchQuery(
+                          umDaoCompra.PesquisarToString("compras, fornecedores, condicoesPagamento",
                           camposSelect, pCampo, pValor, vlCompra.toStringSearchPesquisa(), pValorIgual),
                           out pMsg);
             return vlTable;

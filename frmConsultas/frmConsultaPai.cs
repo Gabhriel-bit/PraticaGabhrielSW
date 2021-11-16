@@ -48,6 +48,11 @@ namespace Projeto_ICI.frmConsultas
 
         private void frmConsultaPai_Resize(object sender, EventArgs e)
         {
+            resizeButtons();
+        }
+
+        protected virtual void resizeButtons()
+        {
             decimal larguraDGV = this.Width - 35;
             var pos = Math.Truncate((larguraDGV - 40) / 4);
             var X = int.Parse((pos + Math.Truncate(pos / 3)).ToString());

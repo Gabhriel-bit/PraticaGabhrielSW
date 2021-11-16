@@ -159,6 +159,15 @@ namespace Projeto_ICI.Classes
                 return lista;
             }
         }
+
+        public compras resetToBasic()
+        {
+            var vlClone = Clone();
+            var vlReset = new compras();
+            ThisCompra = vlReset;
+            return vlClone;
+        }
+
         public compras ThisCompra
         {
             get => Clone();
@@ -263,8 +272,7 @@ namespace Projeto_ICI.Classes
         public string[] toStringSearchPesquisa()
         {
             return new string[] { "codigoForn = fornecedores.codigo",
-                                  "codigoTransp = transportadoras.codigo",
-                                  "codigoCondPag = condicoesPagamento.codigo"  };
+                                  "compras.codigoCondPag = condicoesPagamento.codigo"  };
         }
     }
 

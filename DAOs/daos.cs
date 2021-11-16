@@ -133,8 +133,9 @@ namespace Projeto_ICI.DAOs
 
             if (pCampo != "")
             {
-                if (int.TryParse(pValor, out int _) ||
-                    decimal.TryParse(pValor, out decimal _))
+                if ((int.TryParse(pValor, out int _) ||
+                    decimal.TryParse(pValor, out decimal _)) &&
+                    !pCampo.ToLower().Contains("data"))
                     search += (pValorIgual ? "" : " AND ") + $"{pCampo}={pValor.Replace(',', '.')}";
                 else
                 {
@@ -165,26 +166,33 @@ namespace Projeto_ICI.DAOs
                                : ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
 
             string search = $"select {pCamposSelecionados} from {pNameTable} " +
-                            (pValorIgual ? " where " : $"where {vlNomeDao}.disponivel != 0 ");
-            search += (search.Contains("disponivel") ? "AND " : "");
+                            (pValorIgual ? " where  " : $" where  {vlNomeDao}.disponivel != 0 ");
+            search += (search.Contains("disponivel") && (pCampos[0] != "") ? "AND " : "");
 
-            for (int i = 0; i<=pCampos.Count() -1; i++)
+            if (pCampos[0] != "")
             {
-                if (int.TryParse(pValores[i], out int _) ||
-                    decimal.TryParse(pValores[i], out decimal _))
-                    search += $"{pCampos[i]}={pValores[i].Replace(',', '.')} AND ";
-                else
+                for (int i = 0; i <= pCampos.Count() - 1; i++)
                 {
-                    if (pValorIgual)
-                        search +=  $"{pCampos[i]} = '{pValores[i]}' AND ";
+                    if (int.TryParse(pValores[i], out int _) ||
+                        decimal.TryParse(pValores[i], out decimal _))
+                        search += $"{pCampos[i]}={pValores[i].Replace(',', '.')} AND ";
                     else
-                        search += $"{pCampos[i]} like '%{pValores[i]}%' AND ";
+                    {
+                        if (pValorIgual)
+                            search += $"{pCampos[i]} = '{pValores[i]}' AND ";
+                        else
+                            search += $"{pCampos[i]} like '%{pValores[i]}%' AND ";
+                    }
                 }
+                search = search.Remove(search.Length - 5) + ';';
             }
-            search = search.Remove(search.Length - 5) + ';';
+            else
+                search = search.Replace("AND ", "");
+
             if (pRefCampos != null)
             {
-                search = search.Remove(search.Length - 1) + " AND ";
+                search = search.Remove(search.Length - 1) +
+                         (pCampos[0] == "" ? "" : " AND ");
 
                 foreach (string campo in pRefCampos)
                 {
@@ -192,6 +200,10 @@ namespace Projeto_ICI.DAOs
                 }
                 search = search.Remove(search.Length - 5) + ";";
             }
+            else
+                if (pCampos[0] == "")
+                    search = search.Replace(" where ", "");
+
             return search;
         }
     }
