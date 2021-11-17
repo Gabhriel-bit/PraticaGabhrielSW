@@ -451,7 +451,7 @@ BEGIN
 	CREATE TABLE compras (
 		modelo          VARCHAR(50) NOT NULL,
 		serie           VARCHAR(50) NOT NULL,
-		numero_nf       VARCHAR(50) NOT NULL,
+		numero_nf       VARCHAR(50) NOT NULL,  
 		codigoForn      INT  NOT NULL,
 		codigoTransp    INT,
 		codigoVeiculo   INT,

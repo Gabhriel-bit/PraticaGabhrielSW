@@ -12,7 +12,7 @@ namespace Projeto_ICI.Controllers
         public const string camposSelect =  "modelo, serie, numero_nf, fornecedor, " +
                                             "parcela, vencimento, formaPagamento, " +
                                             "valorTotal, valorPago, dataPagamento, " +
-                                            "contasPagar.dataCad, contasPagar.codigoUsu, " +
+                                            "contas_Pagar.dataCad, contas_Pagar.codigoUsu, " +
                                             "descontoPag as Desconto, taxaJuros as Juros, multa";
 
         private ctrlFormasPagamento umCtrlFormaPag;
@@ -72,7 +72,35 @@ namespace Projeto_ICI.Controllers
                 return msg;
             }
         }
-
+        public string Excluir(List<Classes.contasPagar> pListContas, bool pSql)
+        {
+            var msg = "";
+            foreach (Classes.contasPagar vlConta in pListContas)
+            {
+                msg += umDaoContasPag.Excluir(vlConta) + '\n';
+            }
+            if (pSql)
+                return msg;
+            else
+            {
+                msg = ExecucaoComandQuery(msg);
+                if (msg == "sucesso")
+                {
+                    return $"Conta a pagar cancelada com {msg}!";
+                }
+                if (msg.Contains("DELETE conflitou"))
+                {
+                    return $"Existe um registro que depende de uma das parcelas das " +
+                           $"contas a pagar relacionadas a chave:\n" +
+                           $"Modelo:    {pListContas[0].PK.Split(';')[0]}\n" +
+                           $"Serie:     {pListContas[0].PK.Split(';')[1]}\n" +
+                           $"Número NF: {pListContas[0].PK.Split(';')[2]}\n" +
+                           $"Parcelas:  {1}-{pListContas.Count()}\n" +
+                           $"Não foi possivel excluir as parcelas das contas a pagar!";
+                }
+                return msg;
+            }
+        }
         public override string Alterar(object pObjeto)
         {
             var msg = ExecucaoComandQuery(umDaoContasPag.Alterar(pObjeto));
@@ -102,11 +130,11 @@ namespace Projeto_ICI.Controllers
         }
         public List<Classes.contasPagar> PesquisarCollection(out string pMsg)
         {
-            var camposSelList = camposSelect.Replace("contasPagar.", "");
+            var camposSelList = camposSelect.Replace("contas_Pagar.", ""); 
             camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contasPagar",
+                       umDaoContasPag.PesquisarToString("contas_Pagar",
                        camposSelList.Replace("fornecedor", "codigoForn"), "", ""), out pMsg);
 
             if (vlTabelaCidades.Rows.Count == 0)
@@ -142,13 +170,55 @@ namespace Projeto_ICI.Controllers
                 return lista;
             }
         }
-        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        public List<Classes.contasPagar> PesquisarCollection(string[] pCampo, string[] pValor, out string pMsg)
         {
-            var camposSelList = camposSelect.Replace("contasPagar.", "");
+            var camposSelList = camposSelect.Replace("contas_Pagar.", "");
+            camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contasPagar",
-                       camposSelList.Replace("estado", "codigoEstado"), pCampo, pValor, default, pValorIgual),
+                       umDaoContasPag.PesquisarToString("contas_Pagar",
+                       camposSelList.Replace("fornecedor", "codigoForn"), pCampo, pValor, default, true),
+                       out pMsg);
+            if (vlTabelaCidades.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                var vlListaContasPag = new List<Classes.contasPagar>();
+                foreach (DataRow row in vlTabelaCidades.Rows)
+                {
+                    var vlConta = new Classes.contasPagar((string)row[0], (string)row[1], (string)row[2],
+                                                          (int)row[4], (string)row[5], (string)row[9],
+                                                          decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
+                                                          decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
+                                                          (int)row[11], (string)row[10],
+                                                          decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
+                                                          decimal.Parse(row[13].ToString(), vgEstilo, vgProv),
+                                                          decimal.Parse(row[14].ToString(), vgEstilo, vgProv));
+
+                    vlConta.UmFornecedor = (Classes.fornecedores)umCtrlForn.Pesquisar("codigo",
+                                                                            ((int)row[3]).ToString(),
+                                                                            out string vlMsgForn,
+                                                                            true);
+                    vlConta.UmaFormaPag = (Classes.formasPagamento)umCtrlFormaPag.Pesquisar("codigo",
+                                                                            ((int)row[6]).ToString(),
+                                                                            out string vlMsgFormaPag,
+                                                                            true);
+                    pMsg += vlMsgForn + vlMsgFormaPag;
+                    vlListaContasPag.Add(vlConta);
+                }
+                return vlListaContasPag;
+            }
+        }
+        public override object Pesquisar(string pCampo, string pValor, out string pMsg, bool pValorIgual)
+        {
+            var camposSelList = camposSelect.Replace("contas_Pagar.", "");
+            camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
+            DataTable vlTabelaCidades =
+                 ExecuteComandSearchQuery(
+                       umDaoContasPag.PesquisarToString("contas_Pagar",
+                       camposSelList.Replace("fornecedor", "codigoForn"), pCampo, pValor, default, pValorIgual),
                        out pMsg);
             if (vlTabelaCidades.Rows.Count == 0)
             {
@@ -182,7 +252,7 @@ namespace Projeto_ICI.Controllers
         {
             var vlConta = new Classes.contasPagar();
             var vlTable = ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contasPagar, formasPagamento, fornecedores", camposSelect,
+                       umDaoContasPag.PesquisarToString("contas_Pagar, formasPagamento, fornecedores", camposSelect,
                        pCampo, pValor, vlConta.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }

@@ -100,11 +100,21 @@ namespace Projeto_ICI
         {
             InitializeComponent();
             InicializarAtributos();
+
             mnItem_Equipamentos.Click += MnItem_Equipamentos_Click;
             mnItem_Transportadoras.Click += MnItem_Transportadoras_Click;
 
-            //frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
-            //f.ShowDialog();
+            loginToolStripMenuItem.Enabled = true;
+            logoutToolStripMenuItem.Enabled = false;
+            gb_Atalhos.Enabled = false;
+            consultasToolStripMenuItem.Enabled = false;
+            cadastrosToolStripMenuItem.Enabled = false;
+            /*
+             * loginToolStripMenuItem.Enabled = true;
+             * logoutToolStripMenuItem.Enabled = false;
+             * frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
+             * f.ShowDialog();
+            */
         }
 
         private void InicializarAtributos()
@@ -431,6 +441,28 @@ namespace Projeto_ICI
         {
             var d = new frmCadastros.frmConsultaOrdensServico();
             d.ShowDialog();
+        }
+
+        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loginToolStripMenuItem.Enabled = false;
+            logoutToolStripMenuItem.Enabled = true;
+            //Fazer rotina para logar no sistema
+            //Caso logado habilita os
+            var vlLoguin = true; //= false;
+
+            gb_Atalhos.Enabled = vlLoguin;
+            consultasToolStripMenuItem.Enabled = vlLoguin;
+            cadastrosToolStripMenuItem.Enabled = vlLoguin;
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loginToolStripMenuItem.Enabled = true;
+            logoutToolStripMenuItem.Enabled = false;
+            gb_Atalhos.Enabled = false;
+            consultasToolStripMenuItem.Enabled = false;
+            cadastrosToolStripMenuItem.Enabled = false;
         }
     }
 }

@@ -72,6 +72,7 @@ namespace Projeto_ICI.frmConsultas
             this.cb_ChavePesquisa.TabIndex = 21;
             this.cb_ChavePesquisa.Text = "Chave identificadora";
             this.cb_ChavePesquisa.SelectedIndexChanged += new System.EventHandler(this.cb_ChavePesquisa_SelectedIndexChanged);
+            this.cb_ChavePesquisa.SelectionChangeCommitted += new System.EventHandler(this.cb_ChavePesquisa_SelectionChangeCommitted);
             // 
             // lbl_CampoPesquisa
             // 

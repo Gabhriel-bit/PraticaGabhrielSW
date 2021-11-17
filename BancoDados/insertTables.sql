@@ -48,3 +48,21 @@ insert into produtos (codigoUsu, dataCad, dataUltAlt, produto, referencia, codig
 	insert into produto_fornecedor (codigoProduto, codigoFornecedor) values ((select codigo from produtos where produto = 'CARTUCHO HP 664XL COLORIDO'), 1);
 	insert into produto_fornecedor (codigoProduto, codigoFornecedor) values ((select codigo from produtos where produto = 'IMPRESSORA DESKJET 3022'), 1);
 	insert into produto_fornecedor (codigoProduto, codigoFornecedor) values ((select codigo from produtos where produto = 'CARTUCHO HP 664XL PRETO'), 1);
+
+
+insert into compras (modelo, serie, numero_nf, codigoForn, data_emissao, data_chegada, total_nota, total_produtos, chave_acesso, codigoUsu, valor_frete, valor_seguro, out_desp, peso_bruto, peso_liquido, codigoTransp, codigoCondPag) values ('MODELO', 'SERIE', 123465789, 1, '17/11/2021', '17/11/2021', 4822.68, 4822.68, '', 0, 0, 0, 0, 60.0260, 50.0200, 0, 3);
+insert into produtos_compra (modelo, serie, numero_nf, codigoForn, unidade, quantidade, valor_un, desconto, codigoProd) values ('MODELO', 'SERIE', 123465789, 1, 'UND', 3, 1548.05, 152.6, 1);
+insert into produtos_compra (modelo, serie, numero_nf, codigoForn, unidade, quantidade, valor_un, desconto, codigoProd) values ('MODELO', 'SERIE', 123465789, 1, 'UND', 3, 98.23, 0, 2);
+insert into produtos_compra (modelo, serie, numero_nf, codigoForn, unidade, quantidade, valor_un, desconto, codigoProd) values ('MODELO', 'SERIE', 123465789, 1, 'UND', 3, 129.20, 15.32, 3);
+UPDATE produtos SET codigoUsu = 0, dataCad = '09/11/2021', dataUltAlt = '09/11/2021', produto = 'IMPRESSORA DESKJET 3022', referencia = 'SDADSA', codigoBarras = 7578575785785876786, custo = 1395.45, precoVenda = 32.6500, unidade = 'UND', saldo = 3, peso_bruto = 60.0000, peso_liquid = 50.0000, precoUltCompra = 1548.05, codigoModelo = 2, codigoSubgrupo = 2 WHERE codigo = 1; 
+delete from produto_fornecedor where codigoProduto = 1;
+insert into produto_fornecedor (codigoProduto, codigoFornecedor) values (1, 1);
+UPDATE produtos SET codigoUsu = 0, dataCad = '09/11/2021', dataUltAlt = '09/11/2021', produto = 'CARTUCHO HP 664XL PRETO', referencia = 'F6V31AB', codigoBarras = 165313313651563, custo = 98.23, precoVenda = 35.5500, unidade = 'UND', saldo = 3, peso_bruto = 0.0130, peso_liquid = 0.0100, precoUltCompra = 98.23, codigoModelo = 3, codigoSubgrupo = 4 WHERE codigo = 2; 
+delete from produto_fornecedor where codigoProduto = 2;
+insert into produto_fornecedor (codigoProduto, codigoFornecedor) values (2, 1);
+UPDATE produtos SET codigoUsu = 0, dataCad = '09/11/2021', dataUltAlt = '09/11/2021', produto = 'CARTUCHO HP 664XL COLORIDO', referencia = 'F6V28AB', codigoBarras = 956565655, custo = 113.88, precoVenda = 26.7000, unidade = 'UND', saldo = 3, peso_bruto = 0.0130, peso_liquid = 0.0100, precoUltCompra = 129.20, codigoModelo = 3, codigoSubgrupo = 4 WHERE codigo = 3; 
+delete from produto_fornecedor where codigoProduto = 3;
+insert into produto_fornecedor (codigoProduto, codigoFornecedor) values (3, 1);
+insert into contas_pagar (modelo, serie, numero_nf, codigoForn, parcela, vencimento, dataPagamento, valorTotal, valorPago, codigoUsu, dataCad, codigoFormaPag, descontoPag, taxaJuros, multa) values ('MODELO', 'SERIE', 123465789, 1, 1, '24/11/2021', '', 1607.3992, 0, 0, '17/11/2021', 1, 0.0000, 5.2600, 12.3200);
+insert into contas_pagar (modelo, serie, numero_nf, codigoForn, parcela, vencimento, dataPagamento, valorTotal, valorPago, codigoUsu, dataCad, codigoFormaPag, descontoPag, taxaJuros, multa) values ('MODELO', 'SERIE', 123465789, 1, 2, '01/12/2021', '', 1607.3992, 0, 0, '17/11/2021', 1, 0.0000, 5.2600, 12.3200);
+insert into contas_pagar (modelo, serie, numero_nf, codigoForn, parcela, vencimento, dataPagamento, valorTotal, valorPago, codigoUsu, dataCad, codigoFormaPag, descontoPag, taxaJuros, multa) values ('MODELO', 'SERIE', 123465789, 1, 3, '08/12/2021', '', 1607.8815, 0, 0, '17/11/2021', 2, 0.0000, 5.2600, 12.3200);

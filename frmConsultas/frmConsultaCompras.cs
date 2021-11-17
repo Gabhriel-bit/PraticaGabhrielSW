@@ -68,14 +68,33 @@ namespace Projeto_ICI.frmConsultas
                 errorMSG.SetError(btn_Excluir, null);
                 frmCadCompra.ClearTxTBox();
                 var btnName = frmCadCompra.Btn_Acao;
-                frmCadCompra.BloquearTxtBox(false);
-                frmCadCompra.CarregarTxtBox(vlCompra);
                 frmCadCompra.Btn_Acao = "Cancelar";
+                frmCadCompra.CarregarTxtBox(vlCompra);
+                frmCadCompra.BloquearTxtBox(true);
                 frmCadCompra.ShowDialog();
                 frmCadCompra.Btn_Acao = btnName;
                 carregarDados(umCtrlCompra);
             }
         }
+        protected override object dataGridToObj(Controllers.ctrl pCtrl, out string pMsg)
+        {
+            pMsg = "";
+            if (dataGridView.SelectedRows.Count == 0 || dataGridView.SelectedRows[0].Cells[0].Value == null)
+                return null;
+            else
+            {
+                var row = dataGridView.SelectedRows[0].Cells;
+                var vlCodForn = ((Classes.fornecedores)umCtrlCompra.CTRLForn.Pesquisar("fornecedor",
+                                 (string)row[3].Value, out pMsg, true)).Codigo.ToString();
+                    return pCtrl.Pesquisar(umaCompra.ToStringPK.Split(';'),
+                                       new string[] { (string)row[0].Value,
+                                                      (string)row[1].Value,
+                                                      (string)row[2].Value,
+                                                                vlCodForn},
+                                       out pMsg, true);
+            }
+        }
+
         protected override void Sair()
         {
             if (btn_Sair.Text != "Sair")
@@ -180,6 +199,11 @@ namespace Projeto_ICI.frmConsultas
                 errorMSG.SetError(lbl_CampoPesquisa, null);
             }
 
+        }
+
+        private void cb_ChavePesquisa_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtb_Pesquisa.Focus();
         }
     }
 }

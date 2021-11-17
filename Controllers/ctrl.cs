@@ -42,6 +42,11 @@ namespace Projeto_ICI.Controllers
             pMsg = "";
             return null;
         }
+        public virtual object Pesquisar(string[] pCampo, string[] pValor, out string pMsg, bool pDisponivel)
+        {
+            pMsg = "";
+            return null;
+        }
 
         protected string ExecucaoComandQuery(string pComandText)
         {

@@ -726,9 +726,9 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_ChaveAcesso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ChaveAcesso.Location = new System.Drawing.Point(89, 584);
             this.lbl_ChaveAcesso.Name = "lbl_ChaveAcesso";
-            this.lbl_ChaveAcesso.Size = new System.Drawing.Size(88, 15);
+            this.lbl_ChaveAcesso.Size = new System.Drawing.Size(83, 15);
             this.lbl_ChaveAcesso.TabIndex = 145;
-            this.lbl_ChaveAcesso.Text = "Chave Acesso*";
+            this.lbl_ChaveAcesso.Text = "Chave Acesso";
             // 
             // txtb_ChaveAcesso
             // 
@@ -790,6 +790,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // dt_Emissao
             // 
+            this.dt_Emissao.CustomFormat = "dd/mm/aaaa";
             this.dt_Emissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dt_Emissao.Location = new System.Drawing.Point(15, 70);
             this.dt_Emissao.Name = "dt_Emissao";
@@ -799,6 +800,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // dt_Chegada
             // 
+            this.dt_Chegada.CustomFormat = "dd/mm/aaaa";
             this.dt_Chegada.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dt_Chegada.Location = new System.Drawing.Point(128, 70);
             this.dt_Chegada.Name = "dt_Chegada";

@@ -58,7 +58,7 @@ namespace Projeto_ICI.Controllers
             var vlInserir = umDaoCompra.Inserir(pObjeto) +
                             umDaoCompra.InserirItens(vlCompra.UmaListaItens,
                                                      vlCompra.PK) +
-                            umaCtrlProduto.Alterar(vlCompra.UmaListaItens, true);
+                            umaCtrlProduto.Alterar(vlCompra.UmaListaItens, true) +
                             umaCtrlContaPagar.Inserir(vlCompra.UmaListaContasPagar, true);
             var msg = ExecucaoComandQuery(vlInserir);
             if (msg == "sucesso")
@@ -89,7 +89,7 @@ namespace Projeto_ICI.Controllers
         public override string Excluir(object pObjeto)
         {
             var vlCompra = (Classes.compras)pObjeto;
-            var vlInserir = umaCtrlContaPagar.Excluir(vlCompra.UmaListaContasPagar[0]) +
+            var vlInserir = umaCtrlContaPagar.Excluir(vlCompra.UmaListaContasPagar, true) +
                             umDaoCompra.ExcluirItens(vlCompra.PK) +
                             umDaoCompra.Excluir(pObjeto);
 
@@ -130,24 +130,32 @@ namespace Projeto_ICI.Controllers
                                         decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
                                         decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
                                         decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
-                    vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("coddigo",
+                    vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                         ((int)row[3]).ToString(),
                                                                                         out string pMsgForn,
                                                                                         true);
                     pMsg += pMsgForn == "" ? "" : "\n" + pMsgForn;
-                    vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("coddigo",
-                                                                                        ((int)row[3]).ToString(),
-                                                                                        out string pMsgTrans,
-                                                                                        true);
+                    string pMsgTrans = "";
+                    if ((int)row[13] != 0)
+                        vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("codigo",
+                                                                                            ((int)row[13]).ToString(),
+                                                                                            out pMsgTrans,
+                                                                                            true);
                     pMsg += pMsgTrans == "" ? "" : "\n" + pMsgTrans;
                     vlCompra.UmaCondicaoPag =
                         (Classes.condicoesPagamento)umaCtrlCondPag.Pesquisar("codigo",
-                                                                             ((int)row[2]).ToString(),
+                                                                             ((int)row[14]).ToString(),
                                                                              out string vlMsgCondPag,
                                                                              true);
-                    vlCompra.UmaListaItens = PesquisarCollection(vlCompra.ToStringPK, vlCompra.PK,
-                                                                 out string vlMsgParc);
-                    pMsg += vlMsgParc == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgParc;
+                    pMsg += vlMsgCondPag == "" ? "" : "\n" + vlMsgCondPag;
+                    vlCompra.UmaListaItens = PesquisarCollection(vlCompra.ToStringPK, vlCompra.PK, out string vlMsgParc);
+
+
+                    vlCompra.UmaListaContasPagar = CTRLContasPag.PesquisarCollection(vlCompra.ToStringPK.Split(';'),
+                                                                                     vlCompra.PK.Split(';'),
+                                                                                     out string vlMsgContasPag);
+
+                    pMsg += vlMsgContasPag == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgContasPag;
                     lista.Add(vlCompra);
                 }
                 return lista;
@@ -219,32 +227,41 @@ namespace Projeto_ICI.Controllers
                                     decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
                                     decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
                                     decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
-                vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("coddigo",
+                vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                     ((int)row[3]).ToString(),
                                                                                     out string pMsgForn,
                                                                                     true);
                 pMsg += pMsgForn == "" ? "" : "\n" + pMsgForn;
-                vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("coddigo",
-                                                                                    ((int)row[3]).ToString(),
-                                                                                    out string pMsgTrans,
-                                                                                    true);
+                string pMsgTrans = "";
+                if ((int)row[13] != 0)
+                    vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("codigo",
+                                                                                        ((int)row[13]).ToString(),
+                                                                                        out pMsgTrans,
+                                                                                        true);
                 pMsg += pMsgTrans == "" ? "" : "\n" + pMsgTrans;
                 vlCompra.UmaCondicaoPag =
                     (Classes.condicoesPagamento)umaCtrlCondPag.Pesquisar("codigo",
-                                                                         ((int)row[2]).ToString(),
+                                                                         ((int)row[14]).ToString(),
                                                                          out string vlMsgCondPag,
                                                                          true);
+                pMsg += vlMsgCondPag == "" ? "" : "\n" + vlMsgCondPag;
                 vlCompra.UmaListaItens = PesquisarCollection(vlCompra.ToStringPK, vlCompra.PK, out string vlMsgParc);
-                pMsg += vlMsgParc == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgParc;
+
+
+                vlCompra.UmaListaContasPagar = CTRLContasPag.PesquisarCollection(vlCompra.ToStringPK.Split(';'),
+                                                                                 vlCompra.PK.Split(';'),
+                                                                                 out string vlMsgContasPag);
+
+                pMsg += vlMsgContasPag == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgContasPag;
                 return vlCompra;
             }
         }
 
-        public object Pesquisar(string[] pCampos, string[] pValores, out string pMsg, bool pValorIgual)
+        public override object Pesquisar(string[] pCampos, string[] pValores, out string pMsg, bool pValorIgual)
         {
             var camposSelList = camposSelect.Replace("compras.", "");
             camposSelList = camposSelList.Replace("condicaoPagamento as condição_pagamento",
-                                                  "compras.codigoCondPag.");
+                                                  "compras.codigoCondPag");
             camposSelList = camposSelList.Replace("transpotadora", "codigoTransp");
 
             DataTable vlTabelaCompras =
@@ -270,23 +287,33 @@ namespace Projeto_ICI.Controllers
                                     decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
                                     decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
                                     decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
-                vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("coddigo",
+
+                vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                     ((int)row[3]).ToString(),
                                                                                     out string pMsgForn,
                                                                                     true);
                 pMsg += pMsgForn == "" ? "" : "\n" + pMsgForn;
-                vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("coddigo",
-                                                                                    ((int)row[3]).ToString(),
-                                                                                    out string pMsgTrans,
-                                                                                    true);
+                string pMsgTrans = "";
+                if ((int)row[13] != 0)
+                    vlCompra.UmaTransportadora = (Classes.transportadoras)umaCtrlTransp.Pesquisar("codigo",
+                                                                                        ((int)row[13]).ToString(),
+                                                                                        out pMsgTrans,
+                                                                                        true);
                 pMsg += pMsgTrans == "" ? "" : "\n" + pMsgTrans;
                 vlCompra.UmaCondicaoPag =
                     (Classes.condicoesPagamento)umaCtrlCondPag.Pesquisar("codigo",
-                                                                         ((int)row[2]).ToString(),
+                                                                         ((int)row[14]).ToString(),
                                                                          out string vlMsgCondPag,
                                                                          true);
+                pMsg += vlMsgCondPag == "" ? "" : "\n" + vlMsgCondPag;
                 vlCompra.UmaListaItens = PesquisarCollection(vlCompra.ToStringPK, vlCompra.PK, out string vlMsgParc);
-                pMsg += vlMsgParc == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgParc;
+
+
+                vlCompra.UmaListaContasPagar = CTRLContasPag.PesquisarCollection(vlCompra.ToStringPK.Split(';'),
+                                                                                 vlCompra.PK.Split(';'),
+                                                                                 out string vlMsgContasPag);
+
+                pMsg += vlMsgContasPag == "" ? "" : "\nErro ao carrgar itens da compra\n-->" + vlMsgContasPag;
                 return vlCompra;
             }
         }

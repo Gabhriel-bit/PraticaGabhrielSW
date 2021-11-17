@@ -73,9 +73,11 @@ namespace Projeto_ICI
             this.btn_Comprar = new System.Windows.Forms.Button();
             this.btn_AbrirOS = new System.Windows.Forms.Button();
             this.gb_Atalhos = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.btn_ = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_Principal.SuspendLayout();
             this.gb_Atalhos.SuspendLayout();
             this.SuspendLayout();
@@ -382,6 +384,7 @@ namespace Projeto_ICI
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loginToolStripMenuItem,
             this.logoutToolStripMenuItem,
             this.sairToolStripMenuItem1});
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
@@ -391,13 +394,14 @@ namespace Projeto_ICI
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // sairToolStripMenuItem1
             // 
             this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
-            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(129, 26);
+            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
             this.sairToolStripMenuItem1.Text = "Sair";
             this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
             // 
@@ -423,29 +427,26 @@ namespace Projeto_ICI
             // 
             // gb_Atalhos
             // 
-            this.gb_Atalhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Atalhos.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.gb_Atalhos.Controls.Add(this.btn_);
             this.gb_Atalhos.Controls.Add(this.button2);
             this.gb_Atalhos.Controls.Add(this.button1);
             this.gb_Atalhos.Controls.Add(this.btn_AbrirOS);
             this.gb_Atalhos.Controls.Add(this.btn_Comprar);
-            this.gb_Atalhos.Location = new System.Drawing.Point(0, 32);
+            this.gb_Atalhos.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gb_Atalhos.Location = new System.Drawing.Point(0, 29);
             this.gb_Atalhos.Name = "gb_Atalhos";
-            this.gb_Atalhos.Size = new System.Drawing.Size(96, 334);
+            this.gb_Atalhos.Size = new System.Drawing.Size(96, 337);
             this.gb_Atalhos.TabIndex = 7;
             this.gb_Atalhos.TabStop = false;
-            this.gb_Atalhos.Text = "Atalhos";
             // 
-            // button1
+            // btn_
             // 
-            this.button1.Location = new System.Drawing.Point(6, 145);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 57);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Vender";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_.Location = new System.Drawing.Point(6, 271);
+            this.btn_.Name = "btn_";
+            this.btn_.Size = new System.Drawing.Size(83, 57);
+            this.btn_.TabIndex = 9;
+            this.btn_.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -456,26 +457,45 @@ namespace Projeto_ICI
             this.button2.Text = "Relatório";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // btn_
+            // button1
             // 
-            this.btn_.Location = new System.Drawing.Point(6, 271);
-            this.btn_.Name = "btn_";
-            this.btn_.Size = new System.Drawing.Size(83, 57);
-            this.btn_.TabIndex = 9;
-            this.btn_.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(6, 145);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 57);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Vender";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.vScrollBar1.Location = new System.Drawing.Point(96, 29);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 337);
+            this.vScrollBar1.TabIndex = 8;
+            // 
+            // loginToolStripMenuItem
+            // 
+            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.loginToolStripMenuItem.Text = "Login";
+            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 366);
+            this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.gb_Atalhos);
             this.Controls.Add(this.menu_Principal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_Principal;
+            this.MinimumSize = new System.Drawing.Size(756, 405);
             this.Name = "Gerente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "C. L. COMÉRCIO DE CARTUCHOS E INSUMOS PARA IMPRESSORAS LTDA.";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menu_Principal.ResumeLayout(false);
             this.menu_Principal.PerformLayout();
             this.gb_Atalhos.ResumeLayout(false);
@@ -531,6 +551,8 @@ namespace Projeto_ICI
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
     }
 }
 

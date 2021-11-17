@@ -25,8 +25,6 @@ namespace Projeto_ICI.frmCadastros
         private produtos umProduto;
         private compras umaCompra;
 
-
-
         private List<contasPagar> umaListaItens;
         public frmCadastroCompras(Controllers.ctrlCompras pCtrlCompra)
         {
@@ -55,7 +53,94 @@ namespace Projeto_ICI.frmCadastros
             frmConsTransport = (frmConsultas.frmConsultaTranspotadoras)pFrmCad[1];
             frmConsForn = (frmConsultas.frmConsultaFornecedores)pFrmCad[2];
             frmConsProduto = (frmConsultas.frmConsultaProdutos)pFrmCad[3];
+        }
+        public void ClearTxTBox(bool pIncGBProd = true)
+        {
+            txtb_Modelo.Clear();
+            txtb_Serie.Clear();
+            txtb_NumNF.Clear();
+            txtb_CodigoFornecedor.Clear();
+            txtb_Fornecedor.Clear();
+            dt_Emissao.Value = DateTime.Now;
+            dt_Chegada.Value = DateTime.Now;
+            lv_ParcelasContasPag.Items.Clear();
+            txtb_ChaveAcesso.Clear();
+            txtb_TotalNota.Clear();
+            txtb_TotalProdutos.Clear();
+            txtb_CodigoTransport.Clear();
+            txtb_Transport.Clear();
+            txtb_Frete.Text = "0";
+            txtb_Seguro.Text = "0";
+            txtb_OutrasDeps.Text = "0";
+            txtb_CodigoCondPag.Clear();
+            txtb_CondicaoPag.Clear();
+            if (pIncGBProd)
+            { ClearGroupBoxProd(); }
 
+        }
+        protected void ClearGroupBoxProd()
+        {
+            txtb_CodigoProduto.Clear();
+            txtb_Produto.Clear();
+            txtb_Quantidade.Clear();
+            txtb_Unidade.Clear();
+            txtb_PrecoUnt.Clear();
+            lv_ItensCompra.Items.Clear();
+        }
+
+        public void DesBloqTxTBox()
+        {
+            EnabledPKTxtBox(true);
+
+            dt_Chegada.Enabled = true;
+            dt_Emissao.Enabled = true;
+
+            groupBox_Produtos.Enabled = true;
+            txtb_Frete.Enabled = true;
+            txtb_Seguro.Enabled = true;
+            txtb_OutrasDeps.Enabled = true;
+
+            txtb_CodigoTransport.Enabled = true;
+            txtb_CodigoCondPag.Enabled = true;
+
+            txtb_ChaveAcesso.Enabled = true;
+
+            btn_Gerar.Enabled = true;
+            btn_Limpar.Visible = !btn_Gerar.Enabled;
+            btn_PesquisarCondPag.Enabled = true;
+            btn_PesquisarFornecedor.Enabled = true;
+            btn_PesquisaTransportadora.Enabled = true;
+        }
+        public void BloquearTxtBox(bool pPK)
+        {
+            EnabledPKTxtBox(pPK);
+
+            dt_Chegada.Enabled = false;
+            dt_Emissao.Enabled = false;
+
+            groupBox_Produtos.Enabled = false;
+            txtb_Frete.Enabled = false;
+            txtb_Seguro.Enabled = false;
+            txtb_OutrasDeps.Enabled = false;
+
+            txtb_CodigoTransport.Enabled = false;
+            txtb_CodigoCondPag.Enabled = false;
+
+            txtb_ChaveAcesso.Enabled = false;
+
+            btn_Gerar.Enabled = false;
+            btn_Limpar.Visible = false;
+            btn_PesquisarCondPag.Enabled = false;
+            btn_PesquisaTransportadora.Enabled = false;
+        }
+
+        public void EnabledPKTxtBox(bool pPK)
+        {
+            txtb_Modelo.Enabled = pPK;
+            txtb_Serie.Enabled = pPK;
+            txtb_NumNF.Enabled = pPK;
+            txtb_CodigoFornecedor.Enabled = pPK;
+            btn_PesquisarFornecedor.Enabled = pPK;
         }
 
         private bool conferir_Campos()
@@ -147,7 +232,6 @@ namespace Projeto_ICI.frmCadastros
                 CalcularParcelas();
                 btn_Gerar.Enabled = false;
                 btn_Limpar.Visible = true;
-                btn_Salvar.Enabled = true;
             }
         }
 
@@ -174,6 +258,16 @@ namespace Projeto_ICI.frmCadastros
             umaCompra.PesoBruto = vlPesoBruto;
             umaCompra.PesoLiquido = vlPesoLiq;
             return vlListaItensCompra;
+        }
+        private List<Classes.contasPagar> lvContasPagarToList()
+        {
+            var vlListaContasPagar = new List<Classes.contasPagar>();
+            foreach (ListViewItem vlItem in lv_ParcelasContasPag.Items)
+            {
+                var vlTag = (Classes.contasPagar)vlItem.Tag;
+                vlListaContasPagar.Add(vlTag.ThisContaPagar);
+            }
+            return vlListaContasPagar;
         }
         private void listToLvItensCompra(List<Classes.itensCompra> pLista)
         {
@@ -260,6 +354,7 @@ namespace Projeto_ICI.frmCadastros
                             umCondPag.TaxaJuros,
                             umCondPag.Multa);
                 vlListItem.UmaFormaPag = vlParcela.UmaFormaPag.ThisFormPag;
+                vlListItem.UmFornecedor = umForn.ThisFornecedor;
 
                 string[] vlLVStrItem = new string[] { vlListItem.Parcela.ToString(),
                                                       vlListItem.Vencimento,
@@ -290,98 +385,6 @@ namespace Projeto_ICI.frmCadastros
             return vlLista;
         }
 
-        public void ClearTxTBox(bool pIncGBProd = true)
-        {
-            txtb_Modelo.Clear();
-            txtb_Serie.Clear();
-            txtb_NumNF.Clear();
-            txtb_CodigoFornecedor.Clear();
-            txtb_Fornecedor.Clear();
-            dt_Emissao.Value = DateTime.Now;
-            dt_Chegada.Value = DateTime.Now;
-            lv_ParcelasContasPag.Items.Clear();
-            txtb_ChaveAcesso.Clear();
-            txtb_TotalNota.Clear();
-            txtb_TotalProdutos.Clear();
-            txtb_CodigoTransport.Clear();
-            txtb_Transport.Clear();
-            txtb_Frete.Clear();
-            txtb_Seguro.Clear();
-            txtb_OutrasDeps.Clear();
-            txtb_CodigoCondPag.Clear();
-            txtb_CondicaoPag.Clear();
-            if (pIncGBProd)
-            { ClearGroupBoxProd(); }
-
-        }
-        protected void ClearGroupBoxProd()
-        {
-            txtb_CodigoProduto.Clear();
-            txtb_Produto.Clear();
-            txtb_Quantidade.Clear();
-            txtb_Unidade.Clear();
-            txtb_PrecoUnt.Clear();
-            lv_ItensCompra.Items.Clear();
-        }
-
-        public void DesBloqTxTBox()
-        {
-            EnabledPKTxtBox(true);
-
-            dt_Chegada.Enabled = true;
-            dt_Emissao.Enabled = true;
-
-            groupBox_Produtos.Enabled = true;
-            txtb_Frete.Enabled = true;
-            txtb_Seguro.Enabled = true;
-            txtb_OutrasDeps.Enabled = true;
-
-            txtb_CodigoTransport.Enabled = true;
-            txtb_CodigoCondPag.Enabled = true;
-
-            txtb_ChaveAcesso.Enabled = true;
-
-            btn_Gerar.Enabled = true;
-            btn_Salvar.Enabled = true;
-            btn_Limpar.Visible = !btn_Gerar.Enabled;
-            btn_PesquisarCondPag.Enabled = true;
-            btn_PesquisarFornecedor.Enabled = true;
-            btn_PesquisaTransportadora.Enabled = true;
-        }
-
-        public void BloquearTxtBox(bool pPK)
-        {
-            EnabledPKTxtBox(pPK);
-
-            dt_Chegada.Enabled = false;
-            dt_Emissao.Enabled = false;
-
-            groupBox_Produtos.Enabled = false;
-            txtb_Frete.Enabled = false;
-            txtb_Seguro.Enabled = false;
-            txtb_OutrasDeps.Enabled = false;
-
-            txtb_CodigoTransport.Enabled = false;
-            txtb_CodigoCondPag.Enabled = false;
-
-            txtb_ChaveAcesso.Enabled = false;
-
-            btn_Gerar.Enabled = false;
-            btn_Limpar.Visible = false;
-            btn_Salvar.Enabled = false;
-            btn_PesquisarCondPag.Enabled = false;
-            btn_PesquisaTransportadora.Enabled = false;
-        }
-
-        public void EnabledPKTxtBox(bool pPK)
-        {
-            txtb_Modelo.Enabled = pPK;
-            txtb_Serie.Enabled = pPK;
-            txtb_NumNF.Enabled = pPK;
-            txtb_CodigoFornecedor.Enabled = pPK;
-            btn_PesquisarFornecedor.Enabled = pPK;
-        }
-
         private void btn_Sair_Click(object sender, EventArgs e)
         {
             Close();
@@ -402,6 +405,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_NumNF.Text = pUmaCompra.NumeroNF;
             txtb_Frete.Text = pUmaCompra.Frete.ToString();
             txtb_Seguro.Text = pUmaCompra.Seguro.ToString();
+            txtb_OutrasDeps.Text = pUmaCompra.OutrasDeps.ToString();
             dt_Chegada.Text = pUmaCompra.Chegada;
             dt_Emissao.Text = pUmaCompra.Emissao;
             txtb_ChaveAcesso.Text = pUmaCompra.ChaveAcesso;
@@ -418,6 +422,7 @@ namespace Projeto_ICI.frmCadastros
             listToLvContasPagar(pUmaCompra.UmaListaContasPagar);
 
             umaCompra.ThisCompra = pUmaCompra;
+            btn_Salvar.Enabled = true;
         }
 
         private void groupBox_Produtos_EnabledChanged(object sender, EventArgs e)
@@ -444,7 +449,12 @@ namespace Projeto_ICI.frmCadastros
         private void validarChaveCompra()
         {
             var vlBloq = true;
-            if (txtb_Modelo.Text == "")
+            if (Btn_Acao == "Cancelar")
+            {
+                errorMSG.Clear();
+                vlBloq = false;
+            }
+            else if (txtb_Modelo.Text == "")
                 errorMSG.SetError(lbl_Modelo, "Insira um modelo!");
             else if (txtb_Serie.Text == "")
             {
@@ -574,7 +584,7 @@ namespace Projeto_ICI.frmCadastros
 
         private void dt_Emissao_Validating(object sender, CancelEventArgs e)
         {
-            if (dt_Emissao.Value > DateTime.Now)
+            if (dt_Emissao.Value.Date > DateTime.Now.Date)
             {
                 errorMSG.SetError(lbl_DataEmissao, "A data de emissão deve ser igual ou menor\n" +
                                                    $"que a data atual ({DateTime.Now.ToString().Split(' ')[0]})");
@@ -589,11 +599,11 @@ namespace Projeto_ICI.frmCadastros
 
         private void dt_Chegada_Validating(object sender, CancelEventArgs e)
         {
-            if (dt_Chegada.Value > dt_Emissao.Value)
+            if (dt_Chegada.Value.Date > dt_Emissao.Value.Date)
             {
                 errorMSG.SetError(lbl_DataChegada, "A data de chegada deve ser igual ou menor\n" +
                                                    $"que a data de Emissão ({dt_Emissao.Value.ToString().Split(' ')[0]})");
-                dt_Chegada.Value = DateTime.Now;
+                dt_Chegada.Value = dt_Emissao.Value;
                 dt_Chegada.Focus();
             }
             else
@@ -644,6 +654,11 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.SetError(lbl_Desconto, $"Valor '{txtb_Desconto.Text}' inválido");
                 txtb_Desconto.Text = "0";
+            }
+            else if (strToDecimal(txtb_Desconto.Text) > strToDecimal(txtb_PrecoUnt.Text))
+            {
+                errorMSG.SetError(lbl_Desconto, $"O Desconto não pode exceder o valor do preço unitário!");
+                txtb_Desconto.Text = txtb_PrecoUnt.Text;
             }
             else
                 errorMSG.Clear();
@@ -957,6 +972,7 @@ namespace Projeto_ICI.frmCadastros
                 umaCompra.UmaListaItens.Remove((Classes.itensCompra)vlItem.Tag);
                 lv_ItensCompra.Items.Remove(vlItem);
             }
+            recalcularTotal();
         }
 
         private void txtb_Modelo_TextChanged(object sender, EventArgs e)
