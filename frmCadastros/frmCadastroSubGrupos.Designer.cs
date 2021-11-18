@@ -155,7 +155,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_CodigoGrupo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastroSubGrupos";
-            this.Text = "Cadastro de Sub-Grupos";
+            this.Text = "Cadastro de Subgrupos";
             this.Controls.SetChildIndex(this.lbl_Codigo, 0);
             this.Controls.SetChildIndex(this.lbl_DataCad, 0);
             this.Controls.SetChildIndex(this.lbl_UltAlt, 0);

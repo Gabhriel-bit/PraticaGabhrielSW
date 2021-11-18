@@ -70,7 +70,7 @@ namespace Projeto_ICI.frmConsultas
                 var btnName = frmCadCompra.Btn_Acao;
                 frmCadCompra.Btn_Acao = "Cancelar";
                 frmCadCompra.CarregarTxtBox(vlCompra);
-                frmCadCompra.BloquearTxtBox(true);
+                frmCadCompra.BloquearTxtBox(false);
                 frmCadCompra.ShowDialog();
                 frmCadCompra.Btn_Acao = btnName;
                 carregarDados(umCtrlCompra);

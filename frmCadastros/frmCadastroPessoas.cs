@@ -135,6 +135,11 @@ namespace Projeto_ICI.frmCadastros
 
         protected void date_DataNasc_Validating(object sender, CancelEventArgs e)
         {
+            validaDataNasc(sender, e);
+        }
+
+        protected virtual void validaDataNasc(object sender, CancelEventArgs e)
+        {
             var idade = DateTime.Today.Year - date_DataNasc_Fund.Value.Year;
             if (idade < 16 || idade > 130)
             {

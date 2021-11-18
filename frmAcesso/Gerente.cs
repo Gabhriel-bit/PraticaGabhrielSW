@@ -464,6 +464,22 @@ namespace Projeto_ICI
             consultasToolStripMenuItem.Enabled = false;
             cadastrosToolStripMenuItem.Enabled = false;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var g = new frmConsultas.frmConsultaVendas();
+            g.ShowDialog();
+        }
+
+        private void btn_Sair_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Gerente_Shown(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

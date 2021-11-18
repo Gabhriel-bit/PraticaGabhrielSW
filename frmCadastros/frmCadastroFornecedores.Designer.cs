@@ -47,8 +47,6 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_CPF_CNPJ.Validating += new System.ComponentModel.CancelEventHandler(this.txtb_CPF_CNPJ_Validating);
             // 
-            // btn_PesquisarCidade
-            // 
             // txtb_CodigoUsu
             // 
             this.txtb_CodigoUsu.Location = new System.Drawing.Point(24, 373);
@@ -205,7 +203,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_Fornecedor);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastroFornecedores";
-            this.Text = "Cadastro de fornecedores";
+            this.Text = "Cadastro de Fornecedores";
             this.Controls.SetChildIndex(this.txtb_Logradouro, 0);
             this.Controls.SetChildIndex(this.lbl_Logradouro, 0);
             this.Controls.SetChildIndex(this.txtb_Numero, 0);

@@ -409,11 +409,17 @@
     <Compile Include="frmConsultas\frmConsultaTranspotadoras.Designer.cs">
       <DependentUpon>frmConsultaTranspotadoras.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConsultas\frmFormasPagamento.cs">
+    <Compile Include="frmConsultas\frmConsultaVendas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConsultas\frmFormasPagamento.Designer.cs">
-      <DependentUpon>frmFormasPagamento.cs</DependentUpon>
+    <Compile Include="frmConsultas\frmConsultaVendas.Designer.cs">
+      <DependentUpon>frmConsultaVendas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFormasPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultas\frmConsultaFormasPagamento.Designer.cs">
+      <DependentUpon>frmConsultaFormasPagamento.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -555,8 +561,11 @@
     <EmbeddedResource Include="frmConsultas\frmConsultaTranspotadoras.resx">
       <DependentUpon>frmConsultaTranspotadoras.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultas\frmFormasPagamento.resx">
-      <DependentUpon>frmFormasPagamento.cs</DependentUpon>
+    <EmbeddedResource Include="frmConsultas\frmConsultaFormasPagamento.resx">
+      <DependentUpon>frmConsultaFormasPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultas\frmConsultaVendas.resx">
+      <DependentUpon>frmConsultaVendas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

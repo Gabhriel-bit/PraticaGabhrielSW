@@ -74,6 +74,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_PesoBruto.Enabled = false;
             txtb_PesoLiquido.Enabled = false;
             lv_Fornecedores.Enabled = false;
+            txtb_PrecoVenda.Enabled = false;
 
             btn_Adicionar.Enabled = false;
             btn_PesquisarFornecedor.Enabled = false;
@@ -94,6 +95,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_PesoBruto.Enabled = true;
             txtb_PesoLiquido.Enabled = true;
             lv_Fornecedores.Enabled = true;
+            txtb_PrecoVenda.Enabled = true;
 
             btn_Adicionar.Enabled = true;
             btn_PesquisarFornecedor.Enabled = true;
@@ -120,6 +122,7 @@ namespace Projeto_ICI.frmCadastros
             txtb_Referencia.Clear();
             txtb_PesoBruto.Clear();
             txtb_PesoLiquido.Clear();
+            txtb_PrecoVenda.Clear();
             txtb_PrecoUltCompra.Clear();
             lv_Fornecedores.Items.Clear();
         }

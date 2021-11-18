@@ -90,7 +90,7 @@ namespace Projeto_ICI.Controllers
         {
             var vlCompra = (Classes.compras)pObjeto;
             var vlInserir = umaCtrlContaPagar.Excluir(vlCompra.UmaListaContasPagar, true) +
-                            umDaoCompra.ExcluirItens(vlCompra.PK) +
+                            //umDaoCompra.ExcluirItens(vlCompra.PK) +
                             umDaoCompra.Excluir(pObjeto);
 
             var msg = ExecucaoComandQuery(vlInserir);
@@ -121,15 +121,13 @@ namespace Projeto_ICI.Controllers
                 foreach (DataRow row in vlTabelaCompras.Rows)
                 {
                     var vlCompra = new
-                        Classes.compras((string)row[0], (string)row[1], (string)row[2], (string)row[4],
-                                        (string)row[5], (string)row[16],
-                                        decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
-                                        decimal.Parse(row[9].ToString(), vgEstilo, vgProv),
-                                        decimal.Parse(row[10].ToString(), vgEstilo, vgProv), (int)row[15],
-                                        decimal.Parse(row[11].ToString(), vgEstilo, vgProv),
-                                        decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
-                                        decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
-                                        decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
+                    Classes.compras((string)row[0], (string)row[1], (string)row[2], (string)row[4],
+                                    (string)row[5], (string)row[16],
+                                    rowToDecimal(row, 8), rowToDecimal(row, 9),
+                                    rowToDecimal(row, 10), (int)row[15],
+                                    rowToDecimal(row, 11), rowToDecimal(row, 12),
+                                    rowToDecimal(row, 6), rowToDecimal(row, 7));
+
                     vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                         ((int)row[3]).ToString(),
                                                                                         out string pMsgForn,
@@ -180,8 +178,7 @@ namespace Projeto_ICI.Controllers
                 {
                     var vlItem = new Classes.itensCompra((string)row[0], (string)row[1], (string)row[2],
                                                          (string)row[5], (int)row[6],
-                                                         decimal.Parse(row[7].ToString(), vgEstilo, vgProv),
-                                                         decimal.Parse(row[8].ToString(), vgEstilo, vgProv));
+                                                         rowToDecimal(row, 7), rowToDecimal(row, 8));
                     vlItem.UmFornecedor =
                         (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                    ((int)row[3]).ToString(),
@@ -220,13 +217,11 @@ namespace Projeto_ICI.Controllers
                 var vlCompra = new
                     Classes.compras((string)row[0], (string)row[1], (string)row[2], (string)row[4],
                                     (string)row[5], (string)row[16],
-                                    decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[9].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[10].ToString(), vgEstilo, vgProv), (int)row[15],
-                                    decimal.Parse(row[11].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
+                                    rowToDecimal(row, 8), rowToDecimal(row, 9),
+                                    rowToDecimal(row, 10), (int)row[15],
+                                    rowToDecimal(row, 11), rowToDecimal(row, 12),
+                                    rowToDecimal(row, 6), rowToDecimal(row, 7));
+
                 vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                     ((int)row[3]).ToString(),
                                                                                     out string pMsgForn,
@@ -280,13 +275,10 @@ namespace Projeto_ICI.Controllers
                 var vlCompra = new
                     Classes.compras((string)row[0], (string)row[1], (string)row[2], (string)row[4],
                                     (string)row[5], (string)row[16],
-                                    decimal.Parse(row[8].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[9].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[10].ToString(), vgEstilo, vgProv), (int)row[15],
-                                    decimal.Parse(row[11].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[12].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[6].ToString(), vgEstilo, vgProv),
-                                    decimal.Parse(row[7].ToString(), vgEstilo, vgProv));
+                                    rowToDecimal(row, 8), rowToDecimal(row, 9),
+                                    rowToDecimal(row, 10), (int)row[15],
+                                    rowToDecimal(row, 11), rowToDecimal(row, 12),
+                                    rowToDecimal(row, 6), rowToDecimal(row, 7));
 
                 vlCompra.UmFornecedor = (Classes.fornecedores)umaCtrlForn.Pesquisar("codigo",
                                                                                     ((int)row[3]).ToString(),

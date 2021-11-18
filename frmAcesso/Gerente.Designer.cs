@@ -68,16 +68,17 @@ namespace Projeto_ICI
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Comprar = new System.Windows.Forms.Button();
             this.btn_AbrirOS = new System.Windows.Forms.Button();
             this.gb_Atalhos = new System.Windows.Forms.GroupBox();
-            this.btn_ = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Caixa = new System.Windows.Forms.Button();
+            this.btn_Relatorio = new System.Windows.Forms.Button();
+            this.btn_Vender = new System.Windows.Forms.Button();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Sair = new System.Windows.Forms.Button();
             this.menu_Principal.SuspendLayout();
             this.gb_Atalhos.SuspendLayout();
             this.SuspendLayout();
@@ -391,23 +392,31 @@ namespace Projeto_ICI
             this.sairToolStripMenuItem.Size = new System.Drawing.Size(49, 25);
             this.sairToolStripMenuItem.Text = "Sair";
             // 
+            // loginToolStripMenuItem
+            // 
+            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.loginToolStripMenuItem.Text = "Login";
+            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // sairToolStripMenuItem1
             // 
             this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
-            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
+            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(129, 26);
             this.sairToolStripMenuItem1.Text = "Sair";
             this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
             // 
             // btn_Comprar
             // 
-            this.btn_Comprar.Location = new System.Drawing.Point(6, 82);
+            this.btn_Comprar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Comprar.Location = new System.Drawing.Point(6, 145);
             this.btn_Comprar.Name = "btn_Comprar";
             this.btn_Comprar.Size = new System.Drawing.Size(83, 57);
             this.btn_Comprar.TabIndex = 1;
@@ -417,6 +426,7 @@ namespace Projeto_ICI
             // 
             // btn_AbrirOS
             // 
+            this.btn_AbrirOS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AbrirOS.Location = new System.Drawing.Point(6, 19);
             this.btn_AbrirOS.Name = "btn_AbrirOS";
             this.btn_AbrirOS.Size = new System.Drawing.Size(83, 57);
@@ -428,64 +438,74 @@ namespace Projeto_ICI
             // gb_Atalhos
             // 
             this.gb_Atalhos.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.gb_Atalhos.Controls.Add(this.btn_);
-            this.gb_Atalhos.Controls.Add(this.button2);
-            this.gb_Atalhos.Controls.Add(this.button1);
+            this.gb_Atalhos.Controls.Add(this.btn_Sair);
+            this.gb_Atalhos.Controls.Add(this.btn_Caixa);
+            this.gb_Atalhos.Controls.Add(this.btn_Relatorio);
+            this.gb_Atalhos.Controls.Add(this.btn_Vender);
             this.gb_Atalhos.Controls.Add(this.btn_AbrirOS);
             this.gb_Atalhos.Controls.Add(this.btn_Comprar);
             this.gb_Atalhos.Dock = System.Windows.Forms.DockStyle.Left;
             this.gb_Atalhos.Location = new System.Drawing.Point(0, 29);
             this.gb_Atalhos.Name = "gb_Atalhos";
-            this.gb_Atalhos.Size = new System.Drawing.Size(96, 337);
+            this.gb_Atalhos.Size = new System.Drawing.Size(96, 402);
             this.gb_Atalhos.TabIndex = 7;
             this.gb_Atalhos.TabStop = false;
             // 
-            // btn_
+            // btn_Caixa
             // 
-            this.btn_.Location = new System.Drawing.Point(6, 271);
-            this.btn_.Name = "btn_";
-            this.btn_.Size = new System.Drawing.Size(83, 57);
-            this.btn_.TabIndex = 9;
-            this.btn_.UseVisualStyleBackColor = true;
+            this.btn_Caixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Caixa.Location = new System.Drawing.Point(6, 82);
+            this.btn_Caixa.Name = "btn_Caixa";
+            this.btn_Caixa.Size = new System.Drawing.Size(83, 57);
+            this.btn_Caixa.TabIndex = 9;
+            this.btn_Caixa.Text = "Caixa";
+            this.btn_Caixa.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btn_Relatorio
             // 
-            this.button2.Location = new System.Drawing.Point(6, 208);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(83, 57);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Relatório";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_Relatorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Relatorio.Location = new System.Drawing.Point(6, 271);
+            this.btn_Relatorio.Name = "btn_Relatorio";
+            this.btn_Relatorio.Size = new System.Drawing.Size(83, 57);
+            this.btn_Relatorio.TabIndex = 3;
+            this.btn_Relatorio.Text = "Relatório";
+            this.btn_Relatorio.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_Vender
             // 
-            this.button1.Location = new System.Drawing.Point(6, 145);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 57);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Vender";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_Vender.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Vender.Location = new System.Drawing.Point(6, 208);
+            this.btn_Vender.Name = "btn_Vender";
+            this.btn_Vender.Size = new System.Drawing.Size(83, 57);
+            this.btn_Vender.TabIndex = 2;
+            this.btn_Vender.Text = "Vender";
+            this.btn_Vender.UseVisualStyleBackColor = true;
+            this.btn_Vender.Click += new System.EventHandler(this.button1_Click);
             // 
             // vScrollBar1
             // 
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Left;
             this.vScrollBar1.Location = new System.Drawing.Point(96, 29);
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 337);
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 402);
             this.vScrollBar1.TabIndex = 8;
             // 
-            // loginToolStripMenuItem
+            // btn_Sair
             // 
-            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.loginToolStripMenuItem.Text = "Login";
-            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Sair.Location = new System.Drawing.Point(6, 334);
+            this.btn_Sair.Name = "btn_Sair";
+            this.btn_Sair.Size = new System.Drawing.Size(83, 57);
+            this.btn_Sair.TabIndex = 10;
+            this.btn_Sair.Text = "Sair";
+            this.btn_Sair.UseVisualStyleBackColor = true;
+            this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
             // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 366);
+            this.ClientSize = new System.Drawing.Size(740, 431);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.gb_Atalhos);
             this.Controls.Add(this.menu_Principal);
@@ -496,6 +516,7 @@ namespace Projeto_ICI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "C. L. COMÉRCIO DE CARTUCHOS E INSUMOS PARA IMPRESSORAS LTDA.";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Shown += new System.EventHandler(this.Gerente_Shown);
             this.menu_Principal.ResumeLayout(false);
             this.menu_Principal.PerformLayout();
             this.gb_Atalhos.ResumeLayout(false);
@@ -548,11 +569,12 @@ namespace Projeto_ICI
         private System.Windows.Forms.Button btn_Comprar;
         private System.Windows.Forms.Button btn_AbrirOS;
         private System.Windows.Forms.GroupBox gb_Atalhos;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btn_;
+        private System.Windows.Forms.Button btn_Relatorio;
+        private System.Windows.Forms.Button btn_Vender;
+        private System.Windows.Forms.Button btn_Caixa;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
+        private System.Windows.Forms.Button btn_Sair;
     }
 }
 

@@ -119,5 +119,10 @@ namespace Projeto_ICI.Controllers
         }
         public BancoDados.conexoes UmaConexao
         { get => conexao; set => conexao = value; }
+
+        public decimal rowToDecimal(DataRow pRow, int pIndex)
+        {
+            return decimal.Parse(pRow[pIndex].ToString().Replace('.', ','), vgEstilo, vgProv);
+        }
     }
 }

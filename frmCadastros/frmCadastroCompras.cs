@@ -297,9 +297,11 @@ namespace Projeto_ICI.frmCadastros
             foreach (contasPagar vlItem in pLista)
             {
                 ListViewItem vlLVItem = new ListViewItem(new string[] { vlItem.Parcela.ToString(),
-                                                                        vlItem.Vencimento,
                                                                         vlItem.UmaFormaPag.FormaPag,
-                                                                        vlItem.ValorTotal.ToString()});
+                                                                        vlItem.Vencimento,
+                                                                        vlItem.DataPagamento,
+                                                                        vlItem.ValorTotal.ToString(),
+                                                                        vlItem.ValorPago.ToString()});
                 vlLVItem.Tag = vlItem.ThisContaPagar;
                 lv_ParcelasContasPag.Items.Add(vlLVItem);
                 vlTotal += vlItem.ValorTotal;
@@ -345,7 +347,7 @@ namespace Projeto_ICI.frmCadastros
                             txtb_NumNF.Text,
                             vlParcela.Numero,
                             dt_Emissao.Value.AddDays(vlParcela.Dias).ToString("dd/MM/yyyy"),
-                            "",
+                            "00/00/0000",
                             vlDecimal,
                             0,
                             int.Parse((txtb_CodigoUsu.Text == "" ? "0" : txtb_CodigoUsu.Text)),
@@ -357,9 +359,11 @@ namespace Projeto_ICI.frmCadastros
                 vlListItem.UmFornecedor = umForn.ThisFornecedor;
 
                 string[] vlLVStrItem = new string[] { vlListItem.Parcela.ToString(),
-                                                      vlListItem.Vencimento,
                                                       vlListItem.UmaFormaPag.FormaPag,
-                                                      vlListItem.ValorTotal.ToString()};
+                                                      vlListItem.Vencimento,
+                                                      vlListItem.DataPagamento,
+                                                      vlListItem.ValorTotal.ToString(),
+                                                      vlListItem.ValorPago.ToString()};
 
                 ListViewItem vlLVItem = new ListViewItem(vlLVStrItem);
                 vlLVItem.Tag = vlListItem.ThisContaPagar;
@@ -461,10 +465,10 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.Clear();
                 errorMSG.SetError(lbl_Serie, "Insira uma série!");
             }
-            else if (txtb_NumNF.Text == "")
+            else if (txtb_NumNF.Text == "" || txtb_NumNF.Text == "0")
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_NumNF, "Insira um número de nota fiscal!");
+                errorMSG.SetError(lbl_NumNF, "Insira um número de nota fiscal válido!");
             }
             else if (txtb_Fornecedor.Text == "")
             {
@@ -774,26 +778,33 @@ namespace Projeto_ICI.frmCadastros
                 errorMSG.SetError(lbl_ContasPagar, "As parcelas não foram geradas!\nImpossivel cadastrar a compra.");
                 btn_Gerar.Focus();
             }
+            else if (dt_Chegada.Value.Date > dt_Emissao.Value.Date)
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_DataChegada, "A data de chegada deve ser igual ou menor\n" +
+                                                   $"que a data de Emissão ({dt_Emissao.Value.ToString().Split(' ')[0]})");
+                dt_Chegada.Value = dt_Emissao.Value;
+                dt_Chegada.Focus();
+            }
             else
             {
                 errorMSG.Clear();
-                umaCompra.Emissao = dt_Emissao.Text.Split(' ')[0];
-                umaCompra.Chegada = dt_Chegada.Text.Split(' ')[0];
-                umaCompra.ChaveAcesso = txtb_ChaveAcesso.Text;
-                umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
-                umaCompra.TotalNota = strToDecimal(txtb_TotalNota.Text);
-                umaCompra.TotalProdutos = strToDecimal(txtb_TotalProdutos.Text);
-                umaCompra.Frete = strToDecimal(txtb_Frete.Text);
-                umaCompra.Seguro = strToDecimal(txtb_Seguro.Text);
-                umaCompra.OutrasDeps = strToDecimal(txtb_OutrasDeps.Text);
-                umaCompra.UmFornecedor.ThisFornecedor = umForn;
-                umaCompra.UmaTransportadora.ThisTransportadora = umaTranspot;
-                umaCompra.UmaCondicaoPag.ThisCondPag = umCondPag;
-                umaCompra.UmaListaItens = lvItensCompraToList();
-
                 string msg = "";
                 if (Btn_Acao == "Salvar")
                 {
+                    umaCompra.Emissao = dt_Emissao.Text.Split(' ')[0];
+                    umaCompra.Chegada = dt_Chegada.Text.Split(' ')[0];
+                    umaCompra.ChaveAcesso = txtb_ChaveAcesso.Text;
+                    umaCompra.CodigoUsu = txtb_CodigoUsu.Text == "" ? 0 : int.Parse(txtb_CodigoUsu.Text);
+                    umaCompra.TotalNota = strToDecimal(txtb_TotalNota.Text);
+                    umaCompra.TotalProdutos = strToDecimal(txtb_TotalProdutos.Text);
+                    umaCompra.Frete = strToDecimal(txtb_Frete.Text);
+                    umaCompra.Seguro = strToDecimal(txtb_Seguro.Text);
+                    umaCompra.OutrasDeps = strToDecimal(txtb_OutrasDeps.Text);
+                    umaCompra.UmFornecedor.ThisFornecedor = umForn;
+                    umaCompra.UmaTransportadora.ThisTransportadora = umaTranspot;
+                    umaCompra.UmaCondicaoPag.ThisCondPag = umCondPag;
+                    umaCompra.UmaListaItens = lvItensCompraToList();
                     msg = umCtrlCompra.Inserir(umaCompra);
                 }/*
                 else if (Btn_Acao == "Alterar")
@@ -804,6 +815,7 @@ namespace Projeto_ICI.frmCadastros
                 {
                     msg = umCtrlCompra.Excluir(umaCompra);
                 }
+
                 if (msg.Contains("sucesso"))
                 {
                     MessageBox.Show(msg, "Informação");
@@ -993,6 +1005,11 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_NumNF_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoCodigo(txtb_NumNF, e);
+        }
+
+        private void lv_ParcelasContasPag_MouseClick(object sender, MouseEventArgs e)
+        {
+            lv_ParcelasContasPag.SelectedItems[0].Selected = false;
         }
     }
 }

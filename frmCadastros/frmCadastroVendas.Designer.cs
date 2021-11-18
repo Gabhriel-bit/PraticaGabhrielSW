@@ -85,12 +85,14 @@ namespace Projeto_ICI.frmCadastros
             this.btn_Salvar = new System.Windows.Forms.Button();
             this.lbl_CodigoUsu = new System.Windows.Forms.Label();
             this.txtb_CodigoUsu = new System.Windows.Forms.TextBox();
+            this.lbl_ContasReceber = new System.Windows.Forms.Label();
             this.lv_ParcelasContasPag = new System.Windows.Forms.ListView();
             this.ch_Parcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_Vencimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_FormaPag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Vencimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Pagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_ValorTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lbl_ContasReceber = new System.Windows.Forms.Label();
+            this.ch_ValorPago = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.groupBox_Produtos.SuspendLayout();
             this.SuspendLayout();
@@ -623,45 +625,6 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_CodigoUsu.Size = new System.Drawing.Size(71, 20);
             this.txtb_CodigoUsu.TabIndex = 198;
             // 
-            // lv_ParcelasContasPag
-            // 
-            this.lv_ParcelasContasPag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lv_ParcelasContasPag.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ch_Parcela,
-            this.ch_Vencimento,
-            this.ch_FormaPag,
-            this.ch_ValorTotal});
-            this.lv_ParcelasContasPag.Enabled = false;
-            this.lv_ParcelasContasPag.GridLines = true;
-            this.lv_ParcelasContasPag.HideSelection = false;
-            this.lv_ParcelasContasPag.Location = new System.Drawing.Point(14, 407);
-            this.lv_ParcelasContasPag.MultiSelect = false;
-            this.lv_ParcelasContasPag.Name = "lv_ParcelasContasPag";
-            this.lv_ParcelasContasPag.Size = new System.Drawing.Size(640, 131);
-            this.lv_ParcelasContasPag.TabIndex = 196;
-            this.lv_ParcelasContasPag.UseCompatibleStateImageBehavior = false;
-            this.lv_ParcelasContasPag.View = System.Windows.Forms.View.Details;
-            // 
-            // ch_Parcela
-            // 
-            this.ch_Parcela.Text = "Parcela";
-            // 
-            // ch_Vencimento
-            // 
-            this.ch_Vencimento.Text = "Vencimento";
-            this.ch_Vencimento.Width = 80;
-            // 
-            // ch_FormaPag
-            // 
-            this.ch_FormaPag.Text = "Forma Pagamento";
-            this.ch_FormaPag.Width = 250;
-            // 
-            // ch_ValorTotal
-            // 
-            this.ch_ValorTotal.Text = "Valor Parc.";
-            this.ch_ValorTotal.Width = 100;
-            // 
             // lbl_ContasReceber
             // 
             this.lbl_ContasReceber.AutoSize = true;
@@ -671,15 +634,69 @@ namespace Projeto_ICI.frmCadastros
             this.lbl_ContasReceber.TabIndex = 195;
             this.lbl_ContasReceber.Text = "Contas a receber";
             // 
+            // lv_ParcelasContasPag
+            // 
+            this.lv_ParcelasContasPag.AllowColumnReorder = true;
+            this.lv_ParcelasContasPag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lv_ParcelasContasPag.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_Parcela,
+            this.ch_FormaPag,
+            this.ch_Vencimento,
+            this.ch_Pagamento,
+            this.ch_ValorTotal,
+            this.ch_ValorPago});
+            this.lv_ParcelasContasPag.GridLines = true;
+            this.lv_ParcelasContasPag.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lv_ParcelasContasPag.HideSelection = false;
+            this.lv_ParcelasContasPag.Location = new System.Drawing.Point(14, 404);
+            this.lv_ParcelasContasPag.MultiSelect = false;
+            this.lv_ParcelasContasPag.Name = "lv_ParcelasContasPag";
+            this.lv_ParcelasContasPag.Size = new System.Drawing.Size(640, 131);
+            this.lv_ParcelasContasPag.TabIndex = 200;
+            this.lv_ParcelasContasPag.UseCompatibleStateImageBehavior = false;
+            this.lv_ParcelasContasPag.View = System.Windows.Forms.View.Details;
+            // 
+            // ch_Parcela
+            // 
+            this.ch_Parcela.Text = "Parcela";
+            // 
+            // ch_FormaPag
+            // 
+            this.ch_FormaPag.Text = "Forma Pagamento";
+            this.ch_FormaPag.Width = 150;
+            // 
+            // ch_Vencimento
+            // 
+            this.ch_Vencimento.Text = "Vencimento";
+            this.ch_Vencimento.Width = 80;
+            // 
+            // ch_Pagamento
+            // 
+            this.ch_Pagamento.Text = "Pagamento";
+            this.ch_Pagamento.Width = 80;
+            // 
+            // ch_ValorTotal
+            // 
+            this.ch_ValorTotal.Text = "Valor Parcela";
+            this.ch_ValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ch_ValorTotal.Width = 100;
+            // 
+            // ch_ValorPago
+            // 
+            this.ch_ValorPago.Text = "Valor Pago";
+            this.ch_ValorPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ch_ValorPago.Width = 100;
+            // 
             // frmCadastroVendas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(679, 584);
+            this.Controls.Add(this.lv_ParcelasContasPag);
             this.Controls.Add(this.btn_Sair);
             this.Controls.Add(this.btn_Salvar);
             this.Controls.Add(this.lbl_CodigoUsu);
             this.Controls.Add(this.txtb_CodigoUsu);
-            this.Controls.Add(this.lv_ParcelasContasPag);
             this.Controls.Add(this.lbl_ContasReceber);
             this.Controls.Add(this.btn_Gerar);
             this.Controls.Add(this.btn_Limpar);
@@ -710,6 +727,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_Modelo);
             this.Controls.Add(this.txtb_Serie);
             this.Name = "frmCadastroVendas";
+            this.Text = "Cadastro de Vendas";
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.groupBox_Produtos.ResumeLayout(false);
             this.groupBox_Produtos.PerformLayout();
@@ -775,11 +793,13 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.Button btn_Salvar;
         private System.Windows.Forms.Label lbl_CodigoUsu;
         private System.Windows.Forms.TextBox txtb_CodigoUsu;
+        private System.Windows.Forms.Label lbl_ContasReceber;
         private System.Windows.Forms.ListView lv_ParcelasContasPag;
         private System.Windows.Forms.ColumnHeader ch_Parcela;
-        private System.Windows.Forms.ColumnHeader ch_Vencimento;
         private System.Windows.Forms.ColumnHeader ch_FormaPag;
+        private System.Windows.Forms.ColumnHeader ch_Vencimento;
+        private System.Windows.Forms.ColumnHeader ch_Pagamento;
         private System.Windows.Forms.ColumnHeader ch_ValorTotal;
-        private System.Windows.Forms.Label lbl_ContasReceber;
+        private System.Windows.Forms.ColumnHeader ch_ValorPago;
     }
 }

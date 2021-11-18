@@ -472,6 +472,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_Logradouro);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastroDepositos";
+            this.Text = "Cadastro de Deposito";
             this.Controls.SetChildIndex(this.lbl_Codigo, 0);
             this.Controls.SetChildIndex(this.lbl_DataCad, 0);
             this.Controls.SetChildIndex(this.lbl_UltAlt, 0);

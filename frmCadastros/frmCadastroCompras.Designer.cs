@@ -94,9 +94,11 @@ namespace Projeto_ICI.frmCadastros
             this.txtb_ChaveAcesso = new System.Windows.Forms.TextBox();
             this.lv_ParcelasContasPag = new System.Windows.Forms.ListView();
             this.ch_Parcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_Vencimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_FormaPag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Vencimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Pagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_ValorTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_ValorPago = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lbl_ContasPagar = new System.Windows.Forms.Label();
             this.dt_Emissao = new System.Windows.Forms.DateTimePicker();
             this.dt_Chegada = new System.Windows.Forms.DateTimePicker();
@@ -741,15 +743,18 @@ namespace Projeto_ICI.frmCadastros
             // 
             // lv_ParcelasContasPag
             // 
+            this.lv_ParcelasContasPag.AllowColumnReorder = true;
             this.lv_ParcelasContasPag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lv_ParcelasContasPag.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_Parcela,
-            this.ch_Vencimento,
             this.ch_FormaPag,
-            this.ch_ValorTotal});
-            this.lv_ParcelasContasPag.Enabled = false;
+            this.ch_Vencimento,
+            this.ch_Pagamento,
+            this.ch_ValorTotal,
+            this.ch_ValorPago});
             this.lv_ParcelasContasPag.GridLines = true;
+            this.lv_ParcelasContasPag.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lv_ParcelasContasPag.HideSelection = false;
             this.lv_ParcelasContasPag.Location = new System.Drawing.Point(15, 450);
             this.lv_ParcelasContasPag.MultiSelect = false;
@@ -758,26 +763,38 @@ namespace Projeto_ICI.frmCadastros
             this.lv_ParcelasContasPag.TabIndex = 143;
             this.lv_ParcelasContasPag.UseCompatibleStateImageBehavior = false;
             this.lv_ParcelasContasPag.View = System.Windows.Forms.View.Details;
+            this.lv_ParcelasContasPag.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lv_ParcelasContasPag_MouseClick);
             // 
             // ch_Parcela
             // 
             this.ch_Parcela.Text = "Parcela";
+            // 
+            // ch_FormaPag
+            // 
+            this.ch_FormaPag.Text = "Forma Pagamento";
+            this.ch_FormaPag.Width = 150;
             // 
             // ch_Vencimento
             // 
             this.ch_Vencimento.Text = "Vencimento";
             this.ch_Vencimento.Width = 80;
             // 
-            // ch_FormaPag
+            // ch_Pagamento
             // 
-            this.ch_FormaPag.Text = "Forma Pagamento";
-            this.ch_FormaPag.Width = 250;
+            this.ch_Pagamento.Text = "Pagamento";
+            this.ch_Pagamento.Width = 80;
             // 
             // ch_ValorTotal
             // 
-            this.ch_ValorTotal.Text = "Valor Parc.";
+            this.ch_ValorTotal.Text = "Valor Parcela";
             this.ch_ValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ch_ValorTotal.Width = 100;
+            // 
+            // ch_ValorPago
+            // 
+            this.ch_ValorPago.Text = "Valor Pago";
+            this.ch_ValorPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ch_ValorPago.Width = 100;
             // 
             // lbl_ContasPagar
             // 
@@ -790,8 +807,8 @@ namespace Projeto_ICI.frmCadastros
             // 
             // dt_Emissao
             // 
-            this.dt_Emissao.CustomFormat = "dd/mm/aaaa";
-            this.dt_Emissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dt_Emissao.CustomFormat = "dd/MM/yyyy";
+            this.dt_Emissao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dt_Emissao.Location = new System.Drawing.Point(15, 70);
             this.dt_Emissao.Name = "dt_Emissao";
             this.dt_Emissao.Size = new System.Drawing.Size(107, 20);
@@ -800,8 +817,8 @@ namespace Projeto_ICI.frmCadastros
             // 
             // dt_Chegada
             // 
-            this.dt_Chegada.CustomFormat = "dd/mm/aaaa";
-            this.dt_Chegada.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dt_Chegada.CustomFormat = "dd/MM/yyyy";
+            this.dt_Chegada.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dt_Chegada.Location = new System.Drawing.Point(128, 70);
             this.dt_Chegada.Name = "dt_Chegada";
             this.dt_Chegada.Size = new System.Drawing.Size(107, 20);
@@ -961,5 +978,7 @@ namespace Projeto_ICI.frmCadastros
         private System.Windows.Forms.ColumnHeader ch_PrecoOper;
         private System.Windows.Forms.ColumnHeader ch_SubTotal;
         private System.Windows.Forms.ColumnHeader ch_FormaPag;
+        private System.Windows.Forms.ColumnHeader ch_Pagamento;
+        private System.Windows.Forms.ColumnHeader ch_ValorPago;
     }
 }

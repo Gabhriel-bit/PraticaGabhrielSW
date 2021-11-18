@@ -163,7 +163,7 @@ namespace Projeto_ICI.frmCadastros
             else if (date_DataNasc_Fund.Value > DateTime.Today)
             {
                 errorMSG.Clear();
-                errorMSG.SetError(lbl_DataNasc_Fund, $"Campo 'Data de nascimento' é obrigatório!");
+                errorMSG.SetError(lbl_DataNasc_Fund, $"Campo 'Data de fundação' é obrigatório!");
                 date_DataNasc_Fund.Focus();
             }
             else
@@ -182,6 +182,20 @@ namespace Projeto_ICI.frmCadastros
 
                 vlForn.UmaCidade.ThisCidade = umaCidade;
                 ObjToDataBase(vlForn, umCtrlTransport);
+            }
+        }
+        protected override void validaDataNasc(object sender, CancelEventArgs e)
+        {
+            var idade = DateTime.Today.Year - date_DataNasc_Fund.Value.Year;
+            if (idade < 16 || idade > 130)
+            {
+                errorMSG.SetError(lbl_DataNasc_Fund, "Data de fundação inválida");
+                e.Cancel = closing;
+            }
+            else
+            {
+                errorMSG.SetError(lbl_DataNasc_Fund, null);
+                e.Cancel = false;
             }
         }
     }
