@@ -11,6 +11,7 @@ namespace Projeto_ICI.frmAcesso
     public partial class frmLogin : Projeto_ICI.formularioBase
     {
         private const string chave = "65858479827390656879";
+        private bool pDesbloc = false;
         private Classes.pai confirmacao;
         public frmLogin()
         {
@@ -23,12 +24,13 @@ namespace Projeto_ICI.frmAcesso
 
         private void btn_Conectar_Click(object sender, EventArgs e)
         {
-            confirmacao.DataCad = chave;
+            pDesbloc = true;
             Close();
         }
 
         private void btn_Sair_Click(object sender, EventArgs e)
         {
+            pDesbloc = true;
             Close();
         }
         public bool ConfirmacaoChave(string pChave)
@@ -45,6 +47,11 @@ namespace Projeto_ICI.frmAcesso
             {
                 return false;
             }
+        }
+        public bool ValidaLoguin()
+        {
+            this.ShowDialog();
+            return pDesbloc;
         }
     }
 }

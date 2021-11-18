@@ -104,17 +104,21 @@ namespace Projeto_ICI
             mnItem_Equipamentos.Click += MnItem_Equipamentos_Click;
             mnItem_Transportadoras.Click += MnItem_Transportadoras_Click;
 
-            loginToolStripMenuItem.Enabled = true;
-            logoutToolStripMenuItem.Enabled = false;
-            gb_Atalhos.Enabled = false;
-            consultasToolStripMenuItem.Enabled = false;
-            cadastrosToolStripMenuItem.Enabled = false;
+            ControleAcesso(false);
+
             /*
-             * loginToolStripMenuItem.Enabled = true;
-             * logoutToolStripMenuItem.Enabled = false;
              * frmCadastros.frmConsultaOrdensServico f = new frmCadastros.frmConsultaOrdensServico();
              * f.ShowDialog();
             */
+        }
+
+        private void ControleAcesso(bool pIsLogin)
+        {
+            loginToolStripMenuItem.Enabled = !pIsLogin;
+            logoutToolStripMenuItem.Enabled = pIsLogin;
+            gb_Atalhos.Enabled = pIsLogin;
+            consultasToolStripMenuItem.Enabled = pIsLogin;
+            cadastrosToolStripMenuItem.Enabled = pIsLogin;
         }
 
         private void InicializarAtributos()
@@ -445,24 +449,15 @@ namespace Projeto_ICI
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loginToolStripMenuItem.Enabled = false;
-            logoutToolStripMenuItem.Enabled = true;
             //Fazer rotina para logar no sistema
             //Caso logado habilita os
-            var vlLoguin = true; //= false;
-
-            gb_Atalhos.Enabled = vlLoguin;
-            consultasToolStripMenuItem.Enabled = vlLoguin;
-            cadastrosToolStripMenuItem.Enabled = vlLoguin;
+            var p = new frmAcesso.frmLogin();
+            ControleAcesso(p.ValidaLoguin());
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loginToolStripMenuItem.Enabled = true;
-            logoutToolStripMenuItem.Enabled = false;
-            gb_Atalhos.Enabled = false;
-            consultasToolStripMenuItem.Enabled = false;
-            cadastrosToolStripMenuItem.Enabled = false;
+            ControleAcesso(false);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -478,7 +473,8 @@ namespace Projeto_ICI
 
         private void Gerente_Shown(object sender, EventArgs e)
         {
-
+            var p = new frmAcesso.frmLogin();
+            ControleAcesso(p.ValidaLoguin());
         }
     }
 }

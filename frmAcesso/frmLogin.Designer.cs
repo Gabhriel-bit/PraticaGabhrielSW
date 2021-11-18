@@ -105,7 +105,10 @@ namespace Projeto_ICI.frmAcesso
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(235, 235);
+            this.MinimumSize = new System.Drawing.Size(235, 235);
             this.Name = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Login";
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.ResumeLayout(false);

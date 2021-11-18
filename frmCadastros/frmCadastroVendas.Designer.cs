@@ -173,7 +173,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // txtb_CodigoCondPag
             // 
-            this.txtb_CodigoCondPag.Location = new System.Drawing.Point(319, 363);
+            this.txtb_CodigoCondPag.Location = new System.Drawing.Point(357, 363);
             this.txtb_CodigoCondPag.Name = "txtb_CodigoCondPag";
             this.txtb_CodigoCondPag.Size = new System.Drawing.Size(63, 20);
             this.txtb_CodigoCondPag.TabIndex = 165;
@@ -183,7 +183,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_CodigoCondPag.AutoSize = true;
             this.lbl_CodigoCondPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CodigoCondPag.Location = new System.Drawing.Point(316, 345);
+            this.lbl_CodigoCondPag.Location = new System.Drawing.Point(354, 345);
             this.lbl_CodigoCondPag.Name = "lbl_CodigoCondPag";
             this.lbl_CodigoCondPag.Size = new System.Drawing.Size(51, 15);
             this.lbl_CodigoCondPag.TabIndex = 174;
@@ -191,7 +191,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             // btn_PesquisarCondPag
             // 
-            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(586, 359);
+            this.btn_PesquisarCondPag.Location = new System.Drawing.Point(624, 359);
             this.btn_PesquisarCondPag.Name = "btn_PesquisarCondPag";
             this.btn_PesquisarCondPag.Size = new System.Drawing.Size(26, 25);
             this.btn_PesquisarCondPag.TabIndex = 166;
@@ -201,7 +201,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_CondicaoPag.AutoSize = true;
             this.lbl_CondicaoPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CondicaoPag.Location = new System.Drawing.Point(385, 345);
+            this.lbl_CondicaoPag.Location = new System.Drawing.Point(423, 345);
             this.lbl_CondicaoPag.Name = "lbl_CondicaoPag";
             this.lbl_CondicaoPag.Size = new System.Drawing.Size(148, 15);
             this.lbl_CondicaoPag.TabIndex = 173;
@@ -211,7 +211,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.txtb_CondicaoPag.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtb_CondicaoPag.Enabled = false;
-            this.txtb_CondicaoPag.Location = new System.Drawing.Point(388, 363);
+            this.txtb_CondicaoPag.Location = new System.Drawing.Point(426, 363);
             this.txtb_CondicaoPag.Name = "txtb_CondicaoPag";
             this.txtb_CondicaoPag.Size = new System.Drawing.Size(192, 20);
             this.txtb_CondicaoPag.TabIndex = 172;
@@ -552,7 +552,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Modelo.AutoSize = true;
             this.lbl_Modelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Modelo.Location = new System.Drawing.Point(11, 10);
+            this.lbl_Modelo.Location = new System.Drawing.Point(14, 10);
             this.lbl_Modelo.Name = "lbl_Modelo";
             this.lbl_Modelo.Size = new System.Drawing.Size(54, 15);
             this.lbl_Modelo.TabIndex = 182;
@@ -562,7 +562,7 @@ namespace Projeto_ICI.frmCadastros
             // 
             this.lbl_Serie.AutoSize = true;
             this.lbl_Serie.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Serie.Location = new System.Drawing.Point(94, 12);
+            this.lbl_Serie.Location = new System.Drawing.Point(98, 10);
             this.lbl_Serie.Name = "lbl_Serie";
             this.lbl_Serie.Size = new System.Drawing.Size(41, 15);
             this.lbl_Serie.TabIndex = 181;
@@ -579,7 +579,7 @@ namespace Projeto_ICI.frmCadastros
             // txtb_Serie
             // 
             this.txtb_Serie.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtb_Serie.Location = new System.Drawing.Point(97, 30);
+            this.txtb_Serie.Location = new System.Drawing.Point(96, 28);
             this.txtb_Serie.Name = "txtb_Serie";
             this.txtb_Serie.Size = new System.Drawing.Size(57, 20);
             this.txtb_Serie.TabIndex = 157;

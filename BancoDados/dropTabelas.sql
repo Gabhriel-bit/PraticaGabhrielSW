@@ -1,6 +1,30 @@
 IF DB_ID('praticaDBGabhriel') IS NOT NULL
 BEGIN
 	USE praticaDBGabhriel
+	IF OBJECT_ID('usuarios_permissoes') IS NOT NULL
+	BEGIN
+		DROP TABLE usuarios_permissoes;
+	END
+
+	IF OBJECT_ID('usuarios') IS NOT NULL
+	BEGIN
+		DROP TABLE usuarios;
+	END
+
+	IF OBJECT_ID('contas_receber') IS NOT NULL
+	BEGIN
+		DROP TABLE contas_receber;
+	END
+	
+	IF OBJECT_ID('produtos_venda') IS NOT NULL
+	BEGIN
+		DROP TABLE produtos_venda;
+	END
+
+	IF OBJECT_ID('vendas') IS NOT NULL
+	BEGIN
+		DROP TABLE vendas;
+	END
 
 	IF OBJECT_ID('contas_pagar') IS NOT NULL
 	BEGIN

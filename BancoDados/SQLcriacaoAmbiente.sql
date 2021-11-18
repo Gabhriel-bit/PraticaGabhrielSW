@@ -33,8 +33,7 @@ BEGIN
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -50,8 +49,7 @@ BEGIN
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -67,8 +65,7 @@ BEGIN
 		dataUltAlt VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codPaisEstado FOREIGN KEY (codigoPais) REFERENCES paises (codigo)--,
-		--CONSTRAINT FK_codEstadoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codPaisEstado FOREIGN KEY (codigoPais) REFERENCES paises (codigo)
 	);
 END
 
@@ -84,8 +81,7 @@ BEGIN
 		dataUltAlt   VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codEstadoCidade FOREIGN KEY (codigoEstado) REFERENCES estados (codigo)--,
-		--CONSTRAINT FK_codCidadeUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codEstadoCidade FOREIGN KEY (codigoEstado) REFERENCES estados (codigo)
 	);
 END
 
@@ -103,8 +99,7 @@ BEGIN
 		dataCad     VARCHAR(10) NOT NULL,
 		dataUltAlt  VARCHAR(10) NOT NULL,
 
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -132,7 +127,6 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		CONSTRAINT FK_codCidadeTransp FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)
-		--CONSTRAINT FK_codPaisUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
 	);
 END
 
@@ -147,8 +141,7 @@ BEGIN
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codCargoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -161,8 +154,7 @@ BEGIN
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 		
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codGrupoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -177,8 +169,7 @@ BEGIN
 		dataUltAlt  VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codGrupoSubgrupo FOREIGN KEY (codigoGrupo) REFERENCES grupos (codigo)--,
-		--CONSTRAINT FK_codSubgrupoUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codGrupoSubgrupo FOREIGN KEY (codigoGrupo) REFERENCES grupos (codigo)
 	);
 END
 
@@ -191,8 +182,7 @@ BEGIN
 		dataCad    VARCHAR(10) NOT NULL,
 		dataUltAlt VARCHAR(10) NOT NULL,
 
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codMarcaUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -208,8 +198,7 @@ BEGIN
 		dataUltAlt  VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codMarcaModelo FOREIGN KEY (codigoMarca) REFERENCES marcas (codigo)--,
-		--CONSTRAINT FK_codModeloUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codMarcaModelo FOREIGN KEY (codigoMarca) REFERENCES marcas (codigo)
 	);
 END
 
@@ -226,8 +215,7 @@ BEGIN
 		dataUltAlt   VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codModeloEquip FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo)--,
-		--CONSTRAINT FK_codModeloUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codModeloEquip FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo)
 	);
 END
 
@@ -240,8 +228,7 @@ BEGIN
 		dataCad        VARCHAR(10) NOT NULL,
 		dataUltAlt     VARCHAR(10) NOT NULL,
 		
-	    disponivel    INT NOT NULL default 1--,
-		--CONSTRAINT FK_codFormPagUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	    disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -258,8 +245,7 @@ BEGIN
 	dataCad           VARCHAR(10) NOT NULL,
 	dataUltAlt        VARCHAR(10) NOT NULL,
 	
-	disponivel    INT NOT NULL default 1--,
-	--CONSTRAINT FK_codCondPagUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+	disponivel    INT NOT NULL default 1
 	);
 END
 
@@ -309,8 +295,7 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		CONSTRAINT FK_codCargoFunc FOREIGN KEY (codigoCargo) REFERENCES cargos (codigo),
-		CONSTRAINT FK_codCidadeFunc FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)--,
-		--CONSTRAINT FK_codFuncUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codCidadeFunc FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)
 	);
 END
 
@@ -337,8 +322,7 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		CONSTRAINT FK_codCondPagCliente FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo),
-		CONSTRAINT FK_codCidadeCliente FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)--,
-		--CONSTRAINT FK_codClienteUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codCidadeCliente FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)
 	);
 END
 
@@ -365,8 +349,7 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		CONSTRAINT FK_codCondPagForn FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo),
-		CONSTRAINT FK_codCidadeForn FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)--,
-		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codCidadeForn FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)
 	);
 END
 
@@ -393,8 +376,7 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		CONSTRAINT FK_codModeloProd FOREIGN KEY (codigoModelo) REFERENCES modelos (codigo)--,
-		--CONSTRAINT FK_codSubgrupoProd FOREIGN KEY (codigoSubgrupo) REFERENCES subgrupos (codigo)	,
-		--CONSTRAINT FK_codProdUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		--CONSTRAINT FK_codSubgrupoProd FOREIGN KEY (codigoSubgrupo) REFERENCES subgrupos (codigo)
 	);
 END
 
@@ -428,8 +410,7 @@ BEGIN
 		dataUltAlt    VARCHAR(10) NOT NULL,
 		
 	    disponivel    INT NOT NULL default 1,
-		CONSTRAINT FK_codCidadeDepo FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)--,
-		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+		CONSTRAINT FK_codCidadeDepo FOREIGN KEY (codigoCidade) REFERENCES cidades (codigo)
 	);  
 END
 
@@ -480,8 +461,7 @@ BEGIN
 		CONSTRAINT FK_codFornNf FOREIGN KEY (codigoForn) REFERENCES fornecedores (codigo),
 		CONSTRAINT FK_codVeiculoNf FOREIGN KEY (codigoVeiculo) REFERENCES veiculos (codigo),
 		--CONSTRAINT FK_codTranspNf FOREIGN KEY (codigoTransp) REFERENCES transportadoras (codigo),
-		CONSTRAINT FK_codCondPagNf FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo)--,
-		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)	
+		CONSTRAINT FK_codCondPagNf FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento (codigo)
 	);
 END
 
@@ -502,10 +482,57 @@ BEGIN
 		desconto   NUMERIC(8,4) NOT NULL,
 		disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(codigoProd, modelo, serie, numero_nf, codigoForn),
-		CONSTRAINT FK_codProdNf FOREIGN KEY (codigoProd) REFERENCES produtos (codigo),
-		CONSTRAINT FK_pkProdNf FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
-			REFERENCES compras (modelo, serie, numero_nf, codigoForn)--,
-		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)	
+		CONSTRAINT FK_codCompraNf FOREIGN KEY (codigoProd) REFERENCES produtos (codigo),
+		CONSTRAINT FK_pkProdCompraNf FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
+			REFERENCES compras (modelo, serie, numero_nf, codigoForn)
+	);
+END
+
+IF OBJECT_ID('vendas') IS NULL
+BEGIN
+	CREATE TABLE vendas (
+		modelo        VARCHAR(50) NOT NULL,
+		serie         VARCHAR(50) NOT NULL,
+		numero_nf     VARCHAR(50) NOT NULL,  
+		codigoCliente INT  NOT NULL,
+		codigoTransp  INT,
+		codigoVeiculo INT,
+		codigoCondPag INT NOT NULL,
+
+		total_nota    NUMERIC(8,4) NOT NULL,
+
+		peso_bruto    NUMERIC(8,4) NOT NULL,
+		peso_liquido  NUMERIC(8,4) NOT NULL,
+		data_emissao  VARCHAR(10) NOT NULL,
+		data_saida    VARCHAR(10) NOT NULL,
+		codigoUsu     INT  NOT NULL,
+
+	    disponivel    INT NOT NULL default 1,
+		PRIMARY KEY(modelo, serie, numero_nf, codigoCliente),
+		CONSTRAINT FK_codCliNf FOREIGN KEY (codigoCliente) REFERENCES clientes (codigo),
+		--CONSTRAINT FK_codTranspNf FOREIGN KEY (codigoTransp) REFERENCES transportadoras (codigo),
+		CONSTRAINT FK_codCondPagVenda FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento(codigo)
+	);
+END
+
+IF OBJECT_ID('produtos_venda') IS NULL
+BEGIN
+	CREATE TABLE produtos_venda (
+		codigoProd INT  NOT NULL,
+		modelo     VARCHAR(50) NOT NULL,
+		serie      VARCHAR(50) NOT NULL,
+		numero_nf  VARCHAR(50) NOT NULL,
+		codigoCliente INT  NOT NULL,
+
+		unidade    VARCHAR(5) NOT NULL,
+		quantidade INT NOT NULL,
+		valor_un   NUMERIC(8,4) NOT NULL,
+		desconto   NUMERIC(8,4) NOT NULL,
+		disponivel    INT NOT NULL default 1,
+		PRIMARY KEY(codigoProd, modelo, serie, numero_nf, codigoCliente),
+		CONSTRAINT FK_codVendaNf FOREIGN KEY (codigoProd) REFERENCES produtos(codigo),
+		CONSTRAINT FK_pkProdVendaNf FOREIGN KEY (modelo, serie, numero_nf, codigoCliente) 
+			REFERENCES vendas (modelo, serie, numero_nf, codigoCliente)
 	);
 END
 
@@ -535,9 +562,58 @@ BEGIN
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),
 		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
 		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
-			REFERENCES compras (modelo, serie, numero_nf, codigoForn)--,
-		--CONSTRAINT FK_codFornUsu FOREIGN KEY (codigoUsu) REFERENCES usuarios (codigo)
+			REFERENCES compras(modelo, serie, numero_nf, codigoForn)
 	);
 END
 
+IF OBJECT_ID('contas_receber') IS NULL
+BEGIN
+	CREATE TABLE contas_receber	 (
+		modelo         VARCHAR(50) NOT NULL,
+		serie          VARCHAR(50) NOT NULL,
+		numero_nf      VARCHAR(50) NOT NULL,
+		codigoCliente  INT  NOT NULL,
+		parcela        INT  NOT NULL,
+
+		vencimento     VARCHAR(10) NOT NULL,
+		dataPagamento  VARCHAR(10) NOT NULL,
+		valorTotal     NUMERIC(8,4) NOT NULL,
+		valorPago      NUMERIC(8,4),
+
+		codigoFormaPag INT NOT NULL,
+		codigoUsu      INT  NOT NULL,
+		dataCad        VARCHAR(10) NOT NULL,
+
+		descontoPag NUMERIC(8,4) NOT NULL, 
+		taxaJuros   NUMERIC(8,4) NOT NULL,
+		multa       NUMERIC(8,4) NOT NULL,
+		
+	    disponivel    INT NOT NULL default 1,
+		PRIMARY KEY(modelo, serie, numero_nf, codigoCliente, parcela),
+		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
+		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoCliente) 
+			REFERENCES vendas (modelo, serie, numero_nf, codigoCliente)
+	);
+END
+
+IF OBJECT_ID('usuarios') IS NULL
+BEGIN
+	CREATE TABLE usuarios	 (
+		codigo     INT  NOT NULL PRIMARY KEY,
+		usuario    VARCHAR(10) NOT NULL,   
+		senha      VARCHAR(10) NOT NULL,
+		codigoUsu  INT  NOT NULL,
+		dataCad    VARCHAR(10) NOT NULL,
+		dataUltAlt VARCHAR(10) NOT NULL,
+	);
+END
+
+IF OBJECT_ID('usuarios_permissoes') IS NULL
+BEGIN
+	CREATE TABLE usuarios_permissoes	 (
+		codigo     INT  NOT NULL,
+		permissao  VARCHAR(20) NOT NULL,
+		PRIMARY KEY(codigo, permissao)
+	);
+END
 GO
