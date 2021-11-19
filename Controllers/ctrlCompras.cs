@@ -28,7 +28,7 @@ namespace Projeto_ICI.Controllers
 
         private DAOs.daoCompras umDaoCompra;
 
-        public ctrlCompras(BancoDados.conexoes pUmaConexao, DAOs.daoCompras pDaoCondPag,
+        public ctrlCompras(BancoDados.conexoes pUmaConexao, DAOs.daoCompras pDaoCompra,
                            ctrlTransportadoras pCtrlTransp, ctrlCondicoesPagamento pCtrlCondPag,
                            ctrlFornecedores pCtrlForn, ctrlProdutos pCtrlProduto, ctrlContasPagar pCtrlContaPagar)
         {
@@ -36,7 +36,7 @@ namespace Projeto_ICI.Controllers
             umaCtrlTransp = pCtrlTransp;
             umaCtrlForn = pCtrlForn;
             umaCtrlProduto = pCtrlProduto;
-            umDaoCompra = pDaoCondPag;
+            umDaoCompra = pDaoCompra;
             umaCtrlContaPagar = pCtrlContaPagar;
             UmaConexao = pUmaConexao;
         }

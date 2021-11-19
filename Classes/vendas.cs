@@ -26,7 +26,7 @@ namespace Projeto_ICI.Classes
         private decimal FpesoLiquido;
 
         private List<itensVenda> FumaListaItens;
-        private List<contasPagar> FumaListaContas;
+        private List<contasReceber> FumaListaContas;
 
         public vendas()
         {
@@ -43,7 +43,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = 0;
             FpesoLiquido = 0;
             FumaListaItens = new List<itensVenda>();
-            FumaListaContas = new List<contasPagar>();
+            FumaListaContas = new List<contasReceber>();
         }
 
         public vendas(string pModelo, string pSerie, string pNumNF, string pDataEmissao, string pDataSaida,
@@ -64,7 +64,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = pPesoBruto;
             FpesoLiquido = pPesoLiq;
             FumaListaItens = new List<itensVenda>();
-            FumaListaContas = new List<contasPagar>();
+            FumaListaContas = new List<contasReceber>();
         }
 
         public string PK
@@ -98,7 +98,7 @@ namespace Projeto_ICI.Classes
         { get => FumCliente; set => FumCliente = value; }
         public List<itensVenda> UmaListaItens
         { get => FumaListaItens; set => FumaListaItens = value; }
-        public List<contasPagar> UmaListaContasPagar
+        public List<contasReceber> UmaListaContasReceber
         { get => CloneListaContas(); set => FumaListaContas = value; }
         public List<itensVenda> CloneListaItens()
         {
@@ -116,7 +116,7 @@ namespace Projeto_ICI.Classes
                 return lista;
             }
         }
-        private List<contasPagar> CloneListaContas()
+        private List<contasReceber> CloneListaContas()
         {
             if (FumaListaContas.Count == 0)
             {
@@ -124,10 +124,10 @@ namespace Projeto_ICI.Classes
             }
             else
             {
-                var lista = new List<contasPagar>();
-                foreach (contasPagar item in FumaListaContas)
+                var lista = new List<contasReceber>();
+                foreach (contasReceber item in FumaListaContas)
                 {
-                    lista.Add(item.ThisContaPagar);
+                    lista.Add(item.ThisContaReceber);
                 }
                 return lista;
             }
@@ -165,7 +165,7 @@ namespace Projeto_ICI.Classes
             FpesoBruto = vlCompra.PesoBruto;
             FpesoLiquido = vlCompra.PesoLiquido;
             FumaListaItens = vlCompra.UmaListaItens;
-            FumaListaContas = vlCompra.UmaListaContasPagar;
+            FumaListaContas = vlCompra.UmaListaContasReceber;
         }
 
         private vendas Clone()
@@ -176,7 +176,7 @@ namespace Projeto_ICI.Classes
             vlObj.UmaTransportadora = UmaTransportadora.ThisTransportadora;
             vlObj.UmCliente = UmCliente.ThisCliente;
             vlObj.UmaListaItens = UmaListaItens;
-            vlObj.UmaListaContasPagar = UmaListaContasPagar;
+            vlObj.UmaListaContasReceber = UmaListaContasReceber;
             return vlObj;
         }
 

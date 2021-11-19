@@ -71,6 +71,7 @@
     <Compile Include="Classes\cidades.cs" />
     <Compile Include="Classes\compras.cs" />
     <Compile Include="Classes\contasPagar.cs" />
+    <Compile Include="Classes\contasReceber.cs" />
     <Compile Include="Classes\equipamentos.cs" />
     <Compile Include="Classes\servicos.cs" />
     <Compile Include="Classes\ordensServico.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Classes\pai.cs" />
     <Compile Include="Classes\transportadoras.cs" />
     <Compile Include="Classes\veiculos.cs" />
+    <Compile Include="Classes\vendas.cs" />
     <Compile Include="Controllers\ctrl.cs" />
     <Compile Include="Controllers\ctrlCargos.cs" />
     <Compile Include="Controllers\ctrlCidades.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Controllers\ctrlCompras.cs" />
     <Compile Include="Controllers\ctrlCondicoesPagamento.cs" />
     <Compile Include="Controllers\ctrlContasPagar.cs" />
+    <Compile Include="Controllers\ctrlContasReceber.cs" />
     <Compile Include="Controllers\ctrlDepositos.cs" />
     <Compile Include="Controllers\ctrlEquipamentos.cs" />
     <Compile Include="Controllers\ctrlEstados.cs" />
@@ -112,12 +115,14 @@
     <Compile Include="Controllers\ctrlSubgrupos.cs" />
     <Compile Include="Controllers\ctrlProdutos.cs" />
     <Compile Include="Controllers\ctrlTransportadoras.cs" />
+    <Compile Include="Controllers\ctrlVendas.cs" />
     <Compile Include="DAOs\daoCargos.cs" />
     <Compile Include="DAOs\daoCidades.cs" />
     <Compile Include="DAOs\daoClientes.cs" />
     <Compile Include="DAOs\daoCompras.cs" />
     <Compile Include="DAOs\daoCondicoesPagamento.cs" />
     <Compile Include="DAOs\daoContasPagar.cs" />
+    <Compile Include="DAOs\daoContasReceber.cs" />
     <Compile Include="DAOs\daoDepositos.cs" />
     <Compile Include="DAOs\daoEquipamentos.cs" />
     <Compile Include="DAOs\daoEstados.cs" />
@@ -133,6 +138,7 @@
     <Compile Include="DAOs\daoServicos.cs" />
     <Compile Include="DAOs\daoSubgrupos.cs" />
     <Compile Include="DAOs\daoTransportadoras.cs" />
+    <Compile Include="DAOs\daoVendas.cs" />
     <Compile Include="frmAcesso\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
