@@ -66,7 +66,7 @@ namespace Projeto_ICI.DAOs
             {
                 var vlConta = (Classes.contasPagar)pObj;
                 return ExcluirToString(nameTable, vlConta.ToStringPK.Split(';'),
-                                                  vlConta.PK.Split(';'));
+                                                  vlConta.PK.Split(';'), true);
             }
         }
     }

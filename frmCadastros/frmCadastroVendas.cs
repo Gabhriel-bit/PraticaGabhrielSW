@@ -13,10 +13,10 @@ namespace Projeto_ICI.frmCadastros
     {
         private frmConsultas.frmConsultaCondicoesPagamento frmConsCondPag;
         private frmConsultas.frmConsultaTranspotadoras frmConsTransport;
-        private frmConsultas.frmConsultaFornecedores frmConsForn;
+        private frmConsultas.frmConsultaClientes frmConsCliente;
         private frmConsultas.frmConsultaProdutos frmConsProduto;
 
-        private Controllers.ctrlCompras umCtrlCompra;
+        private Controllers.ctrlVendas umCtrlCompra;
 
         private condicoesPagamento umCondPag;
         private transportadoras umaTranspot;
@@ -25,7 +25,7 @@ namespace Projeto_ICI.frmCadastros
         private vendas umaVenda;
 
         private List<contasReceber> umaListaItens;
-        public frmCadastroVendas(Controllers.ctrlCompras pCtrlCompra)
+        public frmCadastroVendas(Controllers.ctrlVendas pCtrlCompra)
         {
             InitializeComponent();
 
@@ -44,13 +44,39 @@ namespace Projeto_ICI.frmCadastros
             btn_PesquisaTransportadora.Image = umImgPesquisaSair;
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
             BloquearTxtBox(true);
+            verificarPagamentoConta();
+        }
+
+        private void verificarPagamentoConta()
+        {
+            if(Btn_Acao == "Cancelar")
+            {
+                var vlConf = false;
+                foreach (ListViewItem vlItem in lv_ParcelasContasPag.Items)
+                {
+                    var vlContaItem = (Classes.contasReceber)vlItem.Tag;
+                    if (vlContaItem.DataPagamento != "00/00/0000")
+                    {
+                        vlConf = true;
+                        break;
+                    }
+                }
+                if (vlConf)
+                {
+                    btn_Salvar.Enabled = false;
+                    errorMSG.SetError(btn_Salvar, $"Há uma parcela paga em '{lbl_ContasReceber.Text}'" +
+                                                  "\nNão é possivel cancelar " +
+                                                  $"{this.Text.Replace("Cadastro de", "")}!");
+                }
+            }
+            
         }
 
         public override void SetFrmCons(Form[] pFrmCad)
         {
             frmConsCondPag = (frmConsultas.frmConsultaCondicoesPagamento)pFrmCad[0];
             frmConsTransport = (frmConsultas.frmConsultaTranspotadoras)pFrmCad[1];
-            frmConsForn = (frmConsultas.frmConsultaFornecedores)pFrmCad[2];
+            frmConsCliente = (frmConsultas.frmConsultaClientes)pFrmCad[2];
             frmConsProduto = (frmConsultas.frmConsultaProdutos)pFrmCad[3];
         }
         public void ClearTxTBox(bool pIncGBProd = true)
@@ -160,8 +186,8 @@ namespace Projeto_ICI.frmCadastros
                 vlTag.UmProduto.Saldo = int.Parse(vlItem.SubItems[2].Text);
                 vlTag.UmProduto.Custo = strToDecimal(vlItem.SubItems[5].Text);
                 vlTag.UmProduto.UltimaCompra = strToDecimal(vlItem.SubItems[3].Text);
-                vlPesoBruto += vlTag.UmProduto.PesoBruto;
-                vlPesoLiq += vlTag.UmProduto.PesoLiquido;
+                vlPesoBruto += vlTag.UmProduto.PesoBruto * vlTag.Quantidade;
+                vlPesoLiq += vlTag.UmProduto.PesoLiquido * vlTag.Quantidade;
                 vlListaItensCompra.Add(vlTag);
             }
             umaVenda.PesoBruto = vlPesoBruto;
@@ -302,11 +328,11 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_PesquisarFornecedor_Click(object sender, EventArgs e)
         {
-            var nomeBtn = frmConsForn.Btn_Sair;
-            frmConsForn.Btn_Sair = "Selecionar";
-            frmConsForn.ConhecaOBJ(umCliente);
-            frmConsForn.ShowDialog();
-            frmConsForn.Btn_Sair = nomeBtn;
+            var nomeBtn = frmConsCliente.Btn_Sair;
+            frmConsCliente.Btn_Sair = "Selecionar";
+            frmConsCliente.ConhecaOBJ(umCliente);
+            frmConsCliente.ShowDialog();
+            frmConsCliente.Btn_Sair = nomeBtn;
             if (umCliente.Codigo != 0)
             {
                 txtb_Fornecedor.Clear();
@@ -379,6 +405,7 @@ namespace Projeto_ICI.frmCadastros
             {
                 errorMSG.Clear();
                 txtb_CodigoProduto.Text = umProduto.Codigo.ToString();
+                txtb_PrecoUnt.Text = umProduto.CalculaPrecoVenda.ToString();
                 txtb_Unidade.Text = umProduto.Unidade;
                 txtb_Produto.Text = umProduto.Produto;
             }
@@ -425,7 +452,7 @@ namespace Projeto_ICI.frmCadastros
                 if (int.TryParse(txtb_CodigoCliente.Text, out int vlCodigo))
                 {
                     var vlForn =
-                         (Classes.clientes)umCtrlCompra.CTRLForn.Pesquisar("codigo",
+                         (Classes.clientes)umCtrlCompra.CTRLCliente.Pesquisar("codigo",
                                                                             vlCodigo.ToString(),
                                                                             out string vlMsg,
                                                                             false);
@@ -545,7 +572,65 @@ namespace Projeto_ICI.frmCadastros
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtb_Produto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_CodigoProduto, "Selecione um produto");
+                btn_PesquisarProduto.Focus();
+            }
+            else if (verificarItens(txtb_Produto.Text))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_CodigoProduto, "O produto já está na lista");
+                txtb_CodigoProduto.Clear();
+                txtb_Produto.Clear();
+                btn_PesquisarProduto.Focus();
+            }
+            else if (!int.TryParse(txtb_Quantidade.Text, out int i) || (i <= 0))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_Quantidade, $"O valor '{txtb_Quantidade.Text}' não é valido!\n" +
+                                                  "Insira um valor inteiro igual ou superior a 1");
+                txtb_Quantidade.Focus();
+            }
+            else if (!ValidacaoDoubleMoeda(txtb_PrecoUnt.Text, false))
+            {
+                errorMSG.Clear();
+                errorMSG.SetError(lbl_PrecoUnt, $"Valor '{txtb_PrecoUnt.Text}' inválido");
+                txtb_PrecoUnt.Focus();
+            }
+            else
+            {
+                errorMSG.Clear();
+                var vlItem = new itensVenda(txtb_Modelo.Text, txtb_Serie.Text, txtb_NumNF.Text,
+                                                            txtb_Unidade.Text, int.Parse(txtb_Quantidade.Text),
+                                                            strToDecimal(txtb_PrecoUnt.Text),
+                                                            strToDecimal(txtb_Desconto.Text));
+                vlItem.UmProduto = umProduto.ThisProduto;
+                vlItem.UmCliente = umCliente.ThisCliente;
 
+
+                var vlString = new string[] { vlItem.UmProduto.Produto,
+                                              txtb_Unidade.Text,
+                                              txtb_Quantidade.Text,
+                                              vlItem.PrecoUnidade.ToString(),
+                                              vlItem.Desconto.ToString(),
+                                              (vlItem.PrecoUnidade - vlItem.Desconto).ToString(),
+                                              (vlItem.Quantidade * vlItem.PrecoUnidade - vlItem.Desconto).ToString() };
+
+                var vlLVItem = new ListViewItem(vlString);
+                vlLVItem.Tag = vlItem.ThisItenVenda;
+
+                umaVenda.UmaListaItens.Add(vlItem);
+                lv_ItensCompra.Items.Add(vlLVItem);
+                txtb_Produto.Clear();
+                txtb_CodigoProduto.Clear();
+                txtb_Unidade.Clear();
+                txtb_PrecoUnt.Clear();
+                txtb_Desconto.Text = "0";
+                txtb_Quantidade.Text = "0";
+                recalcularTotal();
+            }
         }
 
         private void btn_Salvar_Click(object sender, EventArgs e)
@@ -658,7 +743,7 @@ namespace Projeto_ICI.frmCadastros
                         if (vlMsg == "")
                         {
                             txtb_Produto.Text = vlProduto.Produto;
-                            txtb_PrecoUnt.Text = (vlProduto.PrecoVenda * (1 + vlProduto.Custo)).ToString();
+                            txtb_PrecoUnt.Text = vlProduto.CalculaPrecoVenda.ToString();
                             txtb_Unidade.Text = vlProduto.Unidade;
                             umProduto.ThisProduto = vlProduto;
                         }
@@ -787,6 +872,11 @@ namespace Projeto_ICI.frmCadastros
         private void lv_ParcelasContasPag_MouseClick(object sender, MouseEventArgs e)
         {
             lv_ParcelasContasPag.SelectedItems[0].Selected = false;
+        }
+
+        private void frmCadastroVendas_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            btn_Salvar.Enabled = true;
         }
     }
 }

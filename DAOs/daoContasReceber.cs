@@ -8,7 +8,7 @@ namespace Projeto_ICI.DAOs
 {
     public class daoContasReceber:daos
     {
-        public const string nameTable = "contas_pagar";
+        public const string nameTable = "contas_receber";
         public daoContasReceber()
         { }
         public override string Inserir(object pObj)
@@ -66,7 +66,7 @@ namespace Projeto_ICI.DAOs
             {
                 var vlConta = (Classes.contasReceber)pObj;
                 return ExcluirToString(nameTable, vlConta.ToStringPK.Split(';'),
-                                                  vlConta.PK.Split(';'));
+                                                  vlConta.PK.Split(';'), true);
             }
         }
     }

@@ -123,7 +123,6 @@ namespace Projeto_ICI.frmConsultas
         private void btn_Pesquisar_Click(object sender, EventArgs e)
         {
             var vlChavePesquisa = "";
-            var vlValorIgual = true;
             string vlMsg = "";
             switch (cb_ChavePesquisa.SelectedItem.ToString())
             {
@@ -140,7 +139,7 @@ namespace Projeto_ICI.frmConsultas
                     {
                         dataGridView.DataSource = umCtrlCompra.Pesquisar(vlChavePesquisa.Split(';'),
                                                                          txtb_Pesquisa.Text.Split(';'),
-                                                                         true,
+                                                                         false,
                                                                          out vlMsg);
                         txtb_Pesquisa.Clear();
                     }
@@ -153,13 +152,11 @@ namespace Projeto_ICI.frmConsultas
                 case ("Data chegada") :
                 {
                     vlChavePesquisa = "data_chegada";
-                    vlValorIgual = false;
                     break;
                 }
                 case ("Data emissão") :
                 {
                     vlChavePesquisa = "data_emissao";
-                    vlValorIgual = false;
                     break;
                 }
                 case ("Código Fornecedor") :
@@ -180,7 +177,8 @@ namespace Projeto_ICI.frmConsultas
             }
             dataGridView.DataSource = umCtrlCompra.Pesquisar(vlChavePesquisa,
                                                              txtb_Pesquisa.Text,
-                                                             vlValorIgual, out vlMsg);
+                                                             false,
+                                                             out vlMsg);
             if(vlMsg != "")
                 errorMSG.SetError(lbl_Pesquisa, vlMsg);
             txtb_Pesquisa.Clear();

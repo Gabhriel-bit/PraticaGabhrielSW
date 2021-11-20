@@ -18,12 +18,12 @@ namespace Projeto_ICI.Controllers
         private ctrlFormasPagamento umCtrlFormaPag;
         private ctrlClientes umCtrlCliente;
 
-        private DAOs.daoContasPagar umDaoContasPag;
+        private DAOs.daoContasReceber umDaoContasReceb;
 
-        public ctrlContasReceber(BancoDados.conexoes pUmaConexao, DAOs.daoContasPagar pDaoContaPag,
+        public ctrlContasReceber(BancoDados.conexoes pUmaConexao, DAOs.daoContasReceber pDaoContaPag,
             Controllers.ctrlClientes pCtrlCliente, Controllers.ctrlFormasPagamento pCtrlFomaPag)
         {
-            umDaoContasPag = pDaoContaPag;
+            umDaoContasReceb = pDaoContaPag;
             umCtrlFormaPag = pCtrlFomaPag;
             umCtrlCliente = pCtrlCliente;
             UmaConexao = pUmaConexao;
@@ -37,7 +37,7 @@ namespace Projeto_ICI.Controllers
         public override string Inserir(object pObjeto)
         {
             var vlConta = (Classes.contasReceber)pObjeto;
-            var msg = ExecucaoComandQuery(umDaoContasPag.Inserir(pObjeto));
+            var msg = ExecucaoComandQuery(umDaoContasReceb.Inserir(pObjeto));
             if (msg == "sucesso")
             {
                 return $"Conta a receber inserida com {msg}!";
@@ -54,7 +54,7 @@ namespace Projeto_ICI.Controllers
             var msg = "";
             foreach (Classes.contasReceber vlConta in pListContas)
             {
-                msg += umDaoContasPag.Inserir(vlConta) + '\n';
+                msg += umDaoContasReceb.Inserir(vlConta) + '\n';
             }
             if (pSql)
                 return msg;
@@ -77,7 +77,7 @@ namespace Projeto_ICI.Controllers
             var msg = "";
             foreach (Classes.contasReceber vlConta in pListContas)
             {
-                msg += umDaoContasPag.Excluir(vlConta) + '\n';
+                msg += umDaoContasReceb.Excluir(vlConta) + '\n';
             }
             if (pSql)
                 return msg;
@@ -104,7 +104,7 @@ namespace Projeto_ICI.Controllers
         }
         public override string Alterar(object pObjeto)
         {
-            var msg = ExecucaoComandQuery(umDaoContasPag.Alterar(pObjeto));
+            var msg = ExecucaoComandQuery(umDaoContasReceb.Alterar(pObjeto));
             if (msg == "sucesso")
             {
                 var vlConta = (Classes.contasReceber)pObjeto;
@@ -115,7 +115,7 @@ namespace Projeto_ICI.Controllers
 
         public override string Excluir(object pObjeto)
         {
-            var msg = ExecucaoComandQuery(umDaoContasPag.Excluir(pObjeto));
+            var msg = ExecucaoComandQuery(umDaoContasReceb.Excluir(pObjeto));
             if (msg == "sucesso")
             {
                 var vlConta = (Classes.contasReceber)pObjeto;
@@ -135,7 +135,7 @@ namespace Projeto_ICI.Controllers
             camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contas_Pagar",
+                       umDaoContasReceb.PesquisarToString("contas_Pagar",
                        camposSelList.Replace("cliente", "codigoCliente"), "", ""), out pMsg);
 
             if (vlTabelaCidades.Rows.Count == 0)
@@ -177,7 +177,7 @@ namespace Projeto_ICI.Controllers
             camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contas_receber",
+                       umDaoContasReceb.PesquisarToString("contas_receber",
                        camposSelList.Replace("cliente", "codigoCliente"), pCampo, pValor, default, true),
                        out pMsg);
             if (vlTabelaCidades.Rows.Count == 0)
@@ -218,7 +218,7 @@ namespace Projeto_ICI.Controllers
             camposSelList = camposSelList.Replace("formaPagamento", "codigoFormaPag");
             DataTable vlTabelaCidades =
                  ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contas_receber",
+                       umDaoContasReceb.PesquisarToString("contas_receber",
                        camposSelList.Replace("cliente", "codigoCliente"), pCampo, pValor, default, pValorIgual),
                        out pMsg);
             if (vlTabelaCidades.Rows.Count == 0)
@@ -253,7 +253,7 @@ namespace Projeto_ICI.Controllers
         {
             var vlConta = new Classes.contasReceber();
             var vlTable = ExecuteComandSearchQuery(
-                       umDaoContasPag.PesquisarToString("contas_receber, formasPagamento, clientes", camposSelect,
+                       umDaoContasReceb.PesquisarToString("contas_receber, formasPagamento, clientes", camposSelect,
                        pCampo, pValor, vlConta.toStringSearchPesquisa(), pValorIgual), out pMsg);
             return vlTable;
         }

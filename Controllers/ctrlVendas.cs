@@ -43,7 +43,7 @@ namespace Projeto_ICI.Controllers
         { get => umaCtrlCondPag; }
         public ctrlTransportadoras CTRLTransport
         { get => umaCtrlTransp; }
-        public ctrlContasReceber CTRLContasPag
+        public ctrlContasReceber CTRLContasReceber
         { get => umaCtrlContaReceber; }
         public ctrlClientes CTRLCliente
         { get => umaCtrlCliente; }
@@ -142,7 +142,7 @@ namespace Projeto_ICI.Controllers
                     vlVenda.UmaListaItens = PesquisarCollection(vlVenda.ToStringPK, vlVenda.PK, out string vlMsgParc);
 
 
-                    vlVenda.UmaListaContasReceber = CTRLContasPag.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
+                    vlVenda.UmaListaContasReceber = CTRLContasReceber.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
                                                                                      vlVenda.PK.Split(';'),
                                                                                      out string vlMsgContasPag);
 
@@ -157,7 +157,7 @@ namespace Projeto_ICI.Controllers
         {
             DataTable vlTabelaParcalasCondPag =
                 ExecuteComandSearchQuery(
-                    umDaoVenda.PesquisarToString("produtos_compra",
+                    umDaoVenda.PesquisarToString("produtos_venda",
                                                    camposSelectItens,
                                                    pStrPK.Split(';'), pPK.Split(';')), out pMsg);
             if (vlTabelaParcalasCondPag.Rows.Count == 0)
@@ -233,7 +233,7 @@ namespace Projeto_ICI.Controllers
                 vlVenda.UmaListaItens = PesquisarCollection(vlVenda.ToStringPK, vlVenda.PK, out string vlMsgParc);
 
 
-                vlVenda.UmaListaContasReceber = CTRLContasPag.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
+                vlVenda.UmaListaContasReceber = CTRLContasReceber.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
                                                                                  vlVenda.PK.Split(';'),
                                                                                  out string vlMsgContasPag);
 
@@ -288,7 +288,7 @@ namespace Projeto_ICI.Controllers
                 vlVenda.UmaListaItens = PesquisarCollection(vlVenda.ToStringPK, vlVenda.PK, out string vlMsgParc);
 
 
-                vlVenda.UmaListaContasReceber = CTRLContasPag.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
+                vlVenda.UmaListaContasReceber = CTRLContasReceber.PesquisarCollection(vlVenda.ToStringPK.Split(';'),
                                                                                  vlVenda.PK.Split(';'),
                                                                                  out string vlMsgContasPag);
 

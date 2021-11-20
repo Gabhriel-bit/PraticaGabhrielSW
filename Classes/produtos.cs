@@ -80,6 +80,8 @@ namespace Projeto_ICI.Classes
         { get => FcodigoBarras; set => FcodigoBarras = value; }
         public decimal Custo
         { get => Fcusto; set => Fcusto = value; }
+        public decimal CalculaPrecoVenda
+        { get => Math.Round(Custo * (1 + PrecoVenda / 100), 4); }
         public decimal PrecoVenda
         { get => FprecoVenda; set => FprecoVenda = value; }
         public decimal PesoLiquido
@@ -102,6 +104,7 @@ namespace Projeto_ICI.Classes
         public List<fornecedores> CloneListaForn()
         {
             var lista = new List<fornecedores>();
+            listaForn = (listaForn == null ? lista : listaForn);
             foreach (fornecedores item in listaForn)
             {
                 lista.Add(item.ThisFornecedor);
@@ -131,6 +134,7 @@ namespace Projeto_ICI.Classes
             PesoBruto = ((produtos)pObj).PesoBruto;
             PesoLiquido = ((produtos)pObj).PesoLiquido;
             UltimaCompra = ((produtos)pObj).UltimaCompra;
+            ListaFornecedores = ((produtos)pObj).CloneListaForn();
         }
         private produtos Clone()
         {

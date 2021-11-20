@@ -91,17 +91,16 @@ namespace Projeto_ICI.DAOs
                           $"{pValor.Replace(',', '.')};";
             return excluir;
         }
-        public string ExcluirToString(string pTabela, string[] pCampos, string[] pValores)
+        public string ExcluirToString(string pTabela, string[] pCampos, string[] pValores, bool pAllVal = false)
         {
             var excluir = $"UPDATE {pTabela} SET disponivel = 0 where ";
-            for (int i = 1; i <= pValores.Length - 1; i++)
+            for (int i = (pAllVal ? 0 : 1); i <= pValores.Length - 1; i++)
             {
                 if ((int.TryParse(pValores[i], out int _) ||
                     decimal.TryParse(pValores[i], out decimal _)) &&
                     !pValores[i].Contains("+"))
                 {
-                    excluir += $"{pCampos[i]} = " +
-                        $"{pValores[i].Replace(',', '.')} AND ";
+                    excluir += $"{pCampos[i]} = {pValores[i].Replace(',', '.')} AND ";
                 }
                 else
                     excluir += $"{pCampos[i]} = '{pValores[i]}' AND ";
@@ -140,9 +139,9 @@ namespace Projeto_ICI.DAOs
                 else
                 {
                     if (pValorIgual)
-                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} = '{pValor}'";
+                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} = '{pValor}' ";
                     else
-                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} like '%{pValor}%'";
+                        search += (pValorIgual ? "" : " AND ") + $" {pCampo} like '%{pValor}%' ";
                 }
             }
             if (pRefCampos != null)
@@ -159,15 +158,15 @@ namespace Projeto_ICI.DAOs
         }
 
         public string PesquisarToString(string pNameTable, string pCamposSelecionados,
-                      string[] pCampos, string[] pValores, string[] pRefCampos = default, bool pValorIgual = false)
+                      string[] pCampos, string[] pValores, string[] pRefCampos = default,
+                      bool pValorIgual = false, bool pBuscaDisp = true)
         {
             string vlNomeDao = (pNameTable.Split(',').Length == 1)
                                ? vlNomeDao = pNameTable
                                : ToString().Replace("Projeto_ICI.DAOs.dao", "").ToLower();
 
             string search = $"select {pCamposSelecionados} from {pNameTable} " +
-                            (pValorIgual ? " where  " : $" where  {vlNomeDao}.disponivel != 0 ");
-            search += (search.Contains("disponivel") && (pCampos[0] != "") ? "AND " : "");
+                            (pValorIgual ? " where  " : $" where  {vlNomeDao}.disponivel != 0 AND ");
 
             if (pCampos[0] != "")
             {
@@ -175,7 +174,7 @@ namespace Projeto_ICI.DAOs
                 {
                     if (int.TryParse(pValores[i], out int _) ||
                         decimal.TryParse(pValores[i], out decimal _))
-                        search += $"{pCampos[i]}={pValores[i].Replace(',', '.')} AND ";
+                        search += $"{pCampos[i]} = {pValores[i].Replace(',', '.')} AND ";
                     else
                     {
                         if (pValorIgual)
@@ -186,11 +185,10 @@ namespace Projeto_ICI.DAOs
                 }
                 search = search.Remove(search.Length - 5) + ';';
             }
-            else
-                search = search.Replace("AND ", "");
 
-            if (pRefCampos != null)
+            if (pRefCampos != default)
             {
+                search += (search.Contains("Where") || search.Contains("AND") ? " " : " AND ");
                 search = search.Remove(search.Length - 1) +
                          (pCampos[0] == "" ? "" : " AND ");
 
@@ -201,8 +199,10 @@ namespace Projeto_ICI.DAOs
                 search = search.Remove(search.Length - 5) + ";";
             }
             else
+            {
                 if (pCampos[0] == "")
-                    search = search.Replace(" where ", "");
+                    search = search.Replace("AND", "").Replace(" where ", "");
+            }
 
             return search;
         }

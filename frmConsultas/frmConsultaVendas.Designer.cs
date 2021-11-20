@@ -34,10 +34,26 @@ namespace Projeto_ICI.frmConsultas
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_Pesquisar
+            // 
+            this.btn_Pesquisar.Click += new System.EventHandler(this.btn_Pesquisar_Click);
+            // 
             // txtb_Pesquisa
             // 
             this.txtb_Pesquisa.Location = new System.Drawing.Point(189, 32);
             this.txtb_Pesquisa.Size = new System.Drawing.Size(369, 20);
+            // 
+            // btn_Excluir
+            // 
+            this.btn_Excluir.Click += new System.EventHandler(this.btn_Excluir_Click);
+            // 
+            // btn_Alterar
+            // 
+            this.btn_Alterar.Visible = false;
+            // 
+            // btn_Inserir
+            // 
+            this.btn_Inserir.Click += new System.EventHandler(this.btn_Inserir_Click);
             // 
             // lbl_Pesquisa
             // 
@@ -69,6 +85,8 @@ namespace Projeto_ICI.frmConsultas
             this.cb_ChavePesquisa.Size = new System.Drawing.Size(158, 21);
             this.cb_ChavePesquisa.TabIndex = 23;
             this.cb_ChavePesquisa.Text = "Chave identificadora";
+            this.cb_ChavePesquisa.SelectedIndexChanged += new System.EventHandler(this.cb_ChavePesquisa_SelectedIndexChanged);
+            this.cb_ChavePesquisa.SelectionChangeCommitted += new System.EventHandler(this.cb_ChavePesquisa_SelectionChangeCommitted);
             // 
             // frmConsultaVendas
             // 
@@ -78,6 +96,7 @@ namespace Projeto_ICI.frmConsultas
             this.Controls.Add(this.cb_ChavePesquisa);
             this.Name = "frmConsultaVendas";
             this.Text = "Consulta de Vendas";
+            this.Load += new System.EventHandler(this.frmConsultaCompras_Load);
             this.Controls.SetChildIndex(this.btn_Inserir, 0);
             this.Controls.SetChildIndex(this.btn_Alterar, 0);
             this.Controls.SetChildIndex(this.btn_Excluir, 0);

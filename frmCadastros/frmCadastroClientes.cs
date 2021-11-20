@@ -21,6 +21,7 @@ namespace Projeto_ICI.frmCadastros
             umCtrlCliente = pCtrlCliente;
             umCtrlCidade = pCtrlCliente.CTRLCidade;
 
+            umCondPag = new Classes.condicoesPagamento();
             umaCidade = new Classes.cidades();
             rb_Fisica.Checked = true;
 

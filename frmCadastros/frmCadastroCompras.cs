@@ -45,8 +45,32 @@ namespace Projeto_ICI.frmCadastros
             btn_PesquisaTransportadora.Image = umImgPesquisaSair;
             btn_PesquisarCondPag.Image = umImgPesquisaSair;
             BloquearTxtBox(true);
+            verificarPagamentoConta();
         }
+        private void verificarPagamentoConta()
+        {
+            if (Btn_Acao == "Cancelar")
+            {
+                var vlConf = false;
+                foreach (ListViewItem vlItem in lv_ParcelasContasPag.Items)
+                {
+                    var vlContaItem = (Classes.contasReceber)vlItem.Tag;
+                    if (vlContaItem.DataPagamento != "00/00/0000")
+                    {
+                        vlConf = true;
+                        break;
+                    }
+                }
+                if (vlConf)
+                {
+                    btn_Salvar.Enabled = false;
+                    errorMSG.SetError(btn_Salvar, $"Há uma parcela paga em '{lbl_ContasPagar.Text}'" +
+                                                  "\nNão é possivel cancelar " +
+                                                  $"{this.Text.Replace("Cadastro de", "")}!");
+                }
+            }
 
+        }
         public override void SetFrmCons(Form[] pFrmCad)
         {
             frmConsCondPag = (frmConsultas.frmConsultaCondicoesPagamento)pFrmCad[0];
@@ -251,8 +275,8 @@ namespace Projeto_ICI.frmCadastros
                 vlTag.UmProduto.Saldo = int.Parse(vlItem.SubItems[2].Text);
                 vlTag.UmProduto.Custo = strToDecimal(vlItem.SubItems[5].Text);
                 vlTag.UmProduto.UltimaCompra = strToDecimal(vlItem.SubItems[3].Text);
-                vlPesoBruto += vlTag.UmProduto.PesoBruto;
-                vlPesoLiq += vlTag.UmProduto.PesoLiquido;
+                vlPesoBruto += vlTag.UmProduto.PesoBruto * vlTag.Quantidade;
+                vlPesoLiq += vlTag.UmProduto.PesoLiquido * vlTag.Quantidade;
                 vlListaItensCompra.Add(vlTag);
             }
             umaCompra.PesoBruto = vlPesoBruto;
@@ -768,7 +792,6 @@ namespace Projeto_ICI.frmCadastros
                 txtb_Quantidade.Text = "0";
                 recalcularTotal();
             }
-
         }
 
         private void btn_Salvar_Click(object sender, EventArgs e)
@@ -1010,6 +1033,11 @@ namespace Projeto_ICI.frmCadastros
         private void lv_ParcelasContasPag_MouseClick(object sender, MouseEventArgs e)
         {
             lv_ParcelasContasPag.SelectedItems[0].Selected = false;
+        }
+
+        private void frmCadastroCompras_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            btn_Salvar.Enabled = true;
         }
     }
 }

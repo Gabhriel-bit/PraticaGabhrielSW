@@ -102,35 +102,21 @@ namespace Projeto_ICI.Classes
         { get => CloneListaContas(); set => FumaListaContas = value; }
         public List<itensVenda> CloneListaItens()
         {
-            if (FumaListaItens.Count == 0)
+            var lista = new List<itensVenda>();
+            foreach (itensVenda item in FumaListaItens)
             {
-                return null;
+                lista.Add(item.ThisItenVenda);
             }
-            else
-            {
-                var lista = new List<itensVenda>();
-                foreach (itensVenda item in FumaListaItens)
-                {
-                    lista.Add(item.ThisItenVenda);
-                }
-                return lista;
-            }
+            return lista;
         }
         private List<contasReceber> CloneListaContas()
         {
-            if (FumaListaContas.Count == 0)
+            var lista = new List<contasReceber>();
+            foreach (contasReceber item in FumaListaContas)
             {
-                return null;
+                lista.Add(item.ThisContaReceber);
             }
-            else
-            {
-                var lista = new List<contasReceber>();
-                foreach (contasReceber item in FumaListaContas)
-                {
-                    lista.Add(item.ThisContaReceber);
-                }
-                return lista;
-            }
+            return lista;
         }
 
         public vendas resetToBasic()
@@ -228,8 +214,8 @@ namespace Projeto_ICI.Classes
 
         public string[] toStringSearchPesquisa()
         {
-            return new string[] { "codigoCliente = clientes.codigo",
-                                  "compras.codigoCondPag = condicoesPagamento.codigo"  };
+            return new string[] { "vendas.codigoCliente = clientes.codigo",
+                                  "vendas.codigoCondPag = condicoesPagamento.codigo"  };
         }
     }
 

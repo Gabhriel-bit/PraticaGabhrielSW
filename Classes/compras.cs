@@ -129,35 +129,23 @@ namespace Projeto_ICI.Classes
         { get => CloneListaContas(); set => FumaListaContas = value; }
         public List<itensCompra> CloneListaItens()
         {
-            if (FumaListaItens.Count == 0)
+            var lista = new List<itensCompra>();
+            FumaListaItens = (FumaListaItens == null ? lista : FumaListaItens);
+            foreach (itensCompra item in FumaListaItens)
             {
-                return null;
+                lista.Add(item.ThisItenCompra);
             }
-            else
-            {
-                var lista = new List<itensCompra>();
-                foreach (itensCompra item in FumaListaItens)
-                {
-                    lista.Add(item.ThisItenCompra);
-                }
-                return lista;
-            }
+            return lista;
         }
         private List<contasPagar> CloneListaContas()
         {
-            if (FumaListaContas.Count == 0)
+            var lista = new List<contasPagar>();
+            FumaListaContas = (FumaListaContas == null ? lista : FumaListaContas);
+            foreach (contasPagar item in FumaListaContas)
             {
-                return null;
+                lista.Add(item.ThisContaPagar);
             }
-            else
-            {
-                var lista = new List<contasPagar>();
-                foreach (contasPagar item in FumaListaContas)
-                {
-                    lista.Add(item.ThisContaPagar);
-                }
-                return lista;
-            }
+            return lista;
         }
 
         public compras resetToBasic()

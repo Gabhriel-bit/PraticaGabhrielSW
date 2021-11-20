@@ -74,11 +74,11 @@ namespace Projeto_ICI
             this.btn_Comprar = new System.Windows.Forms.Button();
             this.btn_AbrirOS = new System.Windows.Forms.Button();
             this.gb_Atalhos = new System.Windows.Forms.GroupBox();
+            this.btn_Sair = new System.Windows.Forms.Button();
             this.btn_Caixa = new System.Windows.Forms.Button();
             this.btn_Relatorio = new System.Windows.Forms.Button();
             this.btn_Vender = new System.Windows.Forms.Button();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.btn_Sair = new System.Windows.Forms.Button();
             this.menu_Principal.SuspendLayout();
             this.gb_Atalhos.SuspendLayout();
             this.SuspendLayout();
@@ -451,6 +451,17 @@ namespace Projeto_ICI
             this.gb_Atalhos.TabIndex = 7;
             this.gb_Atalhos.TabStop = false;
             // 
+            // btn_Sair
+            // 
+            this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Sair.Location = new System.Drawing.Point(6, 334);
+            this.btn_Sair.Name = "btn_Sair";
+            this.btn_Sair.Size = new System.Drawing.Size(83, 57);
+            this.btn_Sair.TabIndex = 10;
+            this.btn_Sair.Text = "Sair";
+            this.btn_Sair.UseVisualStyleBackColor = true;
+            this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
+            // 
             // btn_Caixa
             // 
             this.btn_Caixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -478,7 +489,7 @@ namespace Projeto_ICI
             this.btn_Vender.Name = "btn_Vender";
             this.btn_Vender.Size = new System.Drawing.Size(83, 57);
             this.btn_Vender.TabIndex = 2;
-            this.btn_Vender.Text = "Vender";
+            this.btn_Vender.Text = "Venda";
             this.btn_Vender.UseVisualStyleBackColor = true;
             this.btn_Vender.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -489,17 +500,6 @@ namespace Projeto_ICI
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(17, 402);
             this.vScrollBar1.TabIndex = 8;
-            // 
-            // btn_Sair
-            // 
-            this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Sair.Location = new System.Drawing.Point(6, 334);
-            this.btn_Sair.Name = "btn_Sair";
-            this.btn_Sair.Size = new System.Drawing.Size(83, 57);
-            this.btn_Sair.TabIndex = 10;
-            this.btn_Sair.Text = "Sair";
-            this.btn_Sair.UseVisualStyleBackColor = true;
-            this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
             // 
             // Gerente
             // 

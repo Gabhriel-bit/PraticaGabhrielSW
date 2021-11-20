@@ -561,7 +561,7 @@ BEGIN
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoForn, parcela),
 		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
-		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
+		CONSTRAINT FK_pkContasPagNF FOREIGN KEY (modelo, serie, numero_nf, codigoForn) 
 			REFERENCES compras(modelo, serie, numero_nf, codigoForn)
 	);
 END
@@ -590,10 +590,55 @@ BEGIN
 		
 	    disponivel    INT NOT NULL default 1,
 		PRIMARY KEY(modelo, serie, numero_nf, codigoCliente, parcela),
-		CONSTRAINT FK_pkContasPagFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
-		CONSTRAINT FK_pkContasPag FOREIGN KEY (modelo, serie, numero_nf, codigoCliente) 
+		CONSTRAINT FK_pkContasRecFormPag FOREIGN KEY (codigoFormaPag) REFERENCES formasPagamento(codigo),
+		CONSTRAINT FK_pkContasRecNF FOREIGN KEY (modelo, serie, numero_nf, codigoCliente) 
 			REFERENCES vendas (modelo, serie, numero_nf, codigoCliente)
 	);
+END
+
+IF OBJECT_ID('ordens_servico') IS NULL
+BEGIN
+	CREATE TABLE ordens_servico (
+		codigo             INT  NOT NULL PRIMARY KEY,
+		dataEntrega        VARCHAR(10) NOT NULL,
+		dataRealizacao     VARCHAR(10) NOT NULL,
+		numeroSerie        VARCHAR(20) NOT NULL,
+		garantia           VARCHAR(20) NOT NULL,
+		codigoUsu          INT  NOT NULL,
+		codigoCliente      INT  NOT NULL,
+		codigoCondPag      INT  NOT NULL,
+		codigoEquipamento  INT  NOT NULL,
+		CONSTRAINT FK_OSCondPag FOREIGN KEY (codigoCondPag) REFERENCES condicoesPagamento(codigo),
+		CONSTRAINT FK_OSCliente FOREIGN KEY (codigoCliente) REFERENCES clientes(codigo),
+		CONSTRAINT FK_OSEquipamento FOREIGN KEY (codigoEquipamento) REFERENCES equipamentos(codigo)
+    );
+END
+
+IF OBJECT_ID('os_servicos') IS NULL
+BEGIN
+	CREATE TABLE os_servicos (
+		codigoOS          INT  NOT NULL,
+		codigoServico     INT  NOT NULL,
+		codigoFuncionario INT  NOT NULL,
+		quantidade        INT  NOT NULL,
+		CONSTRAINT FK_OSServFunc FOREIGN KEY (codigoServico) REFERENCES servicos(codigo),
+		CONSTRAINT FK_OSServFunc FOREIGN KEY (codigoFuncionario) REFERENCES funcionarios(codigo),
+		CONSTRAINT FK_OSServOS FOREIGN KEY (codigoOS) REFERENCES ordens_servico(codigo),
+		PRIMARY KEY(codigoOS, codigoServico)
+    );
+END
+
+IF OBJECT_ID('os_produtos') IS NULL
+BEGIN
+	CREATE TABLE os_produtos (
+		codigoOS      INT  NOT NULL,
+		codigoProduto INT  NOT NULL,
+		quantidade    INT  NOT NULL,
+        desconto      NUMERIC(8,4) NOT NULL,
+		CONSTRAINT FK_OSProdProd FOREIGN KEY (codigoProduto) REFERENCES produtos(codigo),
+		CONSTRAINT FK_OSProdOS FOREIGN KEY (codigoOS) REFERENCES ordens_servico(codigo),
+		PRIMARY KEY(codigoOS, codigoProduto)
+    );
 END
 
 IF OBJECT_ID('usuarios') IS NULL
@@ -604,7 +649,7 @@ BEGIN
 		senha      VARCHAR(10) NOT NULL,
 		codigoUsu  INT  NOT NULL,
 		dataCad    VARCHAR(10) NOT NULL,
-		dataUltAlt VARCHAR(10) NOT NULL,
+		dataUltAlt VARCHAR(10) NOT NULL
 	);
 END
 
@@ -613,7 +658,8 @@ BEGIN
 	CREATE TABLE usuarios_permissoes	 (
 		codigo     INT  NOT NULL,
 		permissao  VARCHAR(20) NOT NULL,
-		PRIMARY KEY(codigo, permissao)
+		PRIMARY KEY(codigo, permissao),
+		CONSTRAINT FK_CodigoUsuarioPerm FOREIGN KEY (codigo) REFERENCES usuarios(codigo)
 	);
 END
 GO

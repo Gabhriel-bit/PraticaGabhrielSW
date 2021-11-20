@@ -31,7 +31,9 @@ namespace Projeto_ICI
         private daoSubgrupos umaDaoSubgrupo;
         private daoTransportadoras umaDaoTransport;
         private daoCompras umaDaoCompra;
-        private daoContasPagar UmaDaoContaPagar;
+        private daoVendas umaDaoVenda;
+        private daoContasPagar umaDaoContaPagar;
+        private daoContasReceber umaDaoContaReceber;
 
         private ctrlCargos umCtrlCargo;
         private ctrlCidades umCtrlCidade;
@@ -52,7 +54,9 @@ namespace Projeto_ICI
         private ctrlSubgrupos umCtrlSubgrupo;
         private ctrlTransportadoras umCtrlTransport;
         private ctrlCompras umCtrlCompra;
-        private ctrlContasPagar UmCtrlContaPagar;
+        private ctrlVendas umCtrlVenda;
+        private ctrlContasPagar umCtrlContaPagar;
+        private ctrlContasReceber umCtrlContaReceber;
 
         private frmCadastroCargos frmCadCargo;
         private frmCadastroCidades frmCadCidade;
@@ -73,6 +77,7 @@ namespace Projeto_ICI
         private frmCadastroSubGrupos frmCadSubgrupo;
         private frmCadastroTransportadoras frmCadTransport;
         private frmCadastroCompras frmCadCompra;
+        private frmCadastroVendas frmCadVenda;
 
         private frmConsultaCargos frmConsCargo;
         private frmConsultaCidades frmConsCidade;
@@ -93,6 +98,7 @@ namespace Projeto_ICI
         private frmConsultaSubgrupos frmConsSubgrupo;
         private frmConsultaTranspotadoras frmConsTranspot;
         private frmConsultaCompras frmConsCompra;
+        private frmConsultaVendas frmConsVenda;
 
         private BancoDados.conexoes umaConexao;
 
@@ -147,7 +153,9 @@ namespace Projeto_ICI
                 umaDaoSubgrupo = new daoSubgrupos();
                 umaDaoTransport = new daoTransportadoras();
                 umaDaoCompra = new daoCompras();
-                UmaDaoContaPagar = new daoContasPagar();
+                umaDaoVenda = new daoVendas();
+                umaDaoContaPagar = new daoContasPagar();
+                umaDaoContaReceber = new daoContasReceber();
 
                 umCtrlCargo = new ctrlCargos(umaConexao, umaDaoCargo);
                 umCtrlPais = new ctrlPaises(umaConexao, umaDaoPais);
@@ -167,10 +175,13 @@ namespace Projeto_ICI
                 umCtrlServico = new ctrlServicos(umaConexao, umaDaoServico);
                 umCtrlFunc = new ctrlFuncionarios(umaConexao, umaDaoFunc, umCtrlCargo, umCtrlCidade);
                 umCtrlTransport = new ctrlTransportadoras(umaConexao, umaDaoTransport, umCtrlCidade);
-                UmCtrlContaPagar = new ctrlContasPagar(umaConexao, UmaDaoContaPagar, umCtrlForn, umCtrlFormPag);
+                umCtrlContaPagar = new ctrlContasPagar(umaConexao, umaDaoContaPagar, umCtrlForn, umCtrlFormPag);
+                umCtrlContaReceber = new ctrlContasReceber(umaConexao, umaDaoContaReceber, umCtrlCliente, umCtrlFormPag);
                 umCtrlCompra = new ctrlCompras(umaConexao, umaDaoCompra, umCtrlTransport, umCtrlCondPag,
-                    umCtrlForn, umCtrlProduto, UmCtrlContaPagar);
-                
+                    umCtrlForn, umCtrlProduto, umCtrlContaPagar);
+                umCtrlVenda = new ctrlVendas(umaConexao, umaDaoVenda, umCtrlTransport, umCtrlCondPag, umCtrlCliente,
+                    umCtrlProduto, umCtrlContaReceber);
+
 
                 //formulários de cadastro
                 frmCadCargo = new frmCadastroCargos(umCtrlCargo);
@@ -192,6 +203,7 @@ namespace Projeto_ICI
                 frmCadSubgrupo = new frmCadastroSubGrupos(umCtrlSubgrupo);
                 frmCadTransport = new frmCadastroTransportadoras(umCtrlTransport);
                 frmCadCompra = new frmCadastroCompras(umCtrlCompra);
+                frmCadVenda = new frmCadastroVendas(umCtrlVenda);
 
                 //formulários de consulta
                 frmConsCargo = new frmConsultaCargos(umCtrlCargo);
@@ -213,6 +225,7 @@ namespace Projeto_ICI
                 frmConsSubgrupo = new frmConsultaSubgrupos(umCtrlSubgrupo);
                 frmConsTranspot = new frmConsultaTranspotadoras(umCtrlTransport);
                 frmConsCompra = new frmConsultaCompras(umCtrlCompra);
+                frmConsVenda = new frmConsultaVendas(umCtrlVenda);
 
                 //vincula os formulários de consulta com seus respectivos cadastros
                 frmConsCargo.SetFrmCad(frmCadCargo);
@@ -234,6 +247,7 @@ namespace Projeto_ICI
                 frmConsSubgrupo.SetFrmCad(frmCadSubgrupo);
                 frmConsTranspot.SetFrmCad(frmCadTransport);
                 frmConsCompra.SetFrmCad(frmCadCompra);
+                frmConsVenda.SetFrmCad(frmCadVenda);
 
                 //vincula os formulários de consulta com os formulários de cadastro com dependência
                 frmCadCidade.SetFrmCons(frmConsEstado);
@@ -249,6 +263,7 @@ namespace Projeto_ICI
                 frmCadSubgrupo.SetFrmCons(frmConsGrupo);
                 frmCadTransport.SetFrmCons(frmConsCidade);
                 frmCadCompra.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsFornecedor, frmConsProduto });
+                frmCadVenda.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsCliente, frmConsProduto });
             }
             catch (Exception e)
             {
@@ -462,8 +477,7 @@ namespace Projeto_ICI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var g = new frmConsultas.frmConsultaVendas();
-            g.ShowDialog();
+            frmConsVenda.ShowDialog();
         }
 
         private void btn_Sair_Click(object sender, EventArgs e)

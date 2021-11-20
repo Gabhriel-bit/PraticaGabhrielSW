@@ -895,6 +895,7 @@ namespace Projeto_ICI.frmCadastros
             this.Controls.Add(this.txtb_Serie);
             this.Name = "frmCadastroCompras";
             this.Text = "Cadastro de Compras";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastroCompras_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.errorMSG)).EndInit();
             this.groupBox_Produtos.ResumeLayout(false);
             this.groupBox_Produtos.PerformLayout();
