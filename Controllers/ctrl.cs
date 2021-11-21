@@ -48,7 +48,7 @@ namespace Projeto_ICI.Controllers
             return null;
         }
 
-        protected string ExecucaoComandQuery(string pComandText)
+        protected virtual string ExecucaoComandQuery(string pComandText)
         {
             var conn = new SqlCommand();
             string vlTitle = this.ToString().Replace("Projeto_ICI.Controllers.ctrl", "Controller ") + ":\n";

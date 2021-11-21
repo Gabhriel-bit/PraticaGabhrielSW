@@ -15,6 +15,7 @@ namespace Projeto_ICI.Classes
         private equipamentos FumEquipamento;
         private List<itensOSServico> FumaListaItensServico;
         private List<itensOSProdutos> FumaListaItensProduto;
+        private List<contasReceber> FumListaContasReceber;
 
         public ordensServico()
         {
@@ -31,6 +32,7 @@ namespace Projeto_ICI.Classes
 
             FumaListaItensServico = new List<itensOSServico>();
             FumaListaItensProduto = new List<itensOSProdutos>();
+            FumListaContasReceber = new List<contasReceber>();
         }
 
         public ordensServico(int pCodigo, int pCodigoUsu, string pDataEntrada,
@@ -49,6 +51,7 @@ namespace Projeto_ICI.Classes
 
             FumaListaItensServico = new List<itensOSServico>();
             FumaListaItensProduto = new List<itensOSProdutos>();
+            FumListaContasReceber = new List<contasReceber>();
         }
 
         public string contasReceberPKStr
@@ -73,8 +76,33 @@ namespace Projeto_ICI.Classes
         { get => FumaListaItensProduto; set => FumaListaItensProduto = value; }
         public List<itensOSServico> UmaListaItensServico
         { get => FumaListaItensServico; set => FumaListaItensServico = value; }
+        public List<contasReceber> UmaListaContasReceber
+        { get => CloneListaContas(); set => FumListaContasReceber = value; }
 
+        public void setCodigoListasOS()
+        {
+            foreach (itensOSServico vlItem in UmaListaItensServico)
+                vlItem.CodigoOS = Codigo;
+            foreach (itensOSProdutos vlItem in UmaListaItensProduto)
+                vlItem.CodigoOS = Codigo;
+            foreach (contasReceber vlItem in UmaListaContasReceber)
+            {
+                vlItem.Modelo           = $"OS-{Codigo}";
+                vlItem.Serie            = $"OS-{Codigo}";
+                vlItem.NumeroNF         = Codigo.ToString();
+                vlItem.UmCliente.Codigo = Codigo;
+            }
+        }
 
+        private List<contasReceber> CloneListaContas()
+        {
+            var lista = new List<contasReceber>();
+            foreach (contasReceber item in FumListaContasReceber)
+            {
+                lista.Add(item.ThisContaReceber);
+            }
+            return lista;
+        }
         public List<itensOSProdutos> CloneListaProdutos()
         {
             var lista = new List<itensOSProdutos>();

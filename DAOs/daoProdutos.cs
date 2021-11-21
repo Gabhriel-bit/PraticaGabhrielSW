@@ -91,7 +91,7 @@ namespace Projeto_ICI.DAOs
             else
             {
                 string insertion = "\n" + "delete from produto_fornecedor where " +
-                                         $"codigoProduto = {pCodigoProd};\n"; ;
+                                         $"codigoProduto = {pCodigoProd};\n";
                 string[] campo = { "codigoProduto", "codigoFornecedor" },
                          valor = { pCodigoProd.ToString(), ""};
                 foreach (Classes.fornecedores vlForn in listaFornecedores)

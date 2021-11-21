@@ -116,6 +116,7 @@
     <Compile Include="Controllers\ctrlProdutos.cs" />
     <Compile Include="Controllers\ctrlTransportadoras.cs" />
     <Compile Include="Controllers\ctrlVendas.cs" />
+    <Compile Include="Controllers\ordensServico.cs" />
     <Compile Include="DAOs\daoCargos.cs" />
     <Compile Include="DAOs\daoCidades.cs" />
     <Compile Include="DAOs\daoClientes.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="DAOs\daoGrupos.cs" />
     <Compile Include="DAOs\daoMarcas.cs" />
     <Compile Include="DAOs\daoModelos.cs" />
+    <Compile Include="DAOs\daoOrdensServico.cs" />
     <Compile Include="DAOs\daoPaises.cs" />
     <Compile Include="DAOs\daoProdutos.cs" />
     <Compile Include="DAOs\daos.cs" />
