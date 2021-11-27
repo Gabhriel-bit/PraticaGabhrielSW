@@ -14,6 +14,8 @@ namespace Projeto_ICI.API
         private string Fpassword;
         private string FumToken;
         private DateTime FdateRequestToken;
+        private DateTime FultProcesso;
+        private string[] FstatusRequest;
 
         private const string URLDefault = "http://207.244.243.219";
 
@@ -24,6 +26,8 @@ namespace Projeto_ICI.API
             Fpassword = "admin123";
             FumToken  = default;
             FdateRequestToken = DateTime.Now;
+            FultProcesso = DateTime.Now;
+            FstatusRequest = new string[] { "Conexão", "OK" };
         }
 
         public conexaoMagento(string pURL, string pUsername, string pPassword)
@@ -33,6 +37,8 @@ namespace Projeto_ICI.API
             Fpassword = pPassword;
             FumToken  = default;
             FdateRequestToken = DateTime.Now;
+            FultProcesso = DateTime.Now;
+            FstatusRequest = new string[] { "Conexão", "OK" };
         }
 
         protected void SetDateRequest(int pSegundo = 0, int pMinuto = 0, int pHora = 0,
@@ -50,7 +56,8 @@ namespace Projeto_ICI.API
 
         public string URL
         { get => FumaURL; set => FumaURL = value; }
-
+        public string[] StatusRequest
+        { get => FstatusRequest; }
         public string Username
         { get => Fusername; set => Fpassword = value; }
 
@@ -62,10 +69,17 @@ namespace Projeto_ICI.API
         {
             return TokenAcesso(pContentType);
         }
+        public void setUltProcesso(DateTime pData)
+        {
+            FultProcesso = pData;
+        }
+        public string UltDataAcesso
+        { get => FultProcesso.ToString("hh:mm:ss"); }
         public string SetURLDefault
         { get => URLDefault; set => FumaURL = URLDefault; }
         protected virtual string TokenAcesso(string pContentType="application/json")
         {
+            FultProcesso = DateTime.Now;
             if (FdateRequestToken <= DateTime.Now)
             {
                 var vlMagento = new RestClient(URL + "/index.php/rest/V1/integration/admin/token");
@@ -77,6 +91,7 @@ namespace Projeto_ICI.API
                                       ParameterType.RequestBody);
 
                 IRestResponse vlResposta = vlMagento.Execute(vlRequisicao);
+                FstatusRequest[1] = vlResposta.StatusCode.ToString();
                 return formatRequestMsg(vlResposta);
             }
             return FumToken;

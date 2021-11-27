@@ -11,16 +11,21 @@ namespace Projeto_ICI.API
     {
         private API.conexaoMagento umaConexao;
         private Classes.produtos umProduto;
+        private bool[] Fconferencias;
         public magentoProdutos(API.conexaoMagento pConexao)
         {
             umaConexao = pConexao;
             umProduto = new Classes.produtos();
+            Fconferencias = new bool[] { true, true };
         }
-        public string Inserir(Classes.produtos pUmProduto)
+        public bool[] Conferencias
+        { get => Fconferencias; set => Fconferencias = value; }
+        public string Inserir(Classes.produtos pUmProduto, out string[] pProcStstus,string pImage = "")
         {
             var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products");
             var request = new RestRequest(Method.POST);
             var vlToken = umaConexao.Token;
+            pProcStstus = new string[] { "Inserção", "error" };
             if (vlToken.Contains("Erro"))
                 return vlToken;
             request.AddHeader("Authorization", $"Bearer {vlToken}");
@@ -29,45 +34,44 @@ namespace Projeto_ICI.API
             request.AddCookie("mage-messages",
                 "%5B%7B%22type%22%3A%22error%22%2C%22text%22%3A%22Invalid%20Form%20Key." +
                 "%20Please%20refresh%20the%20page.%22%7D%5D");
-            request.AddParameter("application/json", "{\n\t\"product\": {\n    \"" +
-                                "sku\": \"" + pUmProduto.Produto + "\",\n    \"" +
-                                "name\": \"" + pUmProduto.Produto + "\",\n    \"" +
-                                "attribute_set_id\": 4,\n    \"" +
-                                "price\": " + pUmProduto.CalculaPrecoVenda.ToString().Replace('.', ',') + ",\n    \"" +
-                                "status\": 1,\n    \"" +
-                                "visibility\": 4,\n    \"" +
-                                "weight\":" + pUmProduto.PesoLiquido.ToString().Replace('.', ',') + ",\n    \"" +
-                                "extension_attributes\": {\n        \"" +
-                                    "website_ids\": [\n            1\n        ],\n        \"" +
-                                    "category_links\": [\n            {\n                \"" +
-                                    "position\": 0,\n                \"" +
-                                    "category_id\": \"4\"\n            }\n        ],\n        \"" +
-                                    "stock_item\": {\n            \"" +
-                                        "stock_id\": 1,\n            \"" +
-                                        "qty\": " + pUmProduto.Saldo.ToString() + ",\n            \"" +
-                                        "is_in_stock\": true\n        }\n    },\n    \"" +
-                                "options\": [],\n    \"" +
-                                "media_gallery_entries\": [],\n    \"" +
-                                "custom_attributes\": [\n        {\n            \"" +
-                                    "attribute_code\": \"options_container\",\n            \"" +
-                                    "value\": \"container2\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"url_key\",\n            \"" +
-                                    "value\": \"" + pUmProduto.Produto + "\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"tax_class_id\",\n            \"" +
-                                    "value\": \"2\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"category_ids\",\n            \"" +
-                                    "value\": [\n                \"4\"\n            ]\n        }\n    ]\n\t}\n}",
-                                 ParameterType.RequestBody);
-
+            request.AddParameter("application/json", "{\"product\":{" +
+                                                        "\"sku\":\"" + pUmProduto.Produto.Replace(" ", "-") + "\"," +
+                                                        "\"name\": \"" + pUmProduto.Produto + "\"," +
+                                                        "\"attribute_set_id\": 4," +
+                                                        "\"price\":" + pUmProduto.CalculaPrecoVenda.ToString().Replace(",", ".") + "," +
+                                                        "\"status\": 1," +
+                                                        $"\"visibility\": {(Conferencias[0] ? 4 : 0)}," +
+                                                        "\"weight\":" + pUmProduto.PesoLiquido.ToString().Replace(",", ".") + "," +
+                                                        "\"type_id\": \"simple\"," +
+                                                        "\"extension_attributes\":{" +
+                                                            "\"website_ids\": [ 1 ]," +
+                                                            "\"category_links\":[{" +
+                                                                "\"position\": 0," +
+                                                                "\"category_id\": \"3\"}]," +
+                                                            "\"stock_item\":{" +
+                                                                "\"stock_id\": 1," +
+                                                                "\"qty\": " + pUmProduto.Saldo.ToString() + "," +
+                                                                "\"is_in_stock\": " + (Conferencias[1] ? "true" : "false") + "}}," +
+                                                        "\"custom_attributes\":[{" +
+                                                            "\"attribute_code\": \"url_key\"," +
+                                                                "\"value\": \"" + pUmProduto.Produto + "\"},{" +
+                                                            "\"attribute_code\":\"tax_class_id\"," +
+                                                                "\"value\": \"2\"},{" +
+                                                            "\"attribute_code\": \"category_ids\"," +
+                                                                "\"value\": [\"4\"]}]}}",
+                                  ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            var vlMsg = anexarImagem(pUmProduto.Produto, colecaoImages.ImagemImpressora);
+            var vlMsg = anexarImagem(pUmProduto.Produto, pImage);
+            pProcStstus[1] = response.StatusCode.ToString();
+            umaConexao.setUltProcesso(DateTime.Now);
             return formatRespostaRequest(response, "'Inserção'") + '\n' + vlMsg;
         }
-        public string Alterar(Classes.produtos pUmProduto)
+        public string Alterar(Classes.produtos pUmProduto, out string[] pProcStstus)
         {
             var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products/" + pUmProduto.Produto);
             var request = new RestRequest(Method.PUT);
             var vlToken = umaConexao.Token;
+            pProcStstus = new string[] { "Alteração", "error" };
             if (vlToken.Contains("Erro"))
                 return vlToken;
             request.AddHeader("Content-Type", "application/json");
@@ -76,42 +80,42 @@ namespace Projeto_ICI.API
             request.AddCookie("mage-messages", "%5B%7B%22type%22%3A%22error%22%2C%22text%22%3A%22Invali" +
                                                "d%20Form%20Key.%20Please%20refresh%20the%20page.%22%7D%5D");
 
-            request.AddParameter("application/json", "{\n\t\"product\": {\n    \"" +
-                                "sku\": \"" + pUmProduto.Produto + "\",\n    \"" +
-                                "name\": \"" + pUmProduto.Produto + "\",\n    \"" +
-                                "attribute_set_id\": 4,\n    \"" +
-                                "price\": " + pUmProduto.CalculaPrecoVenda.ToString().Replace('.', ',') + ",\n    \"" +
-                                "status\": 1,\n    \"" +
-                                "visibility\": 4,\n    \"" +
-                                "weight\":" + pUmProduto.PesoLiquido.ToString().Replace('.', ',') + ",\n    \"" +
-                                "extension_attributes\": {\n        \"" +
-                                    "website_ids\": [\n            1\n        ],\n        \"" +
-                                    "category_links\": [\n            {\n                \"" +
-                                    "position\": 0,\n                \"" +
-                                    "category_id\": \"4\"\n            }\n        ],\n        \"" +
-                                    "stock_item\": {\n            \"" +
-                                        "stock_id\": 1,\n            \"" +
-                                        "qty\": " + pUmProduto.Saldo.ToString() + ",\n            \"" +
-                                        "is_in_stock\": true\n        }\n    },\n    \"" +
-                                "options\": [],\n    \"" +
-                                "media_gallery_entries\": [],\n    \"" +
-                                "custom_attributes\": [\n        {\n            \"" +
-                                    "attribute_code\": \"options_container\",\n            \"" +
-                                    "value\": \"container2\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"url_key\",\n            \"" +
-                                    "value\": \"" + pUmProduto.Produto + "\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"tax_class_id\",\n            \"" +
-                                    "value\": \"2\"\n        },\n        {\n            \"" +
-                                    "attribute_code\": \"category_ids\",\n            \"" +
-                                    "value\": [\n                \"4\"\n            ]\n        }\n    ]\n\t}\n}",
-                                    ParameterType.RequestBody);
+            request.AddParameter("application/json", "{\"product\":{" +
+                                                        "\"sku\":\"" + pUmProduto.Produto.Replace(" ", "-") + "\"," +
+                                                        "\"name\": \"" + pUmProduto.Produto + "\"," +
+                                                        "\"attribute_set_id\": 4," +
+                                                        "\"price\":" + pUmProduto.CalculaPrecoVenda.ToString().Replace(",", ".") + "," +
+                                                        "\"status\": 1," +
+                                                        $"\"visibility\": {(Conferencias[0] ? 4 : 0)}," +
+                                                        "\"weight\":" + pUmProduto.PesoLiquido.ToString().Replace(",", ".") + "," +
+                                                        "\"type_id\": \"simple\"," +
+                                                        "\"extension_attributes\":{" +
+                                                            "\"website_ids\": [ 1 ]," +
+                                                            "\"category_links\":[{" +
+                                                                "\"position\": 0," +
+                                                                "\"category_id\": \"3\"}]," +
+                                                            "\"stock_item\":{" +
+                                                                "\"stock_id\": 1," +
+                                                                "\"qty\": " + pUmProduto.Saldo.ToString() + "," +
+                                                                "\"is_in_stock\": " + (Conferencias[1] ? "true" : "false") + "}}," +
+                                                        "\"custom_attributes\":[{" +
+                                                            "\"attribute_code\": \"url_key\"," +
+                                                                "\"value\": \"" + pUmProduto.Produto + "\"},{" +
+                                                            "\"attribute_code\":\"tax_class_id\"," +
+                                                                "\"value\": \"2\"},{" +
+                                                            "\"attribute_code\": \"category_ids\"," +
+                                                                "\"value\": [\"4\"]}]}}",
+                                  ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            return default;
+            pProcStstus[1] = response.StatusCode.ToString();
+            umaConexao.setUltProcesso(DateTime.Now);
+            return formatRespostaRequest(response, "'Alteração'");
         }
-        public string Excluir(string pProduto)
+        public string Excluir(string pProduto, out string[] pProcStstus)
         {
-            var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products/" + pProduto);
+            var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products/" + pProduto.Replace(" ", "-"));
             var request = new RestRequest(Method.DELETE);
+            pProcStstus = new string[] { "Exclusão", "error" };
             var vlToken = umaConexao.Token;
             if (vlToken.Contains("Erro"))
                 return vlToken;
@@ -120,6 +124,8 @@ namespace Projeto_ICI.API
             request.AddCookie("mage-messages", "%5B%7B%22type%22%3A%22error%22%2C%22text%22%3A" +
                               "%22Invalid%20Form%20Key.%20Please%20refresh%20the%20page.%22%7D%5D");
             IRestResponse response = client.Execute(request);
+            pProcStstus[1] = response.StatusCode.ToString();
+            umaConexao.setUltProcesso(DateTime.Now);
             return formatRespostaRequest(response, "Exclusão");
         }
         public Classes.produtos Pesquisar(string pCampo, string pValor, out string pMsg)
@@ -127,7 +133,7 @@ namespace Projeto_ICI.API
             pMsg = default;
 
 
-
+            umaConexao.setUltProcesso(DateTime.Now);
             return default;
         }
         public List<Classes.produtos> Pesquisar()
@@ -142,33 +148,32 @@ namespace Projeto_ICI.API
             request.AddCookie("private_content_version", "ff7e652208595133bce2da64d6d071d5");
             request.AddCookie("mage-messages", "%5B%7B%22type%22%3A%22error%22%2C%22text%22%3A%22Invalid%20Form%20Key.%20Please%20refresh%20the%20page.%22%7D%5D");
             IRestResponse response = client.Execute(request);
+            umaConexao.setUltProcesso(DateTime.Now);
             return vlListaProd;
         }
 
         private string anexarImagem(string pProduto, string pImage)
         {
-            var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products/" + pProduto + "/media");
+            var client = new RestClient(umaConexao.URL + "/index.php/rest/V1/products/" + pProduto.Replace(" ", "-") + "/media");
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", $"Bearer {umaConexao.Token}");
             request.AddCookie("mage-messages", "%5B%7B%22type%22%3A%22error%22%2C%22text%22%3A%22" +
                                                "Invalid%20Form%20Key.%20Please%20refresh%20the%20page.%22%7D%5D");
-            request.AddParameter("application/json", "{\n    \"" +
-                                 "entry\": {\n        \"" +
-                                 "media_type\": \"image\",\n        \"" +
-                                 "label\": \"Image-" + pProduto + "\",\n        \"" +
-                                 "position\": 1,\n        \"" +
-                                 "disabled\": false,\n        \"" +
-                                 "types\": [\n            \"" +
-                                     "image\",\n            \"" +
-                                     "small_image\",\n            \"" +
-                                     "thumbnail\"\n        ],\n        \"" +
-                                 "content\": {\n            \"" +
-                                     "base64_encoded_data\": \"" + pImage + "\",\n            \"" +
-                                     "type\": \"image/png\",\n            \"" +
-                                     "name\": \"" + pProduto + ".png\"\n        }\n    }\n}",
+            request.AddParameter("application/json", "{" +
+                                 "\"entry\": {" +
+                                 "\"media_type\": \"image\"," +
+                                 "\"label\": \"Image-" + pProduto + "\"," +
+                                 "\"position\": 1," +
+                                 "\"disabled\": false," +
+                                 "\"types\": [\"image\", \"small_image\", \"thumbnail\"]," +
+                                 "\"content\": {" +
+                                     "\"base64_encoded_data\": \"" + pImage + "\"," +
+                                     "\"type\": \"image/png\"," +
+                                     "\"name\": \"" + pProduto + ".png\"}}}",
                                  ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
+            umaConexao.setUltProcesso(DateTime.Now);
             return formatRespostaRequest(response, "'Anexar Imagem'");
         }
 

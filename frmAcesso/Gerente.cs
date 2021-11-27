@@ -100,6 +100,8 @@ namespace Projeto_ICI
         private frmConsultaCompras frmConsCompra;
         private frmConsultaVendas frmConsVenda;
 
+        private API.frmIntegracaoMagento frmIntregMagento;
+
         private BancoDados.conexoes umaConexao;
         private API.conexaoMagento umaConexaoAPI;
 
@@ -266,6 +268,10 @@ namespace Projeto_ICI
                 frmCadTransport.SetFrmCons(frmConsCidade);
                 frmCadCompra.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsFornecedor, frmConsProduto });
                 frmCadVenda.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsCliente, frmConsProduto });
+
+                //referentes a integração do Magento 
+                frmIntregMagento = new API.frmIntegracaoMagento(umaConexaoAPI, umCtrlProduto);
+                frmIntregMagento.SetFrmCons(frmConsProduto);
             }
             catch (Exception e)
             {
@@ -495,61 +501,11 @@ namespace Projeto_ICI
 
         private void btn_Relatorio_Click(object sender, EventArgs e)
         {
-            var vlString = "{\n\t\"product\": {\n    \"sku\": \"xiaomi-mi9\",\n    \"name\": \"xiaomi-mi9\",\n    \"attribute_set_id\": 4,\n    \"price\": 1975.46,\n    \"status\": 1,\n    \"visibility\": 4,\n    \"type_id\": \"simple\",\n    \"weight\": 1,\n    \"extension_attributes\": {\n        \"website_ids\": [\n            1\n        ],\n        \"category_links\": [\n            {\n                \"position\": 0,\n                \"category_id\": \"3\"\n            }\n        ],\n        \"stock_item\": {\n            \"stock_id\": 1,\n            \"qty\": 100,\n            \"is_in_stock\": true,\n            \"is_qty_decimal\": false,\n            \"show_default_notification_message\": false,\n            \"use_config_min_qty\": true,\n            \"min_qty\": 0,\n            \"use_config_min_sale_qty\": 1,\n            \"min_sale_qty\": 1,\n            \"use_config_max_sale_qty\": true,\n            \"max_sale_qty\": 10000,\n            \"use_config_backorders\": true,\n            \"backorders\": 0,\n            \"use_config_notify_stock_qty\": true,\n            \"notify_stock_qty\": 1,\n            \"use_config_qty_increments\": true,\n            \"qty_increments\": 0,\n            \"use_config_enable_qty_inc\": true,\n            \"enable_qty_increments\": false,\n            \"use_config_manage_stock\": true,\n            \"manage_stock\": true,\n            \"low_stock_date\": null,\n            \"is_decimal_divided\": false,\n            \"stock_status_changed_auto\": 0\n        }\n    },\n    \"options\": [],\n    \"media_gallery_entries\": [],\n    \"custom_attributes\": [\n        {\n            \"attribute_code\": \"options_container\",\n            \"value\": \"container2\"\n        },\n        {\n            \"attribute_code\": \"msrp_display_actual_price_type\",\n            \"value\": \"0\"\n        },\n        {\n            \"attribute_code\": \"url_key\",\n            \"value\": \"xiaomi-mi9\"\n        },\n        {\n            \"attribute_code\": \"required_options\",\n            \"value\": \"0\"\n        },\n        {\n            \"attribute_code\": \"has_options\",\n            \"value\": \"0\"\n        },\n        {\n            \"attribute_code\": \"tax_class_id\",\n            \"value\": \"2\"\n        },\n        {\n            \"attribute_code\": \"category_ids\",\n            \"value\": [\n                \"3\"\n            ]\n        }\n    ]\n\t}\n}";
-            int f = vlString.IndexOf("sku\":");
-            int quant = vlString.IndexOf("\"name\":") - 1;
-            vlString = vlString.Replace("\n", "");
-            vlString = vlString.Replace("\t", "");
-            vlString = vlString.Replace(" ", "");
-            vlString = vlString.Replace(";", "");
-            vlString = vlString.Replace("\"", "");
-            vlString = vlString.Replace("{", "");
-            vlString = vlString.Replace("}", "");
-            var df = "";
-            foreach (string vlItem in vlString.Split(','))
-                foreach (string o in vlItem.Split(':'))
-                    df += o + "\n";
-            MessageBox.Show(df);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btn_MagentoIntegration_Click(object sender, EventArgs e)
         {
-            var vlMagentoProd = new API.magentoProdutos(umaConexaoAPI);
-            var vlMsg = vlMagentoProd.Inserir(new Classes.produtos(0, 0, "", "", "DeskJet-2230",
-                                                       "", "", decimal.Parse("1523"),
-                                                       "", 4, 12, decimal.Parse("10"),
-                                                       0, 0));
-            MessageBox.Show(vlMsg);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var vlMagentoProd = new API.magentoProdutos(umaConexaoAPI);
-            var vlMsg = vlMagentoProd.Alterar(new Classes.produtos(0, 0, "", "", "DeskJet-2230",
-                                                       "", "", decimal.Parse("1523"),
-                                                       "", 4, 12, decimal.Parse("10"),
-                                                       0, 0));
-            MessageBox.Show(vlMsg);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var vlMagentoProd = new API.magentoProdutos(umaConexaoAPI);
-            var vlMsg = vlMagentoProd.Excluir("DeskJet-2230");
-            MessageBox.Show(vlMsg);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            var vlMagentoProd = new API.magentoProdutos(umaConexaoAPI);
-            var vlListaProduto = vlMagentoProd.Pesquisar();
-            textBox1.Clear();
-            textBox1.Text = vlListaProduto[0].toStringAttribute().Replace(";", "  ->  ");
-            foreach (Classes.produtos vlProduto in vlListaProduto)
-            {
-                textBox1.Text += vlProduto.toString().Replace(";", " -> ") + '\n';
-            }
+            frmIntregMagento.ShowDialog();
         }
     }
 }
-
