@@ -31,6 +31,20 @@ namespace Projeto_ICI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gerente));
             this.menu_Principal = new System.Windows.Forms.MenuStrip();
+            this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Comprar = new System.Windows.Forms.Button();
+            this.btn_AbrirOS = new System.Windows.Forms.Button();
+            this.gb_Atalhos = new System.Windows.Forms.GroupBox();
+            this.btn_Sair = new System.Windows.Forms.Button();
+            this.btn_Caixa = new System.Windows.Forms.Button();
+            this.btn_Relatorio = new System.Windows.Forms.Button();
+            this.btn_Vender = new System.Windows.Forms.Button();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.btn_MagentoIntegration = new System.Windows.Forms.Button();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Cargos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItem_Cidades = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,18 +81,6 @@ namespace Projeto_ICI
             this.paisesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subgruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sairToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_Comprar = new System.Windows.Forms.Button();
-            this.btn_AbrirOS = new System.Windows.Forms.Button();
-            this.gb_Atalhos = new System.Windows.Forms.GroupBox();
-            this.btn_Sair = new System.Windows.Forms.Button();
-            this.btn_Caixa = new System.Windows.Forms.Button();
-            this.btn_Relatorio = new System.Windows.Forms.Button();
-            this.btn_Vender = new System.Windows.Forms.Button();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.menu_Principal.SuspendLayout();
             this.gb_Atalhos.SuspendLayout();
             this.SuspendLayout();
@@ -95,6 +97,142 @@ namespace Projeto_ICI
             this.menu_Principal.Size = new System.Drawing.Size(740, 29);
             this.menu_Principal.TabIndex = 4;
             this.menu_Principal.Text = "menuStrip1";
+            // 
+            // sairToolStripMenuItem
+            // 
+            this.sairToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loginToolStripMenuItem,
+            this.logoutToolStripMenuItem,
+            this.sairToolStripMenuItem1});
+            this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
+            this.sairToolStripMenuItem.Size = new System.Drawing.Size(49, 25);
+            this.sairToolStripMenuItem.Text = "Sair";
+            // 
+            // loginToolStripMenuItem
+            // 
+            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.loginToolStripMenuItem.Text = "Login";
+            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            // 
+            // logoutToolStripMenuItem
+            // 
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
+            // sairToolStripMenuItem1
+            // 
+            this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
+            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(129, 26);
+            this.sairToolStripMenuItem1.Text = "Sair";
+            this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
+            // 
+            // btn_Comprar
+            // 
+            this.btn_Comprar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Comprar.Location = new System.Drawing.Point(6, 145);
+            this.btn_Comprar.Name = "btn_Comprar";
+            this.btn_Comprar.Size = new System.Drawing.Size(83, 57);
+            this.btn_Comprar.TabIndex = 1;
+            this.btn_Comprar.Text = "Comprar";
+            this.btn_Comprar.UseVisualStyleBackColor = true;
+            this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
+            // 
+            // btn_AbrirOS
+            // 
+            this.btn_AbrirOS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AbrirOS.Location = new System.Drawing.Point(6, 19);
+            this.btn_AbrirOS.Name = "btn_AbrirOS";
+            this.btn_AbrirOS.Size = new System.Drawing.Size(83, 57);
+            this.btn_AbrirOS.TabIndex = 0;
+            this.btn_AbrirOS.Text = "Abrir OS";
+            this.btn_AbrirOS.UseVisualStyleBackColor = true;
+            this.btn_AbrirOS.Click += new System.EventHandler(this.btn_AbrirOS_Click);
+            // 
+            // gb_Atalhos
+            // 
+            this.gb_Atalhos.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.gb_Atalhos.Controls.Add(this.btn_MagentoIntegration);
+            this.gb_Atalhos.Controls.Add(this.btn_Sair);
+            this.gb_Atalhos.Controls.Add(this.btn_Caixa);
+            this.gb_Atalhos.Controls.Add(this.btn_Relatorio);
+            this.gb_Atalhos.Controls.Add(this.btn_Vender);
+            this.gb_Atalhos.Controls.Add(this.btn_AbrirOS);
+            this.gb_Atalhos.Controls.Add(this.btn_Comprar);
+            this.gb_Atalhos.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gb_Atalhos.Location = new System.Drawing.Point(0, 29);
+            this.gb_Atalhos.Name = "gb_Atalhos";
+            this.gb_Atalhos.Size = new System.Drawing.Size(96, 477);
+            this.gb_Atalhos.TabIndex = 7;
+            this.gb_Atalhos.TabStop = false;
+            // 
+            // btn_Sair
+            // 
+            this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Sair.Location = new System.Drawing.Point(6, 397);
+            this.btn_Sair.Name = "btn_Sair";
+            this.btn_Sair.Size = new System.Drawing.Size(83, 57);
+            this.btn_Sair.TabIndex = 10;
+            this.btn_Sair.Text = "Sair";
+            this.btn_Sair.UseVisualStyleBackColor = true;
+            this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
+            // 
+            // btn_Caixa
+            // 
+            this.btn_Caixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Caixa.Location = new System.Drawing.Point(6, 82);
+            this.btn_Caixa.Name = "btn_Caixa";
+            this.btn_Caixa.Size = new System.Drawing.Size(83, 57);
+            this.btn_Caixa.TabIndex = 9;
+            this.btn_Caixa.Text = "Caixa";
+            this.btn_Caixa.UseVisualStyleBackColor = true;
+            // 
+            // btn_Relatorio
+            // 
+            this.btn_Relatorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Relatorio.Location = new System.Drawing.Point(6, 271);
+            this.btn_Relatorio.Name = "btn_Relatorio";
+            this.btn_Relatorio.Size = new System.Drawing.Size(83, 57);
+            this.btn_Relatorio.TabIndex = 3;
+            this.btn_Relatorio.Text = "Relatório";
+            this.btn_Relatorio.UseVisualStyleBackColor = true;
+            this.btn_Relatorio.Click += new System.EventHandler(this.btn_Relatorio_Click);
+            // 
+            // btn_Vender
+            // 
+            this.btn_Vender.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Vender.Location = new System.Drawing.Point(6, 208);
+            this.btn_Vender.Name = "btn_Vender";
+            this.btn_Vender.Size = new System.Drawing.Size(83, 57);
+            this.btn_Vender.TabIndex = 2;
+            this.btn_Vender.Text = "Venda";
+            this.btn_Vender.UseVisualStyleBackColor = true;
+            this.btn_Vender.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.vScrollBar1.Location = new System.Drawing.Point(96, 29);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(17, 477);
+            this.vScrollBar1.TabIndex = 8;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // btn_MagentoIntegration
+            // 
+            this.btn_MagentoIntegration.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_MagentoIntegration.Location = new System.Drawing.Point(6, 334);
+            this.btn_MagentoIntegration.Name = "btn_MagentoIntegration";
+            this.btn_MagentoIntegration.Size = new System.Drawing.Size(83, 57);
+            this.btn_MagentoIntegration.TabIndex = 11;
+            this.btn_MagentoIntegration.Text = "Magento Integration";
+            this.btn_MagentoIntegration.UseVisualStyleBackColor = true;
+            this.btn_MagentoIntegration.Click += new System.EventHandler(this.btn_MagentoIntegration_Click);
             // 
             // consultasToolStripMenuItem
             // 
@@ -382,130 +520,11 @@ namespace Projeto_ICI
             this.servicosToolStripMenuItem.Text = "&Serviços";
             this.servicosToolStripMenuItem.Click += new System.EventHandler(this.servicosToolStripMenuItem_Click);
             // 
-            // sairToolStripMenuItem
-            // 
-            this.sairToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loginToolStripMenuItem,
-            this.logoutToolStripMenuItem,
-            this.sairToolStripMenuItem1});
-            this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
-            this.sairToolStripMenuItem.Size = new System.Drawing.Size(49, 25);
-            this.sairToolStripMenuItem.Text = "Sair";
-            // 
-            // loginToolStripMenuItem
-            // 
-            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
-            this.loginToolStripMenuItem.Text = "Login";
-            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
-            // 
-            // logoutToolStripMenuItem
-            // 
-            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
-            this.logoutToolStripMenuItem.Text = "Logout";
-            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
-            // 
-            // sairToolStripMenuItem1
-            // 
-            this.sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
-            this.sairToolStripMenuItem1.Size = new System.Drawing.Size(129, 26);
-            this.sairToolStripMenuItem1.Text = "Sair";
-            this.sairToolStripMenuItem1.Click += new System.EventHandler(this.sairToolStripMenuItem1_Click);
-            // 
-            // btn_Comprar
-            // 
-            this.btn_Comprar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Comprar.Location = new System.Drawing.Point(6, 145);
-            this.btn_Comprar.Name = "btn_Comprar";
-            this.btn_Comprar.Size = new System.Drawing.Size(83, 57);
-            this.btn_Comprar.TabIndex = 1;
-            this.btn_Comprar.Text = "Comprar";
-            this.btn_Comprar.UseVisualStyleBackColor = true;
-            this.btn_Comprar.Click += new System.EventHandler(this.btn_Comprar_Click);
-            // 
-            // btn_AbrirOS
-            // 
-            this.btn_AbrirOS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AbrirOS.Location = new System.Drawing.Point(6, 19);
-            this.btn_AbrirOS.Name = "btn_AbrirOS";
-            this.btn_AbrirOS.Size = new System.Drawing.Size(83, 57);
-            this.btn_AbrirOS.TabIndex = 0;
-            this.btn_AbrirOS.Text = "Abrir OS";
-            this.btn_AbrirOS.UseVisualStyleBackColor = true;
-            this.btn_AbrirOS.Click += new System.EventHandler(this.btn_AbrirOS_Click);
-            // 
-            // gb_Atalhos
-            // 
-            this.gb_Atalhos.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.gb_Atalhos.Controls.Add(this.btn_Sair);
-            this.gb_Atalhos.Controls.Add(this.btn_Caixa);
-            this.gb_Atalhos.Controls.Add(this.btn_Relatorio);
-            this.gb_Atalhos.Controls.Add(this.btn_Vender);
-            this.gb_Atalhos.Controls.Add(this.btn_AbrirOS);
-            this.gb_Atalhos.Controls.Add(this.btn_Comprar);
-            this.gb_Atalhos.Dock = System.Windows.Forms.DockStyle.Left;
-            this.gb_Atalhos.Location = new System.Drawing.Point(0, 29);
-            this.gb_Atalhos.Name = "gb_Atalhos";
-            this.gb_Atalhos.Size = new System.Drawing.Size(96, 402);
-            this.gb_Atalhos.TabIndex = 7;
-            this.gb_Atalhos.TabStop = false;
-            // 
-            // btn_Sair
-            // 
-            this.btn_Sair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Sair.Location = new System.Drawing.Point(6, 334);
-            this.btn_Sair.Name = "btn_Sair";
-            this.btn_Sair.Size = new System.Drawing.Size(83, 57);
-            this.btn_Sair.TabIndex = 10;
-            this.btn_Sair.Text = "Sair";
-            this.btn_Sair.UseVisualStyleBackColor = true;
-            this.btn_Sair.Click += new System.EventHandler(this.btn_Sair_Click);
-            // 
-            // btn_Caixa
-            // 
-            this.btn_Caixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Caixa.Location = new System.Drawing.Point(6, 82);
-            this.btn_Caixa.Name = "btn_Caixa";
-            this.btn_Caixa.Size = new System.Drawing.Size(83, 57);
-            this.btn_Caixa.TabIndex = 9;
-            this.btn_Caixa.Text = "Caixa";
-            this.btn_Caixa.UseVisualStyleBackColor = true;
-            // 
-            // btn_Relatorio
-            // 
-            this.btn_Relatorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Relatorio.Location = new System.Drawing.Point(6, 271);
-            this.btn_Relatorio.Name = "btn_Relatorio";
-            this.btn_Relatorio.Size = new System.Drawing.Size(83, 57);
-            this.btn_Relatorio.TabIndex = 3;
-            this.btn_Relatorio.Text = "Relatório";
-            this.btn_Relatorio.UseVisualStyleBackColor = true;
-            // 
-            // btn_Vender
-            // 
-            this.btn_Vender.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Vender.Location = new System.Drawing.Point(6, 208);
-            this.btn_Vender.Name = "btn_Vender";
-            this.btn_Vender.Size = new System.Drawing.Size(83, 57);
-            this.btn_Vender.TabIndex = 2;
-            this.btn_Vender.Text = "Venda";
-            this.btn_Vender.UseVisualStyleBackColor = true;
-            this.btn_Vender.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // vScrollBar1
-            // 
-            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.vScrollBar1.Location = new System.Drawing.Point(96, 29);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 402);
-            this.vScrollBar1.TabIndex = 8;
-            // 
             // Gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 431);
+            this.ClientSize = new System.Drawing.Size(740, 506);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.gb_Atalhos);
             this.Controls.Add(this.menu_Principal);
@@ -575,6 +594,8 @@ namespace Projeto_ICI
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
         private System.Windows.Forms.Button btn_Sair;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button btn_MagentoIntegration;
     }
 }
 

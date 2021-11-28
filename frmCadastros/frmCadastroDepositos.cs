@@ -276,9 +276,7 @@ namespace Projeto_ICI.frmCadastros
         private void txtb_CodigoProduto_TextChanged(object sender, EventArgs e)
         {
             if (txtb_CodigoProduto.Text == "")
-            {
                 txtb_Produto.Clear();
-            }
             else
             {
                 if (int.TryParse(txtb_CodigoProduto.Text, out int vlCodigo))
@@ -289,7 +287,6 @@ namespace Projeto_ICI.frmCadastros
                                                                             out string vlMsg,
                                                                             true);
                     if (vlProduto != null)
-                    {
                         if (vlMsg == "")
                         {
                             txtb_Produto.Text = vlProduto.Produto;
@@ -297,14 +294,11 @@ namespace Projeto_ICI.frmCadastros
                         }
                         else
                         {
-                            showErrorMsg(vlMsg);
+                            errorMSG.SetError(lbl_CodigoProduto, vlMsg);
                             txtb_Produto.Clear();
                         }
-                    }
                     else
-                    {
                         txtb_Produto.Clear();
-                    }
                 }
             }
         }

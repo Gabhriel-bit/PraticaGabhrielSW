@@ -100,7 +100,10 @@ namespace Projeto_ICI
         private frmConsultaCompras frmConsCompra;
         private frmConsultaVendas frmConsVenda;
 
+        private API.frmIntegracaoMagento frmIntregMagento;
+
         private BancoDados.conexoes umaConexao;
+        private API.conexaoMagento umaConexaoAPI;
 
         public Gerente()
         {
@@ -133,6 +136,7 @@ namespace Projeto_ICI
             {
                 //conexão com banco de dados
                 umaConexao = new BancoDados.conexoes();
+                umaConexaoAPI = new API.conexaoMagento();
 
                 umaDaoCargo = new daoCargos();
                 umaDaoCidade = new daoCidades();
@@ -264,6 +268,10 @@ namespace Projeto_ICI
                 frmCadTransport.SetFrmCons(frmConsCidade);
                 frmCadCompra.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsFornecedor, frmConsProduto });
                 frmCadVenda.SetFrmCons(new Form[] { frmConsCondPag, frmConsTranspot, frmConsCliente, frmConsProduto });
+
+                //referentes a integração do Magento 
+                frmIntregMagento = new API.frmIntegracaoMagento(umaConexaoAPI, umCtrlProduto);
+                frmIntregMagento.SetFrmCons(frmConsProduto);
             }
             catch (Exception e)
             {
@@ -490,6 +498,14 @@ namespace Projeto_ICI
             var p = new frmAcesso.frmLogin();
             ControleAcesso(p.ValidaLoguin());
         }
+
+        private void btn_Relatorio_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btn_MagentoIntegration_Click(object sender, EventArgs e)
+        {
+            frmIntregMagento.ShowDialog();
+        }
     }
 }
-
