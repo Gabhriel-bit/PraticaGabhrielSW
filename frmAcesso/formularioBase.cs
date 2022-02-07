@@ -69,8 +69,8 @@ namespace Projeto_ICI
         {
             try
             {
-                umImgPesquisaEntrar = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_entrar.png");
-                umImgPesquisaSair = Image.FromFile(@"C:\Users\gabhr\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_sair.png");
+                umImgPesquisaEntrar = Image.FromFile(@"C:\Users\Datapar\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_entrar.png");
+                umImgPesquisaSair = Image.FromFile(@"C:\Users\Datapar\Documents\GitHub\PraticaGabhrielSW\imagens\arquivo_de_pesquisa_sair.png");
             }
             catch (Exception e)
             {
