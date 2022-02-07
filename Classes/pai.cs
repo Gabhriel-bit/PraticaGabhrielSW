@@ -10,7 +10,7 @@ namespace Projeto_ICI.Classes
     public class pai
     {
         private int Fcodigo;
-        private int FCodigoUsu; // Funcionário
+        private int FCodigoUsu;
         private string FdataCad;
         private string FultAlt;
         public pai()
